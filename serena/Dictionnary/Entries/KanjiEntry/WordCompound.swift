@@ -32,7 +32,7 @@ struct WordCompoundListView: View {
                             if showFurigana {
                                 OnyomiTextView(compound.reading)
                                     .font(.caption2)
-                                    .lineHeight(.tight)
+//                                    .lineHeight(.tight)
                                     .foregroundColor(.gray)
                                     .environment(\.useKatakanaForOnyomi, compound.kind == .onyomi ? useKatakanaForOnyomi : false)
                             }

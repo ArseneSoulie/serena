@@ -55,7 +55,6 @@ struct KanjiEntryView: View {
                         .environment(\.useKatakanaForOnyomi, useKatakanaForOnyomi)
                     KanjiReadingsView(title: "Kun readings:", readings: entry.kunyomiReadings)
                     KanjiReadingsView(title: "Nanori readings:", readings: entry.nanoriReadings)
-                    
                     Divider()
                     KanjiRadicalsView(title: "Radicals", radicals: entry.radicals)
                     KanjiSimilarView(title: "Similar kanji:", similarKanji: entry.similarKanji)
@@ -69,6 +68,7 @@ struct KanjiEntryView: View {
                     Divider()
                 }.padding()
             }
+            .environment(\.disableTiles, showStrokeOrder || showsSettings)
             .toolbar {
                 KanjiStrokesToolbar(showStrokeOrder: $showStrokeOrder)
                 KanjiEntryOptionsToolbar(
@@ -77,6 +77,10 @@ struct KanjiEntryView: View {
                     showsSettings: $showsSettings
                 )
             }
+            .animation(.easeOut, value: showsSettings)
+            .animation(.easeOut, value: showFurigana)
+            .animation(.easeOut, value: useKatakanaForOnyomi)
+            .animation(.easeOut, value: showStrokeOrder)
             
         }
     }
@@ -128,7 +132,9 @@ struct KanjiStrokesToolbar: View {
     
     var body: some View {
         Button(
-            action: { showStrokeOrder.toggle() },
+            action: {
+                showStrokeOrder.toggle()
+            },
             label: { Image(.customPaintbrushPointedFillBadgeQuestionmark)}
         ).popover(isPresented: $showStrokeOrder) {
             Text("yo")

@@ -7,3 +7,7 @@ extension EnvironmentValues {
 extension EnvironmentValues {
     @Entry var useKatakanaForOnyomi: Bool = false
 }
+
+extension EnvironmentValues {
+    @Entry var disableTiles: Bool = false
+}

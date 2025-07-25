@@ -6,7 +6,7 @@ enum TileSize {
     
     var font: Font {
         switch self {
-        case .small: .default
+        case .small: .body
         case .largeEntry: .largeTitle
         }
     }
@@ -55,6 +55,7 @@ enum TileKind {
 }
 
 struct TileButtonStyle: ButtonStyle {
+    @Environment(\.disableTiles) var isTileDisabled
     let tileSize: TileSize
     let tileKind: TileKind
     
@@ -64,16 +65,20 @@ struct TileButtonStyle: ButtonStyle {
     }
     
     func makeBody(configuration: Configuration) -> some View {
+        let tileColor = isTileDisabled ? Color.gray : tileKind.color
+        
         configuration.label
             .bold(tileSize.isBold)
             .font(tileSize.font)
             .foregroundStyle(.white)
             .padding(.all, tileSize.paddings)
-            .background(tileKind.color.mix(with: .black, by: configuration.isPressed ? 0.1 : 0).gradient)
-            .clipShape(RoundedRectangle(cornerRadius: tileSize.cornerRadius))
+            .background {
+                RoundedRectangle(cornerRadius: tileSize.cornerRadius)
+                    .fill(tileColor.mix(with: .black, by: configuration.isPressed ? 0.1 : 0).gradient)
+            }
             .offset(x: 0, y: configuration.isPressed ? tileSize.pressOffset : 0)
             .background {
-                tileKind.color.mix(with: .black, by: 0.2)
+                tileColor.mix(with: .black, by: 0.2)
                     .clipShape(RoundedRectangle(cornerRadius: tileSize.cornerRadius))
                     .offset(x: 0, y: tileSize.pressOffset)
             }
