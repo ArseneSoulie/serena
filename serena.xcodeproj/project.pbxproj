@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		03BC51792E3219B30081F67B /* SharingGRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 03BC51782E3219B30081F67B /* SharingGRDB */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		03BC51692E311EEB0081F67B /* serena.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = serena.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03BC51792E3219B30081F67B /* SharingGRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = serena;
 			packageProductDependencies = (
+				03BC51782E3219B30081F67B /* SharingGRDB */,
 			);
 			productName = serena;
 			productReference = 03BC51692E311EEB0081F67B /* serena.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = 03BC51602E311EEB0081F67B;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				03BC51772E3219B30081F67B /* XCRemoteSwiftPackageReference "sharing-grdb" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 03BC516A2E311EEB0081F67B /* Products */;
 			projectDirPath = "";
@@ -184,6 +193,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -238,6 +248,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -349,6 +360,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		03BC51772E3219B30081F67B /* XCRemoteSwiftPackageReference "sharing-grdb" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/sharing-grdb";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		03BC51782E3219B30081F67B /* SharingGRDB */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 03BC51772E3219B30081F67B /* XCRemoteSwiftPackageReference "sharing-grdb" */;
+			productName = SharingGRDB;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 03BC51612E311EEB0081F67B /* Project object */;
 }
