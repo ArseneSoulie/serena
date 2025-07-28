@@ -87,6 +87,7 @@ extension Stroke {
 import SwiftUI
 
 extension Stroke {
+    @available(iOS 13.0, *)
     var swiftUIPath: Path {
         Path(cgPath)
     }

@@ -7,32 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03BC51792E3219B30081F67B /* SharingGRDB in Frameworks */ = {isa = PBXBuildFile; productRef = 03BC51782E3219B30081F67B /* SharingGRDB */; };
+		03EA60CE2E37E0EF00C7F9A9 /* SerenaApp in Frameworks */ = {isa = PBXBuildFile; productRef = 03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */; };
+		03EA9D392E37DA2900EC6EBC /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EA9D252E37DA2900EC6EBC /* Main.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033194E82E37DEB200F037C3 /* KanjiVGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KanjiVGParser; sourceTree = "<group>"; };
 		03BC51692E311EEB0081F67B /* serena.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = serena.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03EA9D252E37DA2900EC6EBC /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		03FF82292E37DF6E00EFA200 /* SerenaApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SerenaApp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		038657562E37C84600045A66 /* KanjiVGParser */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = KanjiVGParser;
-			sourceTree = "<group>";
-		};
-		03BC516B2E311EEB0081F67B /* serena */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = serena;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03BC51662E311EEB0081F67B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03BC51792E3219B30081F67B /* SharingGRDB in Frameworks */,
+				03EA60CE2E37E0EF00C7F9A9 /* SerenaApp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,9 +33,10 @@
 		03BC51602E311EEB0081F67B = {
 			isa = PBXGroup;
 			children = (
-				038657562E37C84600045A66 /* KanjiVGParser */,
-				03BC516B2E311EEB0081F67B /* serena */,
+				03FF82292E37DF6E00EFA200 /* SerenaApp */,
+				033194E82E37DEB200F037C3 /* KanjiVGParser */,
 				03BC516A2E311EEB0081F67B /* Products */,
+				03EA9D252E37DA2900EC6EBC /* Main.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,13 +63,9 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				038657562E37C84600045A66 /* KanjiVGParser */,
-				03BC516B2E311EEB0081F67B /* serena */,
-			);
 			name = serena;
 			packageProductDependencies = (
-				03BC51782E3219B30081F67B /* SharingGRDB */,
+				03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */,
 			);
 			productName = serena;
 			productReference = 03BC51692E311EEB0081F67B /* serena.app */;
@@ -108,7 +96,7 @@
 			mainGroup = 03BC51602E311EEB0081F67B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				03BC51772E3219B30081F67B /* XCRemoteSwiftPackageReference "sharing-grdb" */,
+				03EA60CC2E37E0EF00C7F9A9 /* XCLocalSwiftPackageReference "SerenaApp" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 03BC516A2E311EEB0081F67B /* Products */;
@@ -135,6 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03EA9D392E37DA2900EC6EBC /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,22 +357,17 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		03BC51772E3219B30081F67B /* XCRemoteSwiftPackageReference "sharing-grdb" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/sharing-grdb";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.5.0;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		03EA60CC2E37E0EF00C7F9A9 /* XCLocalSwiftPackageReference "SerenaApp" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = SerenaApp;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		03BC51782E3219B30081F67B /* SharingGRDB */ = {
+		03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 03BC51772E3219B30081F67B /* XCRemoteSwiftPackageReference "sharing-grdb" */;
-			productName = SharingGRDB;
+			productName = SerenaApp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

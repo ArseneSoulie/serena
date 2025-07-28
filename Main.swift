@@ -1,14 +1,8 @@
-//
-//  serenaApp.swift
-//  serena
-//
-//  Created by A S on 23/07/2025.
-//
-
 import SwiftUI
+import SerenaApp
 
 @main
-struct serenaApp: App {
+struct SerenaApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

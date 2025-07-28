@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  serena
-//
-//  Created by A S on 23/07/2025.
-//
-
 import SwiftUI
 
 enum Tabs: String, CaseIterable {
@@ -13,10 +6,12 @@ enum Tabs: String, CaseIterable {
     case stats
 }
 
-struct ContentView: View {
+public struct ContentView: View {
     @State var selectedTab: Tabs = .study
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         TabView(selection: $selectedTab) {
             Tab(
                 "Dictionnary",
