@@ -19,6 +19,12 @@ struct KanjiEntry {
     let info: KanjiInfo
     let radicals: [String]
     let similarKanji: [String]
+    
+    let waniKaniInfo: WaniKaniInfo?
+}
+
+struct WaniKaniInfo {
+    var currentProgress: WanikaniProgress
 }
 
 struct KanjiInfo {
@@ -43,9 +49,7 @@ struct KanjiEntryView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     HStack {
-                        KanjiItemView(kanji: entry.kanji, wanikaniProgression: .apprentice) {
-                            
-                        }
+                        KanjiItemView(kanji: entry.kanji, wanikaniProgression: entry.waniKaniInfo?.currentProgress) {}
                         Spacer()
                         KanjiInfoView(info: entry.info)
                     }
@@ -86,26 +90,106 @@ struct KanjiEntryView: View {
     }
 }
 
-enum WanikaniProgression {
+enum WanikaniProgress: Int, CaseIterable {
+    case notStarted
+    case apprentice1
+    case apprentice2
+    case apprentice3
+    case apprentice4
+    case guru1
+    case guru2
+    case master
+    case enlightened
+    case burned
+    
+    var currentLevel: WanikaniProgressCategory {
+        switch self {
+        case .notStarted: .notStarted
+        case .apprentice1, .apprentice2, .apprentice3, .apprentice4: .apprentice
+        case .guru1, .guru2: .guru
+        case .master: .master
+        case .enlightened: .enlightened
+        case .burned: .burned
+        }
+    }
+}
+
+enum WanikaniProgressCategory {
+    case notStarted
     case apprentice
     case guru
     case master
     case enlightened
     case burned
+
+    var nextCategory: WanikaniProgressCategory? {
+        switch self {
+        case .notStarted: .apprentice
+        case .apprentice: .guru
+        case .guru: .master
+        case .master: .enlightened
+        case .enlightened: .burned
+        case .burned: nil
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .notStarted: .gray.mix(with: .white, by: 0.6)
+        case .apprentice: .pink
+        case .guru: .purple
+        case .master: .blue
+        case .enlightened: .cyan
+        case .burned: .green
+        }
+    }
 }
 
 struct KanjiItemView: View {
     let kanji: String
-    let wanikaniProgression: WanikaniProgression?
+    let wanikaniProgression: WanikaniProgress?
     
     let onTileTapped: () -> Void
     
     var body: some View {
-        Button(kanji, action: onTileTapped)
-            .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .kanji))
+        VStack {
+            Button(kanji, action: onTileTapped)
+                .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .kanji))
+            
+            if let wanikaniProgression {
+                WanikaniProgressView(wanikaniProgression: wanikaniProgression)
+            }
+        }.fixedSize()
     }
 }
 
+struct WanikaniProgressView: View {
+    let wanikaniProgression: WanikaniProgress
+    
+    let allProgress = WanikaniProgress.allCases
+    
+    var body: some View {
+        let progressBarSteps = WanikaniProgress
+            .allCases
+            .filter { $0.currentLevel == wanikaniProgression.currentLevel }
+        
+        HStack(spacing: 2) {
+            ForEach(progressBarSteps, id: \.self) { progress in
+                Rectangle().foregroundStyle(
+                    progress.currentLevel
+                        .color
+                        .opacity(progress.rawValue <= wanikaniProgression.rawValue ? 1 : 0.3)
+                        .gradient
+                )
+            }
+            if let nextCategory = wanikaniProgression.currentLevel.nextCategory, wanikaniProgression.currentLevel != .notStarted {
+                nextCategory.color.opacity(0.3)
+            }
+        }
+        .frame(height: 4)
+        .clipShape(.capsule)
+    }
+}
 
 struct KanjiEntryOptionsToolbar: View {
     @Binding var showFurigana: Bool
@@ -204,7 +288,8 @@ struct KanjiInfoView: View {
             wanikaniLevel: 3,
         ),
         radicals: ["十"],
-        similarKanji: ["早","果","菓","巣","呆"]
+        similarKanji: ["早","果","菓","巣","呆"],
+        waniKaniInfo: .init(currentProgress: .burned)
     )
     
     KanjiEntryView(entry: previewEntry)
