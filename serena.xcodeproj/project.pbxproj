@@ -33,10 +33,10 @@
 		03BC51602E311EEB0081F67B = {
 			isa = PBXGroup;
 			children = (
-				03FF82292E37DF6E00EFA200 /* SerenaApp */,
 				033194E82E37DEB200F037C3 /* KanjiVGParser */,
-				03BC516A2E311EEB0081F67B /* Products */,
+				03FF82292E37DF6E00EFA200 /* SerenaApp */,
 				03EA9D252E37DA2900EC6EBC /* Main.swift */,
+				03BC516A2E311EEB0081F67B /* Products */,
 			);
 			sourceTree = "<group>";
 		};
