@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KanjiVGParser
 
 struct KanjiEntry {
     let kanji: String
@@ -13,14 +14,15 @@ struct KanjiEntry {
     let onyomiReadings: [String]
     let kunyomiReadings: [String]
     let nanoriReadings: [String]
-    let meaningMnemonics: Mnemonics
-    let readingMnemonics: Mnemonics
+    var meaningMnemonics: Mnemonics
+    var readingMnemonics: Mnemonics
     let compounds: [WordCompound]
     let info: KanjiInfo
     let radicals: [String]
     let similarKanji: [String]
     
     let waniKaniInfo: WaniKaniInfo?
+    let svgId: String?
 }
 
 struct WaniKaniInfo {
@@ -38,7 +40,7 @@ struct KanjiInfo {
 
 
 struct KanjiEntryView: View {
-    let entry: KanjiEntry
+    @State var entry: KanjiEntry
     @State var showsSettings = false
     @State var showFurigana = false
     @State var useKatakanaForOnyomi = true
@@ -63,8 +65,8 @@ struct KanjiEntryView: View {
                     KanjiRadicalsView(title: "Radicals", radicals: entry.radicals)
                     KanjiSimilarView(title: "Similar kanji:", similarKanji: entry.similarKanji)
                     Divider()
-                    MnemonicsView(title: "Meaning mnemonics", mnemonics: entry.meaningMnemonics)
-                    MnemonicsView(title: "Reading mnemonics", mnemonics: entry.readingMnemonics)
+                    MnemonicsView(title: "Meaning mnemonics", mnemonics: $entry.meaningMnemonics)
+                    MnemonicsView(title: "Reading mnemonics", mnemonics: $entry.readingMnemonics)
                     Divider()
                     WordCompoundListView(title: "Compounds", compounds: entry.compounds)
                         .environment(\.showFurigana, showFurigana)
@@ -74,7 +76,9 @@ struct KanjiEntryView: View {
             }
             .environment(\.disableTiles, showStrokeOrder || showsSettings)
             .toolbar {
-                KanjiStrokesToolbar(showStrokeOrder: $showStrokeOrder)
+                if let svgId = entry.svgId {
+                    KanjiStrokesToolbar(showStrokeOrder: $showStrokeOrder, svgId: svgId)
+                }
                 KanjiEntryOptionsToolbar(
                     showFurigana: $showFurigana,
                     useKatakanaForOnyomi: $useKatakanaForOnyomi,
@@ -89,6 +93,8 @@ struct KanjiEntryView: View {
         }
     }
 }
+
+
 
 enum WanikaniProgress: Int, CaseIterable {
     case notStarted
@@ -213,6 +219,7 @@ struct KanjiEntryOptionsToolbar: View {
 
 struct KanjiStrokesToolbar: View {
     @Binding var showStrokeOrder: Bool
+    let svgId: String
     
     var body: some View {
         Button(
@@ -221,9 +228,18 @@ struct KanjiStrokesToolbar: View {
             },
             label: { Image(.customPaintbrushPointedFillBadgeQuestionmark)}
         ).popover(isPresented: $showStrokeOrder) {
-            Text("yo")
+            KanjiStrokesView(svgId: svgId)
+                .padding(.all)
+                .padding(.horizontal)
                 .presentationCompactAdaptation(.popover)
         }
+    }
+}
+
+extension KanjiStrokesView {
+    init(svgId: String) {
+        let url = Bundle.module.url(forResource: svgId, withExtension: "svg")
+        self.init(url: url)
     }
 }
 
@@ -289,7 +305,8 @@ struct KanjiInfoView: View {
         ),
         radicals: ["十"],
         similarKanji: ["早","果","菓","巣","呆"],
-        waniKaniInfo: .init(currentProgress: .burned)
+        waniKaniInfo: .init(currentProgress: .apprentice3),
+        svgId: "05358"
     )
     
     KanjiEntryView(entry: previewEntry)

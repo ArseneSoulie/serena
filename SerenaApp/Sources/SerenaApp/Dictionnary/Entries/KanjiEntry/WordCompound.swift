@@ -32,18 +32,18 @@ struct WordCompoundListView: View {
                             if showFurigana {
                                 OnyomiTextView(compound.reading)
                                     .font(.caption2)
-//                                    .lineHeight(.tight)
                                     .foregroundColor(.gray)
                                     .environment(\.useKatakanaForOnyomi, compound.kind == .onyomi ? useKatakanaForOnyomi : false)
                             }
                             Button(compound.word) { }.buttonStyle(TileButtonStyle(tileKind: .vocabulary))
                         }.gridColumnAlignment(.trailing)
                         Text(meaningsString)
+                            .gridColumnAlignment(.leading)
                     }
                     if compound != compounds.last {
                         Divider()
                     }
-                }.gridColumnAlignment(.leading)
+                }
             }
         }
     }

@@ -15,7 +15,10 @@ let package = Package(
     targets: [
         .target(
             name: "KanjiVGParser",
-            dependencies: []
+            dependencies: [],
+            resources: [
+                .process("Resources")
+            ]
         ),
     ]
 )

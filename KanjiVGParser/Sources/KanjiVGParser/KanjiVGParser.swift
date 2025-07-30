@@ -9,23 +9,28 @@
 
 import Foundation
 
-struct KanjiVGParser {
-    
-}
-
-struct KanjiStrokes {
-    let strokes: [Stroke]
-    
-    init(from: URL) throws {
-        throw KanjiVGError.malformedSVG
-    }
-}
-
 struct Stroke: Identifiable {
     let id: String
-    let pathPoints: [CGPoint]
+    let path: Path
     let index: Int
     let groups: [StrokeGroup]
+}
+
+struct KVGStroke: Identifiable {
+    let id: String
+    let pathString: String
+}
+
+extension KVGStroke {
+    init?(attributeDict: [String: String]) {
+        guard let id = attributeDict["id"],
+              let pathString = attributeDict["d"] else {
+            return nil
+        }
+        
+        self.id = id
+        self.pathString = pathString
+    }
 }
 
 struct StrokeGroup: Identifiable {
@@ -42,14 +47,43 @@ struct StrokeGroup: Identifiable {
     let tradForm: Bool?
 }
 
-enum StrokeRadical {
+extension StrokeGroup {
+    init?(attributeDict: [String: String]) {
+        guard let id = attributeDict["id"],
+              let element = attributeDict["kvg:element"] else {
+            return nil
+        }
+        
+        self.id = id
+        self.element = element
+        self.number = attributeDict["kvg:number"].flatMap(Int.init)
+        self.original = attributeDict["kvg:original"]
+        self.part = attributeDict["kvg:part"].flatMap(Int.init)
+        self.partial = attributeDict["kvg:partial"].flatMap(Self.boolValue)
+        self.phon = attributeDict["kvg:phon"]
+        self.position = attributeDict["kvg:position"].flatMap(StrokePosition.init)
+        self.radical = attributeDict["kvg:radical"].flatMap(StrokeRadical.init)
+        self.radicalForm = attributeDict["kvg:radicalForm"].flatMap(Self.boolValue)
+        self.tradForm = attributeDict["kvg:tradForm"].flatMap(Self.boolValue)
+    }
+    
+    private static func boolValue(_ str: String) -> Bool? {
+        switch str.lowercased() {
+        case "true", "1", "yes": return true
+        case "false", "0", "no": return false
+        default: return nil
+        }
+    }
+}
+
+enum StrokeRadical: String {
     case general
     case jis
     case nelson
     case tradit
 }
 
-enum StrokePosition {
+enum StrokePosition: String {
     case bottom
     case kamae
     case left
@@ -62,61 +96,56 @@ enum StrokePosition {
     
 }
 
-enum KanjiVGError: Error {
-    case malformedSVG
-}
-
-
+import Foundation
 import SwiftUI
 
-struct a :View {
-    @State private var drawAmount: CGFloat = 1.0
+final class KanjiVGParser: NSObject, XMLParserDelegate {
+    private var strokeGroupStack: [StrokeGroup] = []
+    private var strokes: [Stroke] = []
+    private var currentElement = ""
     
-    var body: some View {
-        VStack {
-            KanjiPath()
-                .trim(from: 0, to: drawAmount)
-                .stroke(Color.blue, style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))
-                .frame(width: 100, height: 100)
-            Button("reset and draw") {
-                drawAmount = 0.0
-                withAnimation(.linear(duration: 2)) {
-                    drawAmount = 1.0
-                }
-            }
+    func parse(data: Data) -> [Stroke] {
+        let parser = XMLParser(data: data)
+        parser.delegate = self
+        parser.parse()
+        return strokes
+    }
+    
+    // MARK: - XMLParserDelegate
+    
+    func parser(
+        _ parser: XMLParser,
+        didStartElement elementName: String,
+        namespaceURI: String?,
+        qualifiedName qName: String?,
+        attributes attributeDict: [String : String] = [:]
+    ) {
+        if elementName == "g", let strokeGroup = StrokeGroup.init(attributeDict: attributeDict) {
+            strokeGroupStack.append(strokeGroup)
+        } else if elementName == "path", let kvgStroke = KVGStroke.init(attributeDict: attributeDict), let path = path(pathString: kvgStroke.pathString) {
+            strokes.append(Stroke(
+                id: kvgStroke.id,
+                path: path,
+                index: strokes.count,
+                groups: strokeGroupStack
+            ))
         }
+    }
+    
+    func parser(
+        _ parser: XMLParser,
+        didEndElement elementName: String,
+        namespaceURI: String?,
+        qualifiedName qName: String?
+    ) {
+        if elementName == "g" {
+            _ = strokeGroupStack.popLast()
+        }
+    }
+    
+    func path(pathString: String) -> Path? {
+        guard let cgPath = try? CGPath.from(svgPath: pathString, invertYAxis: true) else { return nil }
+        return Path(cgPath)
     }
 }
 
-let pathStrings = [
-    "M27.62,14.5C31.86,18.35,36.4,25.08,37,27",
-    "M49.5,11.5c1.78,2.24,6.04,8.11,6.75,11.75",
-    "M78.25,11.38c0.31,1.17,0.04,2.02-0.72,3.29c-1.6,2.64-5.07,6.81-8.27,9.84",
-    "M27.84,34.42c0.74,0.74,1.62,1.83,1.81,2.99c1.11,7.07,2.33,14.25,3.58,22.59c0.27,1.79,0.54,3.63,0.81,5.53",
-    "M30,35.64c12.75-1.67,34.38-3.91,44.27-4.89c4.19-0.41,7.11,1.25,6.41,5.01c-1.16,6.21-2.86,13.91-4.67,20.03c-0.48,1.63-0.97,3.14-1.46,4.48",
-    "M32.57,48.36c8.93-1.23,39.31-4.11,45.02-4.19",
-    "M34.66,61.04C46.38,60,61,58.62,74.38,57.71",
-    "M12.25,76.95c2.54,0.54,7.24,0.78,9.76,0.54c19.5-1.87,43.7-3.62,66.71-4.48c4.23-0.16,6.79,0.26,8.91,0.53",
-    "M52.99,35.86c0.89,0.89,1.59,2.19,1.6,3.48c0.04,5.51-0.01,38.66-0.03,53.79c0,2.88,0,5.11,0,6.39"
-]
-
-struct KanjiPath: Shape {
-    func path(in rect: CGRect) -> Path {
-        let cgPath = CGMutablePath()
-        for pathString in pathStrings {
-            cgPath.addPath(try! CGPath.from(svgPath: pathString, invertYAxis: true))
-        }
-        let absolutePath = Path(cgPath)
-        let boundingRect = absolutePath.boundingRect
-        let scale = min(rect.width/boundingRect.width, rect.height/boundingRect.height)
-        let scaled = absolutePath.applying(.init(scaleX: scale, y: scale))
-        let scaledBoundingRect = scaled.boundingRect
-        let offsetX = scaledBoundingRect.midX - rect.midX
-        let offsetY = scaledBoundingRect.midY - rect.midY
-        return scaled.offsetBy(dx: -offsetX, dy: -offsetY)
-    }
-}
-
-#Preview {
-    a()
-}

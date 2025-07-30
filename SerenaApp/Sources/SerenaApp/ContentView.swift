@@ -18,7 +18,7 @@ public struct ContentView: View {
                 systemImage: "character.book.closed.fill",
                 value: .dictionnary
             ) {
-                Text("Dictionnary")
+                DictionnaryView()
             }
             Tab(
                 "Study",
