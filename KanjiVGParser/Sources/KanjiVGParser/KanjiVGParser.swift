@@ -70,14 +70,20 @@ enum KanjiVGError: Error {
 import SwiftUI
 
 struct a :View {
+    @State private var drawAmount: CGFloat = 1.0
+    
     var body: some View {
         VStack {
             KanjiPath()
-                .stroke()
-                .overlay {
-                    Rectangle().stroke()
-                }
+                .trim(from: 0, to: drawAmount)
+                .stroke(Color.blue, style: StrokeStyle(lineWidth: 4, lineCap: .round, lineJoin: .round))
                 .frame(width: 100, height: 100)
+            Button("reset and draw") {
+                drawAmount = 0.0
+                withAnimation(.linear(duration: 2)) {
+                    drawAmount = 1.0
+                }
+            }
         }
     }
 }
