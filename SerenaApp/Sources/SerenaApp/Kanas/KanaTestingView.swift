@@ -7,9 +7,21 @@
 
 struct KanaLine: Identifiable, Hashable {
     let name: String
-    let kanas: [String?]
+    let kanas: [KanaText?]
     
     var id: String { name }
+}
+
+typealias KanaText = String
+
+extension KanaText? {
+    var kanaId: String {
+        if let self {
+            self
+        } else {
+            UUID().uuidString
+        }
+    }
 }
 
 let baseKatakana: [KanaLine] = [
@@ -84,7 +96,7 @@ struct Line: View {
             .gridColumnAlignment(.trailing)
             Button(action: { withAnimation {isOn.toggle()}} ) {
                 HStack(spacing: spacing) {
-                    ForEach(kanaLine.kanas, id: \.self) { kana in
+                    ForEach(kanaLine.kanas, id: \.kanaId) { kana in
                         Text(displayAsKana ? kana?.romajiToKatakana ?? "ア" : kana ?? "a")
                             .font(.title2)
                             .padding(.all, 6)
@@ -138,15 +150,33 @@ struct LineGroup: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            DisclosureGroup("\(title) \(selectedKanas)/\(totalKanas)", isExpanded: $isExpanded) {
+            DisclosureGroup(isExpanded: $isExpanded) {
                 Grid(alignment: .leading) {
                     ForEach(lines) { kanaLine in
                         Line(kanaLine: kanaLine, isOn: $selectedRows[containsLine: kanaLine])
                     }
+                }.padding(.vertical, 8)
+            } label: {
+                HStack {
+                    Button("", systemImage: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle") { toggleSelectBaseKatakana()}
+                        .tint(hasSelectedAll ? .mint : .gray)
+                    Text("\(title) \(selectedKanas)/\(totalKanas)").font(.subheadline)
                 }
             }
+
             Divider()
         }.padding(.horizontal)
+    }
+    
+    var hasSelectedAll: Bool {
+        selectedRows.count == lines.count
+    }
+    
+    func toggleSelectBaseKatakana() {
+        withAnimation {
+            if hasSelectedAll { selectedRows.removeAll() }
+            else { selectedRows.formUnion(lines) }
+        }
     }
 }
 
@@ -215,7 +245,7 @@ struct Train: View {
             
             .navigationTitle("Kana training")
             .toolbar {
-                Button(displayAsKana ? "ア" : "A") { withAnimation { displayAsKana.toggle()} }
+                Button(displayAsKana ? "ア↔A" : "A↔ア") { withAnimation { displayAsKana.toggle()} }
                 Button("Fast select") { showsFastSelect.toggle() }
                     .popover (isPresented: $showsFastSelect) {
                         VStack(alignment: .leading) {
@@ -339,12 +369,6 @@ struct Train: View {
     }
 }
 
-struct VisualEffectView: UIViewRepresentable {
-    var effect: UIVisualEffect?
-    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }
-    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = effect }
-}
-
 struct KanaToolbarButton: View {
     let title: String
     let isOn: Bool
@@ -369,48 +393,46 @@ struct KanaTrainingButtonView: View {
     @State var showAllInARowInfo: Bool = false
     var body: some View {
         VStack {
-            HStack {
-                Button("Level ups") { }.buttonStyle(.borderedProminent)
-                    .popover(isPresented: $showLevelUpInfo, arrowEdge: .bottom) {
-                        Text("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.")
-                            .fixedSize(horizontal: false, vertical: true)
-                            .presentationCompactAdaptation(.popover)
-                            .padding()
-                            .padding(.vertical, 20)
-                    }
-                
-                Button("All in a row") { }.buttonStyle(.borderedProminent)
-                    .popover(isPresented: $showAllInARowInfo, arrowEdge: .bottom) {
-                        Text("Try to get all selected kanas right in a row !")
-                            .fixedSize(horizontal: false, vertical: true)
-                            .presentationCompactAdaptation(.popover)
-                            .padding()
-                            .padding(.vertical, 20)
-                    }
-                Button("", systemImage: "questionmark.circle") { showLevelUpInfo = true }
+            ZStack {
+                HStack(spacing: 20) {
+                    Button("Level ups") { }.buttonStyle(.glassProminent)
+                        .popover(isPresented: $showLevelUpInfo, arrowEdge: .bottom) {
+                            VStack(alignment: .leading) {
+                                Text("Level ups")
+                                    .font(.headline)
+                                Text("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.")
+                            }
+                                .fixedSize(horizontal: false, vertical: true)
+                                .presentationCompactAdaptation(.popover)
+                                .padding()
+                                .padding(.vertical, 20)
+                        }
+                    
+                    Button("All in a row") { }.buttonStyle(.glassProminent)
+                        .popover(isPresented: $showAllInARowInfo, arrowEdge: .bottom) {
+                            VStack(alignment: .leading) {
+                                Text("All in a row")
+                                    .font(.headline)
+                                Text("Try to get all selected kanas right in a row !")
+                            }
+                                .fixedSize(horizontal: false, vertical: true)
+                                .presentationCompactAdaptation(.popover)
+                                .padding()
+                                .padding(.vertical, 20)
+                        }
+                }
+                HStack {
+                    Spacer()
+                    Button(action: { showLevelUpInfo = true }, label: { Image(systemName: "questionmark.circle")})
+                        .buttonStyle(.glass)
+                        .padding(.horizontal)
+                }
             }
         }.onChange(of: showLevelUpInfo) { oldValue, newValue in
             if oldValue && !newValue {
                 showAllInARowInfo = true
             }
         }
-    }
-}
-
-struct InfoPopover: View {
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("Level ups")
-                .font(.headline)
-            Text("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.")
-                .padding()
-            Divider()
-                .padding()
-            Text("All in a row")
-                .font(.headline)
-            Text("Try to get all selected kanas right in a row !")
-                .padding()
-        }.frame(width: 300)
     }
 }
 
