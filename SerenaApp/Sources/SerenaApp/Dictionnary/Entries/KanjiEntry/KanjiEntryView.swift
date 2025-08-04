@@ -206,7 +206,7 @@ struct KanjiEntryOptionsToolbar: View {
         Button("Settings", systemImage: "slider.vertical.3") {
             showsSettings.toggle()
         }.popover(isPresented: $showsSettings) {
-            VStack {
+            VStack(alignment: .leading) {
                 Toggle("Show furigana", isOn: $showFurigana)
                 Toggle("Use katakana for onyomi", isOn: $useKatakanaForOnyomi)
             }
@@ -226,7 +226,9 @@ struct KanjiStrokesToolbar: View {
             action: {
                 showStrokeOrder.toggle()
             },
-            label: { Image(.customPaintbrushPointedFillBadgeQuestionmark)}
+            label: {
+                Image(systemName: "pencil.and.scribble")
+            }
         ).popover(isPresented: $showStrokeOrder) {
             KanjiStrokesView(svgId: svgId)
                 .padding(.all)

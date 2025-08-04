@@ -4,10 +4,11 @@ enum Tabs: String, CaseIterable {
     case study
     case dictionnary
     case stats
+    case testing
 }
 
 public struct ContentView: View {
-    @State var selectedTab: Tabs = .study
+    @State var selectedTab: Tabs = .dictionnary
     
     public init() {}
     
@@ -19,6 +20,13 @@ public struct ContentView: View {
                 value: .dictionnary
             ) {
                 DictionnaryView()
+            }
+            Tab(
+                "Tests",
+                systemImage: "testtube.2",
+                value: .testing
+            ) {
+                Train()
             }
             Tab(
                 "Study",

@@ -27,6 +27,8 @@ public struct KanjiStrokesView : View {
                             .stroke(color, style: StrokeStyle(lineWidth: 6, lineCap: .round, lineJoin: .round))
                     }
                     .frame(width: 100, height: 100)
+                    .padding()
+                    .background{ Color.white.clipShape(RoundedRectangle(cornerRadius: 16)) }
                 Slider(value: $drawAmount, in: 0...1)
                     .padding(.vertical)
                 Button("Draw", action: drawKanji)

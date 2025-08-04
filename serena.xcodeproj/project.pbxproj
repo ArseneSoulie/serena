@@ -12,11 +12,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		031C36882E411FA000F25BDB /* MetalShaders */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = MetalShaders; sourceTree = "<group>"; };
 		033194E82E37DEB200F037C3 /* KanjiVGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KanjiVGParser; sourceTree = "<group>"; };
 		03BC51692E311EEB0081F67B /* serena.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = serena.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EA9D252E37DA2900EC6EBC /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		03FF82292E37DF6E00EFA200 /* SerenaApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SerenaApp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		031C36802E411C9900F25BDB /* Effects */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Effects;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03BC51662E311EEB0081F67B /* Frameworks */ = {
@@ -33,9 +42,11 @@
 		03BC51602E311EEB0081F67B = {
 			isa = PBXGroup;
 			children = (
+				031C36882E411FA000F25BDB /* MetalShaders */,
 				033194E82E37DEB200F037C3 /* KanjiVGParser */,
 				03FF82292E37DF6E00EFA200 /* SerenaApp */,
 				03EA9D252E37DA2900EC6EBC /* Main.swift */,
+				031C36802E411C9900F25BDB /* Effects */,
 				03BC516A2E311EEB0081F67B /* Products */,
 			);
 			sourceTree = "<group>";

@@ -36,14 +36,14 @@ struct MnemonicsView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 if mnemonics.userProvidedMnemonic == nil {
-                    Button("", systemImage: "plus") { showAddOrEditMnemonic = true }
+                    Button(action: { showAddOrEditMnemonic = true }, label: { Image(systemName: "plus") })
                 }
                 if let userProvidedMnemonic = mnemonics.userProvidedMnemonic {
                     if mnemonics.wkMnemonic != nil { Divider().padding() }
                     HStack(alignment: .top) {
                         MnemonicView(mnemonic: userProvidedMnemonic)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        Button("Edit", systemImage: "pencil") { showAddOrEditMnemonic = true }
+                        Button(action: { showAddOrEditMnemonic = true }, label: { Image(systemName: "pencil") })
                     }
                 }
             }.padding()
@@ -97,31 +97,45 @@ struct AddMnemonicView: View {
     let onSaveUserMnemonicTapped: (Mnemonic?) -> Void
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section("Your mnemonic") {
                     TextField("Explanation", text: $mnemonicDraft.explanation, axis: .vertical)
                         .lineLimit(3...10)
                     TextField("Optional hint", text: $mnemonicDraft.hint, axis: .vertical)
                         .lineLimit(1...10)
+                }.onSubmit {
+                    onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic)
                 }
+#if os(macOS)
+                .fixedSize(horizontal: false, vertical: true)
+#endif
+                
                 if let wkMnemonic {
                     Section("Wanikani mnemonic") {
                         Text(wkMnemonic.explanation).foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                         if let wkHint = wkMnemonic.hint {
                             Text(wkHint).foregroundStyle(.tertiary)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                     }
+#if os(macOS)
+                    .fixedSize(horizontal: false, vertical: true)
+#endif
                 }
-                
             }
             .toolbar {
-                Button(role: .destructive) { onSaveUserMnemonicTapped(nil) }
-                Button(role: .confirm) { onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic) }
+                Button(action: { onSaveUserMnemonicTapped(nil) }, label: { Image(systemName: "trash")})
+                Button(action: { onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic) }, label: { Image(systemName: "checkmark")})
             }
             .navigationTitle(title)
+            .presentationDetents([.medium, .large])
+#if os(macOS)
+            .padding()
+#endif
         }
-        .presentationDetents([.medium, .large])
+        
     }
 }
 
