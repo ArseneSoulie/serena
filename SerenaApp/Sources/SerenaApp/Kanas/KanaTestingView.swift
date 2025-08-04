@@ -164,7 +164,12 @@ struct Train: View {
     @State var showsFastSelect: Bool = false
     @State var displayAsKana: Bool = true
     
+    init() {
+        setupMetal()
+    }
+    
     var body: some View {
+        let height = UIScreen.main.bounds.height
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
@@ -184,11 +189,22 @@ struct Train: View {
                     Spacer()
                         .frame(height: 80)
                 }
-                .visualEffect({ initial, geom in
-                    initial.colorEffect(ShaderLibrary.color())
-                })
+                .visualEffect { initial, geo in
+                    let globalFrame = geo.frame(in: .global)
+                    let screenHeight = height // or other reference height
+
+                    return initial
+                        .layerEffect(
+                            ShaderLibrary.bundle(.module).pixellate(
+                                .float(8),                        // maxStrength
+                                .float(globalFrame.minY),        // globalYOrigin
+                                .float(screenHeight)             // screenHeight
+                            ),
+                            maxSampleOffset: .zero
+                        )
+                }
+
                 
-                 
             }
             .environment(\.displayAsKana, displayAsKana)
             .overlay(alignment: .bottom) {

@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/pointfreeco/sharing-grdb", from: "0.5.0"),
         .package(name: "KanjiVGParser", path: "./KanjiVGParser"),
-        .package(name: "MetalShaders", path: "./MetalShaders"),
+//        .package(name: "MetalShaders", path: "./MetalShaders"),
     ],
     targets: [
         .target(
@@ -23,7 +23,7 @@ let package = Package(
             dependencies: [
                 .product(name: "SharingGRDB", package: "sharing-grdb"),
                 "KanjiVGParser",
-                "MetalShaders",
+//                "MetalShaders",
             ],
             resources: [
                 .process("Resources")
