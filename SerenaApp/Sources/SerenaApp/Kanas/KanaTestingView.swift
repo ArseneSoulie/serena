@@ -24,7 +24,7 @@ extension KanaText? {
     }
 }
 
-let baseKatakana: [KanaLine] = [
+let base: [KanaLine] = [
     .init(name:"-" , kanas:["a","i","u","e","o"]),
     .init(name:"k-" , kanas:["ka","ki","ku","ke","ko"]),
     .init(name:"s-" , kanas:["sa","shi","su","se","so"]),
@@ -38,7 +38,7 @@ let baseKatakana: [KanaLine] = [
     .init(name:"n" , kanas:["n"]),
 ]
 
-let diacriticKatakana: [KanaLine] = [
+let diacritic: [KanaLine] = [
     .init(name:"g-" , kanas:["ga","gi","gu","ge","go"]),
     .init(name:"z-" , kanas:["za","ji","zu","ze","zo"]),
     .init(name:"d-" , kanas:["da","di","du","de","do"]),
@@ -46,7 +46,7 @@ let diacriticKatakana: [KanaLine] = [
     .init(name:"p-" , kanas:["pa","pi","pu","pe","po"]),
 ]
 
-let combinatoryKatakana: [KanaLine] = [
+let combinatory: [KanaLine] = [
     .init(name:"ky-" , kanas:["kya","kyu","kyo"]),
     .init(name:"sh-" , kanas:["sha","shu","sho"]),
     .init(name:"ch-" , kanas:["cha","chu","cho"]),
@@ -56,7 +56,7 @@ let combinatoryKatakana: [KanaLine] = [
     .init(name:"ry-" , kanas:["rya","ryu","ryo"]),
 ]
 
-let combinatoryDiacriticKatakana: [KanaLine] = [
+let combinatoryDiacritic: [KanaLine] = [
     .init(name:"gy-" , kanas:["gya","gyu","gyo"]),
     .init(name:"j-" , kanas:["ja","ju","jo"]),
     .init(name:"dy-" , kanas:["dya","dyu","dyo"]),
@@ -64,7 +64,7 @@ let combinatoryDiacriticKatakana: [KanaLine] = [
     .init(name:"py-" , kanas:["pya","pyu","pyo"]),
 ]
 
-let newKatakana: [KanaLine] = [
+let new: [KanaLine] = [
     .init(name:"sh-" , kanas:["she"]),
     .init(name:"j-" , kanas:["je"]),
     .init(name:"ch-" , kanas:["che"]),
@@ -83,6 +83,7 @@ struct Line: View {
     let spacing = 4.0
     
     @Environment(\.displayAsKana) var displayAsKana
+    @Environment(\.trainingMode) var trainingMode
     
     var body: some View {
         GridRow {
@@ -97,7 +98,18 @@ struct Line: View {
             Button(action: { withAnimation {isOn.toggle()}} ) {
                 HStack(spacing: spacing) {
                     ForEach(kanaLine.kanas, id: \.kanaId) { kana in
-                        Text(displayAsKana ? kana?.romajiToKatakana ?? "ア" : kana ?? "a")
+                        let displayedText = if !displayAsKana {
+                            kana ?? "a"
+                        } else {
+                            switch trainingMode {
+                            case .hiragana:
+                                kana?.romajiToKatakana.asHiragana ?? "あ"
+                            case .katakana:
+                                kana?.romajiToKatakana ?? "ア"
+                            }
+                            
+                        }
+                        Text(displayedText)
                             .font(.title2)
                             .padding(.all, 6)
                             .frame(maxWidth: .infinity)
@@ -129,23 +141,27 @@ extension Set<KanaLine> {
     }
 }
 
+extension Set<KanaLine> {
+    var kanaCount: Int {
+        self.reduce(0) { partialResult, line in
+            partialResult + line.kanas.count(where: { $0 != nil} )
+        }
+    }
+}
+
+extension Array<KanaLine> {
+    var kanaCount: Int {
+        self.reduce(0) { partialResult, line in
+            partialResult + line.kanas.count(where: { $0 != nil} )
+        }
+    }
+}
+
 struct LineGroup: View {
     let title: String
     let lines: [KanaLine]
     @Binding var selectedRows: Set<KanaLine>
-    
-    var totalKanas: Int {
-        lines.reduce(0) { partialResult, line in
-            partialResult + line.kanas.count(where: { $0 != nil} )
-        }
-    }
-    
-    var selectedKanas: Int {
-        selectedRows.reduce(0) { partialResult, line in
-            partialResult + line.kanas.count(where: { $0 != nil} )
-        }
-    }
-    
+
     @State var isExpanded: Bool = true
     
     var body: some View {
@@ -158,12 +174,12 @@ struct LineGroup: View {
                 }.padding(.vertical, 8)
             } label: {
                 HStack {
-                    Button("", systemImage: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle") { toggleSelectBaseKatakana()}
+                    Button("", systemImage: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle") { toggleSelectBase()}
                         .tint(hasSelectedAll ? .mint : .gray)
-                    Text("\(title) \(selectedKanas)/\(totalKanas)").font(.subheadline)
+                    Text("\(title) \(selectedRows.kanaCount)/\(lines.kanaCount)").font(.subheadline)
                 }
             }
-
+            
             Divider()
         }.padding(.horizontal)
     }
@@ -172,7 +188,7 @@ struct LineGroup: View {
         selectedRows.count == lines.count
     }
     
-    func toggleSelectBaseKatakana() {
+    func toggleSelectBase() {
         withAnimation {
             if hasSelectedAll { selectedRows.removeAll() }
             else { selectedRows.formUnion(lines) }
@@ -182,70 +198,165 @@ struct LineGroup: View {
 
 extension EnvironmentValues {
     @Entry var displayAsKana: Bool = true
+    @Entry var trainingMode: KanaTrainingMode = .katakana
+}
+
+import SwiftUI
+
+struct BottomBlurModifier: ViewModifier {
+    @Binding var height: CGFloat
+    
+    func body(content: Content) -> some View {
+        content
+            .visualEffect { [height] initial, geo in
+                let globalFrame = geo.frame(in: .global)
+                
+                return initial
+                    .layerEffect(
+                        ShaderLibrary.bundle(.module).pixellate(
+                            .float(8),
+                            .float(globalFrame.minY),
+                            .float(height)
+                        ),
+                        maxSampleOffset: .zero
+                    )
+            }
+    }
+}
+
+extension View {
+    func blurBottom(height: Binding<CGFloat>) -> some View {
+        self.modifier(BottomBlurModifier(height: height))
+    }
+}
+
+enum Destination: Hashable {
+    case levelUps([String])
+    case allInARow([String])
+}
+
+enum KanaTrainingMode: String, CaseIterable, Hashable {
+    case hiragana
+    case katakana
+}
+
+struct AllInARowTrainingView: View {
+    let kanas: [String]
+    var body: some View {
+        Text("Hello, world!")
+    }
+}
+
+
+struct LevelUpsTrainingView: View {
+    let kanas: [String]
+    var body: some View {
+        Text("Hello, world!")
+    }
 }
 
 struct Train: View {
-    @State var selectedBaseKatakana: Set<KanaLine> = []
-    @State var selectedDiacriticKatakana: Set<KanaLine> = []
-    @State var selectedCombinatoryKatakana: Set<KanaLine> = []
-    @State var selectedCombinatoryDiacriticKatakana: Set<KanaLine> = []
-    @State var selectedNewKatakana: Set<KanaLine> = []
+    @State var selectedBase: Set<KanaLine> = []
+    @State var selectedDiacritic: Set<KanaLine> = []
+    @State var selectedCombinatory: Set<KanaLine> = []
+    @State var selectedCombinatoryDiacritic: Set<KanaLine> = []
+    @State var selectedNew: Set<KanaLine> = []
     
     @State var showsFastSelect: Bool = false
     @State var displayAsKana: Bool = true
+    @State var trainingMode: KanaTrainingMode = .katakana
+    
+    @State private var destinations: [Destination] = []
     
     init() {
         setupMetal()
     }
     
+    @State var height = UIScreen.main.bounds.height
+    
     var body: some View {
-        let height = UIScreen.main.bounds.height
-        NavigationStack {
+        NavigationStack(path: $destinations) {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text("Select the rows you want to train on and pick a mode below.")
                         .font(.subheadline)
                         .padding()
-                    LineGroup(title: "Base katakana", lines: baseKatakana, selectedRows: $selectedBaseKatakana, isExpanded: false)
-                        .tint(selectedBaseKatakana.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "Diacritics (dakuten/handakuten)", lines: diacriticKatakana, selectedRows: $selectedDiacriticKatakana, isExpanded: false)
-                        .tint(selectedDiacriticKatakana.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "Combinatory", lines: combinatoryKatakana, selectedRows: $selectedCombinatoryKatakana, isExpanded: false)
-                        .tint(selectedCombinatoryKatakana.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "Combinatory diacritics", lines: combinatoryDiacriticKatakana, selectedRows: $selectedCombinatoryDiacriticKatakana, isExpanded: false)
-                        .tint(selectedCombinatoryDiacriticKatakana.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "New cases", lines: newKatakana, selectedRows: $selectedNewKatakana, isExpanded: true)
-                        .tint(selectedNewKatakana.isEmpty ? .secondary : .mint)
+                    Picker(selection: $trainingMode) {
+                        ForEach (KanaTrainingMode.allCases, id: \.self) {
+                            Text($0.rawValue.capitalized)
+                        }
+                    } label: {
+                        Text("Training mode")
+                    }.pickerStyle(.segmented).padding()
+                        
+                    
+                    LineGroup(title: "Base \(trainingMode.rawValue)", lines: base, selectedRows: $selectedBase, isExpanded: true)
+                        .tint(selectedBase.isEmpty ? .secondary : .mint)
+                    LineGroup(title: "Diacritics (dakuten/handakuten)", lines: diacritic, selectedRows: $selectedDiacritic, isExpanded: false)
+                        .tint(selectedDiacritic.isEmpty ? .secondary : .mint)
+                    LineGroup(title: "Combinatory", lines: combinatory, selectedRows: $selectedCombinatory, isExpanded: false)
+                        .tint(selectedCombinatory.isEmpty ? .secondary : .mint)
+                    LineGroup(title: "Combinatory diacritics", lines: combinatoryDiacritic, selectedRows: $selectedCombinatoryDiacritic, isExpanded: false)
+                        .tint(selectedCombinatoryDiacritic.isEmpty ? .secondary : .mint)
+                    if case .katakana = trainingMode {
+                        LineGroup(title: "New cases", lines: new, selectedRows: $selectedNew, isExpanded: false)
+                            .tint(selectedNew.isEmpty ? .secondary : .mint)
+                    }
                     Spacer()
                         .frame(height: 80)
                 }
-                .visualEffect { initial, geo in
-                    let globalFrame = geo.frame(in: .global)
-                    let screenHeight = height // or other reference height
-
-                    return initial
-                        .layerEffect(
-                            ShaderLibrary.bundle(.module).pixellate(
-                                .float(8),                        // maxStrength
-                                .float(globalFrame.minY),        // globalYOrigin
-                                .float(screenHeight)             // screenHeight
-                            ),
-                            maxSampleOffset: .zero
-                        )
-                }
-
+            }
+            .overlay {
+                Rectangle()
+                    .fill( Gradient(stops: [
+                        .init(color: Color(.systemBackground).opacity(0), location: 0.8),
+                        .init(color: Color(.systemBackground).opacity(0.2), location: 0.88),
+                        .init(color: Color(.systemBackground), location: 0.93),
+                    ]))
+                    .ignoresSafeArea(edges: .bottom)
+                    .allowsHitTesting(false)
                 
             }
             .environment(\.displayAsKana, displayAsKana)
+            .environment(\.trainingMode, trainingMode)
             .overlay(alignment: .bottom) {
-                ZStack {
-                    KanaTrainingButtonView()
+                VStack {
+                    let selectedCountText = switch trainingMode {
+                    case .hiragana:
+                        """
+                        か\(selectedBase.kanaCount)/\(base.kanaCount)   \
+                        が\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount)   \
+                        しゃ\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount)   \
+                        じゃ\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount)
+                        """
+                    case .katakana:
+                        """
+                        カ\(selectedBase.kanaCount)/\(base.kanaCount)   \
+                        ガ\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount)   \
+                        シャ\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount)   \
+                        ジャ\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount)   \
+                        新\(selectedNew.kanaCount)/\(new.kanaCount)
+                        """
+                    }
+                    
+                    KanaTrainingButtonView(onLevelUpsTapped: onLevelUpsTapped, onAllInARowTapped: onAllInARowTapped)
+                    Text(selectedCountText)
+                        .font(.footnote)
                 }
             }
-            
+            .onChange(of: trainingMode, { _,_ in
+                selectedNew.removeAll()
+            })
+
             .navigationTitle("Kana training")
             .toolbar {
-                Button(displayAsKana ? "ア↔A" : "A↔ア") { withAnimation { displayAsKana.toggle()} }
+                let switchToRomajiText = switch trainingMode {
+                case .hiragana:
+                    displayAsKana ? "あ↔A" : "A↔あ"
+                case .katakana:
+                    displayAsKana ? "ア↔A" : "A↔ア"
+                }
+                Button(switchToRomajiText) { withAnimation { displayAsKana.toggle()} }
                 Button("Fast select") { showsFastSelect.toggle() }
                     .popover (isPresented: $showsFastSelect) {
                         VStack(alignment: .leading) {
@@ -255,116 +366,143 @@ struct Train: View {
                                 onToggle: toggleEverythingSelection
                             )
                             KanaToolbarButton(
-                                title: "Base katakana",
-                                isOn: hasSelectedAllBaseKatakana,
-                                onToggle: toggleSelectBaseKatakana
+                                title: "Base \(trainingMode.rawValue)",
+                                isOn: hasSelectedAllBase,
+                                onToggle: toggleSelectBase
                             )
                             KanaToolbarButton(
                                 title: "Diacritics",
-                                isOn: hasSelectedAllDiacriticKatakana,
-                                onToggle: toggleSelectDiacriticKatakana
+                                isOn: hasSelectedAllDiacritic,
+                                onToggle: toggleSelectDiacritic
                             )
                             KanaToolbarButton(
                                 title: "Combinatory",
-                                isOn: hasSelectedAllCombinatoryKatakana,
-                                onToggle: toggleSelectCombinatoryKatakana
+                                isOn: hasSelectedAllCombinatory,
+                                onToggle: toggleSelectCombinatory
                             )
                             KanaToolbarButton(
                                 title: "Combinatory diacritics",
-                                isOn: hasSelectedAllCombinatoryDiacriticKatakana,
-                                onToggle: toggleSelectCombinatoryDiacriticKatakana
+                                isOn: hasSelectedAllCombinatoryDiacritic,
+                                onToggle: toggleSelectCombinatoryDiacritic
                             )
-                            KanaToolbarButton(
-                                title: "New cases",
-                                isOn: hasSelectedAllNewKatakana,
-                                onToggle: toggleSelectNewKatakana
-                            )
+                            if case .katakana = trainingMode {
+                                KanaToolbarButton(
+                                    title: "New cases",
+                                    isOn: hasSelectedAllNew,
+                                    onToggle: toggleSelectNew
+                                )
+                            }
                         }
                         .padding()
                         .presentationCompactAdaptation(.popover)
                     }
             }
+            .navigationDestination(for: Destination.self) { destination in
+                switch destination {
+                case let .levelUps(kanas):
+                    LevelUpsTrainingView(kanas: kanas)
+                case let .allInARow(kanas):
+                    AllInARowTrainingView(kanas: kanas)
+                }
+            }
+            
         }
+        .animation(.easeInOut, value: trainingMode)
+    }
+    
+    var mergedKanas: [String] {
+        let unionedSet = selectedBase
+            .union(selectedDiacritic)
+            .union(selectedCombinatory)
+            .union(selectedCombinatoryDiacritic)
+            .union(selectedNew)
+        
+        return unionedSet.map(\.kanas).joined().compactMap {$0}
+    }
+    
+    func onLevelUpsTapped() {
+        let tenRandomFirstKanas = Array(mergedKanas.shuffled().prefix(10))
+        destinations.append(.levelUps(tenRandomFirstKanas))
+    }
+    
+    func onAllInARowTapped() {
+        destinations.append(.allInARow(mergedKanas))
     }
     
     var hasSelectedEverything: Bool {
-        hasSelectedAllBaseKatakana &&
-        hasSelectedAllDiacriticKatakana &&
-        hasSelectedAllCombinatoryKatakana &&
-        hasSelectedAllCombinatoryDiacriticKatakana &&
-        hasSelectedAllNewKatakana
+        let newIfNeeded = trainingMode == .katakana ? hasSelectedAllNew : true
+        
+        return hasSelectedAllBase &&
+        hasSelectedAllDiacritic &&
+        hasSelectedAllCombinatory &&
+        hasSelectedAllCombinatoryDiacritic &&
+        newIfNeeded
     }
     
     func toggleEverythingSelection() {
         withAnimation {
             if hasSelectedEverything {
-                selectedBaseKatakana.removeAll()
-                selectedDiacriticKatakana.removeAll()
-                selectedCombinatoryKatakana.removeAll()
-                selectedCombinatoryDiacriticKatakana.removeAll()
-                selectedNewKatakana.removeAll()
+                selectedBase.removeAll()
+                selectedDiacritic.removeAll()
+                selectedCombinatory.removeAll()
+                selectedCombinatoryDiacritic.removeAll()
+                if trainingMode == .katakana {
+                    selectedNew.removeAll()
+                }
             } else {
-                selectedBaseKatakana.formUnion(baseKatakana)
-                selectedDiacriticKatakana.formUnion(diacriticKatakana)
-                selectedCombinatoryKatakana.formUnion(combinatoryKatakana)
-                selectedCombinatoryDiacriticKatakana.formUnion(combinatoryDiacriticKatakana)
-                selectedNewKatakana.formUnion(newKatakana)
+                selectedBase.formUnion(base)
+                selectedDiacritic.formUnion(diacritic)
+                selectedCombinatory.formUnion(combinatory)
+                selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic)
+                if trainingMode == .katakana {
+                    selectedNew.formUnion(new)
+                }
             }
         }
     }
     
-    var hasSelectedAllBaseKatakana: Bool {
-        selectedBaseKatakana.count == baseKatakana.count
-    }
+    var hasSelectedAllBase: Bool { selectedBase.count == base.count }
+    var hasSelectedAllDiacritic: Bool {selectedDiacritic.count == diacritic.count}
+    var hasSelectedAllCombinatory: Bool {selectedCombinatory.count == combinatory.count}
+    var hasSelectedAllCombinatoryDiacritic: Bool {selectedCombinatoryDiacritic.count == combinatoryDiacritic.count}
+    var hasSelectedAllNew: Bool {selectedNew.count == new.count}
     
-    func toggleSelectBaseKatakana() {
+    func toggleSelectBase() {
         withAnimation {
-            if hasSelectedAllBaseKatakana { selectedBaseKatakana.removeAll() }
-            else { selectedBaseKatakana.formUnion(baseKatakana) }
+            if hasSelectedAllBase { selectedBase.removeAll() }
+            else { selectedBase.formUnion(base) }
         }
     }
     
-    var hasSelectedAllDiacriticKatakana: Bool {
-        selectedDiacriticKatakana.count == diacriticKatakana.count
-    }
     
-    func toggleSelectDiacriticKatakana() {
+    func toggleSelectDiacritic() {
         withAnimation {
-            if hasSelectedAllDiacriticKatakana { selectedDiacriticKatakana.removeAll() }
-            else { selectedDiacriticKatakana.formUnion(diacriticKatakana) }
+            if hasSelectedAllDiacritic { selectedDiacritic.removeAll() }
+            else { selectedDiacritic.formUnion(diacritic) }
         }
     }
     
-    var hasSelectedAllCombinatoryKatakana: Bool {
-        selectedCombinatoryKatakana.count == combinatoryKatakana.count
-    }
     
-    func toggleSelectCombinatoryKatakana() {
+    func toggleSelectCombinatory() {
         withAnimation {
-            if hasSelectedAllCombinatoryKatakana { selectedCombinatoryKatakana.removeAll() }
-            else { selectedCombinatoryKatakana.formUnion(combinatoryKatakana) }
+            if hasSelectedAllCombinatory { selectedCombinatory.removeAll() }
+            else { selectedCombinatory.formUnion(combinatory) }
         }
     }
     
-    var hasSelectedAllCombinatoryDiacriticKatakana: Bool {
-        selectedCombinatoryDiacriticKatakana.count == combinatoryDiacriticKatakana.count
-    }
     
-    func toggleSelectCombinatoryDiacriticKatakana() {
+    func toggleSelectCombinatoryDiacritic() {
         withAnimation {
-            if hasSelectedAllCombinatoryDiacriticKatakana { selectedCombinatoryDiacriticKatakana.removeAll() }
-            else { selectedCombinatoryDiacriticKatakana.formUnion(combinatoryDiacriticKatakana) }
+            if hasSelectedAllCombinatoryDiacritic { selectedCombinatoryDiacritic.removeAll() }
+            else { selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic) }
         }
     }
     
-    var hasSelectedAllNewKatakana: Bool {
-        selectedNewKatakana.count == newKatakana.count
-    }
     
-    func toggleSelectNewKatakana() {
+    func toggleSelectNew() {
         withAnimation {
-            if hasSelectedAllNewKatakana { selectedNewKatakana.removeAll() }
-            else { selectedNewKatakana.formUnion(newKatakana) }
+            if hasSelectedAllNew { selectedNew.removeAll() }
+            else { selectedNew.formUnion(new) }
         }
     }
 }
@@ -391,34 +529,37 @@ struct KanaToolbarButton: View {
 struct KanaTrainingButtonView: View {
     @State var showLevelUpInfo: Bool = false
     @State var showAllInARowInfo: Bool = false
+    let onLevelUpsTapped: () -> Void
+    let onAllInARowTapped: () -> Void
+    
     var body: some View {
         VStack {
             ZStack {
                 HStack(spacing: 20) {
-                    Button("Level ups") { }.buttonStyle(.glassProminent)
+                    Button("Level ups") { onLevelUpsTapped() }.buttonStyle(.glassProminent)
                         .popover(isPresented: $showLevelUpInfo, arrowEdge: .bottom) {
                             VStack(alignment: .leading) {
                                 Text("Level ups")
                                     .font(.headline)
                                 Text("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.")
                             }
-                                .fixedSize(horizontal: false, vertical: true)
-                                .presentationCompactAdaptation(.popover)
-                                .padding()
-                                .padding(.vertical, 20)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .presentationCompactAdaptation(.popover)
+                            .padding()
+                            .padding(.vertical, 20)
                         }
                     
-                    Button("All in a row") { }.buttonStyle(.glassProminent)
+                    Button("All in a row") { onAllInARowTapped() }.buttonStyle(.glassProminent)
                         .popover(isPresented: $showAllInARowInfo, arrowEdge: .bottom) {
                             VStack(alignment: .leading) {
                                 Text("All in a row")
                                     .font(.headline)
                                 Text("Try to get all selected kanas right in a row !")
                             }
-                                .fixedSize(horizontal: false, vertical: true)
-                                .presentationCompactAdaptation(.popover)
-                                .padding()
-                                .padding(.vertical, 20)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .presentationCompactAdaptation(.popover)
+                            .padding()
+                            .padding(.vertical, 20)
                         }
                 }
                 HStack {
