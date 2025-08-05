@@ -13,36 +13,37 @@ public struct ContentView: View {
     public init() {}
     
     public var body: some View {
-        TabView(selection: $selectedTab) {
-            Tab(
-                "Dictionnary",
-                systemImage: "character.book.closed.fill",
-                value: .dictionnary
-            ) {
-                DictionnaryView()
-            }
-            Tab(
-                "Tests",
-                systemImage: "testtube.2",
-                value: .testing
-            ) {
-                Train()
-            }
-            Tab(
-                "Study",
-                systemImage: "book.pages",
-                value: .study
-            ) {
-                StudyView()
-            }
-            Tab(
-                "Stats",
-                systemImage: "chart.pie",
-                value: .stats
-            ) {
-                Text("Settings")
-            }
-        }
+        Train()
+//        TabView(selection: $selectedTab) {
+//            Tab(
+//                "Dictionnary",
+//                systemImage: "character.book.closed.fill",
+//                value: .dictionnary
+//            ) {
+//                DictionnaryView()
+//            }
+//            Tab(
+//                "Tests",
+//                systemImage: "testtube.2",
+//                value: .testing
+//            ) {
+//                Train()
+//            }
+//            Tab(
+//                "Study",
+//                systemImage: "book.pages",
+//                value: .study
+//            ) {
+//                StudyView()
+//            }
+//            Tab(
+//                "Stats",
+//                systemImage: "chart.pie",
+//                value: .stats
+//            ) {
+//                Text("Settings")
+//            }
+//        }
     }
 }
 

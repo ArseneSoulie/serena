@@ -2,25 +2,21 @@ import SwiftUI
 
 enum TileSize {
     case small
+    case medium
     case largeEntry
     
     var font: Font {
         switch self {
-        case .small: .body
-        case .largeEntry: .largeTitle
-        }
-    }
-    
-    var isBold: Bool {
-        switch self {
-        case .small: false
-        case .largeEntry: false
+        case .small: .system(.body, design: .rounded)
+        case .medium: .system(.title2, design: .rounded)
+        case .largeEntry: .system(.largeTitle, design: .rounded)
         }
     }
     
     var paddings: CGFloat {
         switch self {
         case .small: 2
+        case .medium: 8
         case .largeEntry: 8
         }
     }
@@ -28,6 +24,7 @@ enum TileSize {
     var cornerRadius: CGFloat {
         switch self {
         case .small: 2
+        case .medium: 4
         case .largeEntry: 4
         }
     }
@@ -35,6 +32,7 @@ enum TileSize {
     var pressOffset: CGFloat {
         switch self {
         case .small: 2
+        case .medium: 4
         case .largeEntry: 5
         }
     }
@@ -51,7 +49,7 @@ enum TileKind {
         case .radical: .blue
         case .kanji: .pink
         case .vocabulary: .purple
-        case .kana: .mint
+        case .kana: .cyan
         }
     }
     
@@ -77,7 +75,6 @@ struct TileButtonStyle: ButtonStyle {
         let tileColor = isTileDisabled ? Color.gray : tileKind.color
         
         configuration.label
-            .bold(tileSize.isBold)
             .font(tileSize.font)
             .foregroundStyle(tileKind.foregroundColor)
             .padding(.all, tileSize.paddings)

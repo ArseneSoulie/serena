@@ -5,6 +5,10 @@
 //  Created by A S on 01/08/2025.
 //
 
+#if canImport(AppKit)
+import AppKit
+#endif
+
 struct KanaLine: Identifiable, Hashable {
     let name: String
     let kanas: [KanaText?]
@@ -101,13 +105,7 @@ struct Line: View {
                         let displayedText = if !displayAsKana {
                             kana ?? "a"
                         } else {
-                            switch trainingMode {
-                            case .hiragana:
-                                kana?.romajiToKatakana.asHiragana ?? "あ"
-                            case .katakana:
-                                kana?.romajiToKatakana ?? "ア"
-                            }
-                            
+                            kana?.format(for: trainingMode) ?? "ア"
                         }
                         Text(displayedText)
                             .font(.title2)
@@ -240,20 +238,10 @@ enum KanaTrainingMode: String, CaseIterable, Hashable {
     case katakana
 }
 
-struct AllInARowTrainingView: View {
-    let kanas: [String]
-    var body: some View {
-        Text("Hello, world!")
-    }
-}
 
 
-struct LevelUpsTrainingView: View {
-    let kanas: [String]
-    var body: some View {
-        Text("Hello, world!")
-    }
-}
+
+
 
 struct Train: View {
     @State var selectedBase: Set<KanaLine> = []
@@ -271,8 +259,13 @@ struct Train: View {
     init() {
         setupMetal()
     }
+    #if os(iOS)
+    let bgColor = Color(uiColor: .systemBackground)
+    #elseif os(macOS)
+    let bgColor = Color(NSColor.controlBackgroundColor)
     
-    @State var height = UIScreen.main.bounds.height
+    #endif
+//    @State var height = UIScreen.main.bounds.height
     
     var body: some View {
         NavigationStack(path: $destinations) {
@@ -309,9 +302,9 @@ struct Train: View {
             .overlay {
                 Rectangle()
                     .fill( Gradient(stops: [
-                        .init(color: Color(.systemBackground).opacity(0), location: 0.8),
-                        .init(color: Color(.systemBackground).opacity(0.2), location: 0.88),
-                        .init(color: Color(.systemBackground), location: 0.93),
+                        .init(color: bgColor.opacity(0), location: 0.8),
+                        .init(color: bgColor.opacity(0.2), location: 0.88),
+                        .init(color: bgColor, location: 0.93),
                     ]))
                     .ignoresSafeArea(edges: .bottom)
                     .allowsHitTesting(false)
@@ -320,27 +313,10 @@ struct Train: View {
             .environment(\.displayAsKana, displayAsKana)
             .environment(\.trainingMode, trainingMode)
             .overlay(alignment: .bottom) {
-                VStack {
-                    let selectedCountText = switch trainingMode {
-                    case .hiragana:
-                        """
-                        か\(selectedBase.kanaCount)/\(base.kanaCount)   \
-                        が\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount)   \
-                        しゃ\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount)   \
-                        じゃ\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount)
-                        """
-                    case .katakana:
-                        """
-                        カ\(selectedBase.kanaCount)/\(base.kanaCount)   \
-                        ガ\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount)   \
-                        シャ\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount)   \
-                        ジャ\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount)   \
-                        新\(selectedNew.kanaCount)/\(new.kanaCount)
-                        """
-                    }
-                    
+                VStack(spacing: 4) {
                     KanaTrainingButtonView(onLevelUpsTapped: onLevelUpsTapped, onAllInARowTapped: onAllInARowTapped)
-                    Text(selectedCountText)
+                        .disabled(!hasAnySelected)
+                    Text(textForSelectedKanas)
                         .font(.footnote)
                 }
             }
@@ -365,6 +341,7 @@ struct Train: View {
                                 isOn: hasSelectedEverything,
                                 onToggle: toggleEverythingSelection
                             )
+                            Divider()
                             KanaToolbarButton(
                                 title: "Base \(trainingMode.rawValue)",
                                 isOn: hasSelectedAllBase,
@@ -400,7 +377,7 @@ struct Train: View {
             .navigationDestination(for: Destination.self) { destination in
                 switch destination {
                 case let .levelUps(kanas):
-                    LevelUpsTrainingView(kanas: kanas)
+                    LevelUpsTrainingView(kanas: kanas, trainingMode: trainingMode)
                 case let .allInARow(kanas):
                     AllInARowTrainingView(kanas: kanas)
                 }
@@ -408,6 +385,23 @@ struct Train: View {
             
         }
         .animation(.easeInOut, value: trainingMode)
+    }
+    
+    var textForSelectedKanas: String {
+        let baseCount: String = "ka".format(for: trainingMode) + "\(selectedBase.kanaCount)/\(base.kanaCount) "
+        let diacriticCount = "ga".format(for: trainingMode) + "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount) "
+        let combinatoryCount = "sha".format(for: trainingMode) + "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount) "
+        let combinatoryDiacriticCount = "ja".format(for: trainingMode) + "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount) "
+        let newCount = "新\(selectedNew.kanaCount)/\(new.kanaCount)"
+        
+        var selectedCountText: String = ""
+        
+        if !selectedBase.isEmpty { selectedCountText.append(baseCount) }
+        if !selectedDiacritic.isEmpty { selectedCountText.append(diacriticCount)}
+        if !selectedCombinatory.isEmpty { selectedCountText.append(combinatoryCount)}
+        if !selectedCombinatoryDiacritic.isEmpty { selectedCountText.append(combinatoryDiacriticCount)}
+        if !selectedNew.isEmpty { selectedCountText.append(newCount)}
+        return selectedCountText
     }
     
     var mergedKanas: [String] {
@@ -421,12 +415,19 @@ struct Train: View {
     }
     
     func onLevelUpsTapped() {
-        let tenRandomFirstKanas = Array(mergedKanas.shuffled().prefix(10))
-        destinations.append(.levelUps(tenRandomFirstKanas))
+        destinations.append(.levelUps(mergedKanas))
     }
     
     func onAllInARowTapped() {
         destinations.append(.allInARow(mergedKanas))
+    }
+    
+    var hasAnySelected: Bool {
+        !selectedBase.isEmpty
+        || !selectedDiacritic.isEmpty
+        || !selectedCombinatory.isEmpty
+        || !selectedCombinatoryDiacritic.isEmpty
+        || !selectedNew.isEmpty
     }
     
     var hasSelectedEverything: Bool {
@@ -507,6 +508,15 @@ struct Train: View {
     }
 }
 
+extension String {
+    func format(for trainingMode: KanaTrainingMode) -> String {
+        switch trainingMode {
+        case .hiragana: self.romajiToKatakana.asHiragana
+        case .katakana: self.romajiToKatakana
+        }
+    }
+}
+
 struct KanaToolbarButton: View {
     let title: String
     let isOn: Bool
@@ -536,7 +546,7 @@ struct KanaTrainingButtonView: View {
         VStack {
             ZStack {
                 HStack(spacing: 20) {
-                    Button("Level ups") { onLevelUpsTapped() }.buttonStyle(.glassProminent)
+                    Button("Level ups") { onLevelUpsTapped() }.buttonStyle(.borderedProminent)
                         .popover(isPresented: $showLevelUpInfo, arrowEdge: .bottom) {
                             VStack(alignment: .leading) {
                                 Text("Level ups")
@@ -549,7 +559,7 @@ struct KanaTrainingButtonView: View {
                             .padding(.vertical, 20)
                         }
                     
-                    Button("All in a row") { onAllInARowTapped() }.buttonStyle(.glassProminent)
+                    Button("All in a row") { onAllInARowTapped() }.buttonStyle(.borderedProminent)
                         .popover(isPresented: $showAllInARowInfo, arrowEdge: .bottom) {
                             VStack(alignment: .leading) {
                                 Text("All in a row")
@@ -565,7 +575,7 @@ struct KanaTrainingButtonView: View {
                 HStack {
                     Spacer()
                     Button(action: { showLevelUpInfo = true }, label: { Image(systemName: "questionmark.circle")})
-                        .buttonStyle(.glass)
+                        .buttonStyle(.plain)
                         .padding(.horizontal)
                 }
             }
