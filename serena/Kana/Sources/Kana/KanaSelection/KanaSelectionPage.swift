@@ -55,7 +55,7 @@ public struct KanaSelectionPage: View {
                         KanaLineGroupView(title: "【新】\(localized(.newCases))", lines: new, selectedLines: $selectedNew)
                     }
                     Spacer()
-                        .frame(height: 80)
+                        .frame(height: 160)
                 }
             }
             .overlay(alignment: .bottom) {
