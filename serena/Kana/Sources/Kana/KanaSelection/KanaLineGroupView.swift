@@ -24,7 +24,6 @@ struct KanaLineGroupView: View {
                         Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
                     }
                         .tint(hasSelectedAll ? .mint : .gray)
-                        .buttonSizing(.fitted)
                         .buttonStyle(.bordered)
                     Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)").font(.subheadline)
                 }

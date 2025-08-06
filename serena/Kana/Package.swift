@@ -6,7 +6,7 @@ let package = Package(
     name: "Kana",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v15), .iOS(.v26)
+        .iOS(.v17)
     ],
     products: [
         .library(
@@ -29,7 +29,6 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-//                .process("Resources/Localizable./*xcstrings*/")
             ]
         ),
         

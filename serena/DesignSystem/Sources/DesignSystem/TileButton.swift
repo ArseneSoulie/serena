@@ -75,11 +75,11 @@ public struct TileButtonStyle: ButtonStyle {
             .padding(.all, tileSize.paddings)
             .background {
                 RoundedRectangle(cornerRadius: tileSize.cornerRadius)
-                    .fill(tileColor.mix(with: .black, by: configuration.isPressed ? 0.1 : 0).gradient)
+                    .fill(tileColor.gradient)
             }
             .offset(x: 0, y: configuration.isPressed ? tileSize.pressOffset : 0)
             .background {
-                tileColor.mix(with: .black, by: 0.2)
+                tileColor.brightness(-0.2)
                     .clipShape(RoundedRectangle(cornerRadius: tileSize.cornerRadius))
                     .offset(x: 0, y: tileSize.pressOffset)
             }
