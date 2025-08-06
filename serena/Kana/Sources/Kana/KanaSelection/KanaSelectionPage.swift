@@ -13,7 +13,7 @@ public struct KanaSelectionPage: View {
     
     @State var displayAsKana: Bool = true
     
-    @State var kanaType: KanaType = .katakana
+    @State var kanaType: KanaType = .hiragana
     
     @State var showLevelUpPopover: Bool = false
     @State var showAllInARowPopover: Bool = false

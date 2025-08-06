@@ -58,32 +58,35 @@ struct WriteAnswerPage: View {
     }
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text(title)
-            ProgressView(progress: $progress)
-            Text(writingExerciceType.prompt)
-            Text(truth.format(kanaType))
-                .font(.system(.largeTitle, design: .rounded))
-                .padding()
-                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-            
-            Spacer()
-            
-            TextEditor(text: $inputText)
-                .onSubmit(onSubmit)
-                .autocorrectionDisabled(true)
-                .multilineTextAlignment(.center)
-                .textInputAutocapitalization(kanaType.autoCapitalization)
-                .textEditorStyle(.plain)
-                .font(.largeTitle)
-                .focused($isFocused)
-                .padding()
-            
+        ScrollView {
+            VStack(spacing: 10) {
+                ProgressView(progress: $progress)
+                Text(writingExerciceType.prompt)
+                Text(truth.format(kanaType))
+                    .font(.system(.largeTitle, design: .rounded))
+                    .padding()
+                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                
+                Spacer()
+                
+                TextEditor(text: $inputText)
+                    .onSubmit(onSubmit)
+                    .autocorrectionDisabled(true)
+                    .multilineTextAlignment(.center)
+                    .textInputAutocapitalization(kanaType.autoCapitalization)
+                    .textEditorStyle(.plain)
+                    .font(.largeTitle)
+                    .focused($isFocused)
+                    .padding()
+                
+            }
         }
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
+        .navigationTitle(title)
+        .navigationBarTitleDisplayMode(.inline)
         .toast(isPresented: $showToast, message: localized("Level up !"))
     }
     

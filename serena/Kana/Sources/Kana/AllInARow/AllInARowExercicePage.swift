@@ -34,30 +34,33 @@ struct AllInARowExercicePage: View {
     }
     
     var body: some View {
-        VStack(spacing: 20) {
-            Text(.allInARow)
-            ProgressView(progress: $progress)
-            Text(.writeTheWritingOfAllKanasInARow)
-            Text(truth.format(kanaType))
-                .foregroundStyle(truthColor)
-                .modifier(ShakeEffect(animatableData: shakeTrigger))
-                .font(.system(.largeTitle, design: .rounded))
-                .padding()
-                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-            
-            Spacer()
-            
-            TextEditor(text: $inputText)
-                .onSubmit(onSubmit)
-                .autocorrectionDisabled(true)
-                .multilineTextAlignment(.center)
-                .textInputAutocapitalization(kanaType.autoCapitalization)
-                .textEditorStyle(.plain)
-                .font(.largeTitle)
-                .focused($isFocused)
-                .padding()
-            
+        ScrollView {
+            VStack(spacing: 10) {
+                ProgressView(progress: $progress)
+                Text(.writeTheWritingOfAllKanasInARow)
+                Text(truth.format(kanaType))
+                    .foregroundStyle(truthColor)
+                    .modifier(ShakeEffect(animatableData: shakeTrigger))
+                    .font(.system(.largeTitle, design: .rounded))
+                    .padding()
+                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                
+                Spacer()
+                
+                TextEditor(text: $inputText)
+                    .onSubmit(onSubmit)
+                    .autocorrectionDisabled(true)
+                    .multilineTextAlignment(.center)
+                    .textInputAutocapitalization(kanaType.autoCapitalization)
+                    .textEditorStyle(.plain)
+                    .font(.largeTitle)
+                    .focused($isFocused)
+                    .padding()
+                
+            }            
         }
+        .navigationTitle(.allInARow)
+        .navigationBarTitleDisplayMode(.inline)
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }

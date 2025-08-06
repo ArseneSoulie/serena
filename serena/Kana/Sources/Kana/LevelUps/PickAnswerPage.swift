@@ -63,7 +63,6 @@ struct PickAnswerPage: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text(title)
             ProgressView(progress: $progress)
             Text(pickingExerciceType.prompt)
             Text(formattedTruth)
@@ -83,8 +82,10 @@ struct PickAnswerPage: View {
                     .buttonStyle(.borderedProminent)
                 }
             }.disabled(disableButtons)
+            .padding()
             .transaction { $0.disablesAnimations = true}
         }
+        .navigationTitle(title)
         .toast(isPresented: $showToast, message: localized(.levelUp))
     }
     

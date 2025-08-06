@@ -73,7 +73,7 @@ struct CompletedAllInARowPage: View {
                     .padding()
                 Button(.goBackToSelection, action: onGoBackTapped)
                     .buttonStyle(.borderless)
-            }
+            }.padding()
             if isPerfect {
                 ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width/2, y: 0))
             }
