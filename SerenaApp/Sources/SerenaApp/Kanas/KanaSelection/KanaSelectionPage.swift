@@ -1,0 +1,291 @@
+import SwiftUI
+
+struct KanaSelectionPage: View {
+    @Environment(NavigationCoordinator.self) private var coordinator
+    
+    @State var selectedBase: Set<KanaLine> = []
+    @State var selectedDiacritic: Set<KanaLine> = []
+    @State var selectedCombinatory: Set<KanaLine> = []
+    @State var selectedCombinatoryDiacritic: Set<KanaLine> = []
+    @State var selectedNew: Set<KanaLine> = []
+    
+    @State var displayAsKana: Bool = true
+    
+    @State var kanaType: KanaType = .katakana
+    
+    var body: some View {
+        NavigationStack(path: coordinator.binding(for: \.path)) {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    Text("Select the rows you want to train on and pick a mode below.")
+                        .font(.subheadline)
+                        .padding()
+                    Picker("Training mode", selection: $kanaType) {
+                        ForEach (KanaType.allCases, id: \.self) {
+                            Text("\($0.rawValue) 【\($0.letter)】")
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    
+                    KanaLineGroupView(
+                        title: "【\("ka".format(kanaType))】Base \(kanaType.rawValue)",
+                        lines: base, selectedLines: $selectedBase,
+                        isExpanded: true
+                    )
+                    KanaLineGroupView(
+                        title: "【\("ga".format(kanaType))】Diacritics (dakuten/handakuten)",
+                        lines: diacritic, selectedLines: $selectedDiacritic,
+                    )
+                    KanaLineGroupView(title: "【\("sha".format(kanaType))】Combinatory",
+                        lines: combinatory, selectedLines: $selectedCombinatory,
+                    )
+                    KanaLineGroupView(
+                        title: "【\("ja".format(kanaType))】Combinatory diacritics",
+                        lines: combinatoryDiacritic, selectedLines: $selectedCombinatoryDiacritic,
+                    )
+                    if case .katakana = kanaType {
+                        KanaLineGroupView(title: "【新】New cases", lines: new, selectedLines: $selectedNew)
+                    }
+                    Spacer()
+                        .frame(height: 80)
+                }
+            }
+            .overlay(alignment: .bottom) {
+                BottomViews(
+                    kanaType: $kanaType,
+                    textForSelectedKanas: textForSelectedKanas,
+                    onLevelUpsTapped: onLevelUpsTapped,
+                    onAllInARowTapped: onAllInARowTapped,
+                    areTrainingModeButtonDisabled: !hasAnySelected
+                )
+            }
+            .toolbar {
+                ToolbarViews(
+                    displayAsKana: $displayAsKana,
+                    kanaType: kanaType,
+                    selectedBase: $selectedBase,
+                    selectedDiacritic: $selectedDiacritic,
+                    selectedCombinatory: $selectedCombinatory,
+                    selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
+                    selectedNew: $selectedNew
+                )
+            }
+            .navigationDestination(for: Destination.self) { destination in
+                switch destination {
+                case let .levelUps(kanas):
+                    EmptyView()
+//                    LevelUpsTrainingView(kanas: kanas, kanaType: kanaType)
+                case let .allInARow(kanas):
+                    AllInARowView(kanas: kanas, kanaType: kanaType)
+                }
+            }
+            .onChange(of: kanaType, { _,_ in selectedNew.removeAll() })
+            .navigationTitle("Kana training")
+            .environment(\.kanaDisplayType, kanaDisplayType)
+        }
+        .animation(.easeInOut, value: kanaType)
+    }
+    
+    var kanaDisplayType: KanaDisplayType {
+        switch (displayAsKana, kanaType) {
+        case (true , .hiragana): .asHiragana
+        case (true , .katakana): .asKatakana
+        case (false , .hiragana): .asLowercasedRomaji
+        case (false , .katakana): . asUppercasedRomaji
+        }
+    }
+    
+    var textForSelectedKanas: String {
+        let baseCount: String = "ka".format(kanaType) + "\(selectedBase.kanaCount)/\(base.kanaCount) "
+        let diacriticCount = "ga".format(kanaType) + "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount) "
+        let combinatoryCount = "sha".format(kanaType) + "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount) "
+        let combinatoryDiacriticCount = "ja".format(kanaType) + "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount) "
+        let newCount = "新\(selectedNew.kanaCount)/\(new.kanaCount)"
+        
+        var selectedCountText: String = ""
+        
+        if !selectedBase.isEmpty { selectedCountText.append(baseCount) }
+        if !selectedDiacritic.isEmpty { selectedCountText.append(diacriticCount)}
+        if !selectedCombinatory.isEmpty { selectedCountText.append(combinatoryCount)}
+        if !selectedCombinatoryDiacritic.isEmpty { selectedCountText.append(combinatoryDiacriticCount)}
+        if !selectedNew.isEmpty { selectedCountText.append(newCount)}
+        return selectedCountText
+    }
+    
+    var mergedKanas: [String] {
+        let unionedSet = selectedBase
+            .union(selectedDiacritic)
+            .union(selectedCombinatory)
+            .union(selectedCombinatoryDiacritic)
+            .union(selectedNew)
+        
+        return unionedSet.map(\.kanas).joined().compactMap {$0}
+    }
+    
+    func onLevelUpsTapped() {
+        coordinator.push(.levelUps(mergedKanas))
+    }
+    
+    func onAllInARowTapped() {
+        coordinator.push(.allInARow(mergedKanas))
+    }
+    
+    var hasAnySelected: Bool {
+        !selectedBase.isEmpty
+        || !selectedDiacritic.isEmpty
+        || !selectedCombinatory.isEmpty
+        || !selectedCombinatoryDiacritic.isEmpty
+        || !selectedNew.isEmpty
+    }
+}
+
+struct ToolbarViews: View {
+    @State var showsFastSelect: Bool = false
+    
+    @Binding var displayAsKana: Bool
+    let kanaType: KanaType
+    
+    @Binding var selectedBase: Set<KanaLine>
+    @Binding var selectedDiacritic: Set<KanaLine>
+    @Binding var selectedCombinatory: Set<KanaLine>
+    @Binding var selectedCombinatoryDiacritic: Set<KanaLine>
+    @Binding var selectedNew: Set<KanaLine>
+    
+    var body: some View {
+        let swapDisplayModeText: String = if displayAsKana {
+            "\(kanaType.letter)↔\(kanaType.romajiLetter)"
+        } else {
+            "\(kanaType.romajiLetter)↔\(kanaType.letter)"
+        }
+        
+        Button(swapDisplayModeText) { withAnimation { displayAsKana.toggle()} }
+        Button("Fast select") { showsFastSelect.toggle() }
+            .popover (isPresented: $showsFastSelect) {
+                FastSelectPopoverView(
+                    kanaType: kanaType,
+                    selectedBase: $selectedBase,
+                    selectedDiacritic: $selectedDiacritic,
+                    selectedCombinatory: $selectedCombinatory,
+                    selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
+                    selectedNew: $selectedNew
+                )
+            }
+    }
+}
+
+struct BottomViews: View {
+    @Binding var kanaType: KanaType
+    
+    let textForSelectedKanas: String
+    
+    let onLevelUpsTapped: () -> Void
+    let onAllInARowTapped: () -> Void
+    let areTrainingModeButtonDisabled: Bool
+    
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            BottomGradient()
+            VStack(spacing: 4) {
+                KanaTrainingButtonView(
+                    onLevelUpsTapped: onLevelUpsTapped,
+                    onAllInARowTapped: onAllInARowTapped,
+                    isDisabled: areTrainingModeButtonDisabled,
+                    kanaType: $kanaType
+                )
+                Text(textForSelectedKanas)
+                    .font(.footnote)
+            }
+        }
+    }
+}
+
+struct KanaTrainingButtonView: View {
+    let onLevelUpsTapped: () -> Void
+    let onAllInARowTapped: () -> Void
+    let isDisabled: Bool
+    
+    @State var showLevelUpPopover: Bool = false
+    @State var showAllInARowPopover: Bool = false
+    @Binding var kanaType: KanaType
+    
+    var body: some View {
+            ZStack {
+                HStack(spacing: 20) {
+                    TrainingButtonView(
+                        title: "Level ups",
+                        popoverHelpText: "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.",
+                        onButtonTapped: onLevelUpsTapped,
+                        isPopoverPresented: $showLevelUpPopover
+                    )
+                    TrainingButtonView(
+                        title: "All in a row",
+                        popoverHelpText: "Try to get all selected kanas right in a row !",
+                        onButtonTapped: onAllInARowTapped,
+                        isPopoverPresented: $showAllInARowPopover
+                    )
+                }
+                .disabled(isDisabled)
+                HStack {
+                    Spacer()
+                    Button(
+                        action: { showLevelUpPopover = true },
+                        label: { Image(systemName: "questionmark.circle")}
+                    )
+                        .buttonStyle(.bordered)
+                }
+                
+                HStack {
+                    Picker("Training mode", selection: $kanaType) {
+                        ForEach (KanaType.allCases, id: \.self) { Text($0.letter) }
+                    }
+                    .pickerStyle(.segmented)
+                    .fixedSize()
+                    Spacer()
+                }
+            }
+        .onChange(of: showLevelUpPopover) { oldValue, newValue in
+            if oldValue && !newValue {
+                showAllInARowPopover = true
+            }
+        }
+        .padding(.horizontal)
+    }
+}
+
+struct TrainingButtonView: View {
+    let title: String
+    let popoverHelpText: String
+    
+    let onButtonTapped: () -> Void
+    @Binding var isPopoverPresented: Bool
+    
+    var body: some View {
+        Button(title) { onButtonTapped() }.buttonStyle(.borderedProminent)
+            .popover(isPresented: $isPopoverPresented, arrowEdge: .bottom) {
+                VStack(alignment: .leading) {
+                    Text(title)
+                        .font(.headline)
+                    Text(popoverHelpText)
+                }
+                .fixedSize(horizontal: false, vertical: true)
+                .presentationCompactAdaptation(.popover)
+                .padding()
+                .padding(.vertical, 20)
+            }
+    }
+}
+
+
+struct BottomGradient: View {
+    var body: some View {
+        Rectangle()
+            .fill( Gradient(stops: [
+                .init(color: Color.bgColor.opacity(0), location: 0.8),
+                .init(color: Color.bgColor.opacity(0.2), location: 0.85),
+                .init(color: Color.bgColor, location: 0.9),
+            ]))
+            .ignoresSafeArea(edges: .bottom)
+            .allowsHitTesting(false)
+    }
+}

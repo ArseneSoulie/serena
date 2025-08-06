@@ -6,9 +6,9 @@
 //
 import SwiftUI
 
-struct AllInARowTrainingView: View {
-    @Environment(\.trainingMode) var trainingMode
+struct AllInARowView: View {
     let kanas: [String]
+    let kanaType: KanaType
     
     
     @State var textColor: Color = .primary
@@ -39,9 +39,9 @@ struct AllInARowTrainingView: View {
 }
 
 #Preview {
-    AllInARowTrainingView(kanas: [
+    AllInARowView(kanas: [
         "a", "yo", "ka", "gya"
-    ])
+    ], kanaType: .hiragana)
 }
 
 
