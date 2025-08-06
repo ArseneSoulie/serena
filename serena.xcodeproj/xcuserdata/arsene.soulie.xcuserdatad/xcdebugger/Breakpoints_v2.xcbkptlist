@@ -30,8 +30,8 @@
             filePath = "SerenaApp/Sources/SerenaApp/Kanas/LevelUps/LevelUpsPage.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "restart()"
             landmarkType = "7">
          </BreakpointContent>

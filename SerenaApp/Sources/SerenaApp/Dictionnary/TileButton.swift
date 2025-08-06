@@ -43,6 +43,7 @@ enum TileKind {
     case kanji
     case vocabulary
     case kana
+    case custom(Color)
     
     var color: Color {
         switch self {
@@ -50,13 +51,7 @@ enum TileKind {
         case .kanji: .pink
         case .vocabulary: .purple
         case .kana: .cyan
-        }
-    }
-    
-    var foregroundColor: Color {
-        switch self {
-        case .radical, .kanji, .vocabulary: .white
-        case .kana: .white
+        case let .custom(color): color
         }
     }
 }
@@ -76,7 +71,7 @@ struct TileButtonStyle: ButtonStyle {
         
         configuration.label
             .font(tileSize.font)
-            .foregroundStyle(tileKind.foregroundColor)
+            .foregroundStyle(.white)
             .padding(.all, tileSize.paddings)
             .background {
                 RoundedRectangle(cornerRadius: tileSize.cornerRadius)

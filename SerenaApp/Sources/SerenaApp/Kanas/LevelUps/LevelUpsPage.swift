@@ -23,12 +23,14 @@ struct LevelUpsPage: View {
     }
     
     func onLevelCompleted() {
-        switch level {
-        case .level1: level = .level2
-        case .level2: level = .level3
-        case .level3: level = .level4
-        case .level4: level = .completed
-        case .completed: break
+        withAnimation {
+            switch level {
+            case .level1: level = .level2
+            case .level2: level = .level3
+            case .level3: level = .level4
+            case .level4: level = .completed
+            case .completed: break
+            }
         }
     }
     
@@ -68,19 +70,21 @@ struct LevelUpsPage: View {
                     onLevelCompleted: onLevelCompleted
                 )
             case .completed:
-                CompletedPage(
+                CompletedLevelUpsPage(
                     onTryAgainTapped: restart,
                     onAllInARowTapped: onAllInARowTapped,
                     onGoBackTapped: onGoBackTapped
                 )
             }
         }
-//        .overlay(alignment: .top) { confettiView.ignoresSafeArea().offset(y: -100) }
+        //        .overlay(alignment: .top) { confettiView.ignoresSafeArea().offset(y: -100) }
     }
     
     func restart() {
-        level = .level1
-        kanaPool = Array(allKanas.shuffled().prefix(10))
+        withAnimation {
+            level = .level1
+            kanaPool = Array(allKanas.shuffled().prefix(10))
+        }
     }
     
     func onAllInARowTapped() {
@@ -88,6 +92,6 @@ struct LevelUpsPage: View {
     }
     
     func onGoBackTapped() {
-        coordinator.pop()
+        coordinator.popToRoot()
     }
 }

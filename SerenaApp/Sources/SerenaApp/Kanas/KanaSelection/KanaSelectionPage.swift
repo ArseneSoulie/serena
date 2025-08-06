@@ -76,7 +76,7 @@ struct KanaSelectionPage: View {
                 case let .levelUps(kanas):
                     LevelUpsPage(kanas: kanas, kanaType: kanaType)
                 case let .allInARow(kanas):
-                    AllInARowView(kanas: kanas, kanaType: kanaType)
+                    AllInARowPage(kanas: kanas, kanaType: kanaType)
                 }
             }
             .onChange(of: kanaType, { _,_ in selectedNew.removeAll() })

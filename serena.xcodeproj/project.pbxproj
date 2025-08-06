@@ -18,14 +18,6 @@
 		03FF82292E37DF6E00EFA200 /* SerenaApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SerenaApp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		031C36802E411C9900F25BDB /* Effects */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Effects;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
-
 /* Begin PBXFrameworksBuildPhase section */
 		03BC51662E311EEB0081F67B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -44,7 +36,6 @@
 				033194E82E37DEB200F037C3 /* KanjiVGParser */,
 				03FF82292E37DF6E00EFA200 /* SerenaApp */,
 				03EA9D252E37DA2900EC6EBC /* Main.swift */,
-				031C36802E411C9900F25BDB /* Effects */,
 				03BC516A2E311EEB0081F67B /* Products */,
 			);
 			sourceTree = "<group>";

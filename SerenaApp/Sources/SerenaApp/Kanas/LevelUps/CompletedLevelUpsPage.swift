@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CompletedPage: View {
+struct CompletedLevelUpsPage: View {
     let onTryAgainTapped: () -> Void
     let onAllInARowTapped: () -> Void
     let onGoBackTapped: () -> Void
@@ -19,15 +19,7 @@ struct CompletedPage: View {
             
             Spacer()
             
-            TimelineView(.periodic(from: .now, by: 1)) { context in
-                let date = context.date
-                let seconds = Calendar.current.component(.second, from: date)
-                if seconds % 2 == 0 {
-                    Text("└[∵┌] ヾ(-_- )ゞ [┐∵]┘").font(.title2)
-                } else {
-                    Text("┌[∵└] ノ( -_-)ノ [┘∵]┐").font(.title2)
-                }
-            }
+            DancingKaomojiView()
             HStack {
                 Button("Try again with selection", action: onTryAgainTapped)
                 Button("All in a row", action: onAllInARowTapped)
