@@ -38,23 +38,32 @@ struct CompletedAllInARowPage: View {
     var body: some View {
         ZStack {
             VStack {
-                Text(.completed)
-                    .font(.headline)
-                    .padding()
-                Text(completionText)
-                    .font(.subheadline)
-                let columns = [GridItem(.adaptive(minimum: 50))]
-                
-                LazyVGrid(columns: columns) {
-                    ForEach(tiles) {
-                        Button($0.kanaText) {}
-                            .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .custom($0.completionState.color)))
+                ScrollView {
+                    VStack {
+                        Text(.completed)
+                            .font(.headline)
+                            .padding()
+                        Text(completionText)
+                            .font(.subheadline)
+                        let columns = [GridItem(.adaptive(minimum: 50))]
+                        
+                        LazyVGrid(columns: columns) {
+                            ForEach(tiles) {
+                                Button($0.kanaText) {}
+                                    .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .custom($0.completionState.color)))
+                            }
+                        }.padding()
+                            .background {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .fill(Color(white: 0.91))
+                            }
+                            .padding()
+                        
+                        if isPerfect {
+                            DancingKaomojiView()
+                        }
+                        Spacer()
                     }
-                }.padding()
-                
-                Spacer()
-                if isPerfect {
-                    DancingKaomojiView()
                 }
                 
                 HStack {

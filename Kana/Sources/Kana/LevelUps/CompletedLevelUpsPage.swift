@@ -8,19 +8,17 @@ struct CompletedLevelUpsPage: View {
     var body: some View {
         ZStack {
             VStack {
-                Spacer()
-                
                 Text(.completed)
                     .font(.headline)
+                Spacer()
                 Image(systemName: "party.popper")
                     .resizable()
                     .frame(width: 80, height: 80)
                     .padding()
-                Text("おめでとう").font(.title2)
+                DancingKaomojiView()
                 
                 Spacer()
                 
-                DancingKaomojiView()
                 HStack {
                     Button(.tryAgainWithSelection, action: onTryAgainTapped)
                     Button(.allInARow, action: onAllInARowTapped)

@@ -23,11 +23,11 @@
       },
       "shouldTranslate" : false
     },
-    "┌[∵└] ノ( -_-)ノ [┘∵]┐" : {
-      "shouldTranslate" : false
+    "┌[∵└]   ノ( -_-)ノ   [┘∵]┐" : {
+
     },
-    "└[∵┌] ヾ(-_- )ゞ [┐∵]┘" : {
-      "shouldTranslate" : false
+    "└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘" : {
+
     },
     "All" : {
       "extractionState" : "manual",
@@ -216,6 +216,23 @@
         }
       }
     },
+    "Mode" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mode"
+          }
+        }
+      }
+    },
     "New cases" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -299,7 +316,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Testez vos connaissances sur 10 kanas choisis aléatoirement parmi la sélection, par paliers avec une difficulté croissante."
+            "value" : "Testez vos connaissances sur 10 kanas choisis aléatoirement parmi la sélection avec une difficulté croissante."
           }
         }
       }
@@ -369,9 +386,6 @@
           }
         }
       }
-    },
-    "おめでとう" : {
-      "shouldTranslate" : false
     }
   },
   "version" : "1.1"

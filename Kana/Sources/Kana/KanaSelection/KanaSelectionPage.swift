@@ -15,6 +15,9 @@ public struct KanaSelectionPage: View {
     
     @State var kanaType: KanaType = .katakana
     
+    @State var showLevelUpPopover: Bool = false
+    @State var showAllInARowPopover: Bool = false
+    
     public init() {}
     
     public var body: some View {
@@ -36,7 +39,6 @@ public struct KanaSelectionPage: View {
                     KanaLineGroupView(
                         title: "【\("ka".format(kanaType))】\(localized(.base)) \(kanaType.rawValue)",
                         lines: base, selectedLines: $selectedBase,
-                        isExpanded: true
                     )
                     KanaLineGroupView(
                         title: "【\("ga".format(kanaType))】\(localized(.diacritics)) (dakuten/handakuten)",
@@ -59,6 +61,8 @@ public struct KanaSelectionPage: View {
             .overlay(alignment: .bottom) {
                 BottomViews(
                     kanaType: $kanaType,
+                    showLevelUpPopover: $showLevelUpPopover,
+                    showAllInARowPopover: $showAllInARowPopover,
                     textForSelectedKanas: textForSelectedKanas,
                     onLevelUpsTapped: onLevelUpsTapped,
                     onAllInARowTapped: onAllInARowTapped,
@@ -68,6 +72,7 @@ public struct KanaSelectionPage: View {
             .toolbar {
                 ToolbarViews(
                     displayAsKana: $displayAsKana,
+                    showLevelUpPopover: $showLevelUpPopover,
                     kanaType: kanaType,
                     selectedBase: $selectedBase,
                     selectedDiacritic: $selectedDiacritic,
@@ -85,6 +90,11 @@ public struct KanaSelectionPage: View {
                 }
             }
             .onChange(of: kanaType, { _,_ in selectedNew.removeAll() })
+            .onChange(of: showLevelUpPopover) { oldValue, newValue in
+                if oldValue && !newValue {
+                    showAllInARowPopover = true
+                }
+            }
             .navigationTitle(.kanaTraining)
             .environment(\.kanaDisplayType, kanaDisplayType)
         }
@@ -148,6 +158,7 @@ struct ToolbarViews: View {
     @State var showsFastSelect: Bool = false
     
     @Binding var displayAsKana: Bool
+    @Binding var showLevelUpPopover: Bool
     let kanaType: KanaType
     
     @Binding var selectedBase: Set<KanaLine>
@@ -175,11 +186,18 @@ struct ToolbarViews: View {
                     selectedNew: $selectedNew
                 )
             }
+        Button(
+            action: { showLevelUpPopover = true },
+            label: { Image(systemName: "questionmark.circle")}
+        )
     }
 }
 
 struct BottomViews: View {
     @Binding var kanaType: KanaType
+    
+    @Binding var showLevelUpPopover: Bool
+    @Binding var showAllInARowPopover: Bool
     
     let textForSelectedKanas: String
     
@@ -190,70 +208,39 @@ struct BottomViews: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             BottomGradient()
-            VStack(spacing: 4) {
-                KanaTrainingButtonView(
-                    onLevelUpsTapped: onLevelUpsTapped,
-                    onAllInARowTapped: onAllInARowTapped,
-                    isDisabled: areTrainingModeButtonDisabled,
-                    kanaType: $kanaType
-                )
+            VStack(spacing: 8) {
+                ZStack {
+                    HStack(spacing: 20) {
+                        TrainingButtonView(
+                            title: localized(.levelUps),
+                            popoverHelpText: localized(.testYourKnowledgeOn10RandomKanasChosenFromTheSelectionWithIncreasingDifficulty),
+                            onButtonTapped: onLevelUpsTapped,
+                            isPopoverPresented: $showLevelUpPopover
+                        )
+                        TrainingButtonView(
+                            title: localized(.allInARow),
+                            popoverHelpText: localized(.tryToGetAllSelectedKanasRightInARow),
+                            onButtonTapped: onAllInARowTapped,
+                            isPopoverPresented: $showAllInARowPopover
+                        )
+                    }
+                    .disabled(areTrainingModeButtonDisabled)
+
+                    HStack {
+                        Text(.mode)
+                        Spacer()
+                        Picker(.trainingMode, selection: $kanaType) {
+                            ForEach (KanaType.allCases, id: \.self) { Text($0.letter) }
+                        }
+                        .pickerStyle(.segmented)
+                        .fixedSize()
+                    }
+                }
+            .padding(.horizontal)
                 Text(textForSelectedKanas)
                     .font(.footnote)
             }
         }
-    }
-}
-
-struct KanaTrainingButtonView: View {
-    let onLevelUpsTapped: () -> Void
-    let onAllInARowTapped: () -> Void
-    let isDisabled: Bool
-    
-    @State var showLevelUpPopover: Bool = false
-    @State var showAllInARowPopover: Bool = false
-    @Binding var kanaType: KanaType
-    
-    var body: some View {
-            ZStack {
-                HStack(spacing: 20) {
-                    TrainingButtonView(
-                        title: localized(.levelUps),
-                        popoverHelpText: localized(.testYourKnowledgeOn10RandomKanasChosenFromTheSelectionWithIncreasingDifficulty),
-                        onButtonTapped: onLevelUpsTapped,
-                        isPopoverPresented: $showLevelUpPopover
-                    )
-                    TrainingButtonView(
-                        title: localized(.allInARow),
-                        popoverHelpText: localized(.tryToGetAllSelectedKanasRightInARow),
-                        onButtonTapped: onAllInARowTapped,
-                        isPopoverPresented: $showAllInARowPopover
-                    )
-                }
-                .disabled(isDisabled)
-                HStack {
-                    Spacer()
-                    Button(
-                        action: { showLevelUpPopover = true },
-                        label: { Image(systemName: "questionmark.circle")}
-                    )
-                        .buttonStyle(.bordered)
-                }
-                
-                HStack {
-                    Picker(.trainingMode, selection: $kanaType) {
-                        ForEach (KanaType.allCases, id: \.self) { Text($0.letter) }
-                    }
-                    .pickerStyle(.segmented)
-                    .fixedSize()
-                    Spacer()
-                }
-            }
-        .onChange(of: showLevelUpPopover) { oldValue, newValue in
-            if oldValue && !newValue {
-                showAllInARowPopover = true
-            }
-        }
-        .padding(.horizontal)
     }
 }
 
