@@ -10,10 +10,13 @@ enum Tabs: String, CaseIterable {
 public struct ContentView: View {
     @State var selectedTab: Tabs = .dictionnary
     
+    var coordinator = NavigationCoordinator()
+    
     public init() {}
     
     public var body: some View {
         Train()
+            .environment(coordinator)
 //        TabView(selection: $selectedTab) {
 //            Tab(
 //                "Dictionnary",

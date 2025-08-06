@@ -1,30 +1,22 @@
 import Foundation
 
 extension String {
-    var asKatakana: String {
-        self.applyingTransform(.hiraganaToKatakana, reverse: false) ?? self
-    }
-    
-    var asHiragana: String {
-        self.applyingTransform(.hiraganaToKatakana, reverse: true) ?? self
-    }
-    
-    var asLatin: String {
-        self.applyingTransform(.latinToKatakana, reverse: true) ?? self
-    }
-    
-    var latinToKatakana: String {
-        self.applyingTransform(.latinToKatakana, reverse: false) ?? self
-    }
-    
-    var latinToHiragana: String {
-        latinToKatakana.asHiragana
-    }
-}
-
-extension String {
     var romajiToKatakana: String {
-        romajiToKatakana2(self)
+        romajiToKatakanaTransform(self)
+    }
+    
+    var romajiToHiragana: String {
+        romajiToKatakana.applyingTransform(.hiraganaToKatakana, reverse: true) ?? self
+    }
+    
+    var hiraganaToRomaji: String {
+        self.applyingTransform(.latinToHiragana, reverse: true)?.lowercased() ?? self
+            
+    }
+    
+    //this will interpret any glyph as katakana
+    var katakanaToRomaji: String {
+        self.applyingTransform(.hiraganaToKatakana, reverse: true)?.applyingTransform(.latinToHiragana, reverse: true)?.uppercased() ?? self
     }
 }
 
@@ -106,7 +98,7 @@ let romajiToKatakanaMap: [String: String] = [
     "dwa": "ドァ", "dwi": "ドィ", "dwu": "ドゥ", "dwe": "ドェ", "dwo": "ドォ",
 ]
 
-func romajiToKatakana2(_ input: String) -> String {
+func romajiToKatakanaTransform(_ input: String) -> String {
     let lower = input.lowercased()
     var output = ""
     var index = lower.startIndex

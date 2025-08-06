@@ -102,11 +102,7 @@ struct Line: View {
             Button(action: { withAnimation {isOn.toggle()}} ) {
                 HStack(spacing: spacing) {
                     ForEach(kanaLine.kanas, id: \.kanaId) { kana in
-                        let displayedText = if !displayAsKana {
-                            kana ?? "a"
-                        } else {
-                            kana?.format(for: trainingMode) ?? "ア"
-                        }
+                        let displayedText = (kana ?? trainingMode.letter).format(for: trainingMode, asRomaji: !displayAsKana)
                         Text(displayedText)
                             .font(.title2)
                             .padding(.all, 6)
@@ -159,7 +155,7 @@ struct LineGroup: View {
     let title: String
     let lines: [KanaLine]
     @Binding var selectedRows: Set<KanaLine>
-
+    
     @State var isExpanded: Bool = true
     
     var body: some View {
@@ -172,8 +168,12 @@ struct LineGroup: View {
                 }.padding(.vertical, 8)
             } label: {
                 HStack {
-                    Button("", systemImage: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle") { toggleSelectBase()}
+                    Button(action: toggleSelectBase) {
+                        Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
+                    }
                         .tint(hasSelectedAll ? .mint : .gray)
+                        .buttonSizing(.fitted)
+                        .buttonStyle(.bordered)
                     Text("\(title) \(selectedRows.kanaCount)/\(lines.kanaCount)").font(.subheadline)
                 }
             }
@@ -228,22 +228,29 @@ extension View {
     }
 }
 
-enum Destination: Hashable {
-    case levelUps([String])
-    case allInARow([String])
-}
-
 enum KanaTrainingMode: String, CaseIterable, Hashable {
-    case hiragana
-    case katakana
+    case hiragana = "Hiragana"
+    case katakana = "Katakana"
+    
+    var letter: String {
+        switch self {
+        case .hiragana: "あ"
+        case .katakana: "ア"
+        }
+    }
+    
+    var romajiLetter: String {
+        switch self {
+        case .hiragana: "a"
+        case .katakana: "A"
+        }
+    }
 }
-
-
-
-
-
 
 struct Train: View {
+    @Environment(NavigationCoordinator.self) private var coordinator
+    
+    
     @State var selectedBase: Set<KanaLine> = []
     @State var selectedDiacritic: Set<KanaLine> = []
     @State var selectedCombinatory: Set<KanaLine> = []
@@ -254,45 +261,42 @@ struct Train: View {
     @State var displayAsKana: Bool = true
     @State var trainingMode: KanaTrainingMode = .katakana
     
-    @State private var destinations: [Destination] = []
-    
     init() {
         setupMetal()
     }
-    #if os(iOS)
+#if os(iOS)
     let bgColor = Color(uiColor: .systemBackground)
-    #elseif os(macOS)
+#elseif os(macOS)
     let bgColor = Color(NSColor.controlBackgroundColor)
     
-    #endif
-//    @State var height = UIScreen.main.bounds.height
+#endif
     
     var body: some View {
-        NavigationStack(path: $destinations) {
+        NavigationStack(path: coordinator.binding(for: \.path)) {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text("Select the rows you want to train on and pick a mode below.")
                         .font(.subheadline)
                         .padding()
-                    Picker(selection: $trainingMode) {
+                    Picker("Training mode", selection: $trainingMode) {
                         ForEach (KanaTrainingMode.allCases, id: \.self) {
-                            Text($0.rawValue.capitalized)
+                            Text("\($0.rawValue) 【\($0.letter)】")
                         }
-                    } label: {
-                        Text("Training mode")
-                    }.pickerStyle(.segmented).padding()
-                        
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
                     
-                    LineGroup(title: "Base \(trainingMode.rawValue)", lines: base, selectedRows: $selectedBase, isExpanded: true)
+                    
+                    LineGroup(title: "【\("ka".format(for: trainingMode))】Base \(trainingMode.rawValue)", lines: base, selectedRows: $selectedBase, isExpanded: true)
                         .tint(selectedBase.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "Diacritics (dakuten/handakuten)", lines: diacritic, selectedRows: $selectedDiacritic, isExpanded: false)
+                    LineGroup(title: "【\("ga".format(for: trainingMode))】Diacritics (dakuten/handakuten)", lines: diacritic, selectedRows: $selectedDiacritic, isExpanded: false)
                         .tint(selectedDiacritic.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "Combinatory", lines: combinatory, selectedRows: $selectedCombinatory, isExpanded: false)
+                    LineGroup(title: "【\("sha".format(for: trainingMode))】Combinatory", lines: combinatory, selectedRows: $selectedCombinatory, isExpanded: false)
                         .tint(selectedCombinatory.isEmpty ? .secondary : .mint)
-                    LineGroup(title: "Combinatory diacritics", lines: combinatoryDiacritic, selectedRows: $selectedCombinatoryDiacritic, isExpanded: false)
+                    LineGroup(title: "【\("ja".format(for: trainingMode))】Combinatory diacritics", lines: combinatoryDiacritic, selectedRows: $selectedCombinatoryDiacritic, isExpanded: false)
                         .tint(selectedCombinatoryDiacritic.isEmpty ? .secondary : .mint)
                     if case .katakana = trainingMode {
-                        LineGroup(title: "New cases", lines: new, selectedRows: $selectedNew, isExpanded: false)
+                        LineGroup(title: "【新】New cases", lines: new, selectedRows: $selectedNew, isExpanded: false)
                             .tint(selectedNew.isEmpty ? .secondary : .mint)
                     }
                     Spacer()
@@ -303,8 +307,8 @@ struct Train: View {
                 Rectangle()
                     .fill( Gradient(stops: [
                         .init(color: bgColor.opacity(0), location: 0.8),
-                        .init(color: bgColor.opacity(0.2), location: 0.88),
-                        .init(color: bgColor, location: 0.93),
+                        .init(color: bgColor.opacity(0.2), location: 0.85),
+                        .init(color: bgColor, location: 0.9),
                     ]))
                     .ignoresSafeArea(edges: .bottom)
                     .allowsHitTesting(false)
@@ -314,8 +318,7 @@ struct Train: View {
             .environment(\.trainingMode, trainingMode)
             .overlay(alignment: .bottom) {
                 VStack(spacing: 4) {
-                    KanaTrainingButtonView(onLevelUpsTapped: onLevelUpsTapped, onAllInARowTapped: onAllInARowTapped)
-                        .disabled(!hasAnySelected)
+                    KanaTrainingButtonView(onLevelUpsTapped: onLevelUpsTapped, onAllInARowTapped: onAllInARowTapped, isDisabled: !hasAnySelected, trainingMode: $trainingMode)
                     Text(textForSelectedKanas)
                         .font(.footnote)
                 }
@@ -323,16 +326,11 @@ struct Train: View {
             .onChange(of: trainingMode, { _,_ in
                 selectedNew.removeAll()
             })
-
+            
             .navigationTitle("Kana training")
             .toolbar {
-                let switchToRomajiText = switch trainingMode {
-                case .hiragana:
-                    displayAsKana ? "あ↔A" : "A↔あ"
-                case .katakana:
-                    displayAsKana ? "ア↔A" : "A↔ア"
-                }
-                Button(switchToRomajiText) { withAnimation { displayAsKana.toggle()} }
+                let swapText = displayAsKana ? "\(trainingMode.letter)↔\(trainingMode.romajiLetter)" : "\(trainingMode.romajiLetter)↔\(trainingMode.letter)"
+                Button(swapText) { withAnimation { displayAsKana.toggle()} }
                 Button("Fast select") { showsFastSelect.toggle() }
                     .popover (isPresented: $showsFastSelect) {
                         VStack(alignment: .leading) {
@@ -343,28 +341,28 @@ struct Train: View {
                             )
                             Divider()
                             KanaToolbarButton(
-                                title: "Base \(trainingMode.rawValue)",
+                                title: "【\("ka".format(for: trainingMode))】Base \(trainingMode.rawValue)",
                                 isOn: hasSelectedAllBase,
                                 onToggle: toggleSelectBase
                             )
                             KanaToolbarButton(
-                                title: "Diacritics",
+                                title: "【\("ga".format(for: trainingMode))】Diacritics",
                                 isOn: hasSelectedAllDiacritic,
                                 onToggle: toggleSelectDiacritic
                             )
                             KanaToolbarButton(
-                                title: "Combinatory",
+                                title: "【\("sha".format(for: trainingMode))】Combinatory",
                                 isOn: hasSelectedAllCombinatory,
                                 onToggle: toggleSelectCombinatory
                             )
                             KanaToolbarButton(
-                                title: "Combinatory diacritics",
+                                title: "【\("ja".format(for: trainingMode))】Combinatory diacritics",
                                 isOn: hasSelectedAllCombinatoryDiacritic,
                                 onToggle: toggleSelectCombinatoryDiacritic
                             )
                             if case .katakana = trainingMode {
                                 KanaToolbarButton(
-                                    title: "New cases",
+                                    title: "【新】New cases",
                                     isOn: hasSelectedAllNew,
                                     onToggle: toggleSelectNew
                                 )
@@ -415,11 +413,11 @@ struct Train: View {
     }
     
     func onLevelUpsTapped() {
-        destinations.append(.levelUps(mergedKanas))
+        coordinator.push(.levelUps(mergedKanas))
     }
     
     func onAllInARowTapped() {
-        destinations.append(.allInARow(mergedKanas))
+        coordinator.push(.allInARow(mergedKanas))
     }
     
     var hasAnySelected: Bool {
@@ -509,10 +507,17 @@ struct Train: View {
 }
 
 extension String {
-    func format(for trainingMode: KanaTrainingMode) -> String {
-        switch trainingMode {
-        case .hiragana: self.romajiToKatakana.asHiragana
-        case .katakana: self.romajiToKatakana
+    func format(for trainingMode: KanaTrainingMode, asRomaji: Bool = false) -> String {
+        if asRomaji {
+            switch trainingMode {
+            case .hiragana: self.hiraganaToRomaji
+            case .katakana: self.katakanaToRomaji
+            }
+        } else {
+            switch trainingMode {
+            case .hiragana: self.romajiToHiragana
+            case .katakana: self.romajiToKatakana
+            }
         }
     }
 }
@@ -541,6 +546,8 @@ struct KanaTrainingButtonView: View {
     @State var showAllInARowInfo: Bool = false
     let onLevelUpsTapped: () -> Void
     let onAllInARowTapped: () -> Void
+    let isDisabled: Bool
+    @Binding var trainingMode: KanaTrainingMode
     
     var body: some View {
         VStack {
@@ -572,11 +579,24 @@ struct KanaTrainingButtonView: View {
                             .padding(.vertical, 20)
                         }
                 }
+                .disabled(isDisabled)
                 HStack {
                     Spacer()
                     Button(action: { showLevelUpInfo = true }, label: { Image(systemName: "questionmark.circle")})
-                        .buttonStyle(.plain)
+                        .buttonStyle(.bordered)
                         .padding(.horizontal)
+                }
+                
+                HStack {
+                    Picker("Training mode", selection: $trainingMode) {
+                        ForEach (KanaTrainingMode.allCases, id: \.self) {
+                            Text($0.letter)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding()
+                    .fixedSize()
+                    Spacer()
                 }
             }
         }.onChange(of: showLevelUpInfo) { oldValue, newValue in

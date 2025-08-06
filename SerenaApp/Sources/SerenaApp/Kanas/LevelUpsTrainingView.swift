@@ -8,13 +8,19 @@
 import SwiftUI
 
 struct LevelUpsTrainingView: View {
+    @Environment(NavigationCoordinator.self) private var coordinator
+    
+    @State private var showConfetti = true
+    
     let allKanas: [String]
     @State var kanas: [String]
     let trainingMode: KanaTrainingMode
-    @State var level: TrainingLevel = .level3
+    @State var level: TrainingLevel = .level1
     @State var progress: Double = 0
     @State var truth: String
     @State var options: [String]
+    
+    let confettiView = ConfettiView()
     
     init(kanas: [String], trainingMode: KanaTrainingMode) {
         self.allKanas = kanas
@@ -27,36 +33,43 @@ struct LevelUpsTrainingView: View {
     }
     
     var body: some View {
-        switch level {
-        case .level1, .level2:
-            ChooseTrainingView(
-                trainingMode: trainingMode,
-                progress: $progress,
-                truth: truth,
-                options: options,
-                trainingLevel: level,
-                onAnwserSubmitted: onAnwserSubmitted
-            )
-        case .level3, .level4:
-            WriteTrainingView(
-                trainingMode: trainingMode,
-                progress: $progress,
-                truth: truth,
-                trainingLevel: level,
-                onAnwserSubmitted: onAnwserSubmitted
-            )
-        case .completed:
-            CompletedView(
-                totalKanasCount: allKanas.count,
-                onTryAgainTapped: {
-                    kanas = Array(allKanas.shuffled().prefix(10))
-                    level = .level1
-                    nextSimpleStep()
-                },
-                onAllInARowTapped: {},
-                onGoBackTapped: {}
-            )
+        Group {
+            switch level {
+            case .level1, .level2:
+                ChooseTrainingView(
+                    trainingMode: trainingMode,
+                    progress: $progress,
+                    truth: truth,
+                    options: options,
+                    trainingLevel: level,
+                    onAnwserSubmitted: onAnwserSubmitted
+                )
+            case .level3, .level4:
+                WriteTrainingView(
+                    trainingMode: trainingMode,
+                    progress: $progress,
+                    truth: truth,
+                    trainingLevel: level,
+                    onAnwserSubmitted: onAnwserSubmitted
+                )
+            case .completed:
+                CompletedView(
+                    totalKanasCount: allKanas.count,
+                    onTryAgainTapped: {
+                        kanas = Array(allKanas.shuffled().prefix(10))
+                        level = .level1
+                        nextSimpleStep()
+                    },
+                    onAllInARowTapped: {
+                        coordinator.push(.allInARow(allKanas))
+                    },
+                    onGoBackTapped: {
+                        coordinator.popToRoot()
+                    }
+                )
+            }
         }
+        .overlay(alignment: .top) { confettiView.ignoresSafeArea().offset(y: -100) }
     }
     
     func nextSimpleStep() {
@@ -76,13 +89,14 @@ struct LevelUpsTrainingView: View {
             progress += success ? percent : -percent
             progress = min(max(progress, 0), 1)
         }
-        if progress >= 1 {
+        if progress >= 0.99 {
             goToNextLevel()
         }
         nextSimpleStep()
     }
     
     func goToNextLevel() {
+        confettiView.showConfetti()
         progress = 0
         switch level {
         case .level1:
@@ -120,10 +134,10 @@ struct CompletedView: View {
                         }
                 HStack {
                     Button("Try again with selection", action: onTryAgainTapped)
-                    Button("All in a row", action: onTryAgainTapped)
+                    Button("All in a row", action: onAllInARowTapped)
                 }.buttonStyle(.borderedProminent)
                     .padding()
-                Button("Go back to selection", action: onTryAgainTapped)
+                Button("Go back to selection", action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }
     }
@@ -165,7 +179,7 @@ struct ProgressView: View {
                 }
             }
             .frame(height: barHeight)
-            Text(progress.formatted(.percent))
+            Text(progress.formatted(.percent.rounded(increment: 1)))
         }
         .onChange(of: progress, { oldValue, newValue in
             if oldValue < newValue {
@@ -250,7 +264,7 @@ struct WriteTrainingView: View {
             Text(trainingLevel.rawValue)
             ProgressView(progress: $progress)
             trainingLevel.prompt
-            Text(trainingMode == .hiragana ? truth.latinToHiragana : truth.latinToKatakana)
+            Text(truth.format(for: trainingMode))
                 .font(.system(.largeTitle, design: .rounded))
                 .padding()
                 .overlay(content: {
@@ -275,8 +289,8 @@ struct WriteTrainingView: View {
     
     func onSubmit() {
         let cleanedText = text.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let convertedTruth = trainingMode == .hiragana ? truth.latinToHiragana : truth.latinToKatakana
-        let convertedText = trainingMode == .hiragana ? cleanedText.latinToHiragana : cleanedText.latinToKatakana
+        let convertedTruth = truth.format(for: trainingMode)
+        let convertedText = cleanedText.format(for: trainingMode)
         
         let isCorrect = convertedTruth == convertedText
         text = ""
@@ -334,13 +348,13 @@ struct ChooseTrainingView: View {
         switch kind {
         case .question:
             if case .level1 = trainingLevel {
-                trainingMode == .hiragana ? string.latinToHiragana : string.latinToKatakana
+                string.format(for: trainingMode)
             } else {
                 string
             }
         case .options:
             if case .level2 = trainingLevel {
-                trainingMode == .hiragana ? string.latinToHiragana : string.latinToKatakana
+                string.format(for: trainingMode)
             } else {
                 string
             }

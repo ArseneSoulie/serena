@@ -9,6 +9,6 @@ struct OnyomiTextView: View {
     }
     
     var body: some View {
-        Text(useKatakanaForOnyomi ? text.asKatakana : text.asHiragana)
+        Text(useKatakanaForOnyomi ? text.romajiToKatakana : text.romajiToHiragana)
     }
 }
