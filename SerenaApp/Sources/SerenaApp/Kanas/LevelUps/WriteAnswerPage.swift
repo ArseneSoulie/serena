@@ -36,6 +36,8 @@ struct WriteAnswerPage: View {
     @State var inputText: String = ""
     @FocusState var isFocused: Bool
     
+    @State private var showToast = false
+    
     init(
         title: String,
         kanaType: KanaType,
@@ -82,6 +84,7 @@ struct WriteAnswerPage: View {
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
+        .toast(isPresented: $showToast, message: "Level up !")
     }
     
     func nextRound() {
@@ -106,13 +109,23 @@ struct WriteAnswerPage: View {
         inputText = ""
         
         let isCorrect = convertedTruth == convertedText
+        var nextProgress = isCorrect ? progress + answerCompletionPercent : progress - answerCompletionPercent
+        nextProgress = min(max(nextProgress, 0), 1)
+        
+        let isLevelCompleted = nextProgress >= 0.99
+        
+        if !isLevelCompleted {
+            nextRound()
+        } else {
+            withAnimation {
+                showToast = true
+            }
+        }
         
         withAnimation {
-            progress += isCorrect ? answerCompletionPercent : -answerCompletionPercent
-            progress = min(max(progress, 0), 1)
-            nextRound()
+            progress = nextProgress
         } completion: {
-            if progress >= 0.99 {
+            if isLevelCompleted {
                 onLevelCompleted()
             }
         }

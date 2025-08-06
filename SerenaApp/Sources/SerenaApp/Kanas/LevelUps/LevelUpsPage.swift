@@ -35,49 +35,46 @@ struct LevelUpsPage: View {
     }
     
     var body: some View {
-        ZStack {
-            switch level {
-            case .level1:
-                PickAnswerPage(
-                    title: "Level 1",
-                    pickingExerciceType: .pickRomaji,
-                    kanaType: kanaType,
-                    kanaPool: kanaPool,
-                    onLevelCompleted: onLevelCompleted
-                )
-            case .level2:
-                PickAnswerPage(
-                    title: "Level 2",
-                    pickingExerciceType: .pickKana,
-                    kanaType: kanaType,
-                    kanaPool: kanaPool,
-                    onLevelCompleted: onLevelCompleted
-                )
-            case .level3:
-                WriteAnswerPage(
-                    title: "Level 3",
-                    kanaType: kanaType,
-                    writingExerciceType: .single,
-                    kanaPool: kanaPool,
-                    onLevelCompleted: onLevelCompleted
-                )
-            case .level4:
-                WriteAnswerPage(
-                    title: "Level 4",
-                    kanaType: kanaType,
-                    writingExerciceType: .groupOfThree,
-                    kanaPool: kanaPool,
-                    onLevelCompleted: onLevelCompleted
-                )
-            case .completed:
-                CompletedLevelUpsPage(
-                    onTryAgainTapped: restart,
-                    onAllInARowTapped: onAllInARowTapped,
-                    onGoBackTapped: onGoBackTapped
-                )
-            }
+        switch level {
+        case .level1:
+            PickAnswerPage(
+                title: "Level 1",
+                pickingExerciceType: .pickRomaji,
+                kanaType: kanaType,
+                kanaPool: kanaPool,
+                onLevelCompleted: onLevelCompleted
+            )
+        case .level2:
+            PickAnswerPage(
+                title: "Level 2",
+                pickingExerciceType: .pickKana,
+                kanaType: kanaType,
+                kanaPool: kanaPool,
+                onLevelCompleted: onLevelCompleted
+            )
+        case .level3:
+            WriteAnswerPage(
+                title: "Level 3",
+                kanaType: kanaType,
+                writingExerciceType: .single,
+                kanaPool: kanaPool,
+                onLevelCompleted: onLevelCompleted
+            )
+        case .level4:
+            WriteAnswerPage(
+                title: "Level 4",
+                kanaType: kanaType,
+                writingExerciceType: .groupOfThree,
+                kanaPool: kanaPool,
+                onLevelCompleted: onLevelCompleted
+            )
+        case .completed:
+            CompletedLevelUpsPage(
+                onTryAgainTapped: restart,
+                onAllInARowTapped: onAllInARowTapped,
+                onGoBackTapped: onGoBackTapped
+            )
         }
-        //        .overlay(alignment: .top) { confettiView.ignoresSafeArea().offset(y: -100) }
     }
     
     func restart() {

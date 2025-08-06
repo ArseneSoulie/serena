@@ -25,6 +25,8 @@ struct PickAnswerPage: View {
     @State private var guessingOptions: [String]
     @State private var progress: Double = 0
     
+    @State private var showToast = false
+    
     init(
         title: String,
         pickingExerciceType: PickExerciceType,
@@ -81,6 +83,7 @@ struct PickAnswerPage: View {
             }
             .transaction { $0.disablesAnimations = true}
         }
+        .toast(isPresented: $showToast, message: "Level up !")
     }
     
     func nextRound() {
@@ -101,6 +104,10 @@ struct PickAnswerPage: View {
         
         if !isLevelCompleted {
             nextRound()
+        } else {
+            withAnimation {
+                showToast = true
+            }
         }
         
         withAnimation {

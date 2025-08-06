@@ -6,27 +6,30 @@ struct CompletedLevelUpsPage: View {
     let onGoBackTapped: () -> Void
     
     var body: some View {
-        VStack {
-            Spacer()
-            
-            Text("Completed !")
-                .font(.headline)
-            Image(systemName: "party.popper")
-                .resizable()
-                .frame(width: 80, height: 80)
-                .padding()
-            Text("おめでとう").font(.title2)
-            
-            Spacer()
-            
-            DancingKaomojiView()
-            HStack {
-                Button("Try again with selection", action: onTryAgainTapped)
-                Button("All in a row", action: onAllInARowTapped)
-            }.buttonStyle(.borderedProminent)
-                .padding()
-            Button("Go back to selection", action: onGoBackTapped)
-                .buttonStyle(.borderless)
+        ZStack {
+            VStack {
+                Spacer()
+                
+                Text("Completed !")
+                    .font(.headline)
+                Image(systemName: "party.popper")
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .padding()
+                Text("おめでとう").font(.title2)
+                
+                Spacer()
+                
+                DancingKaomojiView()
+                HStack {
+                    Button("Try again with selection", action: onTryAgainTapped)
+                    Button("All in a row", action: onAllInARowTapped)
+                }.buttonStyle(.borderedProminent)
+                    .padding()
+                Button("Go back to selection", action: onGoBackTapped)
+                    .buttonStyle(.borderless)
+            }
+            ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width/2, y: 0))
         }
     }
 }
