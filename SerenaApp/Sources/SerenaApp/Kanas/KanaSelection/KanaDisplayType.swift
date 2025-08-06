@@ -28,4 +28,11 @@ extension String {
         case .katakana: format(.asKatakana)
         }
     }
+    
+    func formatAsRomaji(_ type: KanaType) -> String {
+        switch type {
+        case .hiragana: format(.asLowercasedRomaji)
+        case .katakana: format(.asUppercasedRomaji)
+        }
+    }
 }

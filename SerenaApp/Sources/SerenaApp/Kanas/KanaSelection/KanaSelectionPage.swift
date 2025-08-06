@@ -74,8 +74,7 @@ struct KanaSelectionPage: View {
             .navigationDestination(for: Destination.self) { destination in
                 switch destination {
                 case let .levelUps(kanas):
-                    EmptyView()
-//                    LevelUpsTrainingView(kanas: kanas, kanaType: kanaType)
+                    LevelUpsPage(kanas: kanas, kanaType: kanaType)
                 case let .allInARow(kanas):
                     AllInARowView(kanas: kanas, kanaType: kanaType)
                 }
