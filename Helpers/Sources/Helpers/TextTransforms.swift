@@ -1,6 +1,6 @@
 import Foundation
 
-extension String {
+public extension String {
     var romajiToKatakana: String {
         romajiToKatakanaTransform(self)
     }
@@ -20,7 +20,7 @@ extension String {
     }
 }
 
-let romajiToKatakanaMap: [String: String] = [
+private let romajiToKatakanaMap: [String: String] = [
     // Vowels
     "a": "ア", "i": "イ", "u": "ウ", "e": "エ", "o": "オ",
 
@@ -98,7 +98,7 @@ let romajiToKatakanaMap: [String: String] = [
     "dwa": "ドァ", "dwi": "ドィ", "dwu": "ドゥ", "dwe": "ドェ", "dwo": "ドォ",
 ]
 
-func romajiToKatakanaTransform(_ input: String) -> String {
+private func romajiToKatakanaTransform(_ input: String) -> String {
     let lower = input.lowercased()
     var output = ""
     var index = lower.startIndex

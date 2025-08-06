@@ -1,4 +1,5 @@
 import SwiftUI
+import Navigation
 
 enum Level {
     case level1
@@ -38,7 +39,7 @@ struct LevelUpsPage: View {
         switch level {
         case .level1:
             PickAnswerPage(
-                title: "Level 1",
+                title: "\(localized(.level)) 1",
                 pickingExerciceType: .pickRomaji,
                 kanaType: kanaType,
                 kanaPool: kanaPool,
@@ -46,7 +47,7 @@ struct LevelUpsPage: View {
             )
         case .level2:
             PickAnswerPage(
-                title: "Level 2",
+                title: "\(localized(.level)) 2",
                 pickingExerciceType: .pickKana,
                 kanaType: kanaType,
                 kanaPool: kanaPool,
@@ -54,7 +55,7 @@ struct LevelUpsPage: View {
             )
         case .level3:
             WriteAnswerPage(
-                title: "Level 3",
+                title: "\(localized(.level)) 3",
                 kanaType: kanaType,
                 writingExerciceType: .single,
                 kanaPool: kanaPool,
@@ -62,7 +63,7 @@ struct LevelUpsPage: View {
             )
         case .level4:
             WriteAnswerPage(
-                title: "Level 4",
+                title: "\(localized(.level)) 4",
                 kanaType: kanaType,
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,

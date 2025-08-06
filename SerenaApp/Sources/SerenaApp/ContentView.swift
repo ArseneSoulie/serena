@@ -1,4 +1,6 @@
 import SwiftUI
+import Kana
+import Navigation
 
 enum Tabs: String, CaseIterable {
     case study

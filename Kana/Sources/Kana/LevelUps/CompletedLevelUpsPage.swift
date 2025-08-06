@@ -10,7 +10,7 @@ struct CompletedLevelUpsPage: View {
             VStack {
                 Spacer()
                 
-                Text("Completed !")
+                Text(.completed)
                     .font(.headline)
                 Image(systemName: "party.popper")
                     .resizable()
@@ -22,11 +22,11 @@ struct CompletedLevelUpsPage: View {
                 
                 DancingKaomojiView()
                 HStack {
-                    Button("Try again with selection", action: onTryAgainTapped)
-                    Button("All in a row", action: onAllInARowTapped)
+                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
+                    Button(.allInARow, action: onAllInARowTapped)
                 }.buttonStyle(.borderedProminent)
                     .padding()
-                Button("Go back to selection", action: onGoBackTapped)
+                Button(.goBackToSelection, action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }
             ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width/2, y: 0))

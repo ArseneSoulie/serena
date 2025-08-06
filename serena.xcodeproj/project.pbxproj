@@ -12,8 +12,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		031C36D12E43AFE500F25BDB /* Kana */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Kana; sourceTree = "<group>"; };
+		031C36D22E43B04800F25BDB /* Helpers */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Helpers; sourceTree = "<group>"; };
+		031C36D32E43B16700F25BDB /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
+		031C36D42E43B29000F25BDB /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 		033194E82E37DEB200F037C3 /* KanjiVGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KanjiVGParser; sourceTree = "<group>"; };
 		03BC51692E311EEB0081F67B /* serena.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = serena.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		03C1F41C2E43CC3400029A0D /* serena-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "serena-Info.plist"; sourceTree = "<group>"; };
 		03EA9D252E37DA2900EC6EBC /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		03FF82292E37DF6E00EFA200 /* SerenaApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SerenaApp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -33,6 +38,11 @@
 		03BC51602E311EEB0081F67B = {
 			isa = PBXGroup;
 			children = (
+				03C1F41C2E43CC3400029A0D /* serena-Info.plist */,
+				031C36D42E43B29000F25BDB /* DesignSystem */,
+				031C36D32E43B16700F25BDB /* Navigation */,
+				031C36D22E43B04800F25BDB /* Helpers */,
+				031C36D12E43AFE500F25BDB /* Kana */,
 				033194E82E37DEB200F037C3 /* KanjiVGParser */,
 				03FF82292E37DF6E00EFA200 /* SerenaApp */,
 				03EA9D252E37DA2900EC6EBC /* Main.swift */,
@@ -92,6 +102,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = 03BC51602E311EEB0081F67B;
 			minimizedProjectReferenceProxies = 1;
@@ -188,6 +199,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 			};
@@ -244,6 +256,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -261,6 +274,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "serena-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -304,6 +318,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "serena-Info.plist";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

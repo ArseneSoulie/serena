@@ -1,4 +1,5 @@
 import SwiftUI
+import DesignSystem
 
 enum CompletionState {
     case success
@@ -37,7 +38,7 @@ struct CompletedAllInARowPage: View {
     var body: some View {
         ZStack {
             VStack {
-                Text("Completed !")
+                Text(.completed)
                     .font(.headline)
                     .padding()
                 Text(completionText)
@@ -57,11 +58,11 @@ struct CompletedAllInARowPage: View {
                 }
                 
                 HStack {
-                    Button("Try again with selection", action: onTryAgainTapped)
-                    Button("Level ups", action: onLevelUpsTapped)
+                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
+                    Button(.levelUps, action: onLevelUpsTapped)
                 }.buttonStyle(.borderedProminent)
                     .padding()
-                Button("Go back to selection", action: onGoBackTapped)
+                Button(.goBackToSelection, action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }
             if isPerfect {
@@ -88,11 +89,11 @@ struct CompletedAllInARowPage: View {
     
     var completionText: String {
         if isPerfect {
-            return "Perfect run ! 🎉"
+            return localized(.perfectRun🎉)
         } else {
-            let failedText = failedKanas.isEmpty ? "" : "Incorrect: \(failedKanas.count) "
-            let skippedText = remainingKanas.isEmpty ? "" : "Passed: \(remainingKanas.count) "
-            let succeededText = "Correct: \(kanas.count - (remainingKanas.count + failedKanas.count)) "
+            let failedText = failedKanas.isEmpty ? "" : "\(localized(.incorrect)): \(failedKanas.count) "
+            let skippedText = remainingKanas.isEmpty ? "" : "\(localized(.passed)): \(remainingKanas.count) "
+            let succeededText = "\(localized(.correct)): \(kanas.count - (remainingKanas.count + failedKanas.count)) "
             
             return succeededText + failedText + skippedText
         }

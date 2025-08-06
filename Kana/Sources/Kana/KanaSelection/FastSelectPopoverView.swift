@@ -12,30 +12,30 @@ struct FastSelectPopoverView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Button("All", action: selectAll)
+                Button(localized(.all), action: selectAll)
                 Spacer()
-                Button("Clear", action: clearAll)
+                Button(localized(.clear), action: clearAll)
             }
             Divider()
             FastSelectToggleButton(
-                title: "【\("ka".format(kanaType))】Base \(kanaType.rawValue)",
+                title: "【\("ka".format(kanaType))】\(localized(.base)) \(kanaType.rawValue)",
                 isOn: $selectedBase[containsLines: base]
             )
             FastSelectToggleButton(
-                title: "【\("ga".format(kanaType))】Diacritics",
+                title: "【\("ga".format(kanaType))】\(localized(.diacritics))",
                 isOn: $selectedDiacritic[containsLines: diacritic]
             )
             FastSelectToggleButton(
-                title: "【\("sha".format(kanaType))】Combinatory",
+                title: "【\("sha".format(kanaType))】\(localized(.combinatory))",
                 isOn: $selectedCombinatory[containsLines: combinatory]
             )
             FastSelectToggleButton(
-                title: "【\("ja".format(kanaType))】Combinatory diacritics",
+                title: "【\("ja".format(kanaType))】\(localized(.combinatoryDiacritics))",
                 isOn: $selectedCombinatoryDiacritic[containsLines: combinatoryDiacritic]
             )
             if case .katakana = kanaType {
                 FastSelectToggleButton(
-                    title: "【新】New cases",
+                    title: "【新】\(localized(.newCases))",
                     isOn: $selectedNew[containsLines: new]
                 )
             }

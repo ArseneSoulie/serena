@@ -1,6 +1,8 @@
 import SwiftUI
+import Helpers
+import Navigation
 
-struct KanaSelectionPage: View {
+public struct KanaSelectionPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     
     @State var selectedBase: Set<KanaLine> = []
@@ -13,14 +15,17 @@ struct KanaSelectionPage: View {
     
     @State var kanaType: KanaType = .katakana
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         NavigationStack(path: coordinator.binding(for: \.path)) {
             ScrollView {
                 VStack(alignment: .leading) {
-                    Text("Select the rows you want to train on and pick a mode below.")
+                    Text(.selectTheRowsYouWantToTrainOnAndPickAModeBelow)
                         .font(.subheadline)
                         .padding()
-                    Picker("Training mode", selection: $kanaType) {
+                    
+                    Picker(.trainingMode, selection: $kanaType) {
                         ForEach (KanaType.allCases, id: \.self) {
                             Text("\($0.rawValue) 【\($0.letter)】")
                         }
@@ -29,23 +34,23 @@ struct KanaSelectionPage: View {
                     .padding()
                     
                     KanaLineGroupView(
-                        title: "【\("ka".format(kanaType))】Base \(kanaType.rawValue)",
+                        title: "【\("ka".format(kanaType))】\(localized(.base)) \(kanaType.rawValue)",
                         lines: base, selectedLines: $selectedBase,
                         isExpanded: true
                     )
                     KanaLineGroupView(
-                        title: "【\("ga".format(kanaType))】Diacritics (dakuten/handakuten)",
+                        title: "【\("ga".format(kanaType))】\(localized(.diacritics)) (dakuten/handakuten)",
                         lines: diacritic, selectedLines: $selectedDiacritic,
                     )
-                    KanaLineGroupView(title: "【\("sha".format(kanaType))】Combinatory",
+                    KanaLineGroupView(title: "【\("sha".format(kanaType))】\(localized(.combinatory))",
                         lines: combinatory, selectedLines: $selectedCombinatory,
                     )
                     KanaLineGroupView(
-                        title: "【\("ja".format(kanaType))】Combinatory diacritics",
+                        title: "【\("ja".format(kanaType))】\(localized(.combinatoryDiacritics))",
                         lines: combinatoryDiacritic, selectedLines: $selectedCombinatoryDiacritic,
                     )
                     if case .katakana = kanaType {
-                        KanaLineGroupView(title: "【新】New cases", lines: new, selectedLines: $selectedNew)
+                        KanaLineGroupView(title: "【新】\(localized(.newCases))", lines: new, selectedLines: $selectedNew)
                     }
                     Spacer()
                         .frame(height: 80)
@@ -80,7 +85,7 @@ struct KanaSelectionPage: View {
                 }
             }
             .onChange(of: kanaType, { _,_ in selectedNew.removeAll() })
-            .navigationTitle("Kana training")
+            .navigationTitle(.kanaTraining)
             .environment(\.kanaDisplayType, kanaDisplayType)
         }
         .animation(.easeInOut, value: kanaType)
@@ -159,7 +164,7 @@ struct ToolbarViews: View {
         }
         
         Button(swapDisplayModeText) { withAnimation { displayAsKana.toggle()} }
-        Button("Fast select") { showsFastSelect.toggle() }
+        Button(localized(.fastSelect)) { showsFastSelect.toggle() }
             .popover (isPresented: $showsFastSelect) {
                 FastSelectPopoverView(
                     kanaType: kanaType,
@@ -212,14 +217,14 @@ struct KanaTrainingButtonView: View {
             ZStack {
                 HStack(spacing: 20) {
                     TrainingButtonView(
-                        title: "Level ups",
-                        popoverHelpText: "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.",
+                        title: localized(.levelUps),
+                        popoverHelpText: localized(.testYourKnowledgeOn10RandomKanasChosenFromTheSelectionWithIncreasingDifficulty),
                         onButtonTapped: onLevelUpsTapped,
                         isPopoverPresented: $showLevelUpPopover
                     )
                     TrainingButtonView(
-                        title: "All in a row",
-                        popoverHelpText: "Try to get all selected kanas right in a row !",
+                        title: localized(.allInARow),
+                        popoverHelpText: localized(.tryToGetAllSelectedKanasRightInARow),
                         onButtonTapped: onAllInARowTapped,
                         isPopoverPresented: $showAllInARowPopover
                     )
@@ -235,7 +240,7 @@ struct KanaTrainingButtonView: View {
                 }
                 
                 HStack {
-                    Picker("Training mode", selection: $kanaType) {
+                    Picker(.trainingMode, selection: $kanaType) {
                         ForEach (KanaType.allCases, id: \.self) { Text($0.letter) }
                     }
                     .pickerStyle(.segmented)
@@ -287,4 +292,14 @@ struct BottomGradient: View {
             .ignoresSafeArea(edges: .bottom)
             .allowsHitTesting(false)
     }
+}
+
+extension Color {
+    static let bgColor: Color = {
+#if os(iOS)
+    Color(uiColor: .systemBackground)
+#elseif os(macOS)
+    Color(NSColor.controlBackgroundColor)
+#endif
+    }()
 }

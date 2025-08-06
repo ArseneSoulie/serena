@@ -1,4 +1,5 @@
 import SwiftUI
+import Navigation
 
 struct AllInARowPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator

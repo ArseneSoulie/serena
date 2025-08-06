@@ -6,8 +6,8 @@ enum PickExerciceType {
     
     var prompt: String {
         switch self {
-        case .pickRomaji: "Pick the correct writing for the kana."
-        case .pickKana: "Pick the correct kana word for the writing."
+        case .pickRomaji: localized(.pickTheCorrectWritingForTheKana)
+        case .pickKana: localized(.pickTheCorrectKanaWordForTheWriting)
         }
     }
 }
@@ -85,7 +85,7 @@ struct PickAnswerPage: View {
             }.disabled(disableButtons)
             .transaction { $0.disablesAnimations = true}
         }
-        .toast(isPresented: $showToast, message: "Level up !")
+        .toast(isPresented: $showToast, message: localized(.levelUp))
     }
     
     func nextRound() {

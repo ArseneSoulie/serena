@@ -7,8 +7,8 @@ enum WriteExerciceType {
     
     var prompt: String {
         switch self {
-        case .single: "Write the kana."
-        case .groupOfThree: "Write the combinaison of the three kanas."
+        case .single: localized(.writeTheKana)
+        case .groupOfThree: localized(.writeTheCombinaisonOfTheThreeKanas)
         }
     }
 }
@@ -84,7 +84,7 @@ struct WriteAnswerPage: View {
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
-        .toast(isPresented: $showToast, message: "Level up !")
+        .toast(isPresented: $showToast, message: localized("Level up !"))
     }
     
     func nextRound() {

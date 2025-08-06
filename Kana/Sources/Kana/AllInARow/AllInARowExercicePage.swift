@@ -35,9 +35,9 @@ struct AllInARowExercicePage: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("All in a row")
+            Text(.allInARow)
             ProgressView(progress: $progress)
-            Text("Write the writing of all kanas in a row")
+            Text(.writeTheWritingOfAllKanasInARow)
             Text(truth.format(kanaType))
                 .foregroundStyle(truthColor)
                 .modifier(ShakeEffect(animatableData: shakeTrigger))
@@ -63,8 +63,8 @@ struct AllInARowExercicePage: View {
         }
         .onAppear { isFocused = true }
         .toolbar {
-            Button("Skip", action: onSkip)
-            Button("Finish", action: onFinished)
+            Button(.skip, action: onSkip)
+            Button(.finish, action: onFinished)
         }
     }
     

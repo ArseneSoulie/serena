@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03BC51682E311EEB0081F67B"
-               BuildableName = "serena.app"
-               BlueprintName = "serena"
-               ReferencedContainer = "container:serena.xcodeproj">
+               BlueprintIdentifier = "Kana"
+               BuildableName = "Kana"
+               BlueprintName = "Kana"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -39,18 +39,7 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      showNonLocalizedStrings = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03BC51682E311EEB0081F67B"
-            BuildableName = "serena.app"
-            BlueprintName = "serena"
-            ReferencedContainer = "container:serena.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
+      allowLocationSimulation = "YES">
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -58,16 +47,15 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03BC51682E311EEB0081F67B"
-            BuildableName = "serena.app"
-            BlueprintName = "serena"
-            ReferencedContainer = "container:serena.xcodeproj">
+            BlueprintIdentifier = "Kana"
+            BuildableName = "Kana"
+            BlueprintName = "Kana"
+            ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
