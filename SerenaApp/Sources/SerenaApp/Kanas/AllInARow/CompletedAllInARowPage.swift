@@ -35,35 +35,39 @@ struct CompletedAllInARowPage: View {
     @State var tiles: [CompletedTileData] = []
     
     var body: some View {
-        VStack {
-            Text("Completed !")
-                .font(.headline)
-                .padding()
-            Text(completionText)
-                .font(.subheadline)
-            let columns = [GridItem(.adaptive(minimum: 50))]
-            
-            LazyVGrid(columns: columns) {
-                ForEach(tiles) {
-                    Button($0.kanaText) {}
-                        .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .custom($0.completionState.color)))
+        ZStack {
+            VStack {
+                Text("Completed !")
+                    .font(.headline)
+                    .padding()
+                Text(completionText)
+                    .font(.subheadline)
+                let columns = [GridItem(.adaptive(minimum: 50))]
+                
+                LazyVGrid(columns: columns) {
+                    ForEach(tiles) {
+                        Button($0.kanaText) {}
+                            .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .custom($0.completionState.color)))
+                    }
+                }.padding()
+                
+                Spacer()
+                if isPerfect {
+                    DancingKaomojiView()
                 }
-            }.padding()
-            
-            Spacer()
-            if isPerfect {
-                DancingKaomojiView()
+                
+                HStack {
+                    Button("Try again with selection", action: onTryAgainTapped)
+                    Button("Level ups", action: onLevelUpsTapped)
+                }.buttonStyle(.borderedProminent)
+                    .padding()
+                Button("Go back to selection", action: onGoBackTapped)
+                    .buttonStyle(.borderless)
             }
-            
-            HStack {
-                Button("Try again with selection", action: onTryAgainTapped)
-                Button("Level ups", action: onLevelUpsTapped)
-            }.buttonStyle(.borderedProminent)
-                .padding()
-            Button("Go back to selection", action: onGoBackTapped)
-                .buttonStyle(.borderless)
+            if isPerfect {
+                ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width/2, y: 0))
+            }
         }
-        
         .onAppear {
             guard tiles.isEmpty else { return }
             Task {

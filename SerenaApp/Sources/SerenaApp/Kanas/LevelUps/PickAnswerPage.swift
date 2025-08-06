@@ -27,6 +27,8 @@ struct PickAnswerPage: View {
     
     @State private var showToast = false
     
+    @State private var disableButtons: Bool = false
+    
     init(
         title: String,
         pickingExerciceType: PickExerciceType,
@@ -80,7 +82,7 @@ struct PickAnswerPage: View {
                     .font(.title2)
                     .buttonStyle(.borderedProminent)
                 }
-            }
+            }.disabled(disableButtons)
             .transaction { $0.disablesAnimations = true}
         }
         .toast(isPresented: $showToast, message: "Level up !")
@@ -105,6 +107,7 @@ struct PickAnswerPage: View {
         if !isLevelCompleted {
             nextRound()
         } else {
+            disableButtons = true
             withAnimation {
                 showToast = true
             }
@@ -115,6 +118,7 @@ struct PickAnswerPage: View {
         } completion: {
             if isLevelCompleted {
                 onLevelCompleted()
+                disableButtons = false
             }
         }
     }
