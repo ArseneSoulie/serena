@@ -40,7 +40,7 @@ struct CompletedAllInARowPage: View {
             VStack {
                 ScrollView {
                     VStack {
-                        Text(.completed)
+                        Text(localized("Completed !"))
                             .font(.headline)
                             .padding()
                         Text(completionText)
@@ -67,11 +67,11 @@ struct CompletedAllInARowPage: View {
                 }
                 
                 HStack {
-                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
-                    Button(.levelUps, action: onLevelUpsTapped)
+                    Button(localized("Try again with selection"), action: onTryAgainTapped)
+                    Button(localized("Level ups"), action: onLevelUpsTapped)
                 }.buttonStyle(.borderedProminent)
                     .padding()
-                Button(.goBackToSelection, action: onGoBackTapped)
+                Button(localized("Go back to selection"), action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }.padding()
             if isPerfect {
@@ -98,11 +98,11 @@ struct CompletedAllInARowPage: View {
     
     var completionText: String {
         if isPerfect {
-            return localized(.perfectRun🎉)
+            return localized("Perfect run ! 🎉")
         } else {
-            let failedText = failedKanas.isEmpty ? "" : "\(localized(.incorrect)): \(failedKanas.count) "
-            let skippedText = remainingKanas.isEmpty ? "" : "\(localized(.passed)): \(remainingKanas.count) "
-            let succeededText = "\(localized(.correct)): \(kanas.count - (remainingKanas.count + failedKanas.count)) "
+            let failedText = failedKanas.isEmpty ? "" : "\(localized("Incorrect")): \(failedKanas.count) "
+            let skippedText = remainingKanas.isEmpty ? "" : "\(localized("Passed")): \(remainingKanas.count) "
+            let succeededText = "\(localized("Correct")): \(kanas.count - (remainingKanas.count + failedKanas.count)) "
             
             return succeededText + failedText + skippedText
         }

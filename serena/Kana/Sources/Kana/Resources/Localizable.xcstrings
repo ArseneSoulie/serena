@@ -24,10 +24,10 @@
       "shouldTranslate" : false
     },
     "┌[∵└]   ノ( -_-)ノ   [┘∵]┐" : {
-
+      "shouldTranslate" : false
     },
     "└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘" : {
-
+      "shouldTranslate" : false
     },
     "All" : {
       "extractionState" : "manual",
@@ -219,12 +219,6 @@
     "Mode" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mode"
-          }
-        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",

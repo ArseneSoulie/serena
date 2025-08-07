@@ -37,7 +37,7 @@ struct AllInARowExercicePage: View {
         ScrollView {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
-                Text(.writeTheWritingOfAllKanasInARow)
+                Text(localized("Write the writing of all kanas in a row"))
                 Text(truth.format(kanaType))
                     .foregroundStyle(truthColor)
                     .modifier(ShakeEffect(animatableData: shakeTrigger))
@@ -59,15 +59,15 @@ struct AllInARowExercicePage: View {
                 
             }            
         }
-        .navigationTitle(.allInARow)
+        .navigationTitle(localized("All in a row"))
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
         .toolbar {
-            Button(.skip, action: onSkip)
-            Button(.finish, action: onFinished)
+            Button(localized("Skip"), action: onSkip)
+            Button(localized("Finish"), action: onFinished)
         }
     }
     

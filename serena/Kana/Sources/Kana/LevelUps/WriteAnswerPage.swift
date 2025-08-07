@@ -7,8 +7,8 @@ enum WriteExerciceType {
     
     var prompt: String {
         switch self {
-        case .single: localized(.writeTheKana)
-        case .groupOfThree: localized(.writeTheCombinaisonOfTheThreeKanas)
+        case .single: localized("Write the kana.")
+        case .groupOfThree: localized("Write the combinaison of the three kanas.")
         }
     }
 }

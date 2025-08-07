@@ -1,11 +1,11 @@
-// swift-tools-version: 6.2
+// swift-tools-version: 6.1
 import PackageDescription
 
 let package = Package(
     name: "SerenaApp",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v15), .iOS(.v26)
+        .macOS(.v15), .iOS(.v18)
     ],
     products: [
         .library(

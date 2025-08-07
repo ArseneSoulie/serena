@@ -24,11 +24,11 @@ public struct KanaSelectionPage: View {
         NavigationStack(path: coordinator.binding(for: \.path)) {
             ScrollView {
                 VStack(alignment: .leading) {
-                    Text(.selectTheRowsYouWantToTrainOnAndPickAModeBelow)
+                    Text(localized("Select the rows you want to train on and pick a mode below."))
                         .font(.subheadline)
                         .padding()
                     
-                    Picker(.trainingMode, selection: $kanaType) {
+                    Picker(localized("Training mode"), selection: $kanaType) {
                         ForEach (KanaType.allCases, id: \.self) {
                             Text("\($0.rawValue) 【\($0.letter)】")
                         }
@@ -37,22 +37,22 @@ public struct KanaSelectionPage: View {
                     .padding()
                     
                     KanaLineGroupView(
-                        title: "【\("ka".format(kanaType))】\(localized(.base)) \(kanaType.rawValue)",
+                        title: "【\("ka".format(kanaType))】\(localized("Base")) \(kanaType.rawValue)",
                         lines: base, selectedLines: $selectedBase,
                     )
                     KanaLineGroupView(
-                        title: "【\("ga".format(kanaType))】\(localized(.diacritics)) (dakuten/handakuten)",
+                        title: "【\("ga".format(kanaType))】\(localized("Diacritics")) (dakuten/handakuten)",
                         lines: diacritic, selectedLines: $selectedDiacritic,
                     )
-                    KanaLineGroupView(title: "【\("sha".format(kanaType))】\(localized(.combinatory))",
+                    KanaLineGroupView(title: "【\("sha".format(kanaType))】\(localized("Combinatory"))",
                         lines: combinatory, selectedLines: $selectedCombinatory,
                     )
                     KanaLineGroupView(
-                        title: "【\("ja".format(kanaType))】\(localized(.combinatoryDiacritics))",
+                        title: "【\("ja".format(kanaType))】\(localized("Combinatory diacritics"))",
                         lines: combinatoryDiacritic, selectedLines: $selectedCombinatoryDiacritic,
                     )
                     if case .katakana = kanaType {
-                        KanaLineGroupView(title: "【新】\(localized(.newCases))", lines: new, selectedLines: $selectedNew)
+                        KanaLineGroupView(title: "【新】\(localized("New cases"))", lines: new, selectedLines: $selectedNew)
                     }
                     Spacer()
                         .frame(height: 160)
@@ -95,7 +95,7 @@ public struct KanaSelectionPage: View {
                     showAllInARowPopover = true
                 }
             }
-            .navigationTitle(.kanaTraining)
+            .navigationTitle(localized("Kana training"))
             .environment(\.kanaDisplayType, kanaDisplayType)
         }
         .animation(.easeInOut, value: kanaType)
@@ -175,7 +175,7 @@ struct ToolbarViews: View {
         }
         
         Button(swapDisplayModeText) { withAnimation { displayAsKana.toggle()} }
-        Button(localized(.fastSelect)) { showsFastSelect.toggle() }
+        Button(localized("Fast select")) { showsFastSelect.toggle() }
             .popover (isPresented: $showsFastSelect) {
                 FastSelectPopoverView(
                     kanaType: kanaType,
@@ -212,14 +212,14 @@ struct BottomViews: View {
                 ZStack {
                     HStack(spacing: 20) {
                         TrainingButtonView(
-                            title: localized(.levelUps),
-                            popoverHelpText: localized(.testYourKnowledgeOn10RandomKanasChosenFromTheSelectionWithIncreasingDifficulty),
+                            title: localized("Level ups"),
+                            popoverHelpText: localized("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty."),
                             onButtonTapped: onLevelUpsTapped,
                             isPopoverPresented: $showLevelUpPopover
                         )
                         TrainingButtonView(
-                            title: localized(.allInARow),
-                            popoverHelpText: localized(.tryToGetAllSelectedKanasRightInARow),
+                            title: localized("All in a row"),
+                            popoverHelpText: localized("Try to get all selected kanas right in a row !"),
                             onButtonTapped: onAllInARowTapped,
                             isPopoverPresented: $showAllInARowPopover
                         )
@@ -227,9 +227,9 @@ struct BottomViews: View {
                     .disabled(areTrainingModeButtonDisabled)
 
                     HStack {
-                        Text(.mode)
+                        Text(localized("Mode"))
                         Spacer()
-                        Picker(.trainingMode, selection: $kanaType) {
+                        Picker(localized("Training mode"), selection: $kanaType) {
                             ForEach (KanaType.allCases, id: \.self) { Text($0.letter) }
                         }
                         .pickerStyle(.segmented)
