@@ -1,17 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@ 【%@】" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ 【%2$@】"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "%@ %lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -183,6 +172,9 @@
         }
       }
     },
+    "Let's go %lld" : {
+
+    },
     "Level" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -293,6 +285,9 @@
         }
       }
     },
+    "Show romaji" : {
+
+    },
     "Skip" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -314,6 +309,9 @@
           }
         }
       }
+    },
+    "The extended group will only show characters in the katakana form" : {
+
     },
     "Training mode" : {
       "extractionState" : "manual",

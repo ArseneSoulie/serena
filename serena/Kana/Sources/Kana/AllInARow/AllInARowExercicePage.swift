@@ -2,7 +2,6 @@ import SwiftUI
 
 struct AllInARowExercicePage: View {
     let kanas: [String]
-    let kanaType: KanaType
     
     @State private var progress: Double = 0
     
@@ -20,13 +19,11 @@ struct AllInARowExercicePage: View {
     
     init(
         kanas: [String],
-        kanaType: KanaType,
         failedKanas: Binding<Set<String>>,
         remainingKanas: Binding<Set<String>>,
         onFinished: @escaping () -> Void
     ) {
         self.kanas = kanas
-        self.kanaType = kanaType
         truth = remainingKanas.wrappedValue.randomElement() ?? ""
         _failedKanas = failedKanas
         _remainingKanas = remainingKanas
@@ -38,7 +35,7 @@ struct AllInARowExercicePage: View {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(localized("Write the writing of all kanas in a row"))
-                Text(truth.format(kanaType))
+                Text(truth)
                     .foregroundStyle(truthColor)
                     .modifier(ShakeEffect(animatableData: shakeTrigger))
                     .font(.system(.largeTitle, design: .rounded))
@@ -51,7 +48,7 @@ struct AllInARowExercicePage: View {
                     .onSubmit(onSubmit)
                     .autocorrectionDisabled(true)
                     .multilineTextAlignment(.center)
-                    .textInputAutocapitalization(kanaType.autoCapitalization)
+                    .textInputAutocapitalization(truth.kanaType.autoCapitalization)
                     .textEditorStyle(.plain)
                     .font(.largeTitle)
                     .focused($isFocused)
@@ -77,8 +74,8 @@ struct AllInARowExercicePage: View {
     
     func onSubmit() {
         let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let convertedTruth = truth.format(kanaType)
-        let convertedText = cleanedText.format(kanaType)
+        let convertedTruth = truth
+        let convertedText = cleanedText.format(truth.kanaType)
         
         inputText = ""
         

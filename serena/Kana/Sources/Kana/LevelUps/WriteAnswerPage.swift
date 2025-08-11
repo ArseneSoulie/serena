@@ -13,18 +13,18 @@ enum WriteExerciceType {
     }
 }
 
-extension KanaType {
+extension TextType {
     var autoCapitalization: TextInputAutocapitalization {
         switch self {
         case .hiragana: .never
         case .katakana: .characters
+        case .mixedOrOther: .never
         }
     }
 }
 
 struct WriteAnswerPage: View {
     let title: String
-    let kanaType: KanaType
     
     let writingExerciceType: WriteExerciceType
     let kanaPool: [String]
@@ -40,13 +40,11 @@ struct WriteAnswerPage: View {
     
     init(
         title: String,
-        kanaType: KanaType,
         writingExerciceType: WriteExerciceType,
         kanaPool: [String],
         onLevelCompleted: @escaping () -> Void,
     ) {
         self.title = title
-        self.kanaType = kanaType
         self.writingExerciceType = writingExerciceType
         self.kanaPool = kanaPool
         self.onLevelCompleted = onLevelCompleted
@@ -62,7 +60,7 @@ struct WriteAnswerPage: View {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(writingExerciceType.prompt)
-                Text(truth.format(kanaType))
+                Text(truth)
                     .font(.system(.largeTitle, design: .rounded))
                     .padding()
                     .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
@@ -73,7 +71,7 @@ struct WriteAnswerPage: View {
                     .onSubmit(onSubmit)
                     .autocorrectionDisabled(true)
                     .multilineTextAlignment(.center)
-                    .textInputAutocapitalization(kanaType.autoCapitalization)
+                    .textInputAutocapitalization(truth.kanaType.autoCapitalization)
                     .textEditorStyle(.plain)
                     .font(.largeTitle)
                     .focused($isFocused)
@@ -106,8 +104,8 @@ struct WriteAnswerPage: View {
     
     func onSubmit() {
         let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let convertedTruth = truth.format(kanaType)
-        let convertedText = cleanedText.format(kanaType)
+        let convertedTruth = truth
+        let convertedText = cleanedText.format(truth.kanaType)
         
         inputText = ""
         

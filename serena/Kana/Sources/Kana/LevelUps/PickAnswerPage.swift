@@ -16,7 +16,6 @@ struct PickAnswerPage: View {
     let title: String
     
     let pickingExerciceType: PickExerciceType
-    let kanaType: KanaType
     
     let kanaPool: [String]
     let onLevelCompleted: () -> Void
@@ -32,13 +31,11 @@ struct PickAnswerPage: View {
     init(
         title: String,
         pickingExerciceType: PickExerciceType,
-        kanaType: KanaType,
         kanaPool: [String],
         onLevelCompleted: @escaping () -> Void
     ) {
         self.title = title
         self.pickingExerciceType = pickingExerciceType
-        self.kanaType = kanaType
         self.kanaPool = kanaPool
         self.onLevelCompleted = onLevelCompleted
         let options = Array(kanaPool.shuffled().prefix(3))
@@ -49,15 +46,15 @@ struct PickAnswerPage: View {
     
     var formattedTruth: String {
         switch pickingExerciceType {
-        case .pickRomaji: truth.format(kanaType)
-        case .pickKana: truth.formatAsRomaji(kanaType)
+        case .pickRomaji: truth
+        case .pickKana: truth.formatAsRomaji
         }
     }
     
     func formatGuessingOption(_ option: String) -> String {
         switch pickingExerciceType {
-        case .pickRomaji: option.formatAsRomaji(kanaType)
-        case .pickKana: option.format(kanaType)
+        case .pickRomaji: option.formatAsRomaji
+        case .pickKana: option
         }
     }
     

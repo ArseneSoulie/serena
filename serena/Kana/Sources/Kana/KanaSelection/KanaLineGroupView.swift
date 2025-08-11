@@ -7,6 +7,9 @@ struct KanaLineGroupView: View {
     
     @State var isExpanded: Bool = true
     
+    let showRomaji: Bool
+    let kanaSelectionType: KanaSelectionType
+    
     var body: some View {
         VStack(alignment: .leading) {
             DisclosureGroup(isExpanded: $isExpanded) {
@@ -14,6 +17,8 @@ struct KanaLineGroupView: View {
                     ForEach(lines) { kanaLine in
                         KanaLineView(
                             kanaLine: kanaLine,
+                            showRomaji: showRomaji,
+                            kanaSelectionType: kanaSelectionType,
                             isOn: $selectedLines[containsLine: kanaLine]
                         )
                     }

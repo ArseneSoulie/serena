@@ -24,7 +24,6 @@ struct CompletedTileData: Identifiable {
 
 struct CompletedAllInARowPage: View {
     let kanas: [String]
-    let kanaType: KanaType
     
     let failedKanas: Set<String>
     let remainingKanas: Set<String>
@@ -84,7 +83,7 @@ struct CompletedAllInARowPage: View {
                 for kana in kanas {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        tiles.append(.init(kanaText: kana.format(kanaType), completionState: completionState(for: kana))
+                        tiles.append(.init(kanaText: kana, completionState: completionState(for: kana))
                         )
                     }
                 }
@@ -120,7 +119,6 @@ struct CompletedAllInARowPage: View {
 #Preview {
     CompletedAllInARowPage(
         kanas: ["a", "i", "u", "e", "o", "ka", "ki", "ku"],
-        kanaType: .hiragana,
         failedKanas: ["ka"],
         remainingKanas: [],
         onTryAgainTapped: { },

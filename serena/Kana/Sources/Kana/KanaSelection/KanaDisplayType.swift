@@ -1,38 +1,60 @@
 import SwiftUI
 
-enum KanaDisplayType {
-    case asHiragana
-    case asKatakana
-    case asLowercasedRomaji
-    case asUppercasedRomaji
+extension String {
+    func format(_ type: TextType) -> String {
+        switch type {
+        case .hiragana: self.romajiToHiragana
+        case .katakana: self.romajiToKatakana
+        case .mixedOrOther: self
+        }
+    }
+    
+    #warning("""
+    This is a very crude implementation of converting mixed text to romaji.
+    In the future change this to a per kana transformation and move it to text transforms
+    """)
+    var formatAsRomaji: String {
+        switch kanaType {
+        case .hiragana: self.hiraganaToRomaji.lowercased()
+        case .katakana: self.katakanaToRomaji.uppercased()
+        case .mixedOrOther: self
+        }
+    }
 }
 
 
-extension EnvironmentValues {
-    @Entry var kanaDisplayType: KanaDisplayType = .asHiragana
+enum TextType {
+    case hiragana
+    case katakana
+    case mixedOrOther
 }
 
 extension String {
-    func format(_ displayType: KanaDisplayType) -> String {
-        switch displayType {
-        case .asHiragana: self.romajiToHiragana
-        case .asKatakana: self.romajiToKatakana
-        case .asLowercasedRomaji: self.hiraganaToRomaji
-        case .asUppercasedRomaji: self.katakanaToRomaji
+    var kanaType: TextType {
+        var hasHiragana = false
+        var hasKatakana = false
+        var hasOther = false
+
+        for scalar in self.unicodeScalars {
+            let value = scalar.value
+            switch value {
+            case 0x3040...0x309F:
+                hasHiragana = true
+            case 0x30A0...0x30FF, 0x31F0...0x31FF:
+                hasKatakana = true
+            case 0x3000 where scalar == " ":
+                continue // allow space (optional)
+            default:
+                hasOther = true
+            }
         }
-    }
-    
-    func format(_ type: KanaType) -> String {
-        switch type {
-        case .hiragana: format(.asHiragana)
-        case .katakana: format(.asKatakana)
-        }
-    }
-    
-    func formatAsRomaji(_ type: KanaType) -> String {
-        switch type {
-        case .hiragana: format(.asLowercasedRomaji)
-        case .katakana: format(.asUppercasedRomaji)
+
+        switch (hasHiragana, hasKatakana, hasOther) {
+        case (true, false, false): return .hiragana
+        case (false, true, false): return .katakana
+        case (_, _, true): return .mixedOrOther
+        default: return .mixedOrOther
         }
     }
 }
+import CoreFoundation
