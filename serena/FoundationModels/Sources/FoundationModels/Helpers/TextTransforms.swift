@@ -24,6 +24,14 @@ public extension String {
     }
 }
 
+private let romajiToKatakanaWarningMap: [String: String] = [
+    "dja": "ヂャ", "dju": "ヂュ", "djo": "ヂョ",
+    "djya": "ヂャ", "djyu": "ヂュ", "djyo": "ヂョ",
+    "chya": "チャ", "chyu": "チュ", "chyo": "チョ", "chye": "チェ",
+    "shya": "シャ", "shyu": "シュ", "shye": "シェ", "shyo": "ショ",
+    "tza": "ツァ", "tzi": "ツィ", "tze": "ツェ", "tzo": "ツォ",
+]
+
 private let romajiToKatakanaMap: [String: String] = [
     // Vowels
     "a": "ア", "i": "イ", "u": "ウ", "e": "エ", "o": "オ",
@@ -40,10 +48,9 @@ private let romajiToKatakanaMap: [String: String] = [
     // T
     "ta": "タ", "chi": "チ", "ti": "チ", "tsu": "ツ", "tu": "ツ", "te": "テ", "to": "ト",
     "cha": "チャ", "chu": "チュ", "cho": "チョ", "che": "チェ",
-    "tya": "チャ", "tyu": "チュ", "tyo": "チョ",
+    "tya": "チャ", "tyu": "チュ", "tyo": "チョ", "tye": "チェ",
     "thi": "ティ", "thu": "トゥ",
     "tsa": "ツァ", "tsi": "ツィ", "tse": "ツェ", "tso": "ツォ",
-    "tza": "ツァ", "tzi": "ツィ", "tze": "ツェ", "tzo": "ツォ",
 
     // N
     "na": "ナ", "ni": "ニ", "nu": "ヌ", "ne": "ネ", "no": "ノ",
@@ -100,6 +107,9 @@ private let romajiToKatakanaMap: [String: String] = [
     // D/W combos
     "twa": "トァ", "twi": "トィ", "twu": "トゥ", "twe": "トェ", "two": "トゥ",
     "dwa": "ドァ", "dwi": "ドィ", "dwu": "ドゥ", "dwe": "ドェ", "dwo": "ドォ",
+    
+    // Y
+    "ye": "イェ",
 ]
 
 private func romajiToKatakanaTransform(_ input: String) -> String {
