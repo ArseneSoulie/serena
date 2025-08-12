@@ -117,6 +117,17 @@
         }
       }
     },
+    "Extended katakana" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katakanas étendus"
+          }
+        }
+      }
+    },
     "Fast select" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -173,7 +184,14 @@
       }
     },
     "Let's go %lld" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C’est parti %lld"
+          }
+        }
+      }
     },
     "Level" : {
       "extractionState" : "manual",
@@ -253,7 +271,14 @@
       }
     },
     "Pick an exercise type" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez un type d’exercice"
+          }
+        }
+      }
     },
     "Pick the correct kana word for the writing." : {
       "extractionState" : "manual",
@@ -289,7 +314,14 @@
       }
     },
     "Show romaji" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher Romaji"
+          }
+        }
+      }
     },
     "Skip" : {
       "extractionState" : "manual",
@@ -314,7 +346,14 @@
       }
     },
     "The extended group will only show characters in the katakana form" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le groupe n’utilisera que la forme katakana"
+          }
+        }
+      }
     },
     "Training mode" : {
       "extractionState" : "manual",

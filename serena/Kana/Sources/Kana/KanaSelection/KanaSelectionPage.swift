@@ -63,7 +63,7 @@ public struct KanaSelectionPage: View {
                     )
                     let willPartiallyRepresentSelection = (kanaSelectionType == .hiragana || kanaSelectionType == .both) && !selectedExtendedKatakana.isEmpty
                     if willPartiallyRepresentSelection {
-                        Text("The extended group will only show characters in the katakana form")
+                        Text(localized("The extended group will only show characters in the katakana form"))
                             .padding()
                     }
                     KanaLineGroupView(
@@ -167,7 +167,7 @@ struct ToolbarViews: View {
     @Binding var selectedExtendedKatakana: Set<KanaLine>
     
     var body: some View {
-        Toggle("Show romaji", isOn: $showRomaji)
+        Toggle(localized("Show romaji"), isOn: $showRomaji)
         Button(localized("Fast select")) { showsFastSelect.toggle() }
             .popover (isPresented: $showsFastSelect) {
                 FastSelectPopoverView(
@@ -193,7 +193,7 @@ struct BottomViews: View {
             BottomGradient()
             VStack(spacing: 8) {
                 ZStack {
-                    Button("Let's go \(totalSelectedKanas)", action: onExerciceSelectionTapped)
+                    Button(localized("Let's go \(totalSelectedKanas)"), action: onExerciceSelectionTapped)
                         .buttonStyle(.borderedProminent)
                         .disabled(totalSelectedKanas == 0)
 

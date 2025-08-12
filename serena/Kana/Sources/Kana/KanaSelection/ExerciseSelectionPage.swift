@@ -30,7 +30,7 @@ public struct ExerciseSelectionPage: View {
             Button(localized("Go !"), action:onAllInARowTapped )
                 .buttonStyle(.bordered)
         }.padding()
-        .navigationTitle("Pick an exercise type")
+        .navigationTitle(localized("Pick an exercise type"))
     }
     
     func onLevelUpsTapped() {
