@@ -59,7 +59,7 @@ let combinatoryDiacritic: [KanaLine] = [
     .init(name:"py-" , kanas:["pya","pyu","pyo"]),
 ]
 
-let new: [KanaLine] = [
+let extendedKatakana: [KanaLine] = [
     .init(name:"sh-" , kanas:["she"]),
     .init(name:"j-" , kanas:["je"]),
     .init(name:"ch-" , kanas:["che"]),

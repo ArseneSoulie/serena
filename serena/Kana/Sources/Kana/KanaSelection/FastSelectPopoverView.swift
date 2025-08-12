@@ -5,7 +5,7 @@ struct FastSelectPopoverView: View {
     @Binding var selectedDiacritic: Set<KanaLine>
     @Binding var selectedCombinatory: Set<KanaLine>
     @Binding var selectedCombinatoryDiacritic: Set<KanaLine>
-    @Binding var selectedNew: Set<KanaLine>
+    @Binding var selectedExtendedKatakana: Set<KanaLine>
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -33,7 +33,7 @@ struct FastSelectPopoverView: View {
             )
             FastSelectToggleButton(
                 title: localized("Extended katakana"),
-                isOn: $selectedNew[containsLines: new]
+                isOn: $selectedExtendedKatakana[containsLines: extendedKatakana]
             )
         }
         .padding()
@@ -45,7 +45,7 @@ struct FastSelectPopoverView: View {
         selectedDiacritic.formUnion(diacritic)
         selectedCombinatory.formUnion(combinatory)
         selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic)
-        selectedNew.formUnion(new)
+        selectedExtendedKatakana.formUnion(extendedKatakana)
     }
     
     func clearAll() {
@@ -53,7 +53,7 @@ struct FastSelectPopoverView: View {
         selectedDiacritic.removeAll()
         selectedCombinatory.removeAll()
         selectedCombinatoryDiacritic.removeAll()
-        selectedNew.removeAll()
+        selectedExtendedKatakana.removeAll()
     }
 }
 

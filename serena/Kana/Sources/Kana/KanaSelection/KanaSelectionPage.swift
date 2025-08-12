@@ -9,7 +9,7 @@ public struct KanaSelectionPage: View {
     @State var selectedDiacritic: Set<KanaLine> = []
     @State var selectedCombinatory: Set<KanaLine> = []
     @State var selectedCombinatoryDiacritic: Set<KanaLine> = []
-    @State var selectedNew: Set<KanaLine> = []
+    @State var selectedExtendedKatakana: Set<KanaLine> = []
     
     @State var showRomaji: Bool = false
     
@@ -61,15 +61,15 @@ public struct KanaSelectionPage: View {
                         showRomaji: showRomaji,
                         kanaSelectionType: kanaSelectionType,
                     )
-                    let willPartiallyRepresentSelection = (kanaSelectionType == .hiragana || kanaSelectionType == .both) && !selectedNew.isEmpty
+                    let willPartiallyRepresentSelection = (kanaSelectionType == .hiragana || kanaSelectionType == .both) && !selectedExtendedKatakana.isEmpty
                     if willPartiallyRepresentSelection {
                         Text("The extended group will only show characters in the katakana form")
                             .padding()
                     }
                     KanaLineGroupView(
                         title: localized("Extended katakana"),
-                        lines: new,
-                        selectedLines: $selectedNew,
+                        lines: extendedKatakana,
+                        selectedLines: $selectedExtendedKatakana,
                         showRomaji: showRomaji,
                         kanaSelectionType: kanaSelectionType,
                     )
@@ -95,7 +95,7 @@ public struct KanaSelectionPage: View {
                     selectedDiacritic: $selectedDiacritic,
                     selectedCombinatory: $selectedCombinatory,
                     selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                    selectedNew: $selectedNew
+                    selectedExtendedKatakana: $selectedExtendedKatakana
                 )
             }
             .navigationDestination(for: Destination.self) { destination in
@@ -118,7 +118,7 @@ public struct KanaSelectionPage: View {
         let diacriticCount = "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount) "
         let combinatoryCount = "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount) "
         let combinatoryDiacriticCount = "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount) "
-        let newCount = "\(selectedNew.kanaCount)/\(new.kanaCount)"
+        let extendedKatakanaCount = "\(selectedExtendedKatakana.kanaCount)/\(extendedKatakana.kanaCount)"
         
         var selectedCountText: String = ""
         
@@ -126,7 +126,7 @@ public struct KanaSelectionPage: View {
         if !selectedDiacritic.isEmpty { selectedCountText.append(diacriticCount)}
         if !selectedCombinatory.isEmpty { selectedCountText.append(combinatoryCount)}
         if !selectedCombinatoryDiacritic.isEmpty { selectedCountText.append(combinatoryDiacriticCount)}
-        if !selectedNew.isEmpty { selectedCountText.append(newCount)}
+        if !selectedExtendedKatakana.isEmpty { selectedCountText.append(extendedKatakanaCount)}
         return selectedCountText
     }
     
@@ -138,7 +138,7 @@ public struct KanaSelectionPage: View {
         
         let unionedKanas = unionedSet.map(\.kanas).joined().compactMap {$0}
         
-        let katakanaOnlyKanas = selectedNew.map(\.kanas).joined().compactMap {$0}
+        let katakanaOnlyKanas = selectedExtendedKatakana.map(\.kanas).joined().compactMap {$0}
         
         let fullHiraganaSet: [Kana] = unionedKanas.map { .hiragana(value: $0) }
         let fullKatakanaSet: [Kana] = unionedKanas.map { .katakana(value: $0) } + katakanaOnlyKanas.map { .katakana(value: $0) }
@@ -164,7 +164,7 @@ struct ToolbarViews: View {
     @Binding var selectedDiacritic: Set<KanaLine>
     @Binding var selectedCombinatory: Set<KanaLine>
     @Binding var selectedCombinatoryDiacritic: Set<KanaLine>
-    @Binding var selectedNew: Set<KanaLine>
+    @Binding var selectedExtendedKatakana: Set<KanaLine>
     
     var body: some View {
         Toggle("Show romaji", isOn: $showRomaji)
@@ -175,7 +175,7 @@ struct ToolbarViews: View {
                     selectedDiacritic: $selectedDiacritic,
                     selectedCombinatory: $selectedCombinatory,
                     selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                    selectedNew: $selectedNew
+                    selectedExtendedKatakana: $selectedExtendedKatakana
                 )
             }
     }
