@@ -1,5 +1,6 @@
 import SwiftUI
 import DesignSystem
+import FoundationModels
 
 enum CompletionState {
     case success
@@ -16,17 +17,17 @@ enum CompletionState {
 }
 
 struct CompletedTileData: Identifiable {
-    let kanaText: String
+    let kana: Kana
     let completionState: CompletionState
     
-    var id: String { kanaText }
+    var id: String { kana.kanaValue }
 }
 
 struct CompletedAllInARowPage: View {
-    let kanas: [String]
+    let kanas: [Kana]
     
-    let failedKanas: Set<String>
-    let remainingKanas: Set<String>
+    let failedKanas: Set<Kana>
+    let remainingKanas: Set<Kana>
     
     let onTryAgainTapped: () -> Void
     let onLevelUpsTapped: () -> Void
@@ -48,7 +49,7 @@ struct CompletedAllInARowPage: View {
                         
                         LazyVGrid(columns: columns) {
                             ForEach(tiles) {
-                                Button($0.kanaText) {}
+                                Button($0.kana.kanaValue) {}
                                     .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .custom($0.completionState.color)))
                             }
                         }.padding()
@@ -83,7 +84,7 @@ struct CompletedAllInARowPage: View {
                 for kana in kanas {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        tiles.append(.init(kanaText: kana, completionState: completionState(for: kana))
+                        tiles.append(.init(kana: kana, completionState: completionState(for: kana))
                         )
                     }
                 }
@@ -107,7 +108,7 @@ struct CompletedAllInARowPage: View {
         }
     }
     
-    func completionState(for kana: String) -> CompletionState {
+    func completionState(for kana: Kana) -> CompletionState {
         if failedKanas.contains(kana) { .failed }
         else if remainingKanas.contains(kana) { .skipped }
         else { .success }
@@ -118,10 +119,20 @@ struct CompletedAllInARowPage: View {
 
 #Preview {
     CompletedAllInARowPage(
-        kanas: ["a", "i", "u", "e", "o", "ka", "ki", "ku"],
-        failedKanas: ["ka"],
+        kanas: [
+            .hiragana(value: "a"),
+            .hiragana(value: "i"),
+            .hiragana(value: "u"),
+            .hiragana(value: "e"),
+            .hiragana(value: "o"),
+            .hiragana(value: "ka"),
+            .hiragana(value: "ki"),
+            .hiragana(value: "ku")
+        ],
+        failedKanas: [.hiragana(value: "ka")],
         remainingKanas: [],
-        onTryAgainTapped: { },
+        onTryAgainTapped: {
+        },
         onLevelUpsTapped: { },
         onGoBackTapped: { }
     )

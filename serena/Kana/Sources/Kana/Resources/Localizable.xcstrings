@@ -252,6 +252,9 @@
         }
       }
     },
+    "Pick an exercise type" : {
+
+    },
     "Pick the correct kana word for the writing." : {
       "extractionState" : "manual",
       "localizations" : {

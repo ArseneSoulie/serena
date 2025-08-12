@@ -1,5 +1,6 @@
 
 import SwiftUI
+import FoundationModels
 
 enum WriteExerciceType {
     case single
@@ -13,24 +14,14 @@ enum WriteExerciceType {
     }
 }
 
-extension TextType {
-    var autoCapitalization: TextInputAutocapitalization {
-        switch self {
-        case .hiragana: .never
-        case .katakana: .characters
-        case .mixedOrOther: .never
-        }
-    }
-}
-
 struct WriteAnswerPage: View {
     let title: String
     
     let writingExerciceType: WriteExerciceType
-    let kanaPool: [String]
+    let kanaPool: [Kana]
     let onLevelCompleted: () -> Void
     
-    @State private var truth: String
+    @State private var truth: [Kana]
     @State private var progress: Double = 0
     
     @State var inputText: String = ""
@@ -41,7 +32,7 @@ struct WriteAnswerPage: View {
     init(
         title: String,
         writingExerciceType: WriteExerciceType,
-        kanaPool: [String],
+        kanaPool: [Kana],
         onLevelCompleted: @escaping () -> Void,
     ) {
         self.title = title
@@ -50,8 +41,8 @@ struct WriteAnswerPage: View {
         self.onLevelCompleted = onLevelCompleted
 
         switch writingExerciceType {
-        case .single: truth = kanaPool.randomElement() ?? ""
-        case .groupOfThree: truth = kanaPool.shuffled().prefix(3).joined(separator: "")
+        case .single: truth = Array(kanaPool.shuffled().prefix(1))
+        case .groupOfThree: truth = Array(kanaPool.shuffled().prefix(3))
         }
     }
     
@@ -60,7 +51,7 @@ struct WriteAnswerPage: View {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(writingExerciceType.prompt)
-                Text(truth)
+                Text(kanaTruth)
                     .font(.system(.largeTitle, design: .rounded))
                     .padding()
                     .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
@@ -70,8 +61,8 @@ struct WriteAnswerPage: View {
                 TextEditor(text: $inputText)
                     .onSubmit(onSubmit)
                     .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
                     .multilineTextAlignment(.center)
-                    .textInputAutocapitalization(truth.kanaType.autoCapitalization)
                     .textEditorStyle(.plain)
                     .font(.largeTitle)
                     .focused($isFocused)
@@ -92,28 +83,33 @@ struct WriteAnswerPage: View {
         isFocused = true
         
         switch writingExerciceType {
-        case .single: truth = kanaPool.randomElement() ?? ""
-        case .groupOfThree: truth = kanaPool.shuffled().prefix(3).joined(separator: "")
+        case .single: truth = Array(kanaPool.shuffled().prefix(1))
+        case .groupOfThree: truth = Array(kanaPool.shuffled().prefix(3))
         }
     }
-    
     
     var answerCompletionPercent: Double {
         1.0 / Double(kanaPool.count)
     }
     
+    var kanaTruth: String {
+        truth.map(\.kanaValue).joined()
+    }
+    
+    @State var isLevelCompleted = false
+    
     func onSubmit() {
-        let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let convertedTruth = truth
-        let convertedText = cleanedText.format(truth.kanaType)
+        if isLevelCompleted { return }
+        let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardisedRomaji
+        let convertedTruth: String = truth.map(\.kanaValue).joined().standardisedRomaji
         
         inputText = ""
         
-        let isCorrect = convertedTruth == convertedText
+        let isCorrect = cleanedText == convertedTruth
         var nextProgress = isCorrect ? progress + answerCompletionPercent : progress - answerCompletionPercent
         nextProgress = min(max(nextProgress, 0), 1)
         
-        let isLevelCompleted = nextProgress >= 0.99
+        isLevelCompleted = nextProgress >= 0.99
         
         if !isLevelCompleted {
             nextRound()

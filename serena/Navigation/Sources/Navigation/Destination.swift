@@ -1,5 +1,7 @@
-public enum Destination: Hashable {
-    case levelUps([String])
-    case allInARow([String])
-    case exerciseSelection([String])
+import FoundationModels
+
+public enum Destination: Hashable, Equatable {
+    case levelUps([Kana])
+    case allInARow([Kana])
+    case exerciseSelection([Kana])
 }

@@ -1,17 +1,18 @@
 import SwiftUI
 import Navigation
+import FoundationModels
 
 public struct AllInARowPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     
-    let kanas: [String]
+    let kanas: [Kana]
     
-    @State private var failedKanas: Set<String> = []
-    @State private var remainingKanas: Set<String>
+    @State private var failedKanas: Set<Kana> = []
+    @State private var remainingKanas: Set<Kana>
     
     @State var isFinished: Bool = false
     
-    public init(kanas: [String]) {
+    public init(kanas: [Kana]) {
         self.kanas = kanas
         self.remainingKanas = Set(kanas)
     }

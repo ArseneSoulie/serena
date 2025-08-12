@@ -18,6 +18,10 @@ public extension String {
     var katakanaToRomaji: String {
         self.applyingTransform(.hiraganaToKatakana, reverse: true)?.applyingTransform(.latinToHiragana, reverse: true)?.uppercased() ?? self
     }
+    
+    var standardisedRomaji: String {
+        romajiToHiragana.hiraganaToRomaji.lowercased()
+    }
 }
 
 private let romajiToKatakanaMap: [String: String] = [
@@ -117,7 +121,7 @@ private func romajiToKatakanaTransform(_ input: String) -> String {
         }
 
         if !matched {
-            output += String(lower[index]) // optionally skip or replace
+            output += String(lower[index])
             index = lower.index(after: index)
         }
     }

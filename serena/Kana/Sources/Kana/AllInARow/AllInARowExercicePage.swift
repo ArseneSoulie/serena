@@ -1,30 +1,31 @@
 import SwiftUI
+import FoundationModels
 
 struct AllInARowExercicePage: View {
-    let kanas: [String]
+    let kanas: [Kana]
     
     @State private var progress: Double = 0
     
-    @State private var truth: String
+    @State private var truth: Kana
     @State private var truthColor: Color = .primary
     @State private var shakeTrigger: CGFloat = 0
     
     @State private var inputText: String = ""
     @FocusState private var isFocused: Bool
     
-    @Binding var failedKanas: Set<String>
-    @Binding var remainingKanas: Set<String>
+    @Binding var failedKanas: Set<Kana>
+    @Binding var remainingKanas: Set<Kana>
     
     let onFinished: () -> Void
     
     init(
-        kanas: [String],
-        failedKanas: Binding<Set<String>>,
-        remainingKanas: Binding<Set<String>>,
+        kanas: [Kana],
+        failedKanas: Binding<Set<Kana>>,
+        remainingKanas: Binding<Set<Kana>>,
         onFinished: @escaping () -> Void
     ) {
         self.kanas = kanas
-        truth = remainingKanas.wrappedValue.randomElement() ?? ""
+        truth = remainingKanas.wrappedValue.randomElement() ?? .hiragana(value: "")
         _failedKanas = failedKanas
         _remainingKanas = remainingKanas
         self.onFinished = onFinished
@@ -35,7 +36,7 @@ struct AllInARowExercicePage: View {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(localized("Write the writing of all kanas in a row"))
-                Text(truth)
+                Text(truth.kanaValue)
                     .foregroundStyle(truthColor)
                     .modifier(ShakeEffect(animatableData: shakeTrigger))
                     .font(.system(.largeTitle, design: .rounded))
@@ -47,8 +48,8 @@ struct AllInARowExercicePage: View {
                 TextEditor(text: $inputText)
                     .onSubmit(onSubmit)
                     .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
                     .multilineTextAlignment(.center)
-                    .textInputAutocapitalization(truth.kanaType.autoCapitalization)
                     .textEditorStyle(.plain)
                     .font(.largeTitle)
                     .focused($isFocused)
@@ -73,18 +74,17 @@ struct AllInARowExercicePage: View {
     }
     
     func onSubmit() {
-        let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let convertedTruth = truth
-        let convertedText = cleanedText.format(truth.kanaType)
+        let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardisedRomaji
+        let convertedTruth = truth.kanaValue.standardisedRomaji
         
         inputText = ""
         
-        let isCorrect = convertedTruth == convertedText
+        let isCorrect = cleanedText == convertedTruth
         
         if isCorrect {
             remainingKanas.remove(truth)
             withAnimation {
-                truth = remainingKanas.randomElement() ?? ""
+                truth = remainingKanas.randomElement() ?? .empty
                 progress += answerCompletionPercent
                 if progress >= 0.99 {
                     onFinished()
@@ -104,6 +104,6 @@ struct AllInARowExercicePage: View {
     }
     
     func onSkip() {
-        truth = remainingKanas.randomElement() ?? ""
+        truth = remainingKanas.randomElement() ?? .empty
     }
 }

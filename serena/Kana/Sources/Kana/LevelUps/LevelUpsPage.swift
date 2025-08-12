@@ -1,5 +1,6 @@
 import SwiftUI
 import Navigation
+import FoundationModels
 
 enum Level {
     case level1
@@ -11,12 +12,12 @@ enum Level {
 
 public struct LevelUpsPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
-    let allKanas: [String]
+    let allKanas: [Kana]
     
-    @State var kanaPool: [String]
+    @State var kanaPool: [Kana]
     @State var level: Level = .level1
     
-    public init(kanas: [String]) {
+    public init(kanas: [Kana]) {
         self.allKanas = kanas
         kanaPool = Array(allKanas.shuffled().prefix(10))
     }

@@ -7,13 +7,14 @@
 
 import SwiftUI
 import Navigation
+import FoundationModels
 
 public struct ExerciseSelectionPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     
-    let kanaPool: [String]
+    let kanaPool: [Kana]
     
-    public init(kanaPool: [String]) {
+    public init(kanaPool: [Kana]) {
         self.kanaPool = kanaPool
     }
     
@@ -29,7 +30,7 @@ public struct ExerciseSelectionPage: View {
             Button(localized("Go !"), action:onAllInARowTapped )
                 .buttonStyle(.bordered)
         }.padding()
-//        .navigationTitle("Pick an exercise type")
+        .navigationTitle("Pick an exercise type")
     }
     
     func onLevelUpsTapped() {

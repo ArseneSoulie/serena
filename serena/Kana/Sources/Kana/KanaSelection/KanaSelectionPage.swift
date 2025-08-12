@@ -1,6 +1,6 @@
 import SwiftUI
-import Helpers
 import Navigation
+import FoundationModels
 
 public struct KanaSelectionPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
@@ -130,7 +130,7 @@ public struct KanaSelectionPage: View {
         return selectedCountText
     }
     
-    var selectedKanasForExercise: [String] {
+    var selectedKanasForExercise: [Kana] {
         let unionedSet = selectedBase
             .union(selectedDiacritic)
             .union(selectedCombinatory)
@@ -140,8 +140,8 @@ public struct KanaSelectionPage: View {
         
         let katakanaOnlyKanas = selectedNew.map(\.kanas).joined().compactMap {$0}
         
-        let fullHiraganaSet = unionedKanas.map(\.romajiToHiragana)
-        let fullKatakanaSet = unionedKanas.map(\.romajiToKatakana) + katakanaOnlyKanas.map(\.romajiToKatakana)
+        let fullHiraganaSet: [Kana] = unionedKanas.map { .hiragana(value: $0) }
+        let fullKatakanaSet: [Kana] = unionedKanas.map { .katakana(value: $0) } + katakanaOnlyKanas.map { .katakana(value: $0) }
         
         return switch kanaSelectionType {
         case .hiragana: fullHiraganaSet
