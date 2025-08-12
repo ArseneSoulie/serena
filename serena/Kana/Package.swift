@@ -15,9 +15,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Helpers", path: "./Helpers"),
         .package(name: "Navigation", path: "./Navigation"),
         .package(name: "DesignSystem", path: "./DesignSystem"),
+        .package(name: "FoundationModels", path: "./FoundationModels"),
     ],
     targets: [
         .target(
@@ -25,7 +25,7 @@ let package = Package(
             dependencies: [
                 "Navigation",
                 "DesignSystem",
-                "Helpers",
+                "FoundationModels",
             ],
             resources: [
                 .process("Resources"),

@@ -1,4 +1,5 @@
 import SwiftUI
+import FoundationModels
 
 enum PickExerciceType {
     case pickRomaji
@@ -16,13 +17,12 @@ struct PickAnswerPage: View {
     let title: String
     
     let pickingExerciceType: PickExerciceType
-    let kanaType: KanaType
     
-    let kanaPool: [String]
+    let kanaPool: [Kana]
     let onLevelCompleted: () -> Void
     
-    @State private var truth: String
-    @State private var guessingOptions: [String]
+    @State private var truth: Kana
+    @State private var guessingOptions: [Kana]
     @State private var progress: Double = 0
     
     @State private var showToast = false
@@ -32,32 +32,30 @@ struct PickAnswerPage: View {
     init(
         title: String,
         pickingExerciceType: PickExerciceType,
-        kanaType: KanaType,
-        kanaPool: [String],
+        kanaPool: [Kana],
         onLevelCompleted: @escaping () -> Void
     ) {
         self.title = title
         self.pickingExerciceType = pickingExerciceType
-        self.kanaType = kanaType
         self.kanaPool = kanaPool
         self.onLevelCompleted = onLevelCompleted
         let options = Array(kanaPool.shuffled().prefix(3))
         guessingOptions = options
-        truth = options.randomElement() ?? ""
+        truth = options.randomElement() ?? .empty
     }
     
     
     var formattedTruth: String {
         switch pickingExerciceType {
-        case .pickRomaji: truth.format(kanaType)
-        case .pickKana: truth.formatAsRomaji(kanaType)
+        case .pickRomaji: truth.kanaValue
+        case .pickKana: truth.romajiValue
         }
     }
     
-    func formatGuessingOption(_ option: String) -> String {
+    func formatGuessingOption(_ option: Kana) -> String {
         switch pickingExerciceType {
-        case .pickRomaji: option.formatAsRomaji(kanaType)
-        case .pickKana: option.format(kanaType)
+        case .pickRomaji: option.romajiValue
+        case .pickKana: option.kanaValue
         }
     }
     
@@ -91,14 +89,14 @@ struct PickAnswerPage: View {
     
     func nextRound() {
         guessingOptions = Array(kanaPool.shuffled().prefix(3))
-        truth = guessingOptions.randomElement() ?? ""
+        truth = guessingOptions.randomElement() ?? .empty
     }
     
     var answerCompletionPercent: Double {
         1.0 / Double(kanaPool.count)
     }
     
-    func onOptionSelected(_ option: String) {
+    func onOptionSelected(_ option: Kana) {
         let isCorrect = option == truth
         var nextProgress = isCorrect ? progress + answerCompletionPercent : progress - answerCompletionPercent
         nextProgress = min(max(nextProgress, 0), 1)

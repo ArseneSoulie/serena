@@ -1,17 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@ 【%@】" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ 【%2$@】"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "%@ %lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -58,6 +47,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Base"
+          }
+        }
+      }
+    },
+    "Both" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensemble"
           }
         }
       }
@@ -128,6 +128,17 @@
         }
       }
     },
+    "Extended katakana" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katakanas étendus"
+          }
+        }
+      }
+    },
     "Fast select" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -179,6 +190,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entraînement Kana"
+          }
+        }
+      }
+    },
+    "Let's go ! %lld" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C’est parti ! %lld"
           }
         }
       }
@@ -260,6 +282,16 @@
         }
       }
     },
+    "Pick an exercise type" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez un type d’exercice"
+          }
+        }
+      }
+    },
     "Pick the correct kana word for the writing." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -293,6 +325,16 @@
         }
       }
     },
+    "Show romaji" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher Romaji"
+          }
+        }
+      }
+    },
     "Skip" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -311,6 +353,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Testez vos connaissances sur 10 kanas choisis aléatoirement parmi la sélection avec une difficulté croissante."
+          }
+        }
+      }
+    },
+    "The extended group will only show characters in the katakana form" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le groupe n’utilisera que la forme katakana"
           }
         }
       }

@@ -1,5 +1,6 @@
 import SwiftUI
 import Navigation
+import FoundationModels
 
 enum Level {
     case level1
@@ -9,17 +10,15 @@ enum Level {
     case completed
 }
 
-struct LevelUpsPage: View {
+public struct LevelUpsPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
-    let kanaType: KanaType
-    let allKanas: [String]
+    let allKanas: [Kana]
     
-    @State var kanaPool: [String]
+    @State var kanaPool: [Kana]
     @State var level: Level = .level1
     
-    init(kanas: [String], kanaType: KanaType) {
+    public init(kanas: [Kana]) {
         self.allKanas = kanas
-        self.kanaType = kanaType
         kanaPool = Array(allKanas.shuffled().prefix(10))
     }
     
@@ -35,13 +34,12 @@ struct LevelUpsPage: View {
         }
     }
     
-    var body: some View {
+    public var body: some View {
         switch level {
         case .level1:
             PickAnswerPage(
                 title: "\(localized("Level")) 1",
                 pickingExerciceType: .pickRomaji,
-                kanaType: kanaType,
                 kanaPool: kanaPool,
                 onLevelCompleted: onLevelCompleted
             )
@@ -49,14 +47,12 @@ struct LevelUpsPage: View {
             PickAnswerPage(
                 title: "\(localized("Level")) 2",
                 pickingExerciceType: .pickKana,
-                kanaType: kanaType,
                 kanaPool: kanaPool,
                 onLevelCompleted: onLevelCompleted
             )
         case .level3:
             WriteAnswerPage(
                 title: "\(localized("Level")) 3",
-                kanaType: kanaType,
                 writingExerciceType: .single,
                 kanaPool: kanaPool,
                 onLevelCompleted: onLevelCompleted
@@ -64,7 +60,6 @@ struct LevelUpsPage: View {
         case .level4:
             WriteAnswerPage(
                 title: "\(localized("Level")) 4",
-                kanaType: kanaType,
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,
                 onLevelCompleted: onLevelCompleted

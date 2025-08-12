@@ -1,13 +1,11 @@
 import SwiftUI
 
 struct FastSelectPopoverView: View {
-    let kanaType: KanaType
-    
     @Binding var selectedBase: Set<KanaLine>
     @Binding var selectedDiacritic: Set<KanaLine>
     @Binding var selectedCombinatory: Set<KanaLine>
     @Binding var selectedCombinatoryDiacritic: Set<KanaLine>
-    @Binding var selectedNew: Set<KanaLine>
+    @Binding var selectedExtendedKatakana: Set<KanaLine>
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,27 +16,25 @@ struct FastSelectPopoverView: View {
             }
             Divider()
             FastSelectToggleButton(
-                title: "【\("ka".format(kanaType))】\(localized("Base")) \(kanaType.rawValue)",
+                title: localized("Base"),
                 isOn: $selectedBase[containsLines: base]
             )
             FastSelectToggleButton(
-                title: "【\("ga".format(kanaType))】\(localized("Diacritics"))",
+                title: localized("Diacritics"),
                 isOn: $selectedDiacritic[containsLines: diacritic]
             )
             FastSelectToggleButton(
-                title: "【\("sha".format(kanaType))】\(localized("Combinatory"))",
+                title: localized("Combinatory"),
                 isOn: $selectedCombinatory[containsLines: combinatory]
             )
             FastSelectToggleButton(
-                title: "【\("ja".format(kanaType))】\(localized("Combinatory diacritics"))",
+                title: localized("Combinatory diacritics"),
                 isOn: $selectedCombinatoryDiacritic[containsLines: combinatoryDiacritic]
             )
-            if case .katakana = kanaType {
-                FastSelectToggleButton(
-                    title: "【新】\(localized("New cases"))",
-                    isOn: $selectedNew[containsLines: new]
-                )
-            }
+            FastSelectToggleButton(
+                title: localized("Extended katakana"),
+                isOn: $selectedExtendedKatakana[containsLines: extendedKatakana]
+            )
         }
         .padding()
         .presentationCompactAdaptation(.popover)
@@ -49,9 +45,7 @@ struct FastSelectPopoverView: View {
         selectedDiacritic.formUnion(diacritic)
         selectedCombinatory.formUnion(combinatory)
         selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic)
-        if kanaType == .katakana {
-            selectedNew.formUnion(new)
-        }
+        selectedExtendedKatakana.formUnion(extendedKatakana)
     }
     
     func clearAll() {
@@ -59,12 +53,9 @@ struct FastSelectPopoverView: View {
         selectedDiacritic.removeAll()
         selectedCombinatory.removeAll()
         selectedCombinatoryDiacritic.removeAll()
-        if kanaType == .katakana {
-            selectedNew.removeAll()
-        }
+        selectedExtendedKatakana.removeAll()
     }
 }
-
 
 struct FastSelectToggleButton: View {
     let title: String

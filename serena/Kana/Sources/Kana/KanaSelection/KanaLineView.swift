@@ -1,9 +1,9 @@
 import SwiftUI
 
 struct KanaLineView: View {
-    @Environment(\.kanaDisplayType) var kanaDisplayType
-    
     let kanaLine: KanaLine
+    let showRomaji: Bool
+    let kanaSelectionType: KanaSelectionType
     
     @Binding var isOn: Bool
     
@@ -19,10 +19,7 @@ struct KanaLineView: View {
             Button(action: toggleLine) {
                 HStack(spacing: 4) {
                     ForEach(kanaLine.kanas, id: \.kanaId) { kana in
-                        let displayedText = (kana ?? "a").format(kanaDisplayType)
-                        
-                        Text(displayedText)
-                            .font(.title2)
+                        KanaWritingPreview(text: kana, showRomaji: showRomaji, kanaSelectionType: kanaSelectionType)
                             .padding(.all, 6)
                             .frame(maxWidth: .infinity)
                             .background { Color(white: 0.97) }
@@ -59,15 +56,81 @@ struct KanaLineView: View {
     }
 }
 
+struct KanaWritingPreview: View {
+    let text: String
+    let showRomaji: Bool
+    let kanaSelectionType: KanaSelectionType
+    
+    init(text: String?, showRomaji: Bool, kanaSelectionType: KanaSelectionType) {
+        self.text = text ?? ""
+        self.showRomaji = showRomaji
+        self.kanaSelectionType = kanaSelectionType
+    }
+    
+    var body: some View {
+        switch kanaSelectionType {
+        case .hiragana:
+            VStack {
+                Text(text.romajiToHiragana).bold()
+                if showRomaji {
+                    Text(text.lowercased())
+                        .font(.caption)
+                }
+            }
+        case .katakana:
+            VStack {
+                Text(text.romajiToKatakana).bold()
+                if showRomaji {
+                    Text(text.uppercased())
+                        .font(.caption)
+                }
+            }
+        case .both:
+            HStack {
+                VStack {
+                    Text(text.romajiToHiragana).bold()
+                    if showRomaji {
+                        Text(text.lowercased())
+                            .font(.caption)
+                    }
+                }
+                VStack {
+                    Text(text.romajiToKatakana).bold()
+                    if showRomaji {
+                        Text(text.uppercased())
+                            .font(.caption)
+                    }
+                }
+            }
+        }
+    }
+}
+
 #Preview {
     @Previewable @State var isOn = true
     Grid {
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            showRomaji: true,
+            kanaSelectionType: .hiragana,
             isOn: $isOn
         )
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            showRomaji: true,
+            kanaSelectionType: .katakana,
+            isOn: $isOn
+        )
+        KanaLineView(
+            kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            showRomaji: false,
+            kanaSelectionType: .hiragana,
+            isOn: $isOn
+        )
+        KanaLineView(
+            kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            showRomaji: false,
+            kanaSelectionType: .hiragana,
             isOn: $isOn
         )
     }

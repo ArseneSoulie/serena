@@ -1,6 +1,6 @@
 import SwiftUI
-import Helpers
 import Navigation
+import FoundationModels
 
 public struct KanaSelectionPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
@@ -9,14 +9,11 @@ public struct KanaSelectionPage: View {
     @State var selectedDiacritic: Set<KanaLine> = []
     @State var selectedCombinatory: Set<KanaLine> = []
     @State var selectedCombinatoryDiacritic: Set<KanaLine> = []
-    @State var selectedNew: Set<KanaLine> = []
+    @State var selectedExtendedKatakana: Set<KanaLine> = []
     
-    @State var displayAsKana: Bool = true
+    @State var showRomaji: Bool = false
     
-    @State var kanaType: KanaType = .hiragana
-    
-    @State var showLevelUpPopover: Bool = false
-    @State var showAllInARowPopover: Bool = false
+    @State var kanaSelectionType: KanaSelectionType = .hiragana
     
     public init() {}
     
@@ -28,94 +25,97 @@ public struct KanaSelectionPage: View {
                         .font(.subheadline)
                         .padding()
                     
-                    Picker(localized("Training mode"), selection: $kanaType) {
-                        ForEach (KanaType.allCases, id: \.self) {
-                            Text("\($0.rawValue) 【\($0.letter)】")
+                    Picker(localized("Training mode"), selection: $kanaSelectionType) {
+                        ForEach (KanaSelectionType.allCases, id: \.self) {
+                            Text(localized($0.rawValue))
                         }
                     }
                     .pickerStyle(.segmented)
                     .padding()
                     
                     KanaLineGroupView(
-                        title: "【\("ka".format(kanaType))】\(localized("Base")) \(kanaType.rawValue)",
-                        lines: base, selectedLines: $selectedBase,
+                        title: localized("Base"),
+                        lines: base,
+                        selectedLines: $selectedBase,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
                     )
                     KanaLineGroupView(
-                        title: "【\("ga".format(kanaType))】\(localized("Diacritics")) (dakuten/handakuten)",
-                        lines: diacritic, selectedLines: $selectedDiacritic,
-                    )
-                    KanaLineGroupView(title: "【\("sha".format(kanaType))】\(localized("Combinatory"))",
-                        lines: combinatory, selectedLines: $selectedCombinatory,
+                        title: localized("Diacritics"),
+                        lines: diacritic,
+                        selectedLines: $selectedDiacritic,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
                     )
                     KanaLineGroupView(
-                        title: "【\("ja".format(kanaType))】\(localized("Combinatory diacritics"))",
-                        lines: combinatoryDiacritic, selectedLines: $selectedCombinatoryDiacritic,
+                        title: localized("Combinatory"),
+                        lines: combinatory,
+                        selectedLines: $selectedCombinatory,
+                                      showRomaji: showRomaji,
+                                      kanaSelectionType: kanaSelectionType,
                     )
-                    if case .katakana = kanaType {
-                        KanaLineGroupView(title: "【新】\(localized("New cases"))", lines: new, selectedLines: $selectedNew)
-                    }
+                    KanaLineGroupView(
+                        title: localized("Combinatory diacritics"),
+                        lines: combinatoryDiacritic,
+                        selectedLines: $selectedCombinatoryDiacritic,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
+                    )
+                    let willPartiallyRepresentSelection = (kanaSelectionType == .hiragana || kanaSelectionType == .both) && !selectedExtendedKatakana.isEmpty
+                    KanaLineGroupView(
+                        title: localized("Extended katakana"),
+                        subtitle: willPartiallyRepresentSelection ? localized("The extended group will only show characters in the katakana form") : nil,
+                        lines: extendedKatakana,
+                        selectedLines: $selectedExtendedKatakana,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: .katakana,
+                    )
+                    .opacity(kanaSelectionType == .hiragana ? 0.3 : 1)
                     Spacer()
                         .frame(height: 160)
                 }
             }
+            .animation(.default, value: showRomaji)
+            .animation(.default, value: kanaSelectionType)
             .overlay(alignment: .bottom) {
                 BottomViews(
-                    kanaType: $kanaType,
-                    showLevelUpPopover: $showLevelUpPopover,
-                    showAllInARowPopover: $showAllInARowPopover,
+                    kanaSelectionType: $kanaSelectionType,
                     textForSelectedKanas: textForSelectedKanas,
-                    onLevelUpsTapped: onLevelUpsTapped,
-                    onAllInARowTapped: onAllInARowTapped,
-                    areTrainingModeButtonDisabled: !hasAnySelected
+                    totalSelectedKanas: selectedKanasForExercise.count,
+                    onExerciceSelectionTapped: onExerciceSelectionTapped,
                 )
             }
             .toolbar {
                 ToolbarViews(
-                    displayAsKana: $displayAsKana,
-                    showLevelUpPopover: $showLevelUpPopover,
-                    kanaType: kanaType,
+                    showRomaji: $showRomaji,
                     selectedBase: $selectedBase,
                     selectedDiacritic: $selectedDiacritic,
                     selectedCombinatory: $selectedCombinatory,
                     selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                    selectedNew: $selectedNew
+                    selectedExtendedKatakana: $selectedExtendedKatakana
                 )
             }
             .navigationDestination(for: Destination.self) { destination in
                 switch destination {
                 case let .levelUps(kanas):
-                    LevelUpsPage(kanas: kanas, kanaType: kanaType)
+                    LevelUpsPage(kanas: kanas)
                 case let .allInARow(kanas):
-                    AllInARowPage(kanas: kanas, kanaType: kanaType)
-                }
-            }
-            .onChange(of: kanaType, { _,_ in selectedNew.removeAll() })
-            .onChange(of: showLevelUpPopover) { oldValue, newValue in
-                if oldValue && !newValue {
-                    showAllInARowPopover = true
+                    AllInARowPage(kanas: kanas)
+                case let .exerciseSelection(kanas):
+                    ExerciseSelectionPage(kanaPool: kanas)
                 }
             }
             .navigationTitle(localized("Kana training"))
-            .environment(\.kanaDisplayType, kanaDisplayType)
-        }
-        .animation(.easeInOut, value: kanaType)
-    }
-    
-    var kanaDisplayType: KanaDisplayType {
-        switch (displayAsKana, kanaType) {
-        case (true , .hiragana): .asHiragana
-        case (true , .katakana): .asKatakana
-        case (false , .hiragana): .asLowercasedRomaji
-        case (false , .katakana): . asUppercasedRomaji
         }
     }
+
     
     var textForSelectedKanas: String {
-        let baseCount: String = "ka".format(kanaType) + "\(selectedBase.kanaCount)/\(base.kanaCount) "
-        let diacriticCount = "ga".format(kanaType) + "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount) "
-        let combinatoryCount = "sha".format(kanaType) + "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount) "
-        let combinatoryDiacriticCount = "ja".format(kanaType) + "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount) "
-        let newCount = "新\(selectedNew.kanaCount)/\(new.kanaCount)"
+        let baseCount: String = "\(selectedBase.kanaCount)/\(base.kanaCount) "
+        let diacriticCount = "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount) "
+        let combinatoryCount = "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount) "
+        let combinatoryDiacriticCount = "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount) "
+        let extendedKatakanaCount = "\(selectedExtendedKatakana.kanaCount)/\(extendedKatakana.kanaCount)"
         
         var selectedCountText: String = ""
         
@@ -123,114 +123,82 @@ public struct KanaSelectionPage: View {
         if !selectedDiacritic.isEmpty { selectedCountText.append(diacriticCount)}
         if !selectedCombinatory.isEmpty { selectedCountText.append(combinatoryCount)}
         if !selectedCombinatoryDiacritic.isEmpty { selectedCountText.append(combinatoryDiacriticCount)}
-        if !selectedNew.isEmpty { selectedCountText.append(newCount)}
+        if !selectedExtendedKatakana.isEmpty { selectedCountText.append(extendedKatakanaCount)}
         return selectedCountText
     }
     
-    var mergedKanas: [String] {
+    var selectedKanasForExercise: [Kana] {
         let unionedSet = selectedBase
             .union(selectedDiacritic)
             .union(selectedCombinatory)
             .union(selectedCombinatoryDiacritic)
-            .union(selectedNew)
         
-        return unionedSet.map(\.kanas).joined().compactMap {$0}
+        let unionedKanas = unionedSet.map(\.kanas).joined().compactMap {$0}
+        
+        let katakanaOnlyKanas = selectedExtendedKatakana.map(\.kanas).joined().compactMap {$0}
+        
+        let fullHiraganaSet: [Kana] = unionedKanas.map { .hiragana(value: $0) }
+        let fullKatakanaSet: [Kana] = unionedKanas.map { .katakana(value: $0) } + katakanaOnlyKanas.map { .katakana(value: $0) }
+        
+        return switch kanaSelectionType {
+        case .hiragana: fullHiraganaSet
+        case .both: fullHiraganaSet + fullKatakanaSet
+        case .katakana: fullKatakanaSet
+        }
     }
     
-    func onLevelUpsTapped() {
-        coordinator.push(.levelUps(mergedKanas))
-    }
-    
-    func onAllInARowTapped() {
-        coordinator.push(.allInARow(mergedKanas))
-    }
-    
-    var hasAnySelected: Bool {
-        !selectedBase.isEmpty
-        || !selectedDiacritic.isEmpty
-        || !selectedCombinatory.isEmpty
-        || !selectedCombinatoryDiacritic.isEmpty
-        || !selectedNew.isEmpty
+    func onExerciceSelectionTapped() {
+        coordinator.push(.exerciseSelection(selectedKanasForExercise))
     }
 }
 
 struct ToolbarViews: View {
     @State var showsFastSelect: Bool = false
     
-    @Binding var displayAsKana: Bool
-    @Binding var showLevelUpPopover: Bool
-    let kanaType: KanaType
+    @Binding var showRomaji: Bool
     
     @Binding var selectedBase: Set<KanaLine>
     @Binding var selectedDiacritic: Set<KanaLine>
     @Binding var selectedCombinatory: Set<KanaLine>
     @Binding var selectedCombinatoryDiacritic: Set<KanaLine>
-    @Binding var selectedNew: Set<KanaLine>
+    @Binding var selectedExtendedKatakana: Set<KanaLine>
     
     var body: some View {
-        let swapDisplayModeText: String = if displayAsKana {
-            "\(kanaType.letter)↔\(kanaType.romajiLetter)"
-        } else {
-            "\(kanaType.romajiLetter)↔\(kanaType.letter)"
-        }
-        
-        Button(swapDisplayModeText) { withAnimation { displayAsKana.toggle()} }
+        Toggle(localized("Show romaji"), isOn: $showRomaji)
         Button(localized("Fast select")) { showsFastSelect.toggle() }
             .popover (isPresented: $showsFastSelect) {
                 FastSelectPopoverView(
-                    kanaType: kanaType,
                     selectedBase: $selectedBase,
                     selectedDiacritic: $selectedDiacritic,
                     selectedCombinatory: $selectedCombinatory,
                     selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                    selectedNew: $selectedNew
+                    selectedExtendedKatakana: $selectedExtendedKatakana
                 )
             }
-        Button(
-            action: { showLevelUpPopover = true },
-            label: { Image(systemName: "questionmark.circle")}
-        )
     }
 }
 
 struct BottomViews: View {
-    @Binding var kanaType: KanaType
-    
-    @Binding var showLevelUpPopover: Bool
-    @Binding var showAllInARowPopover: Bool
+    @Binding var kanaSelectionType: KanaSelectionType
     
     let textForSelectedKanas: String
-    
-    let onLevelUpsTapped: () -> Void
-    let onAllInARowTapped: () -> Void
-    let areTrainingModeButtonDisabled: Bool
+    let totalSelectedKanas: Int
+    let onExerciceSelectionTapped: () -> Void
     
     var body: some View {
         ZStack(alignment: .bottom) {
             BottomGradient()
             VStack(spacing: 8) {
                 ZStack {
-                    HStack(spacing: 20) {
-                        TrainingButtonView(
-                            title: localized("Level ups"),
-                            popoverHelpText: localized("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty."),
-                            onButtonTapped: onLevelUpsTapped,
-                            isPopoverPresented: $showLevelUpPopover
-                        )
-                        TrainingButtonView(
-                            title: localized("All in a row"),
-                            popoverHelpText: localized("Try to get all selected kanas right in a row !"),
-                            onButtonTapped: onAllInARowTapped,
-                            isPopoverPresented: $showAllInARowPopover
-                        )
-                    }
-                    .disabled(areTrainingModeButtonDisabled)
+                    Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)
+                        .buttonStyle(.borderedProminent)
+                        .disabled(totalSelectedKanas == 0)
 
                     HStack {
                         Text(localized("Mode"))
                         Spacer()
-                        Picker(localized("Training mode"), selection: $kanaType) {
-                            ForEach (KanaType.allCases, id: \.self) { Text($0.letter) }
+                        Picker(localized("Training mode"), selection: $kanaSelectionType) {
+                            ForEach (KanaSelectionType.allCases, id: \.self) { Text($0.symbol) }
                         }
                         .pickerStyle(.segmented)
                         .fixedSize()

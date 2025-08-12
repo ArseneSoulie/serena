@@ -1,29 +1,27 @@
 import SwiftUI
 import Navigation
+import FoundationModels
 
-struct AllInARowPage: View {
+public struct AllInARowPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     
-    let kanas: [String]
-    let kanaType: KanaType
+    let kanas: [Kana]
     
-    @State private var failedKanas: Set<String> = []
-    @State private var remainingKanas: Set<String>
+    @State private var failedKanas: Set<Kana> = []
+    @State private var remainingKanas: Set<Kana>
     
     @State var isFinished: Bool = false
     
-    init(kanas: [String], kanaType: KanaType) {
+    public init(kanas: [Kana]) {
         self.kanas = kanas
-        self.kanaType = kanaType
         self.remainingKanas = Set(kanas)
     }
     
     
-    var body: some View {
+    public var body: some View {
         if !isFinished {
             AllInARowExercicePage(
                 kanas: kanas,
-                kanaType: kanaType,
                 failedKanas: $failedKanas,
                 remainingKanas: $remainingKanas,
                 onFinished: onFinished
@@ -31,7 +29,6 @@ struct AllInARowPage: View {
         } else {
             CompletedAllInARowPage(
                 kanas: kanas,
-                kanaType: kanaType,
                 failedKanas: failedKanas,
                 remainingKanas: remainingKanas,
                 onTryAgainTapped: onTryAgainTapped,

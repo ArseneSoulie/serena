@@ -14,9 +14,15 @@ let package = Package(
             targets: ["Navigation"]
         ),
     ],
+    dependencies: [
+        .package(name: "FoundationModels", path: "./FoundationModels"),
+    ],
     targets: [
         .target(
-            name: "Navigation"
+            name: "Navigation",
+            dependencies: [
+                "FoundationModels"
+            ]
         ),
 
     ]
