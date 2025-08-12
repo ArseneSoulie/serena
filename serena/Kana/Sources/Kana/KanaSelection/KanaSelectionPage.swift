@@ -62,16 +62,13 @@ public struct KanaSelectionPage: View {
                         kanaSelectionType: kanaSelectionType,
                     )
                     let willPartiallyRepresentSelection = (kanaSelectionType == .hiragana || kanaSelectionType == .both) && !selectedExtendedKatakana.isEmpty
-                    if willPartiallyRepresentSelection {
-                        Text(localized("The extended group will only show characters in the katakana form"))
-                            .padding()
-                    }
                     KanaLineGroupView(
                         title: localized("Extended katakana"),
+                        subtitle: willPartiallyRepresentSelection ? localized("The extended group will only show characters in the katakana form") : nil,
                         lines: extendedKatakana,
                         selectedLines: $selectedExtendedKatakana,
                         showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
+                        kanaSelectionType: .katakana,
                     )
                     .opacity(kanaSelectionType == .hiragana ? 0.3 : 1)
                     Spacer()
