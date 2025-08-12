@@ -23,6 +23,7 @@ struct WriteAnswerPage: View {
     
     @State private var truth: [Kana]
     @State private var progress: Double = 0
+    @State private var isLevelCompleted = false
     
     @State var inputText: String = ""
     @FocusState var isFocused: Bool
@@ -73,7 +74,10 @@ struct WriteAnswerPage: View {
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
-        .onAppear { isFocused = true }
+        .onAppear {
+            isFocused = true
+            isLevelCompleted = false
+        }
         .navigationTitle(title)
         .navigationBarTitleDisplayMode(.inline)
         .toast(isPresented: $showToast, message: localized("Level up !"))
@@ -95,8 +99,6 @@ struct WriteAnswerPage: View {
     var kanaTruth: String {
         truth.map(\.kanaValue).joined()
     }
-    
-    @State var isLevelCompleted = false
     
     func onSubmit() {
         if isLevelCompleted { return }
