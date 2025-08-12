@@ -10,6 +10,5 @@ enum KanaSelectionType: String, CaseIterable, Hashable {
         case .both: "&"
         }
     }
-    
 }
 

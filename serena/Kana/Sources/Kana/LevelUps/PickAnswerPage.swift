@@ -41,7 +41,7 @@ struct PickAnswerPage: View {
         self.onLevelCompleted = onLevelCompleted
         let options = Array(kanaPool.shuffled().prefix(3))
         guessingOptions = options
-        truth = options.randomElement() ?? .hiragana(value: "")
+        truth = options.randomElement() ?? .empty
     }
     
     

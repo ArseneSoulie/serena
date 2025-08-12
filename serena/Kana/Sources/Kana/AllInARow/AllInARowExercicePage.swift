@@ -25,7 +25,7 @@ struct AllInARowExercicePage: View {
         onFinished: @escaping () -> Void
     ) {
         self.kanas = kanas
-        truth = remainingKanas.wrappedValue.randomElement() ?? .hiragana(value: "")
+        truth = remainingKanas.wrappedValue.randomElement() ?? .empty
         _failedKanas = failedKanas
         _remainingKanas = remainingKanas
         self.onFinished = onFinished

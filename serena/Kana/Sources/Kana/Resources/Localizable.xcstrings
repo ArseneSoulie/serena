@@ -51,6 +51,17 @@
         }
       }
     },
+    "Both" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ensemble"
+          }
+        }
+      }
+    },
     "Clear" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -183,12 +194,13 @@
         }
       }
     },
-    "Let's go %lld" : {
+    "Let's go ! %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "C’est parti %lld"
+            "value" : "C’est parti ! %lld"
           }
         }
       }

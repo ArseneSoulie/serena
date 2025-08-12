@@ -190,7 +190,7 @@ struct BottomViews: View {
             BottomGradient()
             VStack(spacing: 8) {
                 ZStack {
-                    Button(localized("Let's go \(totalSelectedKanas)"), action: onExerciceSelectionTapped)
+                    Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)
                         .buttonStyle(.borderedProminent)
                         .disabled(totalSelectedKanas == 0)
 
