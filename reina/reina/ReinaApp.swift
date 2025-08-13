@@ -15,7 +15,7 @@ struct ReinaApp: App {
     
     var body: some Scene {
         WindowGroup {
-            KanaSelectionPage()
+            KanaMainPage()
                 .environment(coordinator)
         }
     }

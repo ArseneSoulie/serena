@@ -1,10 +1,12 @@
 import SwiftUI
 import Navigation
 
-struct KanaMainPage: View {
+public struct KanaMainPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     
-    var body: some View {
+    public init() {}
+    
+    public var body: some View {
         NavigationStack(path: coordinator.binding(for: \.path)) {
                 TabView {
                     NavigationView {
