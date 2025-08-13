@@ -95,7 +95,7 @@ struct AllInARowExercicePage: View {
         if isCorrect {
             remainingKanas.remove(truth)
             withAnimation {
-                truth = remainingKanas.randomElement() ?? .empty
+                nextRandomKana()
                 progress += answerCompletionPercent
                 if progress >= 0.99 {
                     onFinished()
@@ -115,7 +115,11 @@ struct AllInARowExercicePage: View {
     }
     
     func onSkip() {
-        truth = remainingKanas.randomElement() ?? .empty
+        nextRandomKana()
+    }
+    
+    func nextRandomKana() {
+        truth = remainingKanas.filter { truth != $0 }.randomElement() ?? remainingKanas.first ?? .empty
     }
 }
 
