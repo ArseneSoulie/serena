@@ -18,7 +18,6 @@ public struct KanaSelectionPage: View {
     public init() {}
     
     public var body: some View {
-        NavigationStack(path: coordinator.binding(for: \.path)) {
             ScrollView {
                 VStack(alignment: .leading) {
                     Text(localized("Select the rows you want to train on and pick a mode below."))
@@ -95,18 +94,8 @@ public struct KanaSelectionPage: View {
                     selectedExtendedKatakana: $selectedExtendedKatakana
                 )
             }
-            .navigationDestination(for: Destination.self) { destination in
-                switch destination {
-                case let .levelUps(kanas):
-                    LevelUpsPage(kanas: kanas)
-                case let .allInARow(kanas):
-                    AllInARowPage(kanas: kanas)
-                case let .exerciseSelection(kanas):
-                    ExerciseSelectionPage(kanaPool: kanas)
-                }
-            }
             .navigationTitle(localized("Kana training"))
-        }
+            .navigationBarTitleDisplayMode(.large)
     }
 
     
@@ -244,7 +233,6 @@ struct BottomGradient: View {
                 .init(color: Color.bgColor.opacity(0.2), location: 0.85),
                 .init(color: Color.bgColor, location: 0.9),
             ]))
-            .ignoresSafeArea(edges: .bottom)
             .allowsHitTesting(false)
     }
 }

@@ -194,6 +194,12 @@
         }
       }
     },
+    "KanaLearningPage" : {
+
+    },
+    "Learning" : {
+
+    },
     "Let's go ! %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -237,6 +243,9 @@
           }
         }
       }
+    },
+    "Mnemonics" : {
+
     },
     "Mode" : {
       "extractionState" : "manual",
@@ -366,6 +375,9 @@
           }
         }
       }
+    },
+    "Training" : {
+
     },
     "Training mode" : {
       "extractionState" : "manual",
