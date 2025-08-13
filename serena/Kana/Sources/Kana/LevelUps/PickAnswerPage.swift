@@ -89,7 +89,7 @@ struct PickAnswerPage: View {
     
     func nextRound() {
         guessingOptions = Array(kanaPool.shuffled().prefix(3))
-        truth = guessingOptions.randomElement() ?? .empty
+        truth = guessingOptions.shuffled().first(where: { $0 != truth }) ?? truth
     }
     
     var answerCompletionPercent: Double {

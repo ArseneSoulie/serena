@@ -87,8 +87,11 @@ struct WriteAnswerPage: View {
         isFocused = true
         
         switch writingExerciceType {
-        case .single: truth = Array(kanaPool.shuffled().prefix(1))
-        case .groupOfThree: truth = Array(kanaPool.shuffled().prefix(3))
+        case .single:
+            let nextTruth = kanaPool.filter { !truth.contains($0) }.randomElement() ?? kanaPool.first ?? .empty
+            truth = [nextTruth]
+        case .groupOfThree:
+            truth = Array(kanaPool.shuffled().prefix(3))
         }
     }
     
