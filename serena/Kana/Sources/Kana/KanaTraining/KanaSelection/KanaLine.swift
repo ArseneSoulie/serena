@@ -65,6 +65,7 @@ let extendedKatakana: [KanaLine] = [
     .init(name:"ch-" , kanas:["che"]),
     .init(name:"ts-" , kanas:["tsa","tsi","tse","tso"]),
     .init(name:"f-" , kanas:["fa","fi","fe","fo"]),
+    .init(name:"y-" , kanas:["ye"]),
     .init(name:"w-" , kanas:["wi","we","uxo"]),
     .init(name:"v-" , kanas:["va","vi","vu","ve","vo"]),
     .init(name:"∗" , kanas:["thi","dhi","twu","dwu"]),
