@@ -2,7 +2,7 @@ import Foundation
 
 public extension String {
     var romajiToKatakana: String {
-        romajiToKatakanaTransform(self)
+        romajiToKatakanaTransform(self).transfromedString
     }
     
     var romajiToHiragana: String {
@@ -20,7 +20,12 @@ public extension String {
     }
     
     var standardisedRomaji: String {
-        romajiToHiragana.hiraganaToRomaji.lowercased()
+        lowercased().romajiToKatakana.katakanaToRomaji.lowercased()
+    }
+    
+    var standardizedRomajiWithWarningInfo: (romaji: String, hasWarning: Bool) {
+        let kanakanizedString = romajiToKatakanaTransform(lowercased())
+        return (kanakanizedString.transfromedString.katakanaToRomaji.lowercased(), kanakanizedString.warning)
     }
 }
 
@@ -112,20 +117,27 @@ private let romajiToKatakanaMap: [String: String] = [
     "ye": "イェ",
 ]
 
-private func romajiToKatakanaTransform(_ input: String) -> String {
+private func romajiToKatakanaTransform(_ input: String) -> (transfromedString: String, warning: Bool) {
     let lower = input.lowercased()
     var output = ""
     var index = lower.startIndex
+    var warning: Bool = false
 
     while index < lower.endIndex {
         var matched = false
-        for len in (1...3).reversed() {
+        for len in (1...4).reversed() {
             guard let end = lower.index(index, offsetBy: len, limitedBy: lower.endIndex) else { continue }
             let slice = String(lower[index..<end])
             if let kana = romajiToKatakanaMap[slice] {
                 output += kana
                 index = end
                 matched = true
+                break
+            } else if let kana = romajiToKatakanaWarningMap[slice] {
+                output += kana
+                index = end
+                matched = true
+                warning = true
                 break
             }
         }
@@ -136,5 +148,5 @@ private func romajiToKatakanaTransform(_ input: String) -> String {
         }
     }
 
-    return output
+    return (output, warning)
 }
