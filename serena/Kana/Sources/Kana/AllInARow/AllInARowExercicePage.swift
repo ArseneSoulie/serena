@@ -36,6 +36,7 @@ struct AllInARowExercicePage: View {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(localized("Write the writing of all kanas in a row"))
+                
                 Text(truth.kanaValue)
                     .foregroundStyle(truthColor)
                     .modifier(ShakeEffect(animatableData: shakeTrigger))
@@ -45,17 +46,27 @@ struct AllInARowExercicePage: View {
                 
                 Spacer()
                 
-                TextEditor(text: $inputText)
-                    .onSubmit(onSubmit)
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.never)
-                    .multilineTextAlignment(.center)
-                    .textEditorStyle(.plain)
-                    .font(.largeTitle)
-                    .focused($isFocused)
-                    .padding()
+                ZStack(alignment: .trailing) {
+                    TextEditor(text: $inputText)
+                        .onSubmit(onSubmit)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .multilineTextAlignment(.center)
+                        .textEditorStyle(.plain)
+                        .font(.largeTitle)
+                        .focused($isFocused)
+                    
+                    Button(action: onSubmit) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding()
+                    }
+                }
+                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                .padding()
                 
-            }            
+            }
         }
         .navigationTitle(localized("All in a row"))
         .navigationBarTitleDisplayMode(.inline)
@@ -106,4 +117,22 @@ struct AllInARowExercicePage: View {
     func onSkip() {
         truth = remainingKanas.randomElement() ?? .empty
     }
+}
+
+#Preview {
+    AllInARowExercicePage(
+        kanas: [
+            .hiragana(value: "a"),
+            .hiragana(value: "i"),
+            .hiragana(value: "u"),
+            .hiragana(value: "e"),
+            .hiragana(value: "o"),
+            .hiragana(value: "ka"),
+            .hiragana(value: "ki"),
+            .hiragana(value: "ku")
+        ],
+        failedKanas: .constant([.hiragana(value: "ka")]),
+        remainingKanas: .constant([]),
+        onFinished: {}
+    )
 }
