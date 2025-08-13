@@ -2,7 +2,7 @@ import Foundation
 
 public extension String {
     var romajiToKatakana: String {
-        romajiToKatakanaTransform(self)
+        romajiToKatakanaTransform(self).transfromedString
     }
     
     var romajiToHiragana: String {
@@ -20,9 +20,22 @@ public extension String {
     }
     
     var standardisedRomaji: String {
-        romajiToHiragana.hiraganaToRomaji.lowercased()
+        lowercased().romajiToKatakana.katakanaToRomaji.lowercased()
+    }
+    
+    var standardizedRomajiWithWarningInfo: (romaji: String, hasWarning: Bool) {
+        let kanakanizedString = romajiToKatakanaTransform(lowercased())
+        return (kanakanizedString.transfromedString.katakanaToRomaji.lowercased(), kanakanizedString.warning)
     }
 }
+
+private let romajiToKatakanaWarningMap: [String: String] = [
+    "dja": "ヂャ", "dju": "ヂュ", "djo": "ヂョ",
+    "djya": "ヂャ", "djyu": "ヂュ", "djyo": "ヂョ",
+    "chya": "チャ", "chyu": "チュ", "chyo": "チョ", "chye": "チェ",
+    "shya": "シャ", "shyu": "シュ", "shye": "シェ", "shyo": "ショ",
+    "tza": "ツァ", "tzi": "ツィ", "tze": "ツェ", "tzo": "ツォ",
+]
 
 private let romajiToKatakanaMap: [String: String] = [
     // Vowels
@@ -40,10 +53,9 @@ private let romajiToKatakanaMap: [String: String] = [
     // T
     "ta": "タ", "chi": "チ", "ti": "チ", "tsu": "ツ", "tu": "ツ", "te": "テ", "to": "ト",
     "cha": "チャ", "chu": "チュ", "cho": "チョ", "che": "チェ",
-    "tya": "チャ", "tyu": "チュ", "tyo": "チョ",
+    "tya": "チャ", "tyu": "チュ", "tyo": "チョ", "tye": "チェ",
     "thi": "ティ", "thu": "トゥ",
     "tsa": "ツァ", "tsi": "ツィ", "tse": "ツェ", "tso": "ツォ",
-    "tza": "ツァ", "tzi": "ツィ", "tze": "ツェ", "tzo": "ツォ",
 
     // N
     "na": "ナ", "ni": "ニ", "nu": "ヌ", "ne": "ネ", "no": "ノ",
@@ -100,22 +112,32 @@ private let romajiToKatakanaMap: [String: String] = [
     // D/W combos
     "twa": "トァ", "twi": "トィ", "twu": "トゥ", "twe": "トェ", "two": "トゥ",
     "dwa": "ドァ", "dwi": "ドィ", "dwu": "ドゥ", "dwe": "ドェ", "dwo": "ドォ",
+    
+    // Y
+    "ye": "イェ",
 ]
 
-private func romajiToKatakanaTransform(_ input: String) -> String {
+private func romajiToKatakanaTransform(_ input: String) -> (transfromedString: String, warning: Bool) {
     let lower = input.lowercased()
     var output = ""
     var index = lower.startIndex
+    var warning: Bool = false
 
     while index < lower.endIndex {
         var matched = false
-        for len in (1...3).reversed() {
+        for len in (1...4).reversed() {
             guard let end = lower.index(index, offsetBy: len, limitedBy: lower.endIndex) else { continue }
             let slice = String(lower[index..<end])
             if let kana = romajiToKatakanaMap[slice] {
                 output += kana
                 index = end
                 matched = true
+                break
+            } else if let kana = romajiToKatakanaWarningMap[slice] {
+                output += kana
+                index = end
+                matched = true
+                warning = true
                 break
             }
         }
@@ -126,5 +148,5 @@ private func romajiToKatakanaTransform(_ input: String) -> String {
         }
     }
 
-    return output
+    return (output, warning)
 }

@@ -24,11 +24,15 @@ struct WriteAnswerPage: View {
     @State private var truth: [Kana]
     @State private var progress: Double = 0
     @State private var isLevelCompleted = false
+    @State private var truthColor: Color = .primary
+    @State private var shakeTrigger: CGFloat = 0
     
     @State var inputText: String = ""
     @FocusState var isFocused: Bool
     
     @State private var showToast = false
+    
+    @State var info: String = ""
     
     init(
         title: String,
@@ -52,11 +56,15 @@ struct WriteAnswerPage: View {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(writingExerciceType.prompt)
+                VStack {
                 Text(kanaTruth)
+                    .foregroundStyle(truthColor)
                     .font(.system(.largeTitle, design: .rounded))
+                    .modifier(ShakeEffect(animatableData: shakeTrigger))
                     .padding()
                     .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                
+                    Text(info)
+                }
                 Spacer()
                 
                 ZStack(alignment: .trailing) {
@@ -113,20 +121,38 @@ struct WriteAnswerPage: View {
     }
     
     func onSubmit() {
+        info = ""
         if isLevelCompleted { return }
-        let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardisedRomaji
+        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardizedRomajiWithWarningInfo
         let convertedTruth: String = truth.map(\.kanaValue).joined().standardisedRomaji
-        
-        inputText = ""
-        
         let isCorrect = cleanedText == convertedTruth
-        var nextProgress = isCorrect ? progress + answerCompletionPercent : progress - answerCompletionPercent
+        
+        var nextProgress: Double
+        if !isCorrect {
+            nextProgress = progress - answerCompletionPercent
+        } else if containsInvalidRomaji {
+            nextProgress = progress
+            withAnimation(.default) {
+                truthColor = .orange
+                shakeTrigger += 1
+                info = "This is the right kana but with incorrect writing. Try again!"
+            } completion: {
+                withAnimation {
+                    truthColor = .primary
+                }
+            }
+        } else {
+            nextProgress = progress + answerCompletionPercent
+        }
+        
         nextProgress = min(max(nextProgress, 0), 1)
         
         isLevelCompleted = nextProgress >= 0.99
         
         if !isLevelCompleted {
-            nextRound()
+            if !containsInvalidRomaji {
+                nextRound()                
+            }
         } else {
             withAnimation {
                 showToast = true
@@ -140,5 +166,7 @@ struct WriteAnswerPage: View {
                 onLevelCompleted()
             }
         }
+        
+        inputText = ""
     }
 }

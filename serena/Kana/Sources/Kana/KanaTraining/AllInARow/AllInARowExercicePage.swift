@@ -16,6 +16,8 @@ struct AllInARowExercicePage: View {
     @Binding var failedKanas: Set<Kana>
     @Binding var remainingKanas: Set<Kana>
     
+    @State var info: String = ""
+    
     let onFinished: () -> Void
     
     init(
@@ -37,12 +39,15 @@ struct AllInARowExercicePage: View {
                 ProgressView(progress: $progress)
                 Text(localized("Write the writing of all kanas in a row"))
                 
-                Text(truth.kanaValue)
-                    .foregroundStyle(truthColor)
-                    .modifier(ShakeEffect(animatableData: shakeTrigger))
-                    .font(.system(.largeTitle, design: .rounded))
-                    .padding()
-                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                VStack {
+                    Text(truth.kanaValue)
+                        .foregroundStyle(truthColor)
+                        .modifier(ShakeEffect(animatableData: shakeTrigger))
+                        .font(.system(.largeTitle, design: .rounded))
+                        .padding()
+                        .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                    Text(info)
+                }
                 
                 Spacer()
                 
@@ -85,23 +90,13 @@ struct AllInARowExercicePage: View {
     }
     
     func onSubmit() {
-        let cleanedText = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardisedRomaji
+        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardizedRomajiWithWarningInfo
         let convertedTruth = truth.kanaValue.standardisedRomaji
-        
-        inputText = ""
-        
         let isCorrect = cleanedText == convertedTruth
         
-        if isCorrect {
-            remainingKanas.remove(truth)
-            withAnimation {
-                nextRandomKana()
-                progress += answerCompletionPercent
-                if progress >= 0.99 {
-                    onFinished()
-                }
-            }
-        } else {
+        info = ""
+        
+        if !isCorrect {
             failedKanas.insert(truth)
             withAnimation(.default) {
                 truthColor = .red
@@ -111,7 +106,28 @@ struct AllInARowExercicePage: View {
                     truthColor = .primary
                 }
             }
+        } else if containsInvalidRomaji {
+            withAnimation(.default) {
+                truthColor = .orange
+                shakeTrigger += 1
+                info = "This is the right kana but with incorrect writing. Try again!"
+            } completion: {
+                withAnimation {
+                    truthColor = .primary
+                }
+            }
+        } else {
+            remainingKanas.remove(truth)
+            withAnimation {
+                nextRandomKana()
+                progress += answerCompletionPercent
+                if progress >= 0.99 {
+                    onFinished()
+                }
+            }
         }
+        
+        inputText = ""
     }
     
     func onSkip() {
