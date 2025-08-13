@@ -68,7 +68,7 @@ struct WriteAnswerPage: View {
                         .textEditorStyle(.plain)
                         .font(.largeTitle)
                         .focused($isFocused)
-                        
+                    
                     Button(action: onSubmit) {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable()

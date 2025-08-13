@@ -37,12 +37,12 @@ struct AllInARowExercicePage: View {
                 ProgressView(progress: $progress)
                 Text(localized("Write the writing of all kanas in a row"))
                 
-                    Text(truth.kanaValue)
-                        .foregroundStyle(truthColor)
-                        .modifier(ShakeEffect(animatableData: shakeTrigger))
-                        .font(.system(.largeTitle, design: .rounded))
-                        .padding()
-                        .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                Text(truth.kanaValue)
+                    .foregroundStyle(truthColor)
+                    .modifier(ShakeEffect(animatableData: shakeTrigger))
+                    .font(.system(.largeTitle, design: .rounded))
+                    .padding()
+                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                 
                 Spacer()
                 
@@ -55,7 +55,7 @@ struct AllInARowExercicePage: View {
                         .textEditorStyle(.plain)
                         .font(.largeTitle)
                         .focused($isFocused)
-                        
+                    
                     Button(action: onSubmit) {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable()
@@ -66,7 +66,7 @@ struct AllInARowExercicePage: View {
                 .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                 .padding()
                 
-            }            
+            }
         }
         .navigationTitle(localized("All in a row"))
         .navigationBarTitleDisplayMode(.inline)
