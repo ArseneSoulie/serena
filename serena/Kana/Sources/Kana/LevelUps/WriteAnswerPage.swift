@@ -40,7 +40,7 @@ struct WriteAnswerPage: View {
         self.writingExerciceType = writingExerciceType
         self.kanaPool = kanaPool
         self.onLevelCompleted = onLevelCompleted
-
+        
         switch writingExerciceType {
         case .single: truth = Array(kanaPool.shuffled().prefix(1))
         case .groupOfThree: truth = Array(kanaPool.shuffled().prefix(3))
@@ -59,16 +59,25 @@ struct WriteAnswerPage: View {
                 
                 Spacer()
                 
-                TextEditor(text: $inputText)
-                    .onSubmit(onSubmit)
-                    .autocorrectionDisabled(true)
-                    .textInputAutocapitalization(.never)
-                    .multilineTextAlignment(.center)
-                    .textEditorStyle(.plain)
-                    .font(.largeTitle)
-                    .focused($isFocused)
-                    .padding()
-                
+                ZStack(alignment: .trailing) {
+                    TextEditor(text: $inputText)
+                        .onSubmit(onSubmit)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .multilineTextAlignment(.center)
+                        .textEditorStyle(.plain)
+                        .font(.largeTitle)
+                        .focused($isFocused)
+                        
+                    Button(action: onSubmit) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding()
+                    }
+                }
+                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                .padding()
             }
         }
         .onChange(of: inputText) { _, newValue in
