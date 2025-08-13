@@ -1,0 +1,51 @@
+import SwiftUI
+import Navigation
+
+struct KanaMainPage: View {
+    @Environment(NavigationCoordinator.self) private var coordinator
+    
+    var body: some View {
+        NavigationStack(path: coordinator.binding(for: \.path)) {
+                TabView {
+                    NavigationView {
+                        KanaMnemonicsPage()
+                    }
+                    .tabItem {
+                        Image(systemName: "brain")
+                        Text("Mnemonics")
+                    }
+                    
+                    NavigationView {
+                        KanaLearningPage()
+                    }
+                    .tabItem {
+                        Image(systemName: "book")
+                        Text("Learning")
+                    }
+                    
+                    NavigationView {
+                        KanaSelectionPage()
+                    }
+                    .tabItem {
+                        Image(systemName: "figure.run")
+                        Text("Training")
+                    }
+                }
+                .navigationDestination(for: Destination.self) { destination in
+                    switch destination {
+                    case let .levelUps(kanas):
+                        LevelUpsPage(kanas: kanas)
+                    case let .allInARow(kanas):
+                        AllInARowPage(kanas: kanas)
+                    case let .exerciseSelection(kanas):
+                        ExerciseSelectionPage(kanaPool: kanas)
+                    }
+                }
+        }
+    }
+}
+
+#Preview {
+    KanaMainPage()
+        .environment(NavigationCoordinator())
+}
