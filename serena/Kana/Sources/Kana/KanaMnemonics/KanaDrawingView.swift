@@ -16,6 +16,7 @@ public struct KanaDrawingView: View {
                 if !isDrawing {
                     currentPath = Path()
                     currentPath.move(to: $0.startLocation)
+                    currentPoints = []
                 }
                 isDrawing = true
                 
@@ -41,14 +42,9 @@ public struct KanaDrawingView: View {
         currentPath.addLine(to: location)
     }
     
-    @State var driedPointsCount: Int = 0
-    
     func updateWetness() {
-        if driedPointsCount < currentPoints.count {
-            withAnimation {
-                _ = currentPoints.removeFirst()
-            }
-
+        if !currentPoints.isEmpty {
+            _ = currentPoints.removeFirst()
         }
     }
     
@@ -75,9 +71,6 @@ public struct KanaDrawingView: View {
                     }
                     currentPath.stroke(Color(white: 0.2),style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
                     
-                    dryingPath
-                        .stroke(.black,style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
-
                     Circle().fill(Color(white: 0.1))
                         .frame(width: isDrawing ? 25 : 0, height:  isDrawing ? 25 : 0)
                         .position(currentPoint)
@@ -85,10 +78,17 @@ public struct KanaDrawingView: View {
                 }
                 .allowsHitTesting(false)
             }
+            .animation(.default, body: {
+                $0.overlay {
+                    dryingPath
+                        .stroke(.black,style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
+                        .opacity(isDrawing ? 1 : 0)
+                }
+            })
             .onReceive(timer) { _ in
                 updateWetness()
             }
-
+        
         Button("Go back") {
             _ = paths.popLast()
         }
