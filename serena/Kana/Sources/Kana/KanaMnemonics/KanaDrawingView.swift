@@ -2,9 +2,9 @@ import SwiftUI
 import CoreLocation
 
 public struct KanaDrawingView: View {
+    @State var currentPoint: CGPoint = .zero
     @State var currentPath: Path = Path()
     @State var lastLocation: CGPoint = .zero
-    @State var currentDragLocation: CGPoint = .zero
     @State var paths: [Path] = []
     
     @State var isDrawing: Bool = false
@@ -20,12 +20,9 @@ public struct KanaDrawingView: View {
                 isDrawing = true
                 
                 let nextLocation = $0.location
-                currentDragLocation = nextLocation
+                currentPoint = nextLocation
                 if nextLocation.distance(lastLocation) > minimumDistanceToNextPoint {
-                    lastLocation = nextLocation
-                    currentPath.addLine(to: nextLocation)
-                    wetPointsCount += 1
-                    currentPoints += 1
+                    addPointToCurrent(location: nextLocation)
                 }
             }
             .onEnded { _ in
@@ -33,31 +30,39 @@ public struct KanaDrawingView: View {
                 paths.append(currentPath)
                 currentPath = Path()
                 lastLocation = .zero
-                withAnimation {
-                    wetPointsCount = 0
-                    currentPoints = 0
-                }
             }
     }
     
-    @State var currentPoints: Int = 0
-    @State var wetPointsCount: Double = 0
+    @State var currentPoints: [CGPoint] = []
     
-    var currentWetness: Double {
-        guard currentPoints > 0 else { return 0 }
-        return 1 - (Double(floor(wetPointsCount)) / Double(currentPoints))
+    func addPointToCurrent(location: CGPoint) {
+        lastLocation = location
+        currentPoints.append(location)
+        currentPath.addLine(to: location)
     }
     
+    @State var driedPointsCount: Int = 0
+    
     func updateWetness() {
-        print(wetPointsCount)
-        if wetPointsCount > 0 {
-            wetPointsCount -= 0.1 * max(2,wetPointsCount/2)
-            print(wetPointsCount)
+        if driedPointsCount < currentPoints.count {
+            withAnimation {
+                _ = currentPoints.removeFirst()
+            }
+
         }
     }
     
-    let timer = Timer.publish(every: 0.01, on: .current, in: .common).autoconnect()
+    let timer = Timer.publish(every: 0.02, on: .current, in: .common).autoconnect()
     
+    var dryingPath : Path {
+        guard let firstPoint = currentPoints.first else { return Path() }
+        return Path { path in
+            path.move(to: firstPoint)
+            for point in currentPoints {
+                path.addLine(to: point)
+            }
+        }
+    }
     
     public var body: some View {
         Rectangle()
@@ -70,16 +75,12 @@ public struct KanaDrawingView: View {
                     }
                     currentPath.stroke(Color(white: 0.2),style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
                     
-                    currentPath
-                        .trimmedPath(from: currentWetness, to: 1)
-                        .stroke(
-                            Color(white: 0.1),
-                            style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round)
-                        )
-                    
+                    dryingPath
+                        .stroke(.black,style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
+
                     Circle().fill(Color(white: 0.1))
                         .frame(width: isDrawing ? 25 : 0, height:  isDrawing ? 25 : 0)
-                        .position(currentDragLocation)
+                        .position(currentPoint)
                         .animation(.default, value: isDrawing)
                 }
                 .allowsHitTesting(false)
