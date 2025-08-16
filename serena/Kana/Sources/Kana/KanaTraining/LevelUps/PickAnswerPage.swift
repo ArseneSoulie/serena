@@ -76,7 +76,7 @@ struct PickAnswerPage: View {
                         action: { onOptionSelected(option) },
                         label: { Text(formatGuessingOption(option)).padding(.horizontal) },
                     )
-                    .typography(.title2)
+                    .typography(.title)
                     .buttonStyle(.borderedProminent)
                 }
             }.disabled(disableButtons)

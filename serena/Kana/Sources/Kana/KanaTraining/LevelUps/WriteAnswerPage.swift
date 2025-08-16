@@ -73,7 +73,7 @@ struct WriteAnswerPage: View {
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.center)
                         .textEditorStyle(.plain)
-                        .typography(.largeTitle)
+                        .typography(.title)
                         .focused($isFocused)
 
                     Button(action: onSubmit) {

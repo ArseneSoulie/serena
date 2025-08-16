@@ -200,6 +200,9 @@
     "KanaLearningPage" : {
 
     },
+    "KanaMnemonicsPage" : {
+
+    },
     "Learning" : {
 
     },
@@ -246,9 +249,6 @@
           }
         }
       }
-    },
-    "ManaMnemonicsPage" : {
-
     },
     "Mnemonics" : {
 

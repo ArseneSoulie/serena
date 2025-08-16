@@ -5,11 +5,14 @@ struct DancingKaomojiView: View {
         TimelineView(.periodic(from: .now, by: 1)) { context in
             let date = context.date
             let seconds = Calendar.current.component(.second, from: date)
-            if seconds % 2 == 0 {
-                Text("└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘").typography(.title2)
+            let kaoText = if seconds % 2 == 0 {
+                "└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘"
+
             } else {
-                Text("┌[∵└]   ノ( -_-)ノ   [┘∵]┐").typography(.title2)
+                "┌[∵└]   ノ( -_-)ノ   [┘∵]┐"
             }
+            Text(kaoText)
+                .typography(.title2)
         }
     }
 }

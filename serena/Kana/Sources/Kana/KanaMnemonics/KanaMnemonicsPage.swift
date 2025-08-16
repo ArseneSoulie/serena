@@ -3,7 +3,7 @@ import SwiftUI
 
 public struct KanaMnemonicsPage: View {
     public var body: some View {
-        Text("ManaMnemonicsPage")
+        Text("KanaMnemonicsPage")
     }
 }
 
