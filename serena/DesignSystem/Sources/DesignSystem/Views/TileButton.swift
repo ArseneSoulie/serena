@@ -8,7 +8,7 @@ public enum TileSize {
     var font: Typography {
         switch self {
         case .small: .body
-        case .medium: .title2
+        case .medium: .title
         case .largeEntry: .largeTitle
         }
     }

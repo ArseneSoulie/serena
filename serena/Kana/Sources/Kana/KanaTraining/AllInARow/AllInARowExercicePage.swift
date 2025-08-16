@@ -1,3 +1,4 @@
+import DesignSystem
 import FoundationModels
 import SwiftUI
 
@@ -16,7 +17,10 @@ struct AllInARowExercicePage: View {
     @Binding var failedKanas: Set<Kana>
     @Binding var remainingKanas: Set<Kana>
 
+    @State var handwrittenFont: CustomFontFamily = .yujiBoku
     @State var info: String = ""
+
+    let handwrittenFontFamilies: [CustomFontFamily] = [.hachiMaruPop, .yujiBoku, .yujiMai, .yujiSyuku]
 
     let onFinished: () -> Void
 
@@ -31,6 +35,7 @@ struct AllInARowExercicePage: View {
         _failedKanas = failedKanas
         _remainingKanas = remainingKanas
         self.onFinished = onFinished
+        randomizeFont()
     }
 
     var body: some View {
@@ -43,9 +48,17 @@ struct AllInARowExercicePage: View {
                     Text(truth.kanaValue)
                         .foregroundStyle(truthColor)
                         .modifier(ShakeEffect(animatableData: shakeTrigger))
-                        .typography(.largeTitle)
+                        .typography(.largeTitle, fontFamily: handwrittenFont)
                         .padding()
+                        .padding(.bottom, 8)
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                        .overlay(alignment: .bottomTrailing) {
+                            Button(
+                                action: randomizeFont,
+                                label: { Image(systemName: "arrow.trianglehead.2.clockwise") },
+                            )
+                            .padding(8)
+                        }
                     Text(info)
                 }
 
@@ -58,7 +71,7 @@ struct AllInARowExercicePage: View {
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.center)
                         .textEditorStyle(.plain)
-                        .typography(.largeTitle)
+                        .typography(.title)
                         .focused($isFocused)
 
                     Button(action: onSubmit) {
@@ -135,24 +148,37 @@ struct AllInARowExercicePage: View {
     }
 
     func nextRandomKana() {
+        randomizeFont()
         truth = remainingKanas.filter { truth != $0 }.randomElement() ?? remainingKanas.first ?? .empty
+    }
+
+    func randomizeFont() {
+        handwrittenFont = handwrittenFontFamilies.filter { $0 != handwrittenFont }.randomElement() ?? .mPlus
     }
 }
 
 #Preview {
-    AllInARowExercicePage(
-        kanas: [
-            .hiragana(value: "a"),
-            .hiragana(value: "i"),
-            .hiragana(value: "u"),
-            .hiragana(value: "e"),
-            .hiragana(value: "o"),
-            .hiragana(value: "ka"),
-            .hiragana(value: "ki"),
-            .hiragana(value: "ku"),
-        ],
-        failedKanas: .constant([.hiragana(value: "ka")]),
-        remainingKanas: .constant([]),
-        onFinished: {},
-    )
+    @State @Previewable var failedKanas: Set<Kana> = []
+    @State @Previewable var remainingKanas: Set<Kana> = [
+        .katakana(value: "tsu"),
+        .hiragana(value: "ku"),
+    ]
+
+    NavigationView {
+        AllInARowExercicePage(
+            kanas: [
+                .hiragana(value: "a"),
+                .hiragana(value: "i"),
+                .hiragana(value: "u"),
+                .hiragana(value: "tsu"),
+                .hiragana(value: "o"),
+                .hiragana(value: "ka"),
+                .hiragana(value: "ki"),
+                .hiragana(value: "ku"),
+            ],
+            failedKanas: $failedKanas,
+            remainingKanas: $remainingKanas,
+            onFinished: {},
+        )
+    }
 }
