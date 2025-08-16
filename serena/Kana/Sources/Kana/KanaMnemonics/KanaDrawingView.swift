@@ -9,6 +9,12 @@ public struct KanaDrawingView: View {
     
     @State var isDrawing: Bool = false
     
+    let kanaString: String
+    
+    init(kanaString: String) {
+        self.kanaString = kanaString
+    }
+    
     let minimumDistanceToNextPoint: CGFloat = 5
     private var dragGesture: some Gesture {
         DragGesture(minimumDistance: 1, coordinateSpace: .local)
@@ -60,18 +66,28 @@ public struct KanaDrawingView: View {
         }
     }
     
+    let driedStrokeColor = Color(white: 0.2)
+    let wetStrokeColor = Color.black
+    
+    let strokeStyle = StrokeStyle(lineWidth: 15,lineCap: .round,lineJoin: .round)
+    
     public var body: some View {
-        Rectangle()
-            .fill( Color(white: 0.8) )
-            .gesture(dragGesture)
+        Text(kanaString)
+            .foregroundStyle(Color(white: 0.8))
+            .font(.system(size: 250, weight: .bold, design: .default))
+            .padding(48)
+            .aspectRatio(1, contentMode: .fill)
+            .allowsHitTesting(false)
+            .background { Color(white: 0.9).gesture(dragGesture) }
             .overlay {
                 Group {
                     ForEach(paths, id: \.cgPath.boundingBox.hashValue) { path in
-                        path.stroke(Color(white: 0.2),style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
+                        path.stroke(driedStrokeColor,style: strokeStyle)
                     }
-                    currentPath.stroke(Color(white: 0.2),style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
+                    currentPath.stroke(driedStrokeColor,style: strokeStyle)
                     
-                    Circle().fill(Color(white: 0.1))
+                    Circle()
+                        .fill(wetStrokeColor)
                         .frame(width: isDrawing ? 25 : 0, height:  isDrawing ? 25 : 0)
                         .position(currentPoint)
                         .animation(.default, value: isDrawing)
@@ -81,20 +97,23 @@ public struct KanaDrawingView: View {
             .animation(.default, body: {
                 $0.overlay {
                     dryingPath
-                        .stroke(.black,style: .init(lineWidth: 15,lineCap: .round,lineJoin: .round))
+                        .stroke(wetStrokeColor,style: strokeStyle)
                         .opacity(isDrawing ? 1 : 0)
                 }
             })
             .onReceive(timer) { _ in
                 updateWetness()
             }
-        
-        Button("Go back") {
+            .clipShape( RoundedRectangle(cornerRadius: 16))
+        HStack {
+            
+        Button("Go back", systemImage: "arrowshape.turn.up.backward") {
             _ = paths.popLast()
         }
         
-        Button("Clean") {
+        Button("Clean", systemImage: "eraser.fill") {
             paths = []
+        }
         }
     }
 }
@@ -106,5 +125,5 @@ extension CGPoint {
 }
 
 #Preview {
-    KanaDrawingView()
+    KanaDrawingView(kanaString: "い")
 }

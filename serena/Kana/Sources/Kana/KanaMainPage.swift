@@ -10,7 +10,7 @@ public struct KanaMainPage: View {
         NavigationStack(path: coordinator.binding(for: \.path)) {
                 TabView {
                     NavigationView {
-                        KanaMnemonicsPage()
+                        KanaMnemonicsPage(mnemonics: [])
                     }
                     .tabItem {
                         Image(systemName: "brain")
