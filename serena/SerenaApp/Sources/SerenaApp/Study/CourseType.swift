@@ -39,10 +39,10 @@ struct CourseCardView: View {
             VStack(alignment: .leading) {
                 HStack {
                     Text(title)
-                        .font(.headline)
+                        .typography(.headline)
                     if let countLabel {
                         Text(countLabel)
-                            .font(.callout)
+                            .typography(.callout)
                             .padding(.horizontal, 8)
                             .foregroundStyle(mainColor)
                             .background(textColor)

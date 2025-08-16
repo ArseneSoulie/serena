@@ -21,7 +21,7 @@ public struct KanaSelectionPage: View {
         ScrollView {
             VStack(alignment: .leading) {
                 Text(localized("Select the rows you want to train on and pick a mode below."))
-                    .font(.subheadline)
+
                     .padding()
 
                 Picker(localized("Training mode"), selection: $kanaSelectionType) {
@@ -197,7 +197,7 @@ struct BottomViews: View {
                 }
                 .padding(.horizontal)
                 Text(textForSelectedKanas)
-                    .font(.footnote)
+                    .typography(.footnote)
             }
         }
     }
@@ -215,7 +215,7 @@ struct TrainingButtonView: View {
             .popover(isPresented: $isPopoverPresented, arrowEdge: .bottom) {
                 VStack(alignment: .leading) {
                     Text(title)
-                        .font(.headline)
+                        .typography(.headline)
                     Text(popoverHelpText)
                 }
                 .fixedSize(horizontal: false, vertical: true)

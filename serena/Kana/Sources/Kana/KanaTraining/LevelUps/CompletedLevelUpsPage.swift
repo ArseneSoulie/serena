@@ -11,7 +11,7 @@ struct CompletedLevelUpsPage: View {
                 ScrollView {
                     VStack {
                         Text(localized("Completed !"))
-                            .font(.headline)
+                            .typography(.headline)
                         Spacer()
                         Image(systemName: "party.popper")
                             .resizable()

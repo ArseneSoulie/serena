@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@ %lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -195,6 +198,9 @@
       }
     },
     "KanaLearningPage" : {
+
+    },
+    "KanaMnemonicsPage" : {
 
     },
     "Learning" : {

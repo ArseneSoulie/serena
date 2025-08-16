@@ -69,6 +69,7 @@ struct FastSelectToggleButton: View {
                 Image(systemName: isOn ? "checkmark.circle.fill" : "checkmark.circle")
                     .tint(isOn ? .mint : .gray)
                 Text(title)
+
                     .tint(.primary)
             }
             .padding(8)

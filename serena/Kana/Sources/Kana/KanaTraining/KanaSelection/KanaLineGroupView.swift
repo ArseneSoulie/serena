@@ -35,7 +35,7 @@ struct KanaLineGroupView: View {
                         HStack {
                             Image(systemName: "lightbulb.min")
                             Text(subtitle)
-                                .font(.footnote)
+                                .typography(.footnote)
                         }
                     }
                     Grid(alignment: .leading) {
@@ -56,7 +56,7 @@ struct KanaLineGroupView: View {
                     }
                     .tint(hasSelectedAll ? .mint : .gray)
                     .buttonStyle(.bordered)
-                    Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)").font(.subheadline)
+                    Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
                 }
             }
             Divider()

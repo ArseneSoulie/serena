@@ -31,7 +31,7 @@ struct WordCompoundListView: View {
                         VStack {
                             if showFurigana {
                                 OnyomiTextView(compound.reading)
-                                    .font(.caption2)
+                                    .typography(.caption2)
                                     .foregroundColor(.gray)
                                     .environment(
                                         \.useKatakanaForOnyomi,

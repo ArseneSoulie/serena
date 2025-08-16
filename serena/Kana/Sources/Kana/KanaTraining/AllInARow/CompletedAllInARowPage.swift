@@ -33,7 +33,7 @@ struct CompletedAllInARowPage: View {
     let onLevelUpsTapped: () -> Void
     let onGoBackTapped: () -> Void
 
-    @State var tiles: [CompletedTileData] = []
+    @State var displayedKanas: [Kana] = []
 
     var body: some View {
         ZStack {
@@ -41,26 +41,28 @@ struct CompletedAllInARowPage: View {
                 ScrollView {
                     VStack {
                         Text(localized("Completed !"))
-                            .font(.headline)
+                            .typography(.headline)
                             .padding()
                         Text(completionText)
-                            .font(.subheadline)
+
                         let columns = [GridItem(.adaptive(minimum: 50))]
 
                         LazyVGrid(columns: columns) {
-                            ForEach(tiles) {
-                                Button($0.kana.kanaValue) {}
+                            ForEach(kanas, id: \.kanaValue) { kana in
+                                Button(kana.kanaValue) {}
                                     .buttonStyle(TileButtonStyle(
-                                        tileSize: .largeEntry,
-                                        tileKind: .custom($0.completionState.color),
+                                        tileSize: .medium,
+                                        tileKind: .custom(completionState(for: kana).color),
                                     ))
+                                    .opacity(displayedKanas.contains(where: { $0 == kana }) ? 1 : 0)
                             }
-                        }.padding()
-                            .background {
-                                RoundedRectangle(cornerRadius: 16)
-                                    .fill(Color(white: 0.91))
-                            }
-                            .padding()
+                        }
+                        .padding()
+                        .background {
+                            RoundedRectangle(cornerRadius: 16)
+                                .fill(Color(white: 0.91))
+                        }
+                        .padding()
 
                         if isPerfect {
                             DancingKaomojiView()
@@ -82,14 +84,12 @@ struct CompletedAllInARowPage: View {
             }
         }
         .onAppear {
-            guard tiles.isEmpty else { return }
+            guard displayedKanas.isEmpty else { return }
             Task {
                 for kana in kanas {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        tiles.append(
-                            .init(kana: kana, completionState: completionState(for: kana)),
-                        )
+                        displayedKanas.append(kana)
                     }
                 }
             }
@@ -130,7 +130,7 @@ struct CompletedAllInARowPage: View {
             .hiragana(value: "ku"),
         ],
         failedKanas: [.hiragana(value: "ka")],
-        remainingKanas: [],
+        remainingKanas: [.hiragana(value: "o")],
         onTryAgainTapped: {},
         onLevelUpsTapped: {},
         onGoBackTapped: {},

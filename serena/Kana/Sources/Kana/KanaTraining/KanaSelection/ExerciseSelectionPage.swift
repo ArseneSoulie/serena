@@ -20,18 +20,23 @@ public struct ExerciseSelectionPage: View {
 
     public var body: some View {
         VStack(alignment: .leading) {
-            Text(localized("Level ups")).font(.title)
+            Text(localized("Level ups"))
+                .typography(.title)
             Text(
                 localized(
                     "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.",
                 ),
             )
+
             Button(localized("Go !"), action: onLevelUpsTapped)
                 .buttonStyle(.bordered)
             Divider().padding()
-            Text(localized("All in a row")).font(.title)
+            Text(localized("All in a row"))
+                .typography(.title)
             Text(localized("Try to get all selected kanas right in a row !"))
+
             Button(localized("Go !"), action: onAllInARowTapped)
+
                 .buttonStyle(.bordered)
         }.padding()
             .navigationTitle(localized("Pick an exercise type"))

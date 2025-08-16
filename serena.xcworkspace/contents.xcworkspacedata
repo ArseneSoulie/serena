@@ -5,6 +5,6 @@
       location = "group:reina/reina.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:serena.xcodeproj">
+      location = "group:serena/serena.xcodeproj">
    </FileRef>
 </Workspace>
