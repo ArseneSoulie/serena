@@ -99,7 +99,7 @@ struct WriteAnswerPage: View {
         .toast(isPresented: $showToast, message: localized("Level up !"))
     }
 
-    func nextRound() {
+    func goToNextRound() {
         isFocused = true
 
         switch writingExerciceType {
@@ -119,54 +119,58 @@ struct WriteAnswerPage: View {
         truth.map(\.kanaValue).joined()
     }
 
+    @State var canSubmit: Bool = true
+
     func onSubmit() {
-        info = ""
-        if isLevelCompleted { return }
-        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !canSubmit { return }
+        let (cleanedText, containsInvalidRomaji) = inputText
+            .trimmingCharacters(in: .whitespacesAndNewlines)
             .standardizedRomajiWithWarningInfo
         let convertedTruth: String = truth.map(\.kanaValue).joined().standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
 
-        var nextProgress: Double
+        inputText = ""
+        info = ""
+
         if !isCorrect {
-            nextProgress = progress - answerCompletionPercent
+            withAnimation {
+                progress = max(progress - answerCompletionPercent, 0)
+            }
         } else if containsInvalidRomaji {
-            nextProgress = progress
-            withAnimation(.default) {
-                truthColor = .orange
-                shakeTrigger += 1
-                info = "This is the right kana but with incorrect writing. Try again!"
-            } completion: {
-                withAnimation {
-                    truthColor = .primary
-                }
-            }
-        } else {
-            nextProgress = progress + answerCompletionPercent
-        }
-
-        nextProgress = min(max(nextProgress, 0), 1)
-
-        isLevelCompleted = nextProgress >= 0.99
-
-        if !isLevelCompleted {
-            if !containsInvalidRomaji {
-                nextRound()
-            }
+            triggerInvalidCharacters()
         } else {
             withAnimation {
-                showToast = true
+                progress = min(progress + answerCompletionPercent, 1)
+            }
+            if progress >= 0.99 {
+                completeLevel()
+            } else {
+                goToNextRound()
             }
         }
+    }
+
+    func completeLevel() {
+        canSubmit = false
 
         withAnimation {
-            progress = nextProgress
+            showToast = true
         } completion: {
-            if isLevelCompleted {
-                onLevelCompleted()
+            canSubmit = true
+            progress = 0
+            onLevelCompleted()
+        }
+    }
+
+    func triggerInvalidCharacters() {
+        withAnimation(.default) {
+            truthColor = .orange
+            shakeTrigger += 1
+            info = "This is the right kana but with incorrect writing. Try again!"
+        } completion: {
+            withAnimation {
+                truthColor = .primary
             }
         }
-
-        inputText = ""
     }
 }
