@@ -11,12 +11,12 @@ let package = Package(
     products: [
         .library(
             name: "DesignSystem",
-            targets: ["DesignSystem"]
+            targets: ["DesignSystem"],
         ),
     ],
     targets: [
         .target(
-            name: "DesignSystem"
+            name: "DesignSystem",
         ),
-    ]
+    ],
 )

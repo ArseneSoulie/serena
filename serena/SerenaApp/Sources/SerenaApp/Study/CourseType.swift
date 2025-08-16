@@ -25,7 +25,7 @@ struct CourseCardView: View {
         subtitle: String = "",
         mainColor: Color,
         countLabel: String? = nil,
-        onSelect: @escaping () -> Void
+        onSelect: @escaping () -> Void,
     ) {
         self.title = title
         self.subtitle = subtitle
@@ -64,7 +64,7 @@ struct CourseCardView: View {
             .background(mainColor)
         }
         .clipShape(
-            RoundedRectangle(cornerRadius: 16)
+            RoundedRectangle(cornerRadius: 16),
         )
     }
 }

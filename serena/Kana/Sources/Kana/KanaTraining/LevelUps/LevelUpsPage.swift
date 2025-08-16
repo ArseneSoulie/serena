@@ -41,34 +41,34 @@ public struct LevelUpsPage: View {
                 title: "\(localized("Level")) 1",
                 pickingExerciceType: .pickRomaji,
                 kanaPool: kanaPool,
-                onLevelCompleted: onLevelCompleted
+                onLevelCompleted: onLevelCompleted,
             )
         case .level2:
             PickAnswerPage(
                 title: "\(localized("Level")) 2",
                 pickingExerciceType: .pickKana,
                 kanaPool: kanaPool,
-                onLevelCompleted: onLevelCompleted
+                onLevelCompleted: onLevelCompleted,
             )
         case .level3:
             WriteAnswerPage(
                 title: "\(localized("Level")) 3",
                 writingExerciceType: .single,
                 kanaPool: kanaPool,
-                onLevelCompleted: onLevelCompleted
+                onLevelCompleted: onLevelCompleted,
             )
         case .level4:
             WriteAnswerPage(
                 title: "\(localized("Level")) 4",
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,
-                onLevelCompleted: onLevelCompleted
+                onLevelCompleted: onLevelCompleted,
             )
         case .completed:
             CompletedLevelUpsPage(
                 onTryAgainTapped: restart,
                 onAllInARowTapped: onAllInARowTapped,
-                onGoBackTapped: onGoBackTapped
+                onGoBackTapped: onGoBackTapped,
             )
         }
     }

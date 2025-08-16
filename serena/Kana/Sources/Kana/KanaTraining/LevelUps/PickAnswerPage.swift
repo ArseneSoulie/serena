@@ -33,7 +33,7 @@ struct PickAnswerPage: View {
         title: String,
         pickingExerciceType: PickExerciceType,
         kanaPool: [Kana],
-        onLevelCompleted: @escaping () -> Void
+        onLevelCompleted: @escaping () -> Void,
     ) {
         self.title = title
         self.pickingExerciceType = pickingExerciceType
@@ -73,7 +73,7 @@ struct PickAnswerPage: View {
                 ForEach(guessingOptions.shuffled(), id: \.self) { option in
                     Button(
                         action: { onOptionSelected(option) },
-                        label: { Text(formatGuessingOption(option)).padding(.horizontal) }
+                        label: { Text(formatGuessingOption(option)).padding(.horizontal) },
                     )
                     .font(.title2)
                     .buttonStyle(.borderedProminent)

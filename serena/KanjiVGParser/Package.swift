@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "KanjiVGParser",
-            targets: ["KanjiVGParser"]
+            targets: ["KanjiVGParser"],
         ),
     ],
     targets: [
@@ -18,7 +18,7 @@ let package = Package(
             dependencies: [],
             resources: [
                 .process("Resources"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

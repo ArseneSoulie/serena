@@ -71,9 +71,9 @@ extension StrokeGroup {
 
     private static func boolValue(_ str: String) -> Bool? {
         switch str.lowercased() {
-        case "true", "1", "yes": return true
-        case "false", "0", "no": return false
-        default: return nil
+        case "true", "1", "yes": true
+        case "false", "0", "no": false
+        default: nil
         }
     }
 }
@@ -118,7 +118,7 @@ final class KanjiVGParser: NSObject, XMLParserDelegate {
         didStartElement elementName: String,
         namespaceURI _: String?,
         qualifiedName _: String?,
-        attributes attributeDict: [String: String] = [:]
+        attributes attributeDict: [String: String] = [:],
     ) {
         if elementName == "g", let strokeGroup = StrokeGroup(attributeDict: attributeDict) {
             strokeGroupStack.append(strokeGroup)
@@ -129,7 +129,7 @@ final class KanjiVGParser: NSObject, XMLParserDelegate {
                 id: kvgStroke.id,
                 path: path,
                 index: strokes.count,
-                groups: strokeGroupStack
+                groups: strokeGroupStack,
             ))
         }
     }
@@ -138,7 +138,7 @@ final class KanjiVGParser: NSObject, XMLParserDelegate {
         _: XMLParser,
         didEndElement elementName: String,
         namespaceURI _: String?,
-        qualifiedName _: String?
+        qualifiedName _: String?,
     ) {
         if elementName == "g" {
             _ = strokeGroupStack.popLast()

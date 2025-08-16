@@ -23,7 +23,7 @@ public struct AllInARowPage: View {
                 kanas: kanas,
                 failedKanas: $failedKanas,
                 remainingKanas: $remainingKanas,
-                onFinished: onFinished
+                onFinished: onFinished,
             )
         } else {
             CompletedAllInARowPage(
@@ -32,7 +32,7 @@ public struct AllInARowPage: View {
                 remainingKanas: remainingKanas,
                 onTryAgainTapped: onTryAgainTapped,
                 onLevelUpsTapped: onLevelUpsTapped,
-                onGoBackTapped: onGoBackTapped
+                onGoBackTapped: onGoBackTapped,
             )
         }
     }

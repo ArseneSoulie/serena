@@ -17,7 +17,7 @@ struct KanaLineGroupView: View {
         lines: [KanaLine],
         selectedLines: Binding<Set<KanaLine>>,
         showRomaji: Bool,
-        kanaSelectionType: KanaSelectionType
+        kanaSelectionType: KanaSelectionType,
     ) {
         self.title = title
         self.subtitle = subtitle
@@ -44,7 +44,7 @@ struct KanaLineGroupView: View {
                                 kanaLine: kanaLine,
                                 showRomaji: showRomaji,
                                 kanaSelectionType: kanaSelectionType,
-                                isOn: $selectedLines[containsLine: kanaLine]
+                                isOn: $selectedLines[containsLine: kanaLine],
                             )
                         }
                     }.padding(.vertical, 8)

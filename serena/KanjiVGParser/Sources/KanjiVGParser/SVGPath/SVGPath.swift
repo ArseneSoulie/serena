@@ -72,7 +72,7 @@ public struct SVGPath: Hashable, Sendable {
             let numbers = try assertArgs(1)
             return .lineTo(SVGPoint(
                 x: isRelative ? 0 : commands.lastPoint.x,
-                y: ySign * numbers[0]
+                y: ySign * numbers[0],
             ))
         }
 
@@ -80,7 +80,7 @@ public struct SVGPath: Hashable, Sendable {
             let numbers = try assertArgs(1)
             return .lineTo(SVGPoint(
                 x: numbers[0],
-                y: isRelative ? 0 : commands.lastPoint.y
+                y: isRelative ? 0 : commands.lastPoint.y,
             ))
         }
 
@@ -88,7 +88,7 @@ public struct SVGPath: Hashable, Sendable {
             let numbers = try assertArgs(4)
             return .quadratic(
                 SVGPoint(x: numbers[0], y: ySign * numbers[1]),
-                SVGPoint(x: numbers[2], y: ySign * numbers[3])
+                SVGPoint(x: numbers[2], y: ySign * numbers[3]),
             )
         }
 
@@ -111,7 +111,7 @@ public struct SVGPath: Hashable, Sendable {
             return .cubic(
                 SVGPoint(x: numbers[0], y: ySign * numbers[1]),
                 SVGPoint(x: numbers[2], y: ySign * numbers[3]),
-                SVGPoint(x: numbers[4], y: ySign * numbers[5])
+                SVGPoint(x: numbers[4], y: ySign * numbers[5]),
             )
         }
 
@@ -129,7 +129,7 @@ public struct SVGPath: Hashable, Sendable {
             return .cubic(
                 control,
                 SVGPoint(x: numbers[0], y: ySign * numbers[1]),
-                SVGPoint(x: numbers[2], y: ySign * numbers[3])
+                SVGPoint(x: numbers[2], y: ySign * numbers[3]),
             )
         }
 
@@ -140,7 +140,7 @@ public struct SVGPath: Hashable, Sendable {
                 rotation: numbers[2] * .pi / 180,
                 largeArc: numbers[3] != 0,
                 sweep: invertYAxis ? numbers[4] == 0 : numbers[4] != 0,
-                end: SVGPoint(x: numbers[5], y: ySign * numbers[6])
+                end: SVGPoint(x: numbers[5], y: ySign * numbers[6]),
             ))
         }
 
@@ -182,7 +182,7 @@ public struct SVGPath: Hashable, Sendable {
                 default: throw SVGError.unexpectedToken(String(token))
                 }
                 commands.append(
-                    isRelative ? command.relative(to: commands) : command
+                    isRelative ? command.relative(to: commands) : command,
                 )
             } while !numbers.isEmpty
         }
@@ -301,7 +301,7 @@ private extension Character {
     }
 }
 
-private extension Array where Element == SVGCommand {
+private extension [SVGCommand] {
     var lastPoint: SVGPoint {
         for command in reversed() {
             if let point = command.point {
@@ -327,11 +327,11 @@ public enum SVGError: Error, Hashable {
     public var message: String {
         switch self {
         case let .unexpectedToken(string):
-            return "Unexpected token '\(string)'"
+            "Unexpected token '\(string)'"
         case let .unexpectedArgument(command, _):
-            return "Too many arguments for '\(command)'"
+            "Too many arguments for '\(command)'"
         case let .missingArgument(command, _):
-            return "Missing argument for '\(command)'"
+            "Missing argument for '\(command)'"
         }
     }
 }
@@ -352,38 +352,38 @@ public extension SVGCommand {
              let .lineTo(point),
              let .cubic(_, _, point),
              let .quadratic(_, point):
-            return point
+            point
         case let .arc(arc):
-            return arc.end
+            arc.end
         case .end:
-            return nil
+            nil
         }
     }
 
     private var startPoint: SVGPoint? {
         switch self {
         case let .moveTo(point):
-            return point
+            point
         default:
-            return nil
+            nil
         }
     }
 
     var control1: SVGPoint? {
         switch self {
         case let .cubic(control1, _, _), let .quadratic(control1, _):
-            return control1
+            control1
         case .moveTo, .lineTo, .arc, .end:
-            return nil
+            nil
         }
     }
 
     var control2: SVGPoint? {
         switch self {
         case let .cubic(_, control2, _):
-            return control2
+            control2
         case .moveTo, .lineTo, .quadratic, .arc, .end:
-            return nil
+            nil
         }
     }
 
@@ -402,7 +402,7 @@ public extension SVGCommand {
         func endSubpath() {
             if start == points.count - 1 {
                 points.removeLast()
-            } else if let start = start {
+            } else if let start {
                 points.append(points[start])
             }
         }
@@ -427,7 +427,7 @@ public extension SVGCommand {
             for t in stride(from: 0, through: 1.0, by: step) {
                 points.append(SVGPoint(
                     x: cubicBezier(last.x, control1.x, control2.x, point.x, t),
-                    y: cubicBezier(last.y, control1.y, control2.y, point.y, t)
+                    y: cubicBezier(last.y, control1.y, control2.y, point.y, t),
                 ))
             }
         case let .quadratic(control, point):
@@ -438,7 +438,7 @@ public extension SVGCommand {
             for t in stride(from: 0, through: 1.0, by: step) {
                 points.append(SVGPoint(
                     x: quadraticBezier(last.x, control.x, point.x, t),
-                    y: quadraticBezier(last.y, control.y, point.y, t)
+                    y: quadraticBezier(last.y, control.y, point.y, t),
                 ))
             }
         case let .arc(arc):
@@ -544,7 +544,7 @@ public extension SVGArc {
 
         func vectorAngle(
             _ ux: Double, _ uy: Double,
-            _ vx: Double, _ vy: Double
+            _ vx: Double, _ vy: Double,
         ) -> Double {
             let sign = (ux * vy - uy * vx < 0) ? -1.0 : 1.0
             let umag = sqrt(ux * ux + uy * uy), vmag = sqrt(vx * vx + vy * vy)
@@ -596,7 +596,7 @@ private func quadraticBezier(
     _ p0: Double,
     _ p1: Double,
     _ p2: Double,
-    _ t: Double
+    _ t: Double,
 ) -> Double {
     let oneMinusT = 1 - t
     let c0 = oneMinusT * oneMinusT * p0
@@ -610,7 +610,7 @@ private func cubicBezier(
     _ p1: Double,
     _ p2: Double,
     _ p3: Double,
-    _ t: Double
+    _ t: Double,
 ) -> Double {
     let oneMinusT = 1 - t
     let oneMinusTSquared = oneMinusT * oneMinusT

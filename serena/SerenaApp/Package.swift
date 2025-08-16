@@ -10,7 +10,7 @@ let package = Package(
     products: [
         .library(
             name: "SerenaApp",
-            targets: ["SerenaApp"]
+            targets: ["SerenaApp"],
         ),
     ],
     dependencies: [
@@ -32,7 +32,7 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

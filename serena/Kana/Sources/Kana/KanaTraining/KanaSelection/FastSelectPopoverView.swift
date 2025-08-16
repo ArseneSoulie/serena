@@ -17,23 +17,23 @@ struct FastSelectPopoverView: View {
             Divider()
             FastSelectToggleButton(
                 title: localized("Base"),
-                isOn: $selectedBase[containsLines: base]
+                isOn: $selectedBase[containsLines: base],
             )
             FastSelectToggleButton(
                 title: localized("Diacritics"),
-                isOn: $selectedDiacritic[containsLines: diacritic]
+                isOn: $selectedDiacritic[containsLines: diacritic],
             )
             FastSelectToggleButton(
                 title: localized("Combinatory"),
-                isOn: $selectedCombinatory[containsLines: combinatory]
+                isOn: $selectedCombinatory[containsLines: combinatory],
             )
             FastSelectToggleButton(
                 title: localized("Combinatory diacritics"),
-                isOn: $selectedCombinatoryDiacritic[containsLines: combinatoryDiacritic]
+                isOn: $selectedCombinatoryDiacritic[containsLines: combinatoryDiacritic],
             )
             FastSelectToggleButton(
                 title: localized("Extended katakana"),
-                isOn: $selectedExtendedKatakana[containsLines: extendedKatakana]
+                isOn: $selectedExtendedKatakana[containsLines: extendedKatakana],
             )
         }
         .padding()

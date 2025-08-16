@@ -128,7 +128,7 @@ struct AddMnemonicView: View {
                 Button(action: { onSaveUserMnemonicTapped(nil) }, label: { Image(systemName: "trash") })
                 Button(
                     action: { onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic) },
-                    label: { Image(systemName: "checkmark") }
+                    label: { Image(systemName: "checkmark") },
                 )
             }
             .navigationTitle(title)
@@ -143,18 +143,18 @@ struct AddMnemonicView: View {
 #Preview {
     @Previewable @State var mnemonics: Mnemonics = .init(wkMnemonic: .init(
         explanation: "balbalba z foibzeof ibezfoi ubzif ubzfi uzbeifuzbe zub eizubfi zubla",
-        hint: "okzdokzdozkdozk"
+        hint: "okzdokzdozkdozk",
     ))
     @Previewable @State var mnemoniscs: Mnemonics = .init(wkMnemonic: nil)
     VStack {
         MnemonicsView(
             title: "Meaning mnemonics",
-            mnemonics: $mnemonics
+            mnemonics: $mnemonics,
         )
 
         MnemonicsView(
             title: "Meaning mnemonics",
-            mnemonics: $mnemoniscs
+            mnemonics: $mnemoniscs,
         )
     }
 }

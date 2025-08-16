@@ -24,7 +24,7 @@ struct AllInARowExercicePage: View {
         kanas: [Kana],
         failedKanas: Binding<Set<Kana>>,
         remainingKanas: Binding<Set<Kana>>,
-        onFinished: @escaping () -> Void
+        onFinished: @escaping () -> Void,
     ) {
         self.kanas = kanas
         truth = remainingKanas.wrappedValue.randomElement() ?? .empty
@@ -153,6 +153,6 @@ struct AllInARowExercicePage: View {
         ],
         failedKanas: .constant([.hiragana(value: "ka")]),
         remainingKanas: .constant([]),
-        onFinished: {}
+        onFinished: {},
     )
 }

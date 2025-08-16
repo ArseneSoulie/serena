@@ -22,8 +22,9 @@ public struct ExerciseSelectionPage: View {
         VStack(alignment: .leading) {
             Text(localized("Level ups")).font(.title)
             Text(
-                localized("Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty."
-                )
+                localized(
+                    "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.",
+                ),
             )
             Button(localized("Go !"), action: onLevelUpsTapped)
                 .buttonStyle(.bordered)

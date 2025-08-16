@@ -11,7 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "Kana",
-            targets: ["Kana"]
+            targets: ["Kana"],
         ),
     ],
     dependencies: [
@@ -29,7 +29,7 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-            ]
+            ],
         ),
-    ]
+    ],
 )

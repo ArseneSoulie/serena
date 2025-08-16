@@ -22,7 +22,7 @@ public class NavigationCoordinator {
     public func binding<T>(for keyPath: ReferenceWritableKeyPath<NavigationCoordinator, T>) -> Binding<T> {
         Binding(
             get: { self[keyPath: keyPath] },
-            set: { self[keyPath: keyPath] = $0 }
+            set: { self[keyPath: keyPath] = $0 },
         )
     }
 }

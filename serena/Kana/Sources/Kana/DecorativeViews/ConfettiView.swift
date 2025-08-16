@@ -51,7 +51,7 @@ struct ConfettiView: View {
                 angle: Angle(degrees: Double.random(in: 60 ... 120)),
                 speed: CGFloat.random(in: 300 ... 700),
                 rotation: Double.random(in: 0 ... 360),
-                color: colors.randomElement()!
+                color: colors.randomElement()!,
             )
         }
 

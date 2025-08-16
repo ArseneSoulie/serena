@@ -35,7 +35,7 @@ struct WordCompoundListView: View {
                                     .foregroundColor(.gray)
                                     .environment(
                                         \.useKatakanaForOnyomi,
-                                        compound.kind == .onyomi ? useKatakanaForOnyomi : false
+                                        compound.kind == .onyomi ? useKatakanaForOnyomi : false,
                                     )
                             }
                             Button(compound.word) {}.buttonStyle(TileButtonStyle(tileKind: .vocabulary))

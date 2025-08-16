@@ -93,7 +93,7 @@ public struct KanaSelectionPage: View {
                 selectedDiacritic: $selectedDiacritic,
                 selectedCombinatory: $selectedCombinatory,
                 selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                selectedExtendedKatakana: $selectedExtendedKatakana
+                selectedExtendedKatakana: $selectedExtendedKatakana,
             )
         }
         .navigationTitle(localized("Kana training"))
@@ -123,9 +123,9 @@ public struct KanaSelectionPage: View {
             .union(selectedCombinatory)
             .union(selectedCombinatoryDiacritic)
 
-        let unionedKanas = unionedSet.map(\.kanas).joined().compactMap { $0 }
+        let unionedKanas = unionedSet.map(\.kanas).joined().compactMap(\.self)
 
-        let katakanaOnlyKanas = selectedExtendedKatakana.map(\.kanas).joined().compactMap { $0 }
+        let katakanaOnlyKanas = selectedExtendedKatakana.map(\.kanas).joined().compactMap(\.self)
 
         let fullHiraganaSet: [Kana] = unionedKanas.map { .hiragana(value: $0) }
         let fullKatakanaSet: [Kana] = unionedKanas.map { .katakana(value: $0) } + katakanaOnlyKanas
@@ -163,7 +163,7 @@ struct ToolbarViews: View {
                     selectedDiacritic: $selectedDiacritic,
                     selectedCombinatory: $selectedCombinatory,
                     selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                    selectedExtendedKatakana: $selectedExtendedKatakana
+                    selectedExtendedKatakana: $selectedExtendedKatakana,
                 )
             }
     }

@@ -11,7 +11,7 @@ let package = Package(
     products: [
         .library(
             name: "Navigation",
-            targets: ["Navigation"]
+            targets: ["Navigation"],
         ),
     ],
     dependencies: [
@@ -22,7 +22,7 @@ let package = Package(
             name: "Navigation",
             dependencies: [
                 "FoundationModels",
-            ]
+            ],
         ),
-    ]
+    ],
 )

@@ -80,7 +80,7 @@ struct KanjiEntryView: View {
                 KanjiEntryOptionsToolbar(
                     showFurigana: $showFurigana,
                     useKatakanaForOnyomi: $useKatakanaForOnyomi,
-                    showsSettings: $showsSettings
+                    showsSettings: $showsSettings,
                 )
             }
             .animation(.easeOut, value: showsSettings)
@@ -180,7 +180,7 @@ struct WanikaniProgressView: View {
                     progress.currentLevel
                         .color
                         .opacity(progress.rawValue <= wanikaniProgression.rawValue ? 1 : 0.3)
-                        .gradient
+                        .gradient,
                 )
             }
             if
@@ -225,7 +225,7 @@ struct KanjiStrokesToolbar: View {
             },
             label: {
                 Image(systemName: "pencil.and.scribble")
-            }
+            },
         ).popover(isPresented: $showStrokeOrder) {
             KanjiStrokesView(svgId: svgId)
                 .padding(.all)
@@ -279,14 +279,14 @@ struct KanjiInfoView: View {
         meaningMnemonics: .init(
             wkMnemonic: .init(
                 explanation: "The simple radical and the simple kanji are the same!",
-                hint: "Simple is simple!"
-            )
+                hint: "Simple is simple!",
+            ),
         ),
         readingMnemonics: .init(
             wkMnemonic: .init(
                 explanation: "One of the most simple things in the world is getting a tan (たん). All you have to do is stand outside long enough. It doesn't matter what skin type you have or what the weather is like. Eventually, if you stand out there long enough, you'll get a tan.",
                 hint: "Get a tan, it's simple, stupid! (Though it's terrible for you so uh... don't always take our advice, kay?)",
-            )
+            ),
         ),
         compounds: [
             .init(kind: .onyomi, word: "単", reading: "タン", meanings: ["single", "simple"]),
@@ -300,19 +300,19 @@ struct KanjiInfoView: View {
                     "credit (in school)",
                     "n units of (e.g. \"in thousands\")",
                     "in amounts of",
-                ]
+                ],
             ),
             .init(
                 kind: .kunyomi,
                 word: "一重",
                 reading: "ひとえ",
-                meanings: ["one layer", "single layer", "monopetalous", "unlined kimono"]
+                meanings: ["one layer", "single layer", "monopetalous", "unlined kimono"],
             ),
             .init(
                 kind: .kunyomi,
                 word: "単衣",
                 reading: "たんい",
-                meanings: ["unlined kimono", "one kimono", "a single kimono"]
+                meanings: ["unlined kimono", "one kimono", "a single kimono"],
             ),
         ],
         info: .init(
@@ -325,7 +325,7 @@ struct KanjiInfoView: View {
         radicals: ["十"],
         similarKanji: ["早", "果", "菓", "巣", "呆"],
         waniKaniInfo: .init(currentProgress: .apprentice3),
-        svgId: "05358"
+        svgId: "05358",
     )
 
     KanjiEntryView(entry: previewEntry)

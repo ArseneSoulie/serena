@@ -52,7 +52,7 @@ struct CompletedAllInARowPage: View {
                                 Button($0.kana.kanaValue) {}
                                     .buttonStyle(TileButtonStyle(
                                         tileSize: .largeEntry,
-                                        tileKind: .custom($0.completionState.color)
+                                        tileKind: .custom($0.completionState.color),
                                     ))
                             }
                         }.padding()
@@ -87,7 +87,8 @@ struct CompletedAllInARowPage: View {
                 for kana in kanas {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        tiles.append(.init(kana: kana, completionState: completionState(for: kana))
+                        tiles.append(
+                            .init(kana: kana, completionState: completionState(for: kana)),
                         )
                     }
                 }
@@ -132,6 +133,6 @@ struct CompletedAllInARowPage: View {
         remainingKanas: [],
         onTryAgainTapped: {},
         onLevelUpsTapped: {},
-        onGoBackTapped: {}
+        onGoBackTapped: {},
     )
 }

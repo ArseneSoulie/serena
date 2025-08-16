@@ -11,7 +11,7 @@ struct KanaLineView: View {
         GridRow {
             Button(
                 action: toggleLine,
-                label: { Text(kanaLine.id).padding(8) }
+                label: { Text(kanaLine.id).padding(8) },
             )
             .tint(.primary)
             .gridColumnAlignment(.trailing)
@@ -113,25 +113,25 @@ struct KanaWritingPreview: View {
             kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: true,
             kanaSelectionType: .hiragana,
-            isOn: $isOn
+            isOn: $isOn,
         )
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: true,
             kanaSelectionType: .katakana,
-            isOn: $isOn
+            isOn: $isOn,
         )
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: false,
             kanaSelectionType: .hiragana,
-            isOn: $isOn
+            isOn: $isOn,
         )
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: false,
             kanaSelectionType: .hiragana,
-            isOn: $isOn
+            isOn: $isOn,
         )
     }
 }
