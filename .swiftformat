@@ -1,0 +1,20 @@
+# file options
+--exclude Pods,**/Generated,DerivedData
+# rules
+--allman false
+--extensionacl on-extension
+--indent 4
+--indentcase false
+--ifdef indent
+--typemark "MARK: - %t"
+--modifierorder
+--closurevoid remove
+--importgrouping alpha
+--stripunusedargs always
+--maxwidth 120
+--wraparguments before-first
+--wrapparameters before-first
+--wrapcollections before-first
+--wrapconditions before-first
+--disable wrapMultilineStatementBraces
+--selfrequired debug
