@@ -12,6 +12,7 @@ struct ToastView: View {
 
     var body: some View {
         Text(message)
+
             .padding()
             .background(Color.black.opacity(0.8))
             .foregroundColor(.white)

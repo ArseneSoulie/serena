@@ -39,7 +39,6 @@ public struct KanjiStrokesView: View {
                 .resizable()
                 .frame(width: 100, height: 100)
             Text("No stroke data for this kanji")
-                .font(.callout)
                 .padding(.vertical)
         }
     }

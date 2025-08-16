@@ -6,7 +6,7 @@ struct StudyView: View {
             VStack(alignment: .leading) {
                 Text("Radicals, Kanji & Vocab.")
                     .foregroundStyle(.secondary)
-                    .font(.headline)
+                    .typography(.headline)
                 CourseCardView(
                     title: "Lessons",
                     subtitle: "today",
@@ -22,7 +22,7 @@ struct StudyView: View {
                 Spacer().frame(height: 20)
                 Text("Extra studies")
                     .foregroundStyle(.secondary)
-                    .font(.headline)
+                    .typography(.headline)
 
                 HStack {
                     CourseCardView(
@@ -39,7 +39,7 @@ struct StudyView: View {
                 Spacer().frame(height: 20)
                 Text("More")
                     .foregroundStyle(.secondary)
-                    .font(.headline)
+                    .typography(.headline)
                 CourseCardView(
                     title: "Kaniwani ↺",
                     subtitle: "english to japanese",

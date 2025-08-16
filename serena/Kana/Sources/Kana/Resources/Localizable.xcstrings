@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@ %lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -243,6 +246,9 @@
           }
         }
       }
+    },
+    "ManaMnemonicsPage" : {
+
     },
     "Mnemonics" : {
 

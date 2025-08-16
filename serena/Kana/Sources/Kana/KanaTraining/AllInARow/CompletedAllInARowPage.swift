@@ -41,10 +41,10 @@ struct CompletedAllInARowPage: View {
                 ScrollView {
                     VStack {
                         Text(localized("Completed !"))
-                            .font(.headline)
+                            .typography(.headline)
                             .padding()
                         Text(completionText)
-                            .font(.subheadline)
+
                         let columns = [GridItem(.adaptive(minimum: 50))]
 
                         LazyVGrid(columns: columns) {

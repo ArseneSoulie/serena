@@ -74,7 +74,7 @@ struct KanaWritingPreview: View {
                 Text(text.romajiToHiragana).bold()
                 if showRomaji {
                     Text(text.lowercased())
-                        .font(.caption)
+                        .typography(.caption)
                 }
             }
         case .katakana:
@@ -82,7 +82,7 @@ struct KanaWritingPreview: View {
                 Text(text.romajiToKatakana).bold()
                 if showRomaji {
                     Text(text.uppercased())
-                        .font(.caption)
+                        .typography(.caption)
                 }
             }
         case .both:
@@ -91,14 +91,14 @@ struct KanaWritingPreview: View {
                     Text(text.romajiToHiragana).bold()
                     if showRomaji {
                         Text(text.lowercased())
-                            .font(.caption)
+                            .typography(.caption)
                     }
                 }
                 VStack {
                     Text(text.romajiToKatakana).bold()
                     if showRomaji {
                         Text(text.uppercased())
-                            .font(.caption)
+                            .typography(.caption)
                     }
                 }
             }

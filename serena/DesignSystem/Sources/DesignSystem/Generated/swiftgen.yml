@@ -1,6 +1,5 @@
-output_dir: ./
 fonts:
-  - inputs: ../Resources/Fonts
-    outputs:
-      - templatePath: ../../../../../../SwiftGen/fonts.stencil
-        output: Fonts.swift
+  inputs: ../Resources/Fonts
+  outputs:
+    templateName: swift5
+    output: Fonts.swift

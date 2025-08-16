@@ -175,6 +175,6 @@ struct MnemonicView: View {
                 .foregroundStyle(.secondary)
                 .padding(.vertical, 4)
             }
-        }.font(.callout)
+        }.typography(.callout)
     }
 }

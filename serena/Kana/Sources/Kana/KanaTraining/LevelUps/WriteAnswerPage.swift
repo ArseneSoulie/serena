@@ -58,7 +58,7 @@ struct WriteAnswerPage: View {
                 VStack {
                     Text(kanaTruth)
                         .foregroundStyle(truthColor)
-                        .font(.system(.largeTitle, design: .rounded))
+                        .typography(.largeTitle)
                         .modifier(ShakeEffect(animatableData: shakeTrigger))
                         .padding()
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
@@ -73,7 +73,7 @@ struct WriteAnswerPage: View {
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.center)
                         .textEditorStyle(.plain)
-                        .font(.largeTitle)
+                        .typography(.largeTitle)
                         .focused($isFocused)
 
                     Button(action: onSubmit) {

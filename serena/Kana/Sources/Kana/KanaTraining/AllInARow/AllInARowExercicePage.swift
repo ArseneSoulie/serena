@@ -43,7 +43,7 @@ struct AllInARowExercicePage: View {
                     Text(truth.kanaValue)
                         .foregroundStyle(truthColor)
                         .modifier(ShakeEffect(animatableData: shakeTrigger))
-                        .font(.system(.largeTitle, design: .rounded))
+                        .typography(.largeTitle)
                         .padding()
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                     Text(info)
@@ -58,7 +58,7 @@ struct AllInARowExercicePage: View {
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.center)
                         .textEditorStyle(.plain)
-                        .font(.largeTitle)
+                        .typography(.largeTitle)
                         .focused($isFocused)
 
                     Button(action: onSubmit) {

@@ -62,8 +62,9 @@ struct PickAnswerPage: View {
         VStack(spacing: 20) {
             ProgressView(progress: $progress)
             Text(pickingExerciceType.prompt)
+
             Text(formattedTruth)
-                .font(.system(.largeTitle, design: .rounded))
+                .typography(.largeTitle)
                 .padding()
                 .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
 
@@ -75,7 +76,7 @@ struct PickAnswerPage: View {
                         action: { onOptionSelected(option) },
                         label: { Text(formatGuessingOption(option)).padding(.horizontal) },
                     )
-                    .font(.title2)
+                    .typography(.title2)
                     .buttonStyle(.borderedProminent)
                 }
             }.disabled(disableButtons)
