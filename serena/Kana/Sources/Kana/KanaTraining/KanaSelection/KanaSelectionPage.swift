@@ -101,20 +101,20 @@ public struct KanaSelectionPage: View {
     }
 
     var textForSelectedKanas: String {
-        let baseCount = "\(selectedBase.kanaCount)/\(base.kanaCount) "
-        let diacriticCount = "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount) "
-        let combinatoryCount = "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount) "
-        let combinatoryDiacriticCount = "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount) "
+        let baseCount = "\(selectedBase.kanaCount)/\(base.kanaCount)"
+        let diacriticCount = "\(selectedDiacritic.kanaCount)/\(diacritic.kanaCount)"
+        let combinatoryCount = "\(selectedCombinatory.kanaCount)/\(combinatory.kanaCount)"
+        let combinatoryDiacriticCount = "\(selectedCombinatoryDiacritic.kanaCount)/\(combinatoryDiacritic.kanaCount)"
         let extendedKatakanaCount = "\(selectedExtendedKatakana.kanaCount)/\(extendedKatakana.kanaCount)"
 
-        var selectedCountText = ""
+        var selectedCountText: [String] = []
 
         if !selectedBase.isEmpty { selectedCountText.append(baseCount) }
         if !selectedDiacritic.isEmpty { selectedCountText.append(diacriticCount) }
         if !selectedCombinatory.isEmpty { selectedCountText.append(combinatoryCount) }
         if !selectedCombinatoryDiacritic.isEmpty { selectedCountText.append(combinatoryDiacriticCount) }
         if !selectedExtendedKatakana.isEmpty { selectedCountText.append(extendedKatakanaCount) }
-        return selectedCountText
+        return selectedCountText.joined(separator: "  |  ")
     }
 
     var selectedKanasForExercise: [Kana] {
@@ -177,28 +177,35 @@ struct BottomViews: View {
     let onExerciceSelectionTapped: () -> Void
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            BottomGradient()
-            VStack(spacing: 8) {
-                ZStack {
-                    Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)
-                        .buttonStyle(.borderedProminent)
-                        .disabled(totalSelectedKanas == 0)
+        VStack(spacing: 4) {
+            ZStack {
+                Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)
+                    .buttonStyle(.borderedProminent)
+                    .disabled(totalSelectedKanas == 0)
 
-                    HStack {
-                        Text(localized("Mode"))
-                        Spacer()
-                        Picker(localized("Training mode"), selection: $kanaSelectionType) {
-                            ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.symbol) }
-                        }
-                        .pickerStyle(.segmented)
-                        .fixedSize()
+                HStack {
+                    Text(localized("Mode"))
+                    Spacer()
+                    Picker(localized("Training mode"), selection: $kanaSelectionType) {
+                        ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.symbol) }
                     }
+                    .pickerStyle(.segmented)
+                    .fixedSize()
                 }
-                .padding(.horizontal)
-                Text(textForSelectedKanas)
-                    .typography(.footnote)
             }
+            .padding(.horizontal)
+            Text(textForSelectedKanas)
+                .typography(.footnote)
+        }
+        .padding(4)
+        .padding(.top, 16)
+        .background {
+            Rectangle()
+                .fill(Gradient(stops: [
+                    .init(color: Color.bgColor.opacity(0), location: 0),
+                    .init(color: Color.bgColor.opacity(0.2), location: 0.05),
+                    .init(color: Color.bgColor, location: 0.2),
+                ]))
         }
     }
 }
@@ -223,18 +230,6 @@ struct TrainingButtonView: View {
                 .padding()
                 .padding(.vertical, 20)
             }
-    }
-}
-
-struct BottomGradient: View {
-    var body: some View {
-        Rectangle()
-            .fill(Gradient(stops: [
-                .init(color: Color.bgColor.opacity(0), location: 0.8),
-                .init(color: Color.bgColor.opacity(0.2), location: 0.85),
-                .init(color: Color.bgColor, location: 0.9),
-            ]))
-            .allowsHitTesting(false)
     }
 }
 

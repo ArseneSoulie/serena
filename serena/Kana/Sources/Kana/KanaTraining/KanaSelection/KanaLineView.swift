@@ -29,7 +29,7 @@ struct KanaLineView: View {
                 }
                 .padding(.all, 4)
                 .foregroundStyle(isOn ? Color(white: 0.2) : Color(white: 0.4))
-                .background { isOn ? .mint : Color(white: 0.92) }
+                .background { isOn ? Color(white: 0.7) : Color(white: 0.92) }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay(alignment: .topTrailing) {
                     if isOn {
