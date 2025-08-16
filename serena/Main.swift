@@ -1,5 +1,5 @@
-import SwiftUI
 import SerenaApp
+import SwiftUI
 
 @main
 struct SerenaApp: App {

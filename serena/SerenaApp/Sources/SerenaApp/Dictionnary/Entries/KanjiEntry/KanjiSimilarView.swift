@@ -3,7 +3,7 @@ import SwiftUI
 struct KanjiSimilarView: View {
     let title: String
     let similarKanji: [String]
-    
+
     var body: some View {
         HStack {
             Text(title).foregroundStyle(.secondary)

@@ -1,17 +1,17 @@
 extension Set<KanaLine> {
     subscript(containsLine kanaLine: KanaLine) -> Bool {
-        get { self.contains(kanaLine) }
+        get { contains(kanaLine) }
         set {
             if newValue {
-                self.insert(kanaLine)
+                insert(kanaLine)
             } else {
-                self.remove(kanaLine)
+                remove(kanaLine)
             }
         }
     }
-    
+
     subscript(containsLines kanaLines: [KanaLine]) -> Bool {
-        get { self.isSuperset(of: kanaLines)}
+        get { isSuperset(of: kanaLines) }
         set {
             if newValue {
                 self = union(kanaLines)
@@ -24,16 +24,16 @@ extension Set<KanaLine> {
 
 extension Set<KanaLine> {
     var kanaCount: Int {
-        self.reduce(0) { partialResult, line in
-            partialResult + line.kanas.count(where: { $0 != nil} )
+        reduce(0) { partialResult, line in
+            partialResult + line.kanas.count(where: { $0 != nil })
         }
     }
 }
 
-extension Array<KanaLine> {
+extension [KanaLine] {
     var kanaCount: Int {
-        self.reduce(0) { partialResult, line in
-            partialResult + line.kanas.count(where: { $0 != nil} )
+        reduce(0) { partialResult, line in
+            partialResult + line.kanas.count(where: { $0 != nil })
         }
     }
 }

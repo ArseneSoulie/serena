@@ -1,10 +1,9 @@
 //
-//  ConfettiPiece.swift
+//  ConfettiView.swift
 //  SerenaApp
 //
 //  Created by A S on 06/08/2025.
 //
-
 
 import SwiftUI
 
@@ -25,7 +24,7 @@ struct ConfettiView: View {
     let emitPoint: CGPoint
 
     @State var isHidden: Bool = false
-    
+
     var body: some View {
         ZStack {
             ForEach(particles) { particle in
@@ -45,14 +44,14 @@ struct ConfettiView: View {
 
     private func launchParticles() {
         isHidden = false
-        let initialParticles = (0..<count).map { _ in
+        let initialParticles = (0 ..< count).map { _ in
             ConfettiParticle(
                 x: emitPoint.x,
                 y: emitPoint.y,
                 angle: Angle(degrees: Double.random(in: 60 ... 120)),
-                speed: CGFloat.random(in: 300...700),
-                rotation: Double.random(in: 0...360),
-                color: colors.randomElement()!
+                speed: CGFloat.random(in: 300 ... 700),
+                rotation: Double.random(in: 0 ... 360),
+                color: colors.randomElement()!,
             )
         }
 
@@ -67,7 +66,7 @@ struct ConfettiView: View {
 
                 particles[index].x += dx
                 particles[index].y += dy
-                particles[index].rotation += Double.random(in: 360...1080)
+                particles[index].rotation += Double.random(in: 360 ... 1080)
             }
             isHidden = true
         }

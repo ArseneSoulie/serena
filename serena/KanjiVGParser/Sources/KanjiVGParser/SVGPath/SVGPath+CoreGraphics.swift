@@ -63,13 +63,13 @@ private extension CGMutablePath {
         case let .quadratic(control, point):
             addQuadCurve(
                 to: CGPoint(point),
-                control: CGPoint(control)
+                control: CGPoint(control),
             )
         case let .cubic(control1, control2, point):
             addCurve(
                 to: CGPoint(point),
                 control1: CGPoint(control1),
-                control2: CGPoint(control2)
+                control2: CGPoint(control2),
             )
         case let .arc(arc):
             arc.asBezierPath(from: SVGPoint(currentPoint)).forEach(addCommand)
@@ -133,7 +133,7 @@ extension CGPath {
             let block = unsafeBitCast(block, to: UnsafeMutableRawPointer.self)
             self.apply(info: block, function: unsafeBitCast(
                 callback,
-                to: CGPathApplierFunction.self
+                to: CGPathApplierFunction.self,
             ))
         }
     }

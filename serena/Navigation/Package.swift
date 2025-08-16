@@ -6,12 +6,12 @@ import PackageDescription
 let package = Package(
     name: "Navigation",
     platforms: [
-        .iOS(.v17)
+        .iOS(.v17),
     ],
     products: [
         .library(
             name: "Navigation",
-            targets: ["Navigation"]
+            targets: ["Navigation"],
         ),
     ],
     dependencies: [
@@ -21,9 +21,8 @@ let package = Package(
         .target(
             name: "Navigation",
             dependencies: [
-                "FoundationModels"
-            ]
+                "FoundationModels",
+            ],
         ),
-
-    ]
+    ],
 )

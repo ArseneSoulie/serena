@@ -1,4 +1,3 @@
-
 enum JLPTLevel: String {
     case N1
     case N2

@@ -4,12 +4,12 @@ import PackageDescription
 let package = Package(
     name: "KanjiVGParser",
     platforms: [
-        .macOS(.v15), .iOS(.v18)
+        .macOS(.v15), .iOS(.v18),
     ],
     products: [
         .library(
             name: "KanjiVGParser",
-            targets: ["KanjiVGParser"]
+            targets: ["KanjiVGParser"],
         ),
     ],
     targets: [
@@ -17,8 +17,8 @@ let package = Package(
             name: "KanjiVGParser",
             dependencies: [],
             resources: [
-                .process("Resources")
-            ]
+                .process("Resources"),
+            ],
         ),
-    ]
+    ],
 )

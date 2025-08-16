@@ -1,11 +1,10 @@
-
-import SwiftUI
 import FoundationModels
+import SwiftUI
 
 enum WriteExerciceType {
     case single
     case groupOfThree
-    
+
     var prompt: String {
         switch self {
         case .single: localized("Write the kana.")
@@ -16,24 +15,24 @@ enum WriteExerciceType {
 
 struct WriteAnswerPage: View {
     let title: String
-    
+
     let writingExerciceType: WriteExerciceType
     let kanaPool: [Kana]
     let onLevelCompleted: () -> Void
-    
+
     @State private var truth: [Kana]
     @State private var progress: Double = 0
     @State private var isLevelCompleted = false
     @State private var truthColor: Color = .primary
     @State private var shakeTrigger: CGFloat = 0
-    
+
     @State var inputText: String = ""
     @FocusState var isFocused: Bool
-    
+
     @State private var showToast = false
-    
+
     @State var info: String = ""
-    
+
     init(
         title: String,
         writingExerciceType: WriteExerciceType,
@@ -44,29 +43,29 @@ struct WriteAnswerPage: View {
         self.writingExerciceType = writingExerciceType
         self.kanaPool = kanaPool
         self.onLevelCompleted = onLevelCompleted
-        
+
         switch writingExerciceType {
         case .single: truth = Array(kanaPool.shuffled().prefix(1))
         case .groupOfThree: truth = Array(kanaPool.shuffled().prefix(3))
         }
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(writingExerciceType.prompt)
                 VStack {
-                Text(kanaTruth)
-                    .foregroundStyle(truthColor)
-                    .font(.system(.largeTitle, design: .rounded))
-                    .modifier(ShakeEffect(animatableData: shakeTrigger))
-                    .padding()
-                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                    Text(kanaTruth)
+                        .foregroundStyle(truthColor)
+                        .font(.system(.largeTitle, design: .rounded))
+                        .modifier(ShakeEffect(animatableData: shakeTrigger))
+                        .padding()
+                        .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                     Text(info)
                 }
                 Spacer()
-                
+
                 ZStack(alignment: .trailing) {
                     TextEditor(text: $inputText)
                         .onSubmit(onSubmit)
@@ -76,7 +75,7 @@ struct WriteAnswerPage: View {
                         .textEditorStyle(.plain)
                         .font(.largeTitle)
                         .focused($isFocused)
-                    
+
                     Button(action: onSubmit) {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable()
@@ -99,10 +98,10 @@ struct WriteAnswerPage: View {
         .navigationBarTitleDisplayMode(.inline)
         .toast(isPresented: $showToast, message: localized("Level up !"))
     }
-    
+
     func nextRound() {
         isFocused = true
-        
+
         switch writingExerciceType {
         case .single:
             let nextTruth = kanaPool.filter { !truth.contains($0) }.randomElement() ?? kanaPool.first ?? .empty
@@ -111,22 +110,23 @@ struct WriteAnswerPage: View {
             truth = Array(kanaPool.shuffled().prefix(3))
         }
     }
-    
+
     var answerCompletionPercent: Double {
         1.0 / Double(kanaPool.count)
     }
-    
+
     var kanaTruth: String {
         truth.map(\.kanaValue).joined()
     }
-    
+
     func onSubmit() {
         info = ""
         if isLevelCompleted { return }
-        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardizedRomajiWithWarningInfo
+        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+            .standardizedRomajiWithWarningInfo
         let convertedTruth: String = truth.map(\.kanaValue).joined().standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
-        
+
         var nextProgress: Double
         if !isCorrect {
             nextProgress = progress - answerCompletionPercent
@@ -144,21 +144,21 @@ struct WriteAnswerPage: View {
         } else {
             nextProgress = progress + answerCompletionPercent
         }
-        
+
         nextProgress = min(max(nextProgress, 0), 1)
-        
+
         isLevelCompleted = nextProgress >= 0.99
-        
+
         if !isLevelCompleted {
             if !containsInvalidRomaji {
-                nextRound()                
+                nextRound()
             }
         } else {
             withAnimation {
                 showToast = true
             }
         }
-        
+
         withAnimation {
             progress = nextProgress
         } completion: {
@@ -166,7 +166,7 @@ struct WriteAnswerPage: View {
                 onLevelCompleted()
             }
         }
-        
+
         inputText = ""
     }
 }

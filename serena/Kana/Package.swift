@@ -6,12 +6,12 @@ let package = Package(
     name: "Kana",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v17)
+        .iOS(.v17),
     ],
     products: [
         .library(
             name: "Kana",
-            targets: ["Kana"]
+            targets: ["Kana"],
         ),
     ],
     dependencies: [
@@ -29,8 +29,7 @@ let package = Package(
             ],
             resources: [
                 .process("Resources"),
-            ]
+            ],
         ),
-        
-    ]
+    ],
 )

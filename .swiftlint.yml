@@ -1,0 +1,21 @@
+trailing_comma:
+  mandatory_comma: true
+force_try:
+  severity: warning
+
+analyzer_rules:
+  - unused_import
+
+child_config: .swiftlint_excluded.generated.yml
+
+excluded:
+  - Binaries
+  - CodeSigning
+  - DerivedData
+  - Documentation
+  - fastlane
+  - scripts
+  - Tools
+  - vendor
+  - DangerDependencies
+  - packages_cacheV2

@@ -1,0 +1,63 @@
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+### OSX ###
+.DS_Store
+
+## Build generated
+build/
+DerivedData/
+
+## Various settings
+*.xcconfig
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+Draft
+
+## Other
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+.idea/
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+
+## fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/README.md
+test_output
+
+## Ignore folder generated after a `bundle install --deployment`
+vendor/
+.bundle
+Brewfile.lock.json
+
+## Ignore folder generated after running SPM
+.build
+packages_cacheV2
+
+## Ignored generated files
+.swiftlint_excluded.generated.yml
+
+#SPM
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+#Mint
+.mint

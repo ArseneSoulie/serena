@@ -4,25 +4,25 @@ public extension String {
     var romajiToKatakana: String {
         romajiToKatakanaTransform(self).transfromedString
     }
-    
+
     var romajiToHiragana: String {
         romajiToKatakana.applyingTransform(.hiraganaToKatakana, reverse: true) ?? self
     }
-    
+
     var hiraganaToRomaji: String {
-        self.applyingTransform(.latinToHiragana, reverse: true)?.lowercased() ?? self
-            
+        applyingTransform(.latinToHiragana, reverse: true)?.lowercased() ?? self
     }
-    
-    //this will interpret any glyph as katakana
+
+    // this will interpret any glyph as katakana
     var katakanaToRomaji: String {
-        self.applyingTransform(.hiraganaToKatakana, reverse: true)?.applyingTransform(.latinToHiragana, reverse: true)?.uppercased() ?? self
+        applyingTransform(.hiraganaToKatakana, reverse: true)?.applyingTransform(.latinToHiragana, reverse: true)?
+            .uppercased() ?? self
     }
-    
+
     var standardisedRomaji: String {
         lowercased().romajiToKatakana.katakanaToRomaji.lowercased()
     }
-    
+
     var standardizedRomajiWithWarningInfo: (romaji: String, hasWarning: Bool) {
         let kanakanizedString = romajiToKatakanaTransform(lowercased())
         return (kanakanizedString.transfromedString.katakanaToRomaji.lowercased(), kanakanizedString.warning)
@@ -78,7 +78,7 @@ private let romajiToKatakanaMap: [String: String] = [
     "rya": "リャ", "ryu": "リュ", "ryo": "リョ",
 
     // W
-    "wa": "ワ", "wo": "ヲ", "we": "ウェ", "wi": "ウィ", "uxo":"ウォ",
+    "wa": "ワ", "wo": "ヲ", "we": "ウェ", "wi": "ウィ", "uxo": "ウォ",
 
     // N
     "n": "ン", "n'": "ン",
@@ -112,7 +112,7 @@ private let romajiToKatakanaMap: [String: String] = [
     // D/W combos
     "twa": "トァ", "twi": "トィ", "twu": "トゥ", "twe": "トェ", "two": "トゥ",
     "dwa": "ドァ", "dwi": "ドィ", "dwu": "ドゥ", "dwe": "ドェ", "dwo": "ドォ",
-    
+
     // Y
     "ye": "イェ",
 ]
@@ -121,13 +121,13 @@ private func romajiToKatakanaTransform(_ input: String) -> (transfromedString: S
     let lower = input.lowercased()
     var output = ""
     var index = lower.startIndex
-    var warning: Bool = false
+    var warning = false
 
     while index < lower.endIndex {
         var matched = false
-        for len in (1...4).reversed() {
+        for len in (1 ... 4).reversed() {
             guard let end = lower.index(index, offsetBy: len, limitedBy: lower.endIndex) else { continue }
-            let slice = String(lower[index..<end])
+            let slice = String(lower[index ..< end])
             if let kana = romajiToKatakanaMap[slice] {
                 output += kana
                 index = end

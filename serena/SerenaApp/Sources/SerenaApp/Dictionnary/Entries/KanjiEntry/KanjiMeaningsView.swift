@@ -3,7 +3,7 @@ import SwiftUI
 struct KanjiMeaningsView: View {
     let title: String
     let meanings: Meanings
-    
+
     var body: some View {
         HStack {
             Text(title).foregroundStyle(.secondary)

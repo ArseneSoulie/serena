@@ -1,15 +1,14 @@
 // TODO: - implement models and views
 
-
-//import SwiftUI
+// import SwiftUI
 //
-//struct Writing {
+// struct Writing {
 //    let pronounciation: String
 //    let writings: [String]
 //    let audioUrl: URL?
-//}
+// }
 //
-//struct VocabularyEntryView {
+// struct VocabularyEntryView {
 //    let writings: [Writing]
 //    let meanings: Meanings
 //    var meaningMnemonics: Mnemonics
@@ -17,4 +16,4 @@
 //    let compounds: [KanjiCompounds]
 //
 //    let waniKaniInfo: WaniKaniInfo?
-//}
+// }

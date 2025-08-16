@@ -1,12 +1,12 @@
-import SwiftUI
 import DesignSystem
 import FoundationModels
+import SwiftUI
 
 enum CompletionState {
     case success
     case failed
     case skipped
-    
+
     var color: Color {
         switch self {
         case .success: .green
@@ -19,22 +19,22 @@ enum CompletionState {
 struct CompletedTileData: Identifiable {
     let kana: Kana
     let completionState: CompletionState
-    
+
     var id: String { kana.kanaValue }
 }
 
 struct CompletedAllInARowPage: View {
     let kanas: [Kana]
-    
+
     let failedKanas: Set<Kana>
     let remainingKanas: Set<Kana>
-    
+
     let onTryAgainTapped: () -> Void
     let onLevelUpsTapped: () -> Void
     let onGoBackTapped: () -> Void
-    
+
     @State var tiles: [CompletedTileData] = []
-    
+
     var body: some View {
         ZStack {
             VStack {
@@ -46,11 +46,14 @@ struct CompletedAllInARowPage: View {
                         Text(completionText)
                             .font(.subheadline)
                         let columns = [GridItem(.adaptive(minimum: 50))]
-                        
+
                         LazyVGrid(columns: columns) {
                             ForEach(tiles) {
                                 Button($0.kana.kanaValue) {}
-                                    .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .custom($0.completionState.color)))
+                                    .buttonStyle(TileButtonStyle(
+                                        tileSize: .largeEntry,
+                                        tileKind: .custom($0.completionState.color),
+                                    ))
                             }
                         }.padding()
                             .background {
@@ -58,14 +61,14 @@ struct CompletedAllInARowPage: View {
                                     .fill(Color(white: 0.91))
                             }
                             .padding()
-                        
+
                         if isPerfect {
                             DancingKaomojiView()
                         }
                         Spacer()
                     }
                 }
-                
+
                 HStack {
                     Button(localized("Try again with selection"), action: onTryAgainTapped)
                     Button(localized("Level ups"), action: onLevelUpsTapped)
@@ -75,7 +78,7 @@ struct CompletedAllInARowPage: View {
                     .buttonStyle(.borderless)
             }.padding()
             if isPerfect {
-                ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width/2, y: 0))
+                ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
             }
         }
         .onAppear {
@@ -84,18 +87,19 @@ struct CompletedAllInARowPage: View {
                 for kana in kanas {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        tiles.append(.init(kana: kana, completionState: completionState(for: kana))
+                        tiles.append(
+                            .init(kana: kana, completionState: completionState(for: kana)),
                         )
                     }
                 }
             }
         }
     }
-    
+
     var isPerfect: Bool {
         failedKanas.isEmpty && remainingKanas.isEmpty
     }
-    
+
     var completionText: String {
         if isPerfect {
             return localized("Perfect run ! 🎉")
@@ -103,19 +107,15 @@ struct CompletedAllInARowPage: View {
             let failedText = failedKanas.isEmpty ? "" : "\(localized("Incorrect")): \(failedKanas.count) "
             let skippedText = remainingKanas.isEmpty ? "" : "\(localized("Passed")): \(remainingKanas.count) "
             let succeededText = "\(localized("Correct")): \(kanas.count - (remainingKanas.count + failedKanas.count)) "
-            
+
             return succeededText + failedText + skippedText
         }
     }
-    
+
     func completionState(for kana: Kana) -> CompletionState {
-        if failedKanas.contains(kana) { .failed }
-        else if remainingKanas.contains(kana) { .skipped }
-        else { .success }
+        if failedKanas.contains(kana) { .failed } else if remainingKanas.contains(kana) { .skipped } else { .success }
     }
 }
-
-
 
 #Preview {
     CompletedAllInARowPage(
@@ -127,13 +127,12 @@ struct CompletedAllInARowPage: View {
             .hiragana(value: "o"),
             .hiragana(value: "ka"),
             .hiragana(value: "ki"),
-            .hiragana(value: "ku")
+            .hiragana(value: "ku"),
         ],
         failedKanas: [.hiragana(value: "ka")],
         remainingKanas: [],
-        onTryAgainTapped: {
-        },
-        onLevelUpsTapped: { },
-        onGoBackTapped: { }
+        onTryAgainTapped: {},
+        onLevelUpsTapped: {},
+        onGoBackTapped: {},
     )
 }

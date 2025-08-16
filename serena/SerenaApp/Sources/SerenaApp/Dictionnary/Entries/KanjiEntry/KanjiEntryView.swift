@@ -1,12 +1,12 @@
 //
-//  KanjiDictionnaryEntryView.swift
+//  KanjiEntryView.swift
 //  serena
 //
 //  Created by A S on 24/07/2025.
 //
 
-import SwiftUI
 import KanjiVGParser
+import SwiftUI
 
 struct KanjiEntry {
     let kanji: String
@@ -20,7 +20,7 @@ struct KanjiEntry {
     let info: KanjiInfo
     let radicals: [String]
     let similarKanji: [String]
-    
+
     let waniKaniInfo: WaniKaniInfo?
     let svgId: String?
 }
@@ -37,15 +37,13 @@ struct KanjiInfo {
     let wanikaniLevel: Int?
 }
 
-
-
 struct KanjiEntryView: View {
     @State var entry: KanjiEntry
     @State var showsSettings = false
     @State var showFurigana = false
     @State var useKatakanaForOnyomi = true
     @State var showStrokeOrder = false
-    
+
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -82,19 +80,16 @@ struct KanjiEntryView: View {
                 KanjiEntryOptionsToolbar(
                     showFurigana: $showFurigana,
                     useKatakanaForOnyomi: $useKatakanaForOnyomi,
-                    showsSettings: $showsSettings
+                    showsSettings: $showsSettings,
                 )
             }
             .animation(.easeOut, value: showsSettings)
             .animation(.easeOut, value: showFurigana)
             .animation(.easeOut, value: useKatakanaForOnyomi)
             .animation(.easeOut, value: showStrokeOrder)
-            
         }
     }
 }
-
-
 
 enum WanikaniProgress: Int, CaseIterable {
     case notStarted
@@ -107,7 +102,7 @@ enum WanikaniProgress: Int, CaseIterable {
     case master
     case enlightened
     case burned
-    
+
     var currentLevel: WanikaniProgressCategory {
         switch self {
         case .notStarted: .notStarted
@@ -138,7 +133,7 @@ enum WanikaniProgressCategory {
         case .burned: nil
         }
     }
-    
+
     var color: Color {
         switch self {
         case .notStarted: .gray.mix(with: .white, by: 0.6)
@@ -154,14 +149,14 @@ enum WanikaniProgressCategory {
 struct KanjiItemView: View {
     let kanji: String
     let wanikaniProgression: WanikaniProgress?
-    
+
     let onTileTapped: () -> Void
-    
+
     var body: some View {
         VStack {
             Button(kanji, action: onTileTapped)
                 .buttonStyle(TileButtonStyle(tileSize: .largeEntry, tileKind: .kanji))
-            
+
             if let wanikaniProgression {
                 WanikaniProgressView(wanikaniProgression: wanikaniProgression)
             }
@@ -171,24 +166,26 @@ struct KanjiItemView: View {
 
 struct WanikaniProgressView: View {
     let wanikaniProgression: WanikaniProgress
-    
+
     let allProgress = WanikaniProgress.allCases
-    
+
     var body: some View {
         let progressBarSteps = WanikaniProgress
             .allCases
             .filter { $0.currentLevel == wanikaniProgression.currentLevel }
-        
+
         HStack(spacing: 2) {
             ForEach(progressBarSteps, id: \.self) { progress in
                 Rectangle().foregroundStyle(
                     progress.currentLevel
                         .color
                         .opacity(progress.rawValue <= wanikaniProgression.rawValue ? 1 : 0.3)
-                        .gradient
+                        .gradient,
                 )
             }
-            if let nextCategory = wanikaniProgression.currentLevel.nextCategory, wanikaniProgression.currentLevel != .notStarted {
+            if
+                let nextCategory = wanikaniProgression.currentLevel.nextCategory,
+                wanikaniProgression.currentLevel != .notStarted {
                 nextCategory.color.opacity(0.3)
             }
         }
@@ -201,7 +198,7 @@ struct KanjiEntryOptionsToolbar: View {
     @Binding var showFurigana: Bool
     @Binding var useKatakanaForOnyomi: Bool
     @Binding var showsSettings: Bool
-    
+
     var body: some View {
         Button("Settings", systemImage: "slider.vertical.3") {
             showsSettings.toggle()
@@ -220,7 +217,7 @@ struct KanjiEntryOptionsToolbar: View {
 struct KanjiStrokesToolbar: View {
     @Binding var showStrokeOrder: Bool
     let svgId: String
-    
+
     var body: some View {
         Button(
             action: {
@@ -228,7 +225,7 @@ struct KanjiStrokesToolbar: View {
             },
             label: {
                 Image(systemName: "pencil.and.scribble")
-            }
+            },
         ).popover(isPresented: $showStrokeOrder) {
             KanjiStrokesView(svgId: svgId)
                 .padding(.all)
@@ -247,7 +244,7 @@ extension KanjiStrokesView {
 
 struct KanjiInfoView: View {
     let info: KanjiInfo
-    
+
     var body: some View {
         VStack(alignment: .trailing) {
             if let wanikaniLevel = info.wanikaniLevel {
@@ -272,31 +269,51 @@ struct KanjiInfoView: View {
     }
 }
 
-
 #Preview {
     let previewEntry: KanjiEntry = .init(
         kanji: "単",
-        meanings: .init(jishoMeanings: ["Simple"], userProvidedMeanings: []) ,
+        meanings: .init(jishoMeanings: ["Simple"], userProvidedMeanings: []),
         onyomiReadings: ["タン"],
         kunyomiReadings: ["ひとえ"],
         nanoriReadings: [],
         meaningMnemonics: .init(
             wkMnemonic: .init(
                 explanation: "The simple radical and the simple kanji are the same!",
-                hint: "Simple is simple!"
-            )
+                hint: "Simple is simple!",
+            ),
         ),
         readingMnemonics: .init(
             wkMnemonic: .init(
                 explanation: "One of the most simple things in the world is getting a tan (たん). All you have to do is stand outside long enough. It doesn't matter what skin type you have or what the weather is like. Eventually, if you stand out there long enough, you'll get a tan.",
                 hint: "Get a tan, it's simple, stupid! (Though it's terrible for you so uh... don't always take our advice, kay?)",
-            )
+            ),
         ),
         compounds: [
             .init(kind: .onyomi, word: "単", reading: "タン", meanings: ["single", "simple"]),
-            .init(kind: .onyomi, word: "単位", reading: "タンイ", meanings: ["unit", "denomination","credit (in school)", "n units of (e.g. \"in thousands\")", "in amounts of"]),
-            .init(kind: .kunyomi, word: "一重", reading: "ひとえ", meanings: ["one layer", "single layer", "monopetalous", "unlined kimono"]),
-            .init(kind: .kunyomi, word: "単衣", reading: "たんい", meanings: ["unlined kimono", "one kimono", "a single kimono"]),
+            .init(
+                kind: .onyomi,
+                word: "単位",
+                reading: "タンイ",
+                meanings: [
+                    "unit",
+                    "denomination",
+                    "credit (in school)",
+                    "n units of (e.g. \"in thousands\")",
+                    "in amounts of",
+                ],
+            ),
+            .init(
+                kind: .kunyomi,
+                word: "一重",
+                reading: "ひとえ",
+                meanings: ["one layer", "single layer", "monopetalous", "unlined kimono"],
+            ),
+            .init(
+                kind: .kunyomi,
+                word: "単衣",
+                reading: "たんい",
+                meanings: ["unlined kimono", "one kimono", "a single kimono"],
+            ),
         ],
         info: .init(
             gradeLevel: 4,
@@ -306,12 +323,10 @@ struct KanjiInfoView: View {
             wanikaniLevel: 3,
         ),
         radicals: ["十"],
-        similarKanji: ["早","果","菓","巣","呆"],
+        similarKanji: ["早", "果", "菓", "巣", "呆"],
         waniKaniInfo: .init(currentProgress: .apprentice3),
-        svgId: "05358"
+        svgId: "05358",
     )
-    
+
     KanjiEntryView(entry: previewEntry)
 }
-
-

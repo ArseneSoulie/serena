@@ -5,12 +5,12 @@ let package = Package(
     name: "SerenaApp",
     defaultLocalization: "en",
     platforms: [
-        .macOS(.v15), .iOS(.v18)
+        .macOS(.v15), .iOS(.v18),
     ],
     products: [
         .library(
             name: "SerenaApp",
-            targets: ["SerenaApp"]
+            targets: ["SerenaApp"],
         ),
     ],
     dependencies: [
@@ -31,8 +31,8 @@ let package = Package(
                 "Kana",
             ],
             resources: [
-                .process("Resources")
-            ]
+                .process("Resources"),
+            ],
         ),
-    ]
+    ],
 )
