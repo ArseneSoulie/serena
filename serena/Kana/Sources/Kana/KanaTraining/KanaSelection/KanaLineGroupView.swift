@@ -54,15 +54,15 @@ struct KanaLineGroupView: View {
                     Button(action: toggleSelectBase) {
                         Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
                     }
-                    .tint(hasSelectedAll ? .mint : .gray)
-                    .buttonStyle(.bordered)
+                    .tint(hasSelectedAll ? .green : .gray)
                     Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
+                        .bold()
                 }
             }
             Divider()
         }
         .padding(.horizontal)
-        .tint(selectedLines.isEmpty ? .secondary : .mint)
+        .tint(selectedLines.isEmpty ? .secondary : .primary)
     }
 
     var hasSelectedAll: Bool {
