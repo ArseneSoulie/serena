@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "KanjiVGParser",
     platforms: [
-        .macOS(.v15), .iOS(.v18)
+        .macOS(.v15), .iOS(.v18),
     ],
     products: [
         .library(
@@ -17,7 +17,7 @@ let package = Package(
             name: "KanjiVGParser",
             dependencies: [],
             resources: [
-                .process("Resources")
+                .process("Resources"),
             ]
         ),
     ]

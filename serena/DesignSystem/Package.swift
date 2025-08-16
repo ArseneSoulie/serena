@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "DesignSystem",
     platforms: [
-        .iOS(.v17)
+        .iOS(.v17),
     ],
     products: [
         .library(
@@ -18,6 +18,5 @@ let package = Package(
         .target(
             name: "DesignSystem"
         ),
-
-    ] 
+    ]
 )

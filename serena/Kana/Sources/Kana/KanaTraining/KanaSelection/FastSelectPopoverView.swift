@@ -6,7 +6,7 @@ struct FastSelectPopoverView: View {
     @Binding var selectedCombinatory: Set<KanaLine>
     @Binding var selectedCombinatoryDiacritic: Set<KanaLine>
     @Binding var selectedExtendedKatakana: Set<KanaLine>
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -39,7 +39,7 @@ struct FastSelectPopoverView: View {
         .padding()
         .presentationCompactAdaptation(.popover)
     }
-    
+
     func selectAll() {
         selectedBase.formUnion(base)
         selectedDiacritic.formUnion(diacritic)
@@ -47,7 +47,7 @@ struct FastSelectPopoverView: View {
         selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic)
         selectedExtendedKatakana.formUnion(extendedKatakana)
     }
-    
+
     func clearAll() {
         selectedBase.removeAll()
         selectedDiacritic.removeAll()
@@ -60,11 +60,11 @@ struct FastSelectPopoverView: View {
 struct FastSelectToggleButton: View {
     let title: String
     @Binding var isOn: Bool
-    
+
     var body: some View {
         Button(action: {
             withAnimation { isOn.toggle() }
-        } ) {
+        }) {
             HStack {
                 Image(systemName: isOn ? "checkmark.circle.fill" : "checkmark.circle")
                     .tint(isOn ? .mint : .gray)

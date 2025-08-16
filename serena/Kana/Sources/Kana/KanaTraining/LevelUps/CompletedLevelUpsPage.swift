@@ -4,7 +4,7 @@ struct CompletedLevelUpsPage: View {
     let onTryAgainTapped: () -> Void
     let onAllInARowTapped: () -> Void
     let onGoBackTapped: () -> Void
-    
+
     var body: some View {
         ZStack {
             VStack {
@@ -18,7 +18,7 @@ struct CompletedLevelUpsPage: View {
                             .frame(width: 80, height: 80)
                             .padding()
                         DancingKaomojiView()
-                        
+
                         Spacer()
                     }
                 }
@@ -30,7 +30,7 @@ struct CompletedLevelUpsPage: View {
                 Button(localized("Go back to selection"), action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }.padding()
-            ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width/2, y: 0))
+            ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
         }
     }
 }

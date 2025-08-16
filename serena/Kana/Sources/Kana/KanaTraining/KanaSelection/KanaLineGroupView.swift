@@ -5,12 +5,12 @@ struct KanaLineGroupView: View {
     let subtitle: String?
     let lines: [KanaLine]
     @Binding var selectedLines: Set<KanaLine>
-    
+
     @State var isExpanded: Bool = true
-    
+
     let showRomaji: Bool
     let kanaSelectionType: KanaSelectionType
-    
+
     init(
         title: String,
         subtitle: String? = nil,
@@ -26,7 +26,7 @@ struct KanaLineGroupView: View {
         self.showRomaji = showRomaji
         self.kanaSelectionType = kanaSelectionType
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             DisclosureGroup(isExpanded: $isExpanded) {
@@ -54,8 +54,8 @@ struct KanaLineGroupView: View {
                     Button(action: toggleSelectBase) {
                         Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
                     }
-                        .tint(hasSelectedAll ? .mint : .gray)
-                        .buttonStyle(.bordered)
+                    .tint(hasSelectedAll ? .mint : .gray)
+                    .buttonStyle(.bordered)
                     Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)").font(.subheadline)
                 }
             }
@@ -64,15 +64,14 @@ struct KanaLineGroupView: View {
         .padding(.horizontal)
         .tint(selectedLines.isEmpty ? .secondary : .mint)
     }
-    
+
     var hasSelectedAll: Bool {
         selectedLines.count == lines.count
     }
-    
+
     func toggleSelectBase() {
         withAnimation {
-            if hasSelectedAll { selectedLines.removeAll() }
-            else { selectedLines.formUnion(lines) }
+            if hasSelectedAll { selectedLines.removeAll() } else { selectedLines.formUnion(lines) }
         }
     }
 }

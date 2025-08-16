@@ -1,25 +1,25 @@
-import SwiftUI
 import FoundationModels
+import SwiftUI
 
 struct AllInARowExercicePage: View {
     let kanas: [Kana]
-    
+
     @State private var progress: Double = 0
-    
+
     @State private var truth: Kana
     @State private var truthColor: Color = .primary
     @State private var shakeTrigger: CGFloat = 0
-    
+
     @State private var inputText: String = ""
     @FocusState private var isFocused: Bool
-    
+
     @Binding var failedKanas: Set<Kana>
     @Binding var remainingKanas: Set<Kana>
-    
+
     @State var info: String = ""
-    
+
     let onFinished: () -> Void
-    
+
     init(
         kanas: [Kana],
         failedKanas: Binding<Set<Kana>>,
@@ -32,13 +32,13 @@ struct AllInARowExercicePage: View {
         _remainingKanas = remainingKanas
         self.onFinished = onFinished
     }
-    
+
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
                 ProgressView(progress: $progress)
                 Text(localized("Write the writing of all kanas in a row"))
-                
+
                 VStack {
                     Text(truth.kanaValue)
                         .foregroundStyle(truthColor)
@@ -48,9 +48,9 @@ struct AllInARowExercicePage: View {
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                     Text(info)
                 }
-                
+
                 Spacer()
-                
+
                 ZStack(alignment: .trailing) {
                     TextEditor(text: $inputText)
                         .onSubmit(onSubmit)
@@ -60,7 +60,7 @@ struct AllInARowExercicePage: View {
                         .textEditorStyle(.plain)
                         .font(.largeTitle)
                         .focused($isFocused)
-                    
+
                     Button(action: onSubmit) {
                         Image(systemName: "checkmark.circle.fill")
                             .resizable()
@@ -70,7 +70,6 @@ struct AllInARowExercicePage: View {
                 }
                 .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                 .padding()
-                
             }
         }
         .navigationTitle(localized("All in a row"))
@@ -84,18 +83,19 @@ struct AllInARowExercicePage: View {
             Button(localized("Finish"), action: onFinished)
         }
     }
-    
+
     var answerCompletionPercent: Double {
         1.0 / Double(kanas.count)
     }
-    
+
     func onSubmit() {
-        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines).standardizedRomajiWithWarningInfo
+        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+            .standardizedRomajiWithWarningInfo
         let convertedTruth = truth.kanaValue.standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
-        
+
         info = ""
-        
+
         if !isCorrect {
             failedKanas.insert(truth)
             withAnimation(.default) {
@@ -126,14 +126,14 @@ struct AllInARowExercicePage: View {
                 }
             }
         }
-        
+
         inputText = ""
     }
-    
+
     func onSkip() {
         nextRandomKana()
     }
-    
+
     func nextRandomKana() {
         truth = remainingKanas.filter { truth != $0 }.randomElement() ?? remainingKanas.first ?? .empty
     }
@@ -149,7 +149,7 @@ struct AllInARowExercicePage: View {
             .hiragana(value: "o"),
             .hiragana(value: "ka"),
             .hiragana(value: "ki"),
-            .hiragana(value: "ku")
+            .hiragana(value: "ku"),
         ],
         failedKanas: .constant([.hiragana(value: "ka")]),
         remainingKanas: .constant([]),

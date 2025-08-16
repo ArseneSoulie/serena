@@ -8,11 +8,12 @@ let package = Package(
     products: [
         .library(
             name: "FoundationModels",
-            targets: ["FoundationModels"]),
+            targets: ["FoundationModels"]
+        ),
     ],
     targets: [
         .target(
-            name: "FoundationModels"),
-
+            name: "FoundationModels"
+        ),
     ]
 )

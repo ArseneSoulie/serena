@@ -3,7 +3,7 @@ import SwiftUI
 enum CourseType {
     case lesson
     case review
-    
+
     var mainColor: Color {
         switch self {
         case .lesson: .pink
@@ -19,8 +19,7 @@ struct CourseCardView: View {
     let textColor: Color = .white
     let countLabel: String?
     let onSelect: () -> Void
-    
-    
+
     init(
         title: String,
         subtitle: String = "",
@@ -34,7 +33,7 @@ struct CourseCardView: View {
         self.countLabel = countLabel
         self.onSelect = onSelect
     }
-    
+
     var body: some View {
         Button(action: onSelect) {
             VStack(alignment: .leading) {
@@ -51,7 +50,7 @@ struct CourseCardView: View {
                     }
                 }
                 Text(subtitle)
-                HStack{
+                HStack {
                     Spacer()
                     Text("  Start →")
                         .padding(.horizontal, 6)

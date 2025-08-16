@@ -4,9 +4,9 @@ struct KanaLineView: View {
     let kanaLine: KanaLine
     let showRomaji: Bool
     let kanaSelectionType: KanaSelectionType
-    
+
     @Binding var isOn: Bool
-    
+
     var body: some View {
         GridRow {
             Button(
@@ -15,7 +15,7 @@ struct KanaLineView: View {
             )
             .tint(.primary)
             .gridColumnAlignment(.trailing)
-            
+
             Button(action: toggleLine) {
                 HStack(spacing: 4) {
                     ForEach(kanaLine.kanas, id: \.kanaId) { kana in
@@ -28,7 +28,7 @@ struct KanaLineView: View {
                     }
                 }
                 .padding(.all, 4)
-                .foregroundStyle (isOn ? Color(white: 0.2) : Color(white: 0.4))
+                .foregroundStyle(isOn ? Color(white: 0.2) : Color(white: 0.4))
                 .background { isOn ? .mint : Color(white: 0.92) }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay(alignment: .topTrailing) {
@@ -46,11 +46,11 @@ struct KanaLineView: View {
                     }
                 }
             }
-            
+
             Text(kanaLine.id).hidden()
         }
     }
-    
+
     func toggleLine() {
         withAnimation { isOn.toggle() }
     }
@@ -60,13 +60,13 @@ struct KanaWritingPreview: View {
     let text: String
     let showRomaji: Bool
     let kanaSelectionType: KanaSelectionType
-    
+
     init(text: String?, showRomaji: Bool, kanaSelectionType: KanaSelectionType) {
         self.text = text ?? ""
         self.showRomaji = showRomaji
         self.kanaSelectionType = kanaSelectionType
     }
-    
+
     var body: some View {
         switch kanaSelectionType {
         case .hiragana:
@@ -110,25 +110,25 @@ struct KanaWritingPreview: View {
     @Previewable @State var isOn = true
     Grid {
         KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: true,
             kanaSelectionType: .hiragana,
             isOn: $isOn
         )
         KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: true,
             kanaSelectionType: .katakana,
             isOn: $isOn
         )
         KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: false,
             kanaSelectionType: .hiragana,
             isOn: $isOn
         )
         KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra","ri","ru","re","ro"]),
+            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
             showRomaji: false,
             kanaSelectionType: .hiragana,
             isOn: $isOn

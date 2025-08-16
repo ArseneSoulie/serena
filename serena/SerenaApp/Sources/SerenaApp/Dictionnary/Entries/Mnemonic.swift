@@ -4,7 +4,7 @@ struct Mnemonic {
     let explanation: String
     let hint: String?
     let images: [Image]
-    
+
     init(explanation: String, hint: String? = nil, images: [Image] = []) {
         self.explanation = explanation
         self.hint = hint
@@ -15,7 +15,7 @@ struct Mnemonic {
 struct Mnemonics {
     let wkMnemonic: Mnemonic?
     var userProvidedMnemonic: Mnemonic?
-    
+
     init(wkMnemonic: Mnemonic? = nil, userProvidedMnemonic: Mnemonic? = nil) {
         self.wkMnemonic = wkMnemonic
         self.userProvidedMnemonic = userProvidedMnemonic
@@ -27,7 +27,7 @@ struct MnemonicsView: View {
     @Binding var mnemonics: Mnemonics
     @State private var showAddOrEditMnemonic: Bool = false
     @State private var showDetails = true
-    
+
     var body: some View {
         DisclosureGroup(title, isExpanded: $showDetails) {
             VStack(alignment: .leading) {
@@ -59,7 +59,6 @@ struct MnemonicsView: View {
     }
 }
 
-
 struct MnemonicDraft {
     var explanation: String
     var hint: String
@@ -74,7 +73,7 @@ extension Mnemonic {
 
 extension MnemonicDraft {
     var unwrappedMnemonic: Mnemonic? {
-        if explanation.isEmpty && hint.isEmpty && images.isEmpty {
+        if explanation.isEmpty, hint.isEmpty, images.isEmpty {
             return nil
         }
         return Mnemonic(explanation: explanation, hint: hint, images: images)
@@ -84,33 +83,33 @@ extension MnemonicDraft {
 struct AddMnemonicView: View {
     @State var mnemonicDraft: MnemonicDraft
     let wkMnemonic: Mnemonic?
-    
+
     let title: String
-    
+
     init(title: String, mnemonics: Mnemonics, onSaveUserMnemonicTapped: @escaping (Mnemonic?) -> Void) {
         self.title = title
-        self.wkMnemonic = mnemonics.wkMnemonic
-        self.mnemonicDraft = mnemonics.userProvidedMnemonic?.draft ?? .init(explanation: "", hint: "", images: [])
+        wkMnemonic = mnemonics.wkMnemonic
+        mnemonicDraft = mnemonics.userProvidedMnemonic?.draft ?? .init(explanation: "", hint: "", images: [])
         self.onSaveUserMnemonicTapped = onSaveUserMnemonicTapped
     }
-    
+
     let onSaveUserMnemonicTapped: (Mnemonic?) -> Void
-    
+
     var body: some View {
         NavigationStack {
             Form {
                 Section("Your mnemonic") {
                     TextField("Explanation", text: $mnemonicDraft.explanation, axis: .vertical)
-                        .lineLimit(3...10)
+                        .lineLimit(3 ... 10)
                     TextField("Optional hint", text: $mnemonicDraft.hint, axis: .vertical)
-                        .lineLimit(1...10)
+                        .lineLimit(1 ... 10)
                 }.onSubmit {
                     onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic)
                 }
-#if os(macOS)
+                #if os(macOS)
                 .fixedSize(horizontal: false, vertical: true)
-#endif
-                
+                #endif
+
                 if let wkMnemonic {
                     Section("Wanikani mnemonic") {
                         Text(wkMnemonic.explanation).foregroundStyle(.secondary)
@@ -120,34 +119,39 @@ struct AddMnemonicView: View {
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
-#if os(macOS)
+                    #if os(macOS)
                     .fixedSize(horizontal: false, vertical: true)
-#endif
+                    #endif
                 }
             }
             .toolbar {
-                Button(action: { onSaveUserMnemonicTapped(nil) }, label: { Image(systemName: "trash")})
-                Button(action: { onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic) }, label: { Image(systemName: "checkmark")})
+                Button(action: { onSaveUserMnemonicTapped(nil) }, label: { Image(systemName: "trash") })
+                Button(
+                    action: { onSaveUserMnemonicTapped(mnemonicDraft.unwrappedMnemonic) },
+                    label: { Image(systemName: "checkmark") }
+                )
             }
             .navigationTitle(title)
             .presentationDetents([.medium, .large])
-#if os(macOS)
-            .padding()
-#endif
+            #if os(macOS)
+                .padding()
+            #endif
         }
-        
     }
 }
 
 #Preview {
-    @Previewable @State var mnemonics: Mnemonics = .init(wkMnemonic: .init(explanation: "balbalba z foibzeof ibezfoi ubzif ubzfi uzbeifuzbe zub eizubfi zubla", hint: "okzdokzdozkdozk"))
+    @Previewable @State var mnemonics: Mnemonics = .init(wkMnemonic: .init(
+        explanation: "balbalba z foibzeof ibezfoi ubzif ubzfi uzbeifuzbe zub eizubfi zubla",
+        hint: "okzdokzdozkdozk"
+    ))
     @Previewable @State var mnemoniscs: Mnemonics = .init(wkMnemonic: nil)
     VStack {
         MnemonicsView(
             title: "Meaning mnemonics",
             mnemonics: $mnemonics
         )
-        
+
         MnemonicsView(
             title: "Meaning mnemonics",
             mnemonics: $mnemoniscs
@@ -155,10 +159,9 @@ struct AddMnemonicView: View {
     }
 }
 
-
 struct MnemonicView: View {
     let mnemonic: Mnemonic
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             if !mnemonic.explanation.isEmpty {

@@ -1,6 +1,6 @@
-import SwiftUI
 import Kana
 import Navigation
+import SwiftUI
 
 enum Tabs: String, CaseIterable {
     case study
@@ -11,11 +11,11 @@ enum Tabs: String, CaseIterable {
 
 public struct ContentView: View {
     @State var selectedTab: Tabs = .dictionnary
-    
+
     var coordinator = NavigationCoordinator()
-    
+
     public init() {}
-    
+
     public var body: some View {
         KanaSelectionPage()
             .environment(coordinator)

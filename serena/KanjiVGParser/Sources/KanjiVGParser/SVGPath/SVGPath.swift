@@ -45,7 +45,7 @@ public struct SVGPath: Hashable, Sendable {
         var number = ""
         var isRelative = false
         let ySign = invertYAxis ? 1.0 : -1.0
-        
+
         func assertArgs(_ count: Int) throws -> [Double] {
             if numbers.count < count {
                 throw SVGError

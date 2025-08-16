@@ -1,6 +1,6 @@
-import SwiftUI
-import Navigation
 import FoundationModels
+import Navigation
+import SwiftUI
 
 enum Level {
     case level1
@@ -13,15 +13,15 @@ enum Level {
 public struct LevelUpsPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     let allKanas: [Kana]
-    
+
     @State var kanaPool: [Kana]
     @State var level: Level = .level1
-    
+
     public init(kanas: [Kana]) {
-        self.allKanas = kanas
+        allKanas = kanas
         kanaPool = Array(allKanas.shuffled().prefix(10))
     }
-    
+
     func onLevelCompleted() {
         withAnimation {
             switch level {
@@ -33,7 +33,7 @@ public struct LevelUpsPage: View {
             }
         }
     }
-    
+
     public var body: some View {
         switch level {
         case .level1:
@@ -72,18 +72,18 @@ public struct LevelUpsPage: View {
             )
         }
     }
-    
+
     func restart() {
         withAnimation {
             level = .level1
             kanaPool = Array(allKanas.shuffled().prefix(10))
         }
     }
-    
+
     func onAllInARowTapped() {
         coordinator.push(.allInARow(allKanas))
     }
-    
+
     func onGoBackTapped() {
         coordinator.popToRoot()
     }

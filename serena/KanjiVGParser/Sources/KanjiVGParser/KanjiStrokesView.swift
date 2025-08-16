@@ -1,20 +1,20 @@
 import SwiftUI
 
-public struct KanjiStrokesView : View {
+public struct KanjiStrokesView: View {
     @State private var drawAmount: CGFloat = 0.0
     private let url: URL?
-    
+
     public init(url: URL?) {
         self.url = url
     }
-    
+
     func drawKanji() {
         drawAmount = 0.0
         withAnimation(.easeIn(duration: 2)) {
             drawAmount = 1.0
         }
     }
-    
+
     public var body: some View {
         let color: Color = .black
         if let url, let strokesView = KanjiStrokes(from: url) {
@@ -28,8 +28,8 @@ public struct KanjiStrokesView : View {
                     }
                     .frame(width: 100, height: 100)
                     .padding()
-                    .background{ Color.white.clipShape(RoundedRectangle(cornerRadius: 16)) }
-                Slider(value: $drawAmount, in: 0...1)
+                    .background { Color.white.clipShape(RoundedRectangle(cornerRadius: 16)) }
+                Slider(value: $drawAmount, in: 0 ... 1)
                     .padding(.vertical)
                 Button("Draw", action: drawKanji)
             }

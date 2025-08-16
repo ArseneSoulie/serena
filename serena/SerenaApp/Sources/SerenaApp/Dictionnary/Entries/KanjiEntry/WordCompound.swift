@@ -10,7 +10,7 @@ struct WordCompound: Identifiable, Equatable {
     let word: String
     let reading: String
     let meanings: [String]
-    
+
     var id: String { word }
 }
 
@@ -20,7 +20,7 @@ struct WordCompoundListView: View {
     @State private var showDetails = true
     @Environment(\.showFurigana) var showFurigana
     @Environment(\.useKatakanaForOnyomi) var useKatakanaForOnyomi
-    
+
     var body: some View {
         DisclosureGroup(title, isExpanded: $showDetails) {
             Spacer()
@@ -28,14 +28,17 @@ struct WordCompoundListView: View {
                 ForEach(compounds) { compound in
                     GridRow(alignment: .center) {
                         let meaningsString = compound.meanings.joined(separator: ", ")
-                        VStack() {
+                        VStack {
                             if showFurigana {
                                 OnyomiTextView(compound.reading)
                                     .font(.caption2)
                                     .foregroundColor(.gray)
-                                    .environment(\.useKatakanaForOnyomi, compound.kind == .onyomi ? useKatakanaForOnyomi : false)
+                                    .environment(
+                                        \.useKatakanaForOnyomi,
+                                        compound.kind == .onyomi ? useKatakanaForOnyomi : false
+                                    )
                             }
-                            Button(compound.word) { }.buttonStyle(TileButtonStyle(tileKind: .vocabulary))
+                            Button(compound.word) {}.buttonStyle(TileButtonStyle(tileKind: .vocabulary))
                         }.gridColumnAlignment(.trailing)
                         Text(meaningsString)
                             .gridColumnAlignment(.leading)

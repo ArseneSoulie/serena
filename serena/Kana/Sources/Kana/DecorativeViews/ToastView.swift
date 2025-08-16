@@ -5,7 +5,6 @@
 //  Created by A S on 06/08/2025.
 //
 
-
 import SwiftUI
 
 struct ToastView: View {
@@ -47,6 +46,6 @@ struct ToastModifier: ViewModifier {
 
 extension View {
     func toast(isPresented: Binding<Bool>, message: String) -> some View {
-        self.modifier(ToastModifier(isPresented: isPresented, message: message))
+        modifier(ToastModifier(isPresented: isPresented, message: message))
     }
 }
