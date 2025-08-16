@@ -51,7 +51,6 @@
 			isa = PBXGroup;
 			children = (
 				03C1F4282E43E1E800029A0D /* reina */,
-				03D5B5322E43E35D0049D1EA /* Frameworks */,
 				03C1F4272E43E1E800029A0D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,13 +61,6 @@
 				03C1F4262E43E1E800029A0D /* reina.app */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		03D5B5322E43E35D0049D1EA /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
