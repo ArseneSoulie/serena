@@ -7,34 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		033850DF2E508E9C00ED6084 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033850DC2E508E9C00ED6084 /* Main.swift */; };
+		033850E12E508F3900ED6084 /* serena-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 033850E02E508F3900ED6084 /* serena-Info.plist */; };
 		03EA60CE2E37E0EF00C7F9A9 /* SerenaApp in Frameworks */ = {isa = PBXBuildFile; productRef = 03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033850D82E508E9C00ED6084 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
+		033850D92E508E9C00ED6084 /* FoundationModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FoundationModels; sourceTree = "<group>"; };
+		033850DA2E508E9C00ED6084 /* Kana */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Kana; sourceTree = "<group>"; };
+		033850DB2E508E9C00ED6084 /* KanjiVGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KanjiVGParser; sourceTree = "<group>"; };
+		033850DC2E508E9C00ED6084 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		033850DD2E508E9C00ED6084 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
+		033850DE2E508E9C00ED6084 /* SerenaApp */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SerenaApp; sourceTree = "<group>"; };
+		033850E02E508F3900ED6084 /* serena-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "serena-Info.plist"; sourceTree = "<group>"; };
 		03BC51692E311EEB0081F67B /* serena.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = serena.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		03C1F41C2E43CC3400029A0D /* serena-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "serena-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		03D5B5312E43E2E50049D1EA /* Exceptions for "serena" folder in "serena" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Main.swift,
-			);
-			target = 03BC51682E311EEB0081F67B /* serena */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		03D5B5302E43E2D80049D1EA /* serena */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				03D5B5312E43E2E50049D1EA /* Exceptions for "serena" folder in "serena" target */,
-			);
-			path = serena;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03BC51662E311EEB0081F67B /* Frameworks */ = {
@@ -51,8 +39,14 @@
 		03BC51602E311EEB0081F67B = {
 			isa = PBXGroup;
 			children = (
-				03C1F41C2E43CC3400029A0D /* serena-Info.plist */,
-				03D5B5302E43E2D80049D1EA /* serena */,
+				033850E02E508F3900ED6084 /* serena-Info.plist */,
+				033850D82E508E9C00ED6084 /* DesignSystem */,
+				033850D92E508E9C00ED6084 /* FoundationModels */,
+				033850DA2E508E9C00ED6084 /* Kana */,
+				033850DB2E508E9C00ED6084 /* KanjiVGParser */,
+				033850DC2E508E9C00ED6084 /* Main.swift */,
+				033850DD2E508E9C00ED6084 /* Navigation */,
+				033850DE2E508E9C00ED6084 /* SerenaApp */,
 				03BC516A2E311EEB0081F67B /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +94,7 @@
 				TargetAttributes = {
 					03BC51682E311EEB0081F67B = {
 						CreatedOnToolsVersion = 26.0;
+						LastSwiftMigration = 1640;
 					};
 				};
 			};
@@ -131,6 +126,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033850E12E508F3900ED6084 /* serena-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				033850DF2E508E9C00ED6084 /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +269,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XQCH63769;
@@ -304,6 +302,7 @@
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
@@ -316,6 +315,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4XQCH63769;
