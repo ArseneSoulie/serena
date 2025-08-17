@@ -144,8 +144,10 @@ struct MnemonicDrawingView: View {
                 path.addPath(drawnPath)
             }
         }
+        let simplified = pathToSave.description
+            .replacingOccurrences(of: #"(\d+)\.\d+"#, with: "$1", options: .regularExpression)
 
-        kanaMnemonicsPaths[data.kanaString] = pathToSave.description
+        kanaMnemonicsPaths[data.kanaString] = simplified
         UserDefaults.standard.set(kanaMnemonicsPaths, forKey: "kana-mnemonic-paths")
         dismiss()
     }
