@@ -21,6 +21,9 @@
     "└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘" : {
       "shouldTranslate" : false
     },
+    "Add and draw your own mnemonic" : {
+
+    },
     "All" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -64,6 +67,9 @@
           }
         }
       }
+    },
+    "Clean" : {
+
     },
     "Clear" : {
       "extractionState" : "manual",
@@ -164,6 +170,9 @@
         }
       }
     },
+    "Go back" : {
+
+    },
     "Go back to selection" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -198,9 +207,6 @@
       }
     },
     "KanaLearningPage" : {
-
-    },
-    "KanaMnemonicsPage" : {
 
     },
     "Learning" : {
