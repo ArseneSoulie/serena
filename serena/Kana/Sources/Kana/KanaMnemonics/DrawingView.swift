@@ -6,10 +6,11 @@ public struct DrawingView<ContentView: View>: View {
     @State var currentPoint: CGPoint = .zero
     @State var currentPath: Path = .init()
     @State var lastLocation: CGPoint = .zero
-    @State var finishedPaths: [Path] = []
+    @Binding var finishedPaths: [Path]
+    @State var redoStack: [Path] = []
     @State var isDrawing: Bool = false
 
-    let minimumDistanceToNextPoint: CGFloat = 5
+    let minimumDistanceToNextPoint: CGFloat = 20
 
     let driedStrokeColor = Color(white: 0.2)
     let wetStrokeColor = Color.black
@@ -18,7 +19,6 @@ public struct DrawingView<ContentView: View>: View {
     let timer = Timer.publish(every: 0.02, on: .main, in: .common).autoconnect()
 
     @ViewBuilder let contentView: () -> ContentView
-    let onSave: (Path) -> Void
 
     private var dragGesture: some Gesture {
         DragGesture(minimumDistance: 1, coordinateSpace: .local)
@@ -39,6 +39,7 @@ public struct DrawingView<ContentView: View>: View {
             .onEnded { _ in
                 isDrawing = false
                 finishedPaths.append(currentPath)
+                redoStack = []
                 currentPath = Path()
                 lastLocation = .zero
             }
@@ -72,7 +73,7 @@ public struct DrawingView<ContentView: View>: View {
 
                 Circle()
                     .fill(wetStrokeColor)
-                    .frame(width: isDrawing ? 25 : 0, height: isDrawing ? 25 : 0)
+                    .frame(width: isDrawing ? 30 : 0, height: isDrawing ? 30 : 0)
                     .position(currentPoint)
                     .animation(.default, value: isDrawing)
             }
@@ -85,20 +86,7 @@ public struct DrawingView<ContentView: View>: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
             .padding(24)
             .onReceive(timer) { _ in updateWetness() }
-
-        HStack {
-            Button("Go back", systemImage: "arrowshape.turn.up.backward") {
-                _ = finishedPaths.popLast()
-            }
-
-            Button("Clean", systemImage: "eraser.fill") {
-                finishedPaths = []
-            }
-
-            Button("Save", systemImage: "square.and.arrow.down.fill") {
-                onSave(driedPath)
-            }
-        }
+        drawingToolBar
     }
 
     func addPointToCurrent(location: CGPoint) {
@@ -112,6 +100,50 @@ public struct DrawingView<ContentView: View>: View {
             _ = currentPoints.removeFirst()
         }
     }
+
+    var drawingToolBar: some View {
+        HStack(spacing: 24) {
+            Button(
+                action: {
+                    let removedPath = finishedPaths.popLast()
+                    if let removedPath {
+                        redoStack.append(removedPath)
+                    }
+                },
+                label: {
+                    Image(systemName: "arrow.uturn.backward")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                },
+            )
+            Button(
+                action: {
+                    let redoPath = redoStack.popLast()
+                    if let redoPath {
+                        finishedPaths.append(redoPath)
+                    }
+                },
+                label: {
+                    Image(systemName: "arrow.uturn.forward")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                },
+            )
+            Button(
+                action: {
+                    redoStack = []
+                    finishedPaths = []
+                },
+                label: {
+                    Image(systemName: "eraser.fill")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                },
+            )
+            Spacer()
+        }
+        .padding(24)
+    }
 }
 
 extension CGPoint {
@@ -121,15 +153,14 @@ extension CGPoint {
 }
 
 #Preview {
-    let url = Bundle.module.url(forResource: "カ", withExtension: "svg")
-
+    @Previewable @State var paths: [Path] = []
     DrawingView(
+        finishedPaths: $paths,
         contentView: {
             Text("あ")
                 .foregroundStyle(Color(white: 0.8))
                 .aspectRatio(1, contentMode: .fit)
                 .padding(48)
         },
-        onSave: { _ in },
     )
 }

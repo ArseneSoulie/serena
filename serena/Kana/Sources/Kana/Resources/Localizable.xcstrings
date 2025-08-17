@@ -21,9 +21,6 @@
     "└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘" : {
       "shouldTranslate" : false
     },
-    "Add and draw your own mnemonic" : {
-
-    },
     "All" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -67,9 +64,6 @@
           }
         }
       }
-    },
-    "Clean" : {
-
     },
     "Clear" : {
       "extractionState" : "manual",
@@ -137,6 +131,12 @@
         }
       }
     },
+    "Draw your mnemonic for %@" : {
+
+    },
+    "Draw your own" : {
+
+    },
     "Extended katakana" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -169,9 +169,6 @@
           }
         }
       }
-    },
-    "Go back" : {
-
     },
     "Go back to selection" : {
       "extractionState" : "manual",
@@ -334,6 +331,12 @@
           }
         }
       }
+    },
+    "Quick search" : {
+
+    },
+    "Save" : {
+
     },
     "Select the rows you want to train on and pick a mode below." : {
       "extractionState" : "manual",
