@@ -181,6 +181,9 @@
         }
       }
     },
+    "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !" : {
+
+    },
     "Incorrect" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -332,10 +335,10 @@
         }
       }
     },
-    "Quick search" : {
+    "Save" : {
 
     },
-    "Save" : {
+    "Search a kana" : {
 
     },
     "Select the rows you want to train on and pick a mode below." : {

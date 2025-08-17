@@ -1,4 +1,5 @@
 import Foundation
+import FoundationModels
 
 struct KanaMnemonicData: Identifiable, Hashable {
     let id: UUID = .init()
@@ -7,7 +8,16 @@ struct KanaMnemonicData: Identifiable, Hashable {
     let explanation: String
 }
 
-let kanaMnemonicsData: [KanaMnemonicData] = [
+extension KanaType {
+    var mnemonicsData: [KanaMnemonicData] {
+        switch self {
+        case .hiragana: hiraganaMnemonicsData
+        case .katakana: katakanaMnemonicsData
+        }
+    }
+}
+
+let hiraganaMnemonicsData: [KanaMnemonicData] = [
     .init(kanjivgId: "03042", kanaString: "あ", explanation: "bla"),
     .init(kanjivgId: "03044", kanaString: "い", explanation: "bla"),
     .init(kanjivgId: "03046", kanaString: "う", explanation: "bla"),
@@ -79,11 +89,13 @@ let kanaMnemonicsData: [KanaMnemonicData] = [
     .init(kanjivgId: "0308b", kanaString: "る", explanation: "bla"),
     .init(kanjivgId: "0308c", kanaString: "れ", explanation: "bla"),
     .init(kanjivgId: "0308d", kanaString: "ろ", explanation: "bla"),
-    .init(kanjivgId: "0308e", kanaString: "ゎ", explanation: "bla"),
     .init(kanjivgId: "0308f", kanaString: "わ", explanation: "bla"),
     .init(kanjivgId: "03092", kanaString: "を", explanation: "bla"),
     .init(kanjivgId: "03093", kanaString: "ん", explanation: "bla"),
     .init(kanjivgId: "03094", kanaString: "ゔ", explanation: "bla"),
+]
+
+let katakanaMnemonicsData: [KanaMnemonicData] = [
     .init(kanjivgId: "030a2", kanaString: "ア", explanation: "bla"),
     .init(kanjivgId: "030a4", kanaString: "イ", explanation: "bla"),
     .init(kanjivgId: "030a6", kanaString: "ウ", explanation: "bla"),
@@ -155,11 +167,8 @@ let kanaMnemonicsData: [KanaMnemonicData] = [
     .init(kanjivgId: "030eb", kanaString: "ル", explanation: "bla"),
     .init(kanjivgId: "030ec", kanaString: "レ", explanation: "bla"),
     .init(kanjivgId: "030ed", kanaString: "ロ", explanation: "bla"),
-    .init(kanjivgId: "030ee", kanaString: "ヮ", explanation: "bla"),
     .init(kanjivgId: "030ef", kanaString: "ワ", explanation: "bla"),
     .init(kanjivgId: "030f2", kanaString: "ヲ", explanation: "bla"),
     .init(kanjivgId: "030f3", kanaString: "ン", explanation: "bla"),
     .init(kanjivgId: "030f4", kanaString: "ヴ", explanation: "bla"),
-    .init(kanjivgId: "030f7", kanaString: "ヷ", explanation: "bla"),
-    .init(kanjivgId: "030fa", kanaString: "ヺ", explanation: "bla"),
 ]

@@ -12,50 +12,58 @@ public struct KanaMnemonicsPage: View {
 
     @State var searchText: String = ""
 
+    @State var kanaType: KanaType = .hiragana
+
     public var body: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(alignment: .leading) {
-                    ForEach(kanaMnemonicsData) { mnemonic in
-                        Text(mnemonic.kanaString)
-                            .typography(.headline)
-                            .id(mnemonic)
-                        Text(mnemonic.explanation)
-
-                        HStack(alignment: .center) {
-                            let url = Bundle.module.url(forResource: mnemonic.kanjivgId, withExtension: "svg")
-
-                            KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
-                                .frame(width: 50, height: 50)
-                                .padding()
-
-                            let kanaCustomMnemonic = kanaMnemonicsPaths[mnemonic.kanaString]
-
-                            if let kanaCustomMnemonic, let kanaPath = Path(kanaCustomMnemonic) {
-                                ScaledShape(path: kanaPath)
-                                    .stroke(style: mnemonicLineStyle)
-                                    .frame(width: 50, height: 50)
-                                Button(action: { onDrawMnemonicTapped(mnemonic: mnemonic) }) {
-                                    Image(systemName: "pencil")
-                                }
-                            } else {
-                                Button(
-                                    "Draw your own",
-                                    systemImage: "pencil",
-                                    action: { onDrawMnemonicTapped(mnemonic: mnemonic) },
-                                )
-                            }
-                        }
+        VStack(spacing: 0) {
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading) {
+                        Text(
+                            "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !",
+                        )
                         Divider()
+                        ForEach(kanaType.mnemonicsData) { mnemonic in
+                            Text(mnemonic.kanaString)
+                                .typography(.headline)
+                                .id(mnemonic)
+                            Text(mnemonic.explanation)
+
+                            HStack(alignment: .center) {
+                                let url = Bundle.module.url(forResource: mnemonic.kanjivgId, withExtension: "svg")
+
+                                KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
+                                    .frame(width: 50, height: 50)
+                                    .padding()
+
+                                let kanaCustomMnemonic = kanaMnemonicsPaths[mnemonic.kanaString]
+
+                                if let kanaCustomMnemonic, let kanaPath = Path(kanaCustomMnemonic) {
+                                    ScaledShape(path: kanaPath)
+                                        .stroke(style: mnemonicLineStyle)
+                                        .frame(width: 50, height: 50)
+                                    Button(action: { onDrawMnemonicTapped(mnemonic: mnemonic) }) {
+                                        Image(systemName: "pencil")
+                                    }
+                                } else {
+                                    Button(
+                                        "Draw your own",
+                                        systemImage: "pencil",
+                                        action: { onDrawMnemonicTapped(mnemonic: mnemonic) },
+                                    )
+                                }
+                            }
+                            Divider()
+                        }
                     }
-                }
-                .padding()
-                .onChange(of: searchText) { _, newValue in
-                    if
-                        let match = kanaMnemonicsData
-                            .first(where: { $0.kanaString.standardisedRomaji == newValue.standardisedRomaji }) {
-                        withAnimation {
-                            proxy.scrollTo(match, anchor: .top)
+                    .padding()
+                    .onChange(of: searchText) { _, newValue in
+                        if
+                            let match = kanaType.mnemonicsData
+                                .first(where: { $0.kanaString.standardisedRomaji == newValue.standardisedRomaji }) {
+                            withAnimation {
+                                proxy.scrollTo(match, anchor: .top)
+                            }
                         }
                     }
                 }
@@ -64,8 +72,15 @@ public struct KanaMnemonicsPage: View {
         .sheet(item: $presentedMnemonic) { data in
             MnemonicDrawingView(data: data, kanaMnemonicsPaths: $kanaMnemonicsPaths)
         }
-        .searchable(text: $searchText, prompt: "Quick search")
         .navigationTitle("Mnemonics")
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search a kana")
+        .toolbar {
+            Picker("", selection: $kanaType) {
+                ForEach(KanaType.allCases, id: \.self) {
+                    Text($0.rawValue)
+                }
+            }
+        }
     }
 
     func onDrawMnemonicTapped(mnemonic: KanaMnemonicData) {
