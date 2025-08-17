@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct KanjiStrokes {
+public struct KanjiStrokes {
     let strokes: [Stroke]
 
     var path: Path {
@@ -11,7 +11,12 @@ struct KanjiStrokes {
         return absolutePath
     }
 
-    init?(from url: URL) {
+    public init?(from url: URL?) {
+        guard let url else { return nil }
+        self.init(from: url)
+    }
+
+    public init?(from url: URL) {
         guard let svgData = try? Data(contentsOf: url) else { return nil }
         let strokes = KanjiVGParser().parse(data: svgData)
         guard !strokes.isEmpty else { return nil }
@@ -20,7 +25,7 @@ struct KanjiStrokes {
 }
 
 extension KanjiStrokes: Shape {
-    func path(in rect: CGRect) -> Path {
+    public func path(in rect: CGRect) -> Path {
         let boundingRect = path.boundingRect
         let scale = min(rect.width / boundingRect.width, rect.height / boundingRect.height)
         let scaled = path.applying(.init(scaleX: scale, y: scale))

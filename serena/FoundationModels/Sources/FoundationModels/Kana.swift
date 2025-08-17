@@ -20,3 +20,8 @@ public enum Kana: Hashable, Equatable, Sendable {
         }
     }
 }
+
+public enum KanaType: String, CaseIterable {
+    case hiragana
+    case katakana
+}

@@ -18,6 +18,7 @@ let package = Package(
         .package(name: "Navigation", path: "./Navigation"),
         .package(name: "DesignSystem", path: "./DesignSystem"),
         .package(name: "FoundationModels", path: "./FoundationModels"),
+        .package(name: "KanjiVGParser", path: "./KanjiVGParser"),
     ],
     targets: [
         .target(
@@ -26,6 +27,7 @@ let package = Package(
                 "Navigation",
                 "DesignSystem",
                 "FoundationModels",
+                "KanjiVGParser",
             ],
             resources: [
                 .process("Resources"),
