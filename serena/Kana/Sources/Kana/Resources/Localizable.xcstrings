@@ -15,6 +15,16 @@
       },
       "shouldTranslate" : false
     },
+    "%@: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$lld"
+          }
+        }
+      }
+    },
     "┌[∵└]   ノ( -_-)ノ   [┘∵]┐" : {
       "shouldTranslate" : false
     },

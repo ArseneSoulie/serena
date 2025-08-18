@@ -2,34 +2,33 @@ import FoundationModels
 import Navigation
 import SwiftUI
 
+enum AllInARowState {
+    case exercice(kanas: [Kana])
+    case summary(kanas: [KanaWithCompletionState])
+}
+
 public struct AllInARowPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
 
     let kanas: [Kana]
 
-    @State private var failedKanas: Set<Kana> = []
-    @State private var remainingKanas: Set<Kana>
+    @State var allInARowState: AllInARowState
 
-    @State var isFinished: Bool = false
-
-    public init(kanas: [Kana]) {
+    init(kanas: [Kana]) {
         self.kanas = kanas
-        remainingKanas = Set(kanas)
+        allInARowState = .exercice(kanas: kanas)
     }
 
     public var body: some View {
-        if !isFinished {
+        switch allInARowState {
+        case let .exercice(kanas):
             AllInARowExercicePage(
                 kanas: kanas,
-                failedKanas: $failedKanas,
-                remainingKanas: $remainingKanas,
-                onFinished: onFinished,
+                onFinishedExercice: onFinishedExercice,
             )
-        } else {
+        case let .summary(kanas):
             CompletedAllInARowPage(
-                kanas: kanas,
-                failedKanas: failedKanas,
-                remainingKanas: remainingKanas,
+                kanasWithCompletionState: kanas,
                 onTryAgainTapped: onTryAgainTapped,
                 onLevelUpsTapped: onLevelUpsTapped,
                 onGoBackTapped: onGoBackTapped,
@@ -37,17 +36,20 @@ public struct AllInARowPage: View {
         }
     }
 
-    func onFinished() {
+    func onFinishedExercice(result: AllInARowResult) {
         withAnimation {
-            isFinished = true
+            let kanasWithStates: [KanaWithCompletionState] =
+                result.successKanas.map { .init(kana: $0, completionState: .success) }
+                    + result.skippedKanas.map { .init(kana: $0, completionState: .skipped) }
+                    + result.failedKanas.map { .init(kana: $0, completionState: .failed) }
+
+            allInARowState = .summary(kanas: kanasWithStates)
         }
     }
 
     func onTryAgainTapped() {
         withAnimation {
-            isFinished = false
-            failedKanas.removeAll()
-            remainingKanas = Set(kanas)
+            allInARowState = .exercice(kanas: kanas)
         }
     }
 
@@ -58,4 +60,10 @@ public struct AllInARowPage: View {
     func onGoBackTapped() {
         coordinator.popToRoot()
     }
+}
+
+struct AllInARowResult {
+    let successKanas: [Kana]
+    let skippedKanas: [Kana]
+    let failedKanas: [Kana]
 }

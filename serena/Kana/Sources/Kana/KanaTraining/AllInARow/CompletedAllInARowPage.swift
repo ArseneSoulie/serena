@@ -16,24 +16,23 @@ enum CompletionState {
     }
 }
 
-struct CompletedTileData: Identifiable {
+struct KanaWithCompletionState: Identifiable, Equatable {
     let kana: Kana
     let completionState: CompletionState
 
-    var id: String { kana.kanaValue }
+    var id: String {
+        kana.kanaValue
+    }
 }
 
 struct CompletedAllInARowPage: View {
-    let kanas: [Kana]
-
-    let failedKanas: Set<Kana>
-    let remainingKanas: Set<Kana>
+    let kanasWithCompletionState: [KanaWithCompletionState]
 
     let onTryAgainTapped: () -> Void
     let onLevelUpsTapped: () -> Void
     let onGoBackTapped: () -> Void
 
-    @State var displayedKanas: [Kana] = []
+    @State var displayedKanas: [KanaWithCompletionState] = []
 
     var body: some View {
         ZStack {
@@ -43,26 +42,39 @@ struct CompletedAllInARowPage: View {
                         Text(localized("Completed !"))
                             .typography(.headline)
                             .padding()
-                        Text(completionText)
+                        if isPerfect {
+                            Text(localized("Perfect run ! 🎉"))
+                        }
 
                         let columns = [GridItem(.adaptive(minimum: 50))]
-
                         LazyVGrid(columns: columns) {
-                            ForEach(kanas, id: \.kanaValue) { kana in
-                                Button(kana.kanaValue) {}
+                            ForEach(kanasWithCompletionState) { kanaWithState in
+                                Button(kanaWithState.kana.kanaValue) {}
                                     .buttonStyle(TileButtonStyle(
                                         tileSize: .medium,
-                                        tileKind: .custom(completionState(for: kana).color),
+                                        tileKind: .custom(kanaWithState.completionState.color),
                                     ))
-                                    .opacity(displayedKanas.contains(where: { $0 == kana }) ? 1 : 0)
+                                    .opacity(displayedKanas.contains(where: { $0 == kanaWithState }) ? 1 : 0)
                             }
                         }
                         .padding()
-                        .background {
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(white: 0.91))
-                        }
+                        .background { RoundedRectangle(cornerRadius: 16).fill(Color(white: 0.91)) }
                         .padding()
+
+                        if succeededKanaCount != 0 {
+                            Text("\(localized("Correct")): \(succeededKanaCount)")
+                                .foregroundStyle(.green)
+                        }
+
+                        if skippedKanaCount != 0 {
+                            Text("\(localized("Passed")): \(skippedKanaCount)")
+                                .foregroundStyle(.secondary)
+                        }
+
+                        if failedKanaCount != 0 {
+                            Text("\(localized("Incorrect")): \(failedKanaCount)")
+                                .foregroundStyle(.red)
+                        }
 
                         if isPerfect {
                             DancingKaomojiView()
@@ -86,51 +98,45 @@ struct CompletedAllInARowPage: View {
         .onAppear {
             guard displayedKanas.isEmpty else { return }
             Task {
-                for kana in kanas {
+                for kanaWithState in kanasWithCompletionState {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        displayedKanas.append(kana)
+                        displayedKanas.append(kanaWithState)
                     }
                 }
             }
         }
     }
 
+    var failedKanaCount: Int {
+        kanasWithCompletionState.count(where: { $0.completionState == .failed })
+    }
+
+    var skippedKanaCount: Int {
+        kanasWithCompletionState.count(where: { $0.completionState == .skipped })
+    }
+
+    var succeededKanaCount: Int {
+        kanasWithCompletionState.count(where: { $0.completionState == .success })
+    }
+
     var isPerfect: Bool {
-        failedKanas.isEmpty && remainingKanas.isEmpty
-    }
-
-    var completionText: String {
-        if isPerfect {
-            return localized("Perfect run ! 🎉")
-        } else {
-            let failedText = failedKanas.isEmpty ? "" : "\(localized("Incorrect")): \(failedKanas.count) "
-            let skippedText = remainingKanas.isEmpty ? "" : "\(localized("Passed")): \(remainingKanas.count) "
-            let succeededText = "\(localized("Correct")): \(kanas.count - (remainingKanas.count + failedKanas.count)) "
-
-            return succeededText + failedText + skippedText
-        }
-    }
-
-    func completionState(for kana: Kana) -> CompletionState {
-        if failedKanas.contains(kana) { .failed } else if remainingKanas.contains(kana) { .skipped } else { .success }
+        failedKanaCount == 0 && skippedKanaCount == 0
     }
 }
 
 #Preview {
     CompletedAllInARowPage(
-        kanas: [
-            .hiragana(value: "a"),
-            .hiragana(value: "i"),
-            .hiragana(value: "u"),
-            .hiragana(value: "e"),
-            .hiragana(value: "o"),
-            .hiragana(value: "ka"),
-            .hiragana(value: "ki"),
-            .hiragana(value: "ku"),
+        kanasWithCompletionState: [
+            .init(kana: .hiragana(value: "a"), completionState: .skipped),
+            .init(kana: .hiragana(value: "i"), completionState: .skipped),
+            .init(kana: .hiragana(value: "u"), completionState: .skipped),
+            .init(kana: .hiragana(value: "e"), completionState: .skipped),
+            .init(kana: .hiragana(value: "o"), completionState: .skipped),
+            .init(kana: .hiragana(value: "ka"), completionState: .skipped),
+            .init(kana: .hiragana(value: "ki"), completionState: .skipped),
+            .init(kana: .hiragana(value: "ku"), completionState: .skipped),
         ],
-        failedKanas: [.hiragana(value: "ka")],
-        remainingKanas: [.hiragana(value: "o")],
         onTryAgainTapped: {},
         onLevelUpsTapped: {},
         onGoBackTapped: {},
