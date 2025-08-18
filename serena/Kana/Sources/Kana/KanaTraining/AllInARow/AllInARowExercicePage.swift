@@ -14,27 +14,24 @@ struct AllInARowExercicePage: View {
     @State private var inputText: String = ""
     @FocusState private var isFocused: Bool
 
-    @Binding var failedKanas: Set<Kana>
-    @Binding var remainingKanas: Set<Kana>
+    @State var failedKanas: Set<Kana> = []
+    @State var remainingKanas: Set<Kana>
 
     @State var handwrittenFont: CustomFontFamily = .yujiBoku
     @State var info: String = ""
 
     let handwrittenFontFamilies: [CustomFontFamily] = [.hachiMaruPop, .yujiBoku, .yujiMai, .yujiSyuku]
 
-    let onFinished: () -> Void
+    let onFinishedExercice: (AllInARowResult) -> Void
 
     init(
         kanas: [Kana],
-        failedKanas: Binding<Set<Kana>>,
-        remainingKanas: Binding<Set<Kana>>,
-        onFinished: @escaping () -> Void,
+        onFinishedExercice: @escaping (AllInARowResult) -> Void,
     ) {
         self.kanas = kanas
-        truth = remainingKanas.wrappedValue.randomElement() ?? .empty
-        _failedKanas = failedKanas
-        _remainingKanas = remainingKanas
-        self.onFinished = onFinished
+        remainingKanas = Set(kanas)
+        truth = kanas.randomElement() ?? .empty
+        self.onFinishedExercice = onFinishedExercice
         randomizeFont()
     }
 
@@ -93,12 +90,22 @@ struct AllInARowExercicePage: View {
         .onAppear { isFocused = true }
         .toolbar {
             Button(localized("Skip"), action: onSkip)
-            Button(localized("Finish"), action: onFinished)
+            Button(localized("Finish"), action: finishExercice)
         }
     }
 
     var answerCompletionPercent: Double {
         1.0 / Double(kanas.count)
+    }
+
+    func finishExercice() {
+        onFinishedExercice(
+            .init(
+                successKanas: kanas.filter { !remainingKanas.contains($0) }.filter { !failedKanas.contains($0) },
+                skippedKanas: Array(remainingKanas),
+                failedKanas: Array(failedKanas),
+            ),
+        )
     }
 
     func onSubmit() {
@@ -135,7 +142,7 @@ struct AllInARowExercicePage: View {
                 nextRandomKana()
                 progress += answerCompletionPercent
                 if progress >= 0.99 {
-                    onFinished()
+                    finishExercice()
                 }
             }
         }
@@ -158,12 +165,6 @@ struct AllInARowExercicePage: View {
 }
 
 #Preview {
-    @State @Previewable var failedKanas: Set<Kana> = []
-    @State @Previewable var remainingKanas: Set<Kana> = [
-        .katakana(value: "tsu"),
-        .hiragana(value: "ku"),
-    ]
-
     NavigationView {
         AllInARowExercicePage(
             kanas: [
@@ -176,9 +177,7 @@ struct AllInARowExercicePage: View {
                 .hiragana(value: "ki"),
                 .hiragana(value: "ku"),
             ],
-            failedKanas: $failedKanas,
-            remainingKanas: $remainingKanas,
-            onFinished: {},
+            onFinishedExercice: { _ in },
         )
     }
 }
