@@ -26,13 +26,14 @@ struct KanaWithCompletionState: Identifiable, Equatable {
 }
 
 struct CompletedAllInARowPage: View {
-    let kanasWithCompletionState: [KanaWithCompletionState]
+    let result: AllInARowResult
 
     let onTryAgainTapped: () -> Void
     let onLevelUpsTapped: () -> Void
     let onGoBackTapped: () -> Void
 
-    @State var displayedKanas: [KanaWithCompletionState] = []
+    @State var displayedKanas: [Kana] = []
+    @State var shouldShowRomajiForFailedKanas: Bool = false
 
     var body: some View {
         ZStack {
@@ -48,31 +49,39 @@ struct CompletedAllInARowPage: View {
 
                         let columns = [GridItem(.adaptive(minimum: 50))]
                         LazyVGrid(columns: columns) {
-                            ForEach(kanasWithCompletionState) { kanaWithState in
-                                Button(kanaWithState.kana.kanaValue) {}
-                                    .buttonStyle(TileButtonStyle(
-                                        tileSize: .medium,
-                                        tileKind: .custom(kanaWithState.completionState.color),
-                                    ))
-                                    .opacity(displayedKanas.contains(where: { $0 == kanaWithState }) ? 1 : 0)
+                            ForEach(result.succeededKanas, id: \.kanaValue) { successKana in
+                                ResultTileView(kana: successKana, backgroundColor: .green, shouldShowRomaji: false)
+                                    .opacity(displayedKanas.contains(successKana) ? 1 : 0)
+                            }
+                            ForEach(result.skippedKanas, id: \.kanaValue) { skippedKana in
+                                ResultTileView(kana: skippedKana, backgroundColor: .secondary, shouldShowRomaji: false)
+                                    .opacity(displayedKanas.contains(skippedKana) ? 1 : 0)
+                            }
+                            ForEach(result.failedKanas, id: \.kanaValue) { failedKana in
+                                ResultTileView(
+                                    kana: failedKana,
+                                    backgroundColor: .red,
+                                    shouldShowRomaji: shouldShowRomajiForFailedKanas,
+                                )
+                                .opacity(displayedKanas.contains(failedKana) ? 1 : 0)
                             }
                         }
                         .padding()
                         .background { RoundedRectangle(cornerRadius: 16).fill(Color(white: 0.91)) }
                         .padding()
 
-                        if succeededKanaCount != 0 {
-                            Text("\(localized("Correct")): \(succeededKanaCount)")
+                        if result.succeededKanas.count != 0 {
+                            Text("\(localized("Correct")): \(result.succeededKanas.count)")
                                 .foregroundStyle(.green)
                         }
 
-                        if skippedKanaCount != 0 {
-                            Text("\(localized("Passed")): \(skippedKanaCount)")
+                        if result.skippedKanas.count != 0 {
+                            Text("\(localized("Passed")): \(result.skippedKanas.count)")
                                 .foregroundStyle(.secondary)
                         }
 
-                        if failedKanaCount != 0 {
-                            Text("\(localized("Incorrect")): \(failedKanaCount)")
+                        if result.failedKanas.count != 0 {
+                            Text("\(localized("Incorrect")): \(result.failedKanas.count)")
                                 .foregroundStyle(.red)
                         }
 
@@ -95,48 +104,71 @@ struct CompletedAllInARowPage: View {
                 ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
             }
         }
+        .animation(.default, value: shouldShowRomajiForFailedKanas)
         .onAppear {
             guard displayedKanas.isEmpty else { return }
             Task {
-                for kanaWithState in kanasWithCompletionState {
+                for kana in result.allKanas {
                     try? await Task.sleep(for: .seconds(0.1))
                     withAnimation {
-                        displayedKanas.append(kanaWithState)
+                        displayedKanas.append(kana)
                     }
+                }
+            }
+        }
+        .toolbar {
+            if result.failedKanas.count != 0 {
+                Toggle(isOn: $shouldShowRomajiForFailedKanas) {
+                    Text("Show Romaji for failed")
                 }
             }
         }
     }
 
-    var failedKanaCount: Int {
-        kanasWithCompletionState.count(where: { $0.completionState == .failed })
-    }
-
-    var skippedKanaCount: Int {
-        kanasWithCompletionState.count(where: { $0.completionState == .skipped })
-    }
-
-    var succeededKanaCount: Int {
-        kanasWithCompletionState.count(where: { $0.completionState == .success })
-    }
-
     var isPerfect: Bool {
-        failedKanaCount == 0 && skippedKanaCount == 0
+        result.failedKanas.count == 0 && result.skippedKanas.count == 0
     }
+}
+
+struct ResultTileView: View {
+    let kana: Kana
+    let backgroundColor: Color
+    let shouldShowRomaji: Bool
+
+    var body: some View {
+        Button(action: {}, label: {
+            VStack {
+                Text(kana.kanaValue)
+                if shouldShowRomaji {
+                    Text(kana.romajiValue)
+                        .typography(.caption)
+                }
+            }
+        })
+        .buttonStyle(TileButtonStyle(tileSize: .medium, tileKind: .custom(backgroundColor)))
+    }
+}
+
+extension AllInARowResult {
+    var allKanas: [Kana] { succeededKanas + skippedKanas + failedKanas }
 }
 
 #Preview {
     CompletedAllInARowPage(
-        kanasWithCompletionState: [
-            .init(kana: .hiragana(value: "a"), completionState: .skipped),
-            .init(kana: .hiragana(value: "i"), completionState: .skipped),
-            .init(kana: .hiragana(value: "u"), completionState: .skipped),
-            .init(kana: .hiragana(value: "e"), completionState: .skipped),
-            .init(kana: .hiragana(value: "o"), completionState: .skipped),
-            .init(kana: .hiragana(value: "ka"), completionState: .skipped),
-            .init(kana: .hiragana(value: "ki"), completionState: .skipped),
-            .init(kana: .hiragana(value: "ku"), completionState: .skipped),
-        ],
+        result: .init(
+            succeededKanas: [
+                .hiragana(value: "a"),
+                .hiragana(value: "i"),
+                .hiragana(value: "u"),
+                .hiragana(value: "e"),
+                .hiragana(value: "o"),
+                .hiragana(value: "ka"),
+                .hiragana(value: "ki"),
+                .hiragana(value: "ku"),
+            ],
+            skippedKanas: [],
+            failedKanas: [],
+        ),
         onTryAgainTapped: {},
         onLevelUpsTapped: {},
         onGoBackTapped: {},

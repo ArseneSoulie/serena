@@ -101,7 +101,7 @@ struct AllInARowExercicePage: View {
     func finishExercice() {
         onFinishedExercice(
             .init(
-                successKanas: kanas.filter { !remainingKanas.contains($0) }.filter { !failedKanas.contains($0) },
+                succeededKanas: kanas.filter { !remainingKanas.contains($0) }.filter { !failedKanas.contains($0) },
                 skippedKanas: Array(remainingKanas),
                 failedKanas: Array(failedKanas),
             ),

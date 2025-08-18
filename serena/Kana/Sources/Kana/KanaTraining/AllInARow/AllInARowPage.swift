@@ -4,7 +4,7 @@ import SwiftUI
 
 enum AllInARowState {
     case exercice(kanas: [Kana])
-    case summary(kanas: [KanaWithCompletionState])
+    case summary(result: AllInARowResult)
 }
 
 public struct AllInARowPage: View {
@@ -26,9 +26,9 @@ public struct AllInARowPage: View {
                 kanas: kanas,
                 onFinishedExercice: onFinishedExercice,
             )
-        case let .summary(kanas):
+        case let .summary(result):
             CompletedAllInARowPage(
-                kanasWithCompletionState: kanas,
+                result: result,
                 onTryAgainTapped: onTryAgainTapped,
                 onLevelUpsTapped: onLevelUpsTapped,
                 onGoBackTapped: onGoBackTapped,
@@ -38,12 +38,7 @@ public struct AllInARowPage: View {
 
     func onFinishedExercice(result: AllInARowResult) {
         withAnimation {
-            let kanasWithStates: [KanaWithCompletionState] =
-                result.successKanas.map { .init(kana: $0, completionState: .success) }
-                    + result.skippedKanas.map { .init(kana: $0, completionState: .skipped) }
-                    + result.failedKanas.map { .init(kana: $0, completionState: .failed) }
-
-            allInARowState = .summary(kanas: kanasWithStates)
+            allInARowState = .summary(result: result)
         }
     }
 
@@ -60,10 +55,4 @@ public struct AllInARowPage: View {
     func onGoBackTapped() {
         coordinator.popToRoot()
     }
-}
-
-struct AllInARowResult {
-    let successKanas: [Kana]
-    let skippedKanas: [Kana]
-    let failedKanas: [Kana]
 }
