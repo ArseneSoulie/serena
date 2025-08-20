@@ -22,14 +22,20 @@ struct KanaLineView: View {
                         KanaWritingPreview(text: kana, showRomaji: showRomaji, kanaSelectionType: kanaSelectionType)
                             .padding(.all, 6)
                             .frame(maxWidth: .infinity)
-                            .background { Color(white: 0.97) }
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .background { isOn ? Color(white: 1) : Color(white: 0.96) }
+                            .clipShape(RoundedRectangle(cornerRadius: 6))
                             .opacity(kana == nil ? 0 : 1)
                     }
                 }
                 .padding(.all, 4)
                 .foregroundStyle(isOn ? Color(white: 0.2) : Color(white: 0.4))
-                .background { isOn ? Color(white: 0.7) : Color(white: 0.92) }
+                .background { Color(white: 0.92) }
+                .overlay {
+                    if isOn {
+                        RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 8)
+                            .fill(Color.gray.opacity(0.7))
+                    }
+                }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
                 .overlay(alignment: .topTrailing) {
                     if isOn {

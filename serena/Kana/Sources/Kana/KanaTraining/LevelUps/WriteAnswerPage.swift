@@ -53,7 +53,7 @@ struct WriteAnswerPage: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 10) {
-                ProgressView(progress: $progress)
+                ProgressBarView(progress: $progress)
                 Text(writingExerciceType.prompt)
                 VStack {
                     Text(kanaTruth)
@@ -64,7 +64,6 @@ struct WriteAnswerPage: View {
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                     Text(info)
                 }
-                Spacer()
 
                 ZStack(alignment: .trailing) {
                     TextEditor(text: $inputText)

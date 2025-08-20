@@ -8,7 +8,7 @@ public func registerFontForUIKitComponents() {
     let navBarFont = fontConvertible.font(typography: .headline)
     let buttonFont = fontConvertible.font(typography: .body)
     let tabBarFont = fontConvertible.font(typography: .caption)
-    let segmentedControlFont = fontConvertible.font(typography: .callout)
+    let segmentedControlFont = fontConvertible.font(typography: .caption)
 
     let navBarAppearance = UINavigationBarAppearance()
     let buttonAppearance = UIBarButtonItemAppearance()

@@ -67,7 +67,7 @@ struct FastSelectToggleButton: View {
         }) {
             HStack {
                 Image(systemName: isOn ? "checkmark.circle.fill" : "checkmark.circle")
-                    .tint(isOn ? .mint : .gray)
+                    .tint(isOn ? .green : .gray)
                 Text(title)
 
                     .tint(.primary)

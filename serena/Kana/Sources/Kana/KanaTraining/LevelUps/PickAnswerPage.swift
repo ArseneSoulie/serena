@@ -60,7 +60,7 @@ struct PickAnswerPage: View {
 
     var body: some View {
         VStack(spacing: 20) {
-            ProgressView(progress: $progress)
+            ProgressBarView(progress: $progress)
             Text(pickingExerciceType.prompt)
 
             Text(formattedTruth)

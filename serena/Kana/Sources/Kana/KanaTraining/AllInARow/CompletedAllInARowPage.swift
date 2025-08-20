@@ -120,7 +120,7 @@ struct CompletedAllInARowPage: View {
             if result.failedKanas.count != 0 {
                 Toggle(isOn: $shouldShowRomajiForFailedKanas) {
                     Text("Show Romaji for failed")
-                }
+                }.padding()
             }
         }
     }
@@ -141,7 +141,7 @@ struct ResultTileView: View {
                 Text(kana.kanaValue)
                 if shouldShowRomaji {
                     Text(kana.romajiValue)
-                        .typography(.caption)
+                        .typography(.callout)
                 }
             }
         })
