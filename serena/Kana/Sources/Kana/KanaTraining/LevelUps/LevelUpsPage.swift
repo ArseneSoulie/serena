@@ -19,7 +19,7 @@ public struct LevelUpsPage: View {
 
     public init(kanas: [Kana]) {
         allKanas = kanas
-        kanaPool = Array(allKanas.shuffled().prefix(10))
+        kanaPool = allKanas.shuffled()
     }
 
     func onLevelCompleted() {
@@ -41,6 +41,7 @@ public struct LevelUpsPage: View {
                 title: "\(localized("Level")) 1",
                 pickingExerciceType: .pickRomaji,
                 kanaPool: kanaPool,
+                maxStepsCount: 10,
                 onLevelCompleted: onLevelCompleted,
             )
         case .level2:
@@ -48,6 +49,7 @@ public struct LevelUpsPage: View {
                 title: "\(localized("Level")) 2",
                 pickingExerciceType: .pickKana,
                 kanaPool: kanaPool,
+                maxStepsCount: 10,
                 onLevelCompleted: onLevelCompleted,
             )
         case .level3:
@@ -55,6 +57,7 @@ public struct LevelUpsPage: View {
                 title: "\(localized("Level")) 3",
                 writingExerciceType: .single,
                 kanaPool: kanaPool,
+                maxStepsCount: 8,
                 onLevelCompleted: onLevelCompleted,
             )
         case .level4:
@@ -62,6 +65,7 @@ public struct LevelUpsPage: View {
                 title: "\(localized("Level")) 4",
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,
+                maxStepsCount: 5,
                 onLevelCompleted: onLevelCompleted,
             )
         case .completed:
@@ -76,7 +80,7 @@ public struct LevelUpsPage: View {
     func restart() {
         withAnimation {
             level = .level1
-            kanaPool = Array(allKanas.shuffled().prefix(10))
+            kanaPool = allKanas.shuffled()
         }
     }
 
