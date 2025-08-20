@@ -14,7 +14,7 @@ repos:
   hooks:
     - id: make_generate_swiftlint_exclude
       name: Generate .swiftlint_excluded.generated.yml
-      entry: make generate_swiftlint_exclude
+      entry: make swiftlint_exclude
       stages: [post-checkout]
       language: system
       always_run: true
