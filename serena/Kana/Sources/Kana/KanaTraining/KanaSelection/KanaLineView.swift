@@ -32,7 +32,7 @@ struct KanaLineView: View {
                 .background { Color(white: 0.92) }
                 .overlay {
                     if isOn {
-                        RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 8)
+                        RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 4)
                             .fill(Color.gray.opacity(0.7))
                     }
                 }

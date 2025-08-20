@@ -6,7 +6,9 @@ import SwiftUI
 public struct KanaMnemonicsPage: View {
     @State private var presentedMnemonic: KanaMnemonicData?
     @State private var kanaMnemonicsPaths = UserDefaults.standard
-        .dictionary(forKey: "kana-mnemonic-paths") as? [String: String] ?? [:]
+        .dictionary(forKey: UserDefaultsKeys.kanaMnemonicsPaths) as? [String: String] ?? [:]
+    @State private var kanaMnemonicsExplanations = UserDefaults.standard
+        .dictionary(forKey: UserDefaultsKeys.kanaMnemonicsExplanations) as? [String: String] ?? [:]
 
     let mnemonicLineStyle: StrokeStyle = .init(lineWidth: 2, lineCap: .round, lineJoin: .round)
 
@@ -15,7 +17,7 @@ public struct KanaMnemonicsPage: View {
     @State var kanaType: KanaType = .hiragana
 
     public var body: some View {
-        VStack(spacing: 0) {
+        ZStack(alignment: .bottomTrailing) {
             ScrollViewReader { proxy in
                 ScrollView {
                     LazyVStack(alignment: .leading) {
@@ -25,9 +27,12 @@ public struct KanaMnemonicsPage: View {
                         Divider()
                         ForEach(kanaType.mnemonicsData) { mnemonic in
                             Text(mnemonic.kanaString)
-                                .typography(.headline)
+                                .typography(.title2).bold()
                                 .id(mnemonic)
                             Text(mnemonic.explanation)
+                            if let personalMnemonic = kanaMnemonicsExplanations[mnemonic.kanaString] {
+                                Text(personalMnemonic).foregroundStyle(.secondary)
+                            }
 
                             HStack(alignment: .center) {
                                 let url = Bundle.module.url(forResource: mnemonic.kanjivgId, withExtension: "svg")
@@ -47,7 +52,7 @@ public struct KanaMnemonicsPage: View {
                                     }
                                 } else {
                                     Button(
-                                        "Draw your own",
+                                        "Make your own",
                                         systemImage: "pencil",
                                         action: { onDrawMnemonicTapped(mnemonic: mnemonic) },
                                     )
@@ -68,19 +73,24 @@ public struct KanaMnemonicsPage: View {
                     }
                 }
             }
-        }
-        .sheet(item: $presentedMnemonic) { data in
-            MnemonicDrawingView(data: data, kanaMnemonicsPaths: $kanaMnemonicsPaths)
-        }
-        .navigationTitle("Mnemonics")
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search a kana")
-        .toolbar {
             Picker("", selection: $kanaType) {
                 ForEach(KanaType.allCases, id: \.self) {
                     Text($0.rawValue)
                 }
             }
+            .pickerStyle(.segmented)
+            .fixedSize()
+            .padding()
         }
+        .sheet(item: $presentedMnemonic) { data in
+            MnemonicDrawingView(
+                data: data,
+                kanaMnemonicsPaths: $kanaMnemonicsPaths,
+                kanaMnemonicsExplanations: $kanaMnemonicsExplanations,
+            )
+        }
+        .navigationTitle("Mnemonics")
+        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search a kana")
     }
 
     func onDrawMnemonicTapped(mnemonic: KanaMnemonicData) {
@@ -91,8 +101,10 @@ public struct KanaMnemonicsPage: View {
 struct MnemonicDrawingView: View {
     let data: KanaMnemonicData
     @Binding var kanaMnemonicsPaths: [String: String]
+    @Binding var kanaMnemonicsExplanations: [String: String]
     @Environment(\.dismiss) var dismiss
 
+    @State var explanationText: String
     @State var drawnPaths: [Path]
 
     let strokes: KanjiStrokes?
@@ -100,9 +112,11 @@ struct MnemonicDrawingView: View {
     init(
         data: KanaMnemonicData,
         kanaMnemonicsPaths: Binding<[String: String]>,
+        kanaMnemonicsExplanations: Binding<[String: String]>,
     ) {
         self.data = data
         _kanaMnemonicsPaths = kanaMnemonicsPaths
+        _kanaMnemonicsExplanations = kanaMnemonicsExplanations
 
         let url = Bundle.module.url(forResource: data.kanjivgId, withExtension: "svg")
         strokes = KanjiStrokes(from: url)
@@ -113,22 +127,33 @@ struct MnemonicDrawingView: View {
         } else {
             drawnPaths = []
         }
+        explanationText = kanaMnemonicsExplanations.wrappedValue[data.kanaString] ?? ""
     }
 
     var body: some View {
         NavigationStack {
-            VStack {
-                DrawingView(
-                    finishedPaths: $drawnPaths,
-                    contentView: {
-                        strokes?.stroke(lineWidth: 15)
-                            .foregroundStyle(Color(white: 0.8))
-                            .aspectRatio(1, contentMode: .fit)
-                            .padding(48)
-                    },
-                )
+            ScrollView {
+                VStack {
+                    TextField(
+                        "Explanation",
+                        text: $explanationText,
+                        prompt: Text("It reminds me of..."),
+                        axis: .vertical,
+                    )
+                    .textFieldStyle(.roundedBorder)
+                    .padding()
+                    DrawingView(
+                        finishedPaths: $drawnPaths,
+                        contentView: {
+                            strokes?.stroke(lineWidth: 15)
+                                .foregroundStyle(Color(white: 0.8))
+                                .aspectRatio(1, contentMode: .fit)
+                                .padding(48)
+                        },
+                    )
+                }
             }
-            .navigationTitle("Draw your mnemonic for \(data.kanaString)")
+            .navigationTitle("Make your mnemonic for \(data.kanaString)")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -148,7 +173,9 @@ struct MnemonicDrawingView: View {
             .replacingOccurrences(of: #"(\d+)\.\d+"#, with: "$1", options: .regularExpression)
 
         kanaMnemonicsPaths[data.kanaString] = simplified
-        UserDefaults.standard.set(kanaMnemonicsPaths, forKey: "kana-mnemonic-paths")
+        kanaMnemonicsExplanations[data.kanaString] = explanationText
+        UserDefaults.standard.set(kanaMnemonicsPaths, forKey: UserDefaultsKeys.kanaMnemonicsPaths)
+        UserDefaults.standard.set(kanaMnemonicsExplanations, forKey: UserDefaultsKeys.kanaMnemonicsExplanations)
         dismiss()
     }
 }

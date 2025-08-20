@@ -17,13 +17,13 @@ public struct KanaMainPage: View {
                     Text("Mnemonics")
                 }
 
-                NavigationView {
-                    KanaLearningPage()
-                }
-                .tabItem {
-                    Image(systemName: "book")
-                    Text("Learning")
-                }
+//                NavigationView {
+//                    KanaLearningPage()
+//                }
+//                .tabItem {
+//                    Image(systemName: "book")
+//                    Text("Learning")
+//                }
 
                 NavigationView {
                     KanaSelectionPage()
