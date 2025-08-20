@@ -184,7 +184,6 @@ struct BottomViews: View {
                     .disabled(totalSelectedKanas == 0)
 
                 HStack {
-                    Text(localized("Mode"))
                     Spacer()
                     Picker(localized("Training mode"), selection: $kanaSelectionType) {
                         ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.symbol) }
