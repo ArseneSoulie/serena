@@ -17,7 +17,7 @@ struct PickAnswerPage: View {
     let title: String
 
     let pickingExerciceType: PickExerciceType
-
+    let maxStepsCount: Int
     let kanaPool: [Kana]
     let onLevelCompleted: () -> Void
 
@@ -33,11 +33,13 @@ struct PickAnswerPage: View {
         title: String,
         pickingExerciceType: PickExerciceType,
         kanaPool: [Kana],
+        maxStepsCount: Int,
         onLevelCompleted: @escaping () -> Void,
     ) {
         self.title = title
         self.pickingExerciceType = pickingExerciceType
         self.kanaPool = kanaPool
+        self.maxStepsCount = maxStepsCount
         self.onLevelCompleted = onLevelCompleted
         let options = Array(kanaPool.shuffled().prefix(3))
         guessingOptions = options
@@ -93,7 +95,7 @@ struct PickAnswerPage: View {
     }
 
     var answerCompletionPercent: Double {
-        1.0 / Double(kanaPool.count)
+        1.0 / Double(min(kanaPool.count, maxStepsCount))
     }
 
     func onOptionSelected(_ option: Kana) {

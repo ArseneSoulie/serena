@@ -18,6 +18,7 @@ struct WriteAnswerPage: View {
 
     let writingExerciceType: WriteExerciceType
     let kanaPool: [Kana]
+    let maxStepsCount: Int
     let onLevelCompleted: () -> Void
 
     @State private var truth: [Kana]
@@ -37,11 +38,13 @@ struct WriteAnswerPage: View {
         title: String,
         writingExerciceType: WriteExerciceType,
         kanaPool: [Kana],
+        maxStepsCount: Int,
         onLevelCompleted: @escaping () -> Void,
     ) {
         self.title = title
         self.writingExerciceType = writingExerciceType
         self.kanaPool = kanaPool
+        self.maxStepsCount = maxStepsCount
         self.onLevelCompleted = onLevelCompleted
 
         switch writingExerciceType {
@@ -111,7 +114,7 @@ struct WriteAnswerPage: View {
     }
 
     var answerCompletionPercent: Double {
-        1.0 / Double(kanaPool.count)
+        1.0 / Double(min(kanaPool.count, maxStepsCount))
     }
 
     var kanaTruth: String {
@@ -132,6 +135,7 @@ struct WriteAnswerPage: View {
         info = ""
 
         if !isCorrect {
+            triggerWrongAnswer()
             withAnimation {
                 progress = max(progress - answerCompletionPercent, 0)
             }
@@ -158,6 +162,17 @@ struct WriteAnswerPage: View {
             canSubmit = true
             progress = 0
             onLevelCompleted()
+        }
+    }
+
+    func triggerWrongAnswer() {
+        withAnimation(.default) {
+            truthColor = .red
+            shakeTrigger += 1
+        } completion: {
+            withAnimation {
+                truthColor = .primary
+            }
         }
     }
 
