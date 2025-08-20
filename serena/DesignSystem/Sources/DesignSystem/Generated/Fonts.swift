@@ -21,7 +21,7 @@ internal typealias Font = FontConvertible.Font
 // swiftlint:disable identifier_name line_length type_body_length
 internal enum FontFamily {
   internal enum HachiMaruPop {
-    internal static let regular = FontConvertible(name: "HachiMaruPop-Regular", family: "Hachi Maru Pop", path: "HachiMaruPop-Regular.ttf")
+    internal static let regular = FontConvertible(name: "HachiMaruPop-Regular", family: "Hachi Maru Pop", path: "HachiMaruPop-Kana-Only-Regular.ttf")
     internal static let all: [FontConvertible] = [regular]
   }
   internal enum MPlus2 {
@@ -37,15 +37,15 @@ internal enum FontFamily {
     internal static let all: [FontConvertible] = [black, bold, extraBold, extraLight, light, medium, regular, semiBold, thin]
   }
   internal enum YujiBoku {
-    internal static let regular = FontConvertible(name: "YujiBoku-Regular", family: "Yuji Boku", path: "YujiBoku-Regular.ttf")
+    internal static let regular = FontConvertible(name: "YujiBoku-Regular", family: "Yuji Boku", path: "YujiBoku-Kana-Only-Regular.ttf")
     internal static let all: [FontConvertible] = [regular]
   }
   internal enum YujiMai {
-    internal static let regular = FontConvertible(name: "YujiMai-Regular", family: "Yuji Mai", path: "YujiMai-Regular.ttf")
+    internal static let regular = FontConvertible(name: "YujiMai-Regular", family: "Yuji Mai", path: "YujiMai-Kana-Only-Regular.ttf")
     internal static let all: [FontConvertible] = [regular]
   }
   internal enum YujiSyuku {
-    internal static let regular = FontConvertible(name: "YujiSyuku-Regular", family: "Yuji Syuku", path: "YujiSyuku-Regular.ttf")
+    internal static let regular = FontConvertible(name: "YujiSyuku-Regular", family: "Yuji Syuku", path: "YujiSyuku-Kana-Only-Regular.ttf")
     internal static let all: [FontConvertible] = [regular]
   }
   internal static let allCustomFonts: [FontConvertible] = [HachiMaruPop.all, MPlus2.all, YujiBoku.all, YujiMai.all, YujiSyuku.all].flatMap { $0 }
