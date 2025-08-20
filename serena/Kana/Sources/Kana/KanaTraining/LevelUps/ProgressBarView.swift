@@ -1,28 +1,30 @@
 import SwiftUI
 
-struct ProgressView: View {
+struct ProgressBarView: View {
     @Binding var progress: Double
     @State var barColor: Color = .gray
 
-    let barHeight: CGFloat = 30
+    let barHeight: CGFloat = 20
 
     var body: some View {
-        VStack(alignment: .leading) {
+        HStack {
             ZStack(alignment: .leading) {
-                Capsule()
+                Rectangle()
                     .frame(height: barHeight)
                     .foregroundColor(Color.gray.opacity(0.3))
-                    .cornerRadius(10)
 
                 GeometryReader { geometry in
-                    Capsule()
+                    Rectangle()
                         .frame(width: geometry.size.width * progress, height: barHeight)
                         .foregroundStyle(barColor)
-                        .cornerRadius(10)
                 }
             }
             .frame(height: barHeight)
-            Text(progress.formatted(.percent.rounded(increment: 1)))
+            .clipShape(.capsule)
+            ZStack {
+                Text(progress, format: .percent.rounded(increment: 1))
+                Text(100, format: .percent.rounded(increment: 1)).hidden()
+            }
         }
         .onChange(of: progress) { oldValue, newValue in
             if oldValue < newValue {

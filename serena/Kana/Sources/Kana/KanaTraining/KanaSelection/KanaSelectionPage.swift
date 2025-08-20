@@ -178,20 +178,14 @@ struct BottomViews: View {
 
     var body: some View {
         VStack(spacing: 4) {
-            ZStack {
+            HStack {
+                Picker(localized("Training mode"), selection: $kanaSelectionType) {
+                    ForEach(KanaSelectionType.allCases, id: \.self) { Text(localized($0.rawValue)) }
+                }
+                .pickerStyle(.segmented)
                 Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)
                     .buttonStyle(.borderedProminent)
                     .disabled(totalSelectedKanas == 0)
-
-                HStack {
-                    Text(localized("Mode"))
-                    Spacer()
-                    Picker(localized("Training mode"), selection: $kanaSelectionType) {
-                        ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.symbol) }
-                    }
-                    .pickerStyle(.segmented)
-                    .fixedSize()
-                }
             }
             .padding(.horizontal)
             Text(textForSelectedKanas)
