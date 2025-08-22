@@ -1,0 +1,20 @@
+{
+  "images" : [
+    {
+      "filename" : "あ.png",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "あ-fr.png",
+      "idiom" : "universal",
+      "locale" : "fr"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "localizable" : true
+  }
+}

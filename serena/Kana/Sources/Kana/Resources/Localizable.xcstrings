@@ -365,6 +365,9 @@
         }
       }
     },
+    "Show kana behind drawing" : {
+
+    },
     "Show romaji" : {
       "localizations" : {
         "fr" : {

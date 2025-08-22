@@ -10,11 +10,14 @@ public struct KanaMnemonicsPage: View {
     @State private var kanaMnemonicsExplanations = UserDefaults.standard
         .dictionary(forKey: UserDefaultsKeys.kanaMnemonicsExplanations) as? [String: String] ?? [:]
 
-    let mnemonicLineStyle: StrokeStyle = .init(lineWidth: 2, lineCap: .round, lineJoin: .round)
+    let mnemonicLineStyle: StrokeStyle = .init(lineWidth: 6, lineCap: .round, lineJoin: .round)
+    let mnemonicDrawingStyle: StrokeStyle = .init(lineWidth: 2, lineCap: .round, lineJoin: .round)
 
     @State var searchText: String = ""
 
     @State var kanaType: KanaType = .hiragana
+
+    @State var showGlyphBehindMnemonic: Bool = false
 
     public var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -38,15 +41,25 @@ public struct KanaMnemonicsPage: View {
                                 let url = Bundle.module.url(forResource: mnemonic.kanjivgId, withExtension: "svg")
 
                                 KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
+                                    .fill(.cyan)
                                     .frame(width: 50, height: 50)
                                     .padding()
+
+                                Image("KanaMnemonics/\(mnemonic.kanaString)", bundle: Bundle.module)
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
 
                                 let kanaCustomMnemonic = kanaMnemonicsPaths[mnemonic.kanaString]
 
                                 if let kanaCustomMnemonic, let kanaPath = Path(kanaCustomMnemonic) {
-                                    ScaledShape(path: kanaPath)
-                                        .stroke(style: mnemonicLineStyle)
-                                        .frame(width: 50, height: 50)
+                                    ZStack {
+                                        if showGlyphBehindMnemonic {
+                                            KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
+                                                .fill(Color.primary.opacity(0.1))
+                                        }
+                                        ScaledShape(path: kanaPath).stroke(style: mnemonicDrawingStyle)
+                                    }
+                                    .frame(width: 50, height: 50)
                                     Button(action: { onDrawMnemonicTapped(mnemonic: mnemonic) }) {
                                         Image(systemName: "pencil")
                                     }
@@ -89,6 +102,9 @@ public struct KanaMnemonicsPage: View {
                 kanaMnemonicsExplanations: $kanaMnemonicsExplanations,
             )
         }
+        .toolbar(content: {
+            Toggle("Show kana behind drawing", isOn: $showGlyphBehindMnemonic)
+        })
         .navigationTitle("Mnemonics")
         .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search a kana")
     }
@@ -145,8 +161,8 @@ struct MnemonicDrawingView: View {
                     DrawingView(
                         finishedPaths: $drawnPaths,
                         contentView: {
-                            strokes?.stroke(lineWidth: 15)
-                                .foregroundStyle(Color(white: 0.8))
+                            strokes?.stroke(lineWidth: 30)
+                                .foregroundStyle(Color(white: 0.95))
                                 .aspectRatio(1, contentMode: .fit)
                                 .padding(48)
                         },
