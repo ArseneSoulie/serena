@@ -25,14 +25,16 @@ public struct KanaMnemonicsPage: View {
                 ScrollView {
                     LazyVStack(alignment: .leading) {
                         Text(
-                            "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !",
+                            localized(
+                                "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !",
+                            ),
                         )
                         Divider()
                         ForEach(kanaType.mnemonicsData) { mnemonic in
                             Text(mnemonic.kanaString)
                                 .typography(.title2).bold()
                                 .id(mnemonic)
-                            Text(mnemonic.explanation)
+                            Text(localized("Mnemonics.\(mnemonic.kanaString)"))
                             if let personalMnemonic = kanaMnemonicsExplanations[mnemonic.kanaString] {
                                 Text(personalMnemonic).foregroundStyle(.secondary)
                             }
@@ -60,7 +62,7 @@ public struct KanaMnemonicsPage: View {
                                     }
                                 } else {
                                     Button(
-                                        "Make your own",
+                                        localized("Make your own"),
                                         systemImage: "pencil",
                                         action: { onDrawMnemonicTapped(mnemonic: mnemonic) },
                                     )
@@ -81,7 +83,7 @@ public struct KanaMnemonicsPage: View {
                     }
                 }
             }
-            Picker("", selection: $kanaType) {
+            Picker(localized("Kana"), selection: $kanaType) {
                 ForEach(KanaType.allCases, id: \.self) {
                     Text($0.rawValue)
                 }
@@ -98,10 +100,14 @@ public struct KanaMnemonicsPage: View {
             )
         }
         .toolbar(content: {
-            Toggle("Show kana behind drawing", isOn: $showGlyphBehindMnemonic)
+            Toggle(localized("Show kana behind drawing"), isOn: $showGlyphBehindMnemonic)
         })
-        .navigationTitle("Mnemonics")
-        .searchable(text: $searchText, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search a kana")
+        .navigationTitle(localized("Mnemonics"))
+        .searchable(
+            text: $searchText,
+            placement: .navigationBarDrawer(displayMode: .always),
+            prompt: localized("Search a kana"),
+        )
     }
 
     func onDrawMnemonicTapped(mnemonic: KanaMnemonicData) {
@@ -146,9 +152,9 @@ struct MnemonicDrawingView: View {
             ScrollView {
                 VStack {
                     TextField(
-                        "Explanation",
+                        localized("Explanation"),
                         text: $explanationText,
-                        prompt: Text("It reminds me of..."),
+                        prompt: Text(localized("It reminds me of...")),
                         axis: .vertical,
                     )
                     .textFieldStyle(.roundedBorder)
@@ -164,11 +170,11 @@ struct MnemonicDrawingView: View {
                     )
                 }
             }
-            .navigationTitle("Make your mnemonic for \(data.kanaString)")
+            .navigationTitle(localized("Make your mnemonic for \(data.kanaString)"))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save", systemImage: "checkmark.circle", action: onSave)
+                    Button(localized("Save"), systemImage: "checkmark.circle", action: onSave)
                 }
             }
         }

@@ -14,7 +14,7 @@ public struct KanaMainPage: View {
                 }
                 .tabItem {
                     Image(systemName: "brain")
-                    Text("Mnemonics")
+                    Text(localized("Mnemonics"))
                 }
 
 //                NavigationView {
@@ -30,7 +30,7 @@ public struct KanaMainPage: View {
                 }
                 .tabItem {
                     Image(systemName: "figure.run")
-                    Text("Training")
+                    Text(localized("Training"))
                 }
             }
             .navigationDestination(for: Destination.self) { destination in
