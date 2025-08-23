@@ -38,16 +38,11 @@ public struct KanaMnemonicsPage: View {
                             }
 
                             HStack(alignment: .center) {
-                                let url = Bundle.module.url(forResource: mnemonic.kanjivgId, withExtension: "svg")
+                                let url = Bundle.module.url(forResource: "0\(mnemonic.unicodeID)", withExtension: "svg")
 
-                                KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
-                                    .fill(.cyan)
-                                    .frame(width: 50, height: 50)
-                                    .padding()
-
-                                Image("KanaMnemonics/\(mnemonic.kanaString)", bundle: Bundle.module)
+                                Image("KanaMnemonics/\(mnemonic.unicodeID)", bundle: Bundle.module)
                                     .resizable()
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 200, height: 100)
 
                                 let kanaCustomMnemonic = kanaMnemonicsPaths[mnemonic.kanaString]
 
@@ -59,7 +54,7 @@ public struct KanaMnemonicsPage: View {
                                         }
                                         ScaledShape(path: kanaPath).stroke(style: mnemonicDrawingStyle)
                                     }
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 80, height: 80)
                                     Button(action: { onDrawMnemonicTapped(mnemonic: mnemonic) }) {
                                         Image(systemName: "pencil")
                                     }
@@ -134,7 +129,7 @@ struct MnemonicDrawingView: View {
         _kanaMnemonicsPaths = kanaMnemonicsPaths
         _kanaMnemonicsExplanations = kanaMnemonicsExplanations
 
-        let url = Bundle.module.url(forResource: data.kanjivgId, withExtension: "svg")
+        let url = Bundle.module.url(forResource: "0\(data.unicodeID)", withExtension: "svg")
         strokes = KanjiStrokes(from: url)
         if
             let savedDrawing = kanaMnemonicsPaths.wrappedValue[data.kanaString],
