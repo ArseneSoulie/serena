@@ -14,7 +14,7 @@ public struct DrawingView<ContentView: View>: View {
 
     let driedStrokeColor = Color(white: 0.2)
     let wetStrokeColor = Color.black
-    let strokeStyle = StrokeStyle(lineWidth: 15, lineCap: .round, lineJoin: .round)
+    let strokeStyle = StrokeStyle(lineWidth: 10, lineCap: .round, lineJoin: .round)
 
     let timer = Timer.publish(every: 0.02, on: .main, in: .common).autoconnect()
 

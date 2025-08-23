@@ -141,10 +141,7 @@
         }
       }
     },
-    "Draw your mnemonic for %@" : {
-
-    },
-    "Draw your own" : {
+    "Explanation" : {
 
     },
     "Extended katakana" : {
@@ -205,6 +202,9 @@
         }
       }
     },
+    "It reminds me of..." : {
+
+    },
     "Kana training" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -217,9 +217,6 @@
       }
     },
     "KanaLearningPage" : {
-
-    },
-    "Learning" : {
 
     },
     "Let's go ! %lld" : {
@@ -265,6 +262,12 @@
           }
         }
       }
+    },
+    "Make your mnemonic for %@" : {
+
+    },
+    "Make your own" : {
+
     },
     "Mnemonics" : {
 
@@ -361,6 +364,9 @@
           }
         }
       }
+    },
+    "Show kana behind drawing" : {
+
     },
     "Show romaji" : {
       "localizations" : {
