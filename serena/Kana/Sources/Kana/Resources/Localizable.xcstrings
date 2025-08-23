@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "shouldTranslate" : false
     },
     "%@ %lld/%lld" : {
       "localizations" : {
@@ -23,7 +23,8 @@
             "value" : "%1$@: %2$lld"
           }
         }
-      }
+      },
+      "shouldTranslate" : false
     },
     "┌[∵└]   ノ( -_-)ノ   [┘∵]┐" : {
       "shouldTranslate" : false
@@ -142,7 +143,14 @@
       }
     },
     "Explanation" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Explication"
+          }
+        }
+      }
     },
     "Extended katakana" : {
       "extractionState" : "manual",
@@ -189,7 +197,25 @@
       }
     },
     "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voila une liste de moyens mnémotechniques pour chaque kana préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et crée ta propre histoire !"
+          }
+        }
+      }
+    },
+    "Hiragana" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hiragana"
+          }
+        }
+      }
     },
     "Incorrect" : {
       "extractionState" : "manual",
@@ -203,7 +229,24 @@
       }
     },
     "It reminds me of..." : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ça me fait penser à …"
+          }
+        }
+      }
+    },
+    "Kana" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kana"
+          }
+        }
+      }
     },
     "Kana training" : {
       "extractionState" : "manual",
@@ -217,7 +260,18 @@
       }
     },
     "KanaLearningPage" : {
-
+      "shouldTranslate" : false
+    },
+    "Katakana" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katakana"
+          }
+        }
+      }
     },
     "Let's go ! %lld" : {
       "extractionState" : "stale",
@@ -264,13 +318,1598 @@
       }
     },
     "Make your mnemonic for %@" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée ton mnémotechnique pour %@"
+          }
+        }
+      }
     },
     "Make your own" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Crée le tien"
+          }
+        }
+      }
     },
     "Mnemonics" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mnemotechniques"
+          }
+        }
+      }
+    },
+    "Mnemonics.あ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Can you find the `a` in the `a` hiragana?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peux-tu trouver le `a` dans l’hiragana `a` ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.ア" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`A` contains an `a` like in the hiragana, do you see it?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`A` contient un `a` comme pour l'hiragana, est-ce que tu le vois ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.い" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`i` looks like a pair of ee(い)ls"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`i` ressemble à deux angu`i`lles"
+          }
+        }
+      }
+    },
+    "Mnemonics.イ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`I` contains an `i` as in `igloo`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`I` contient un `i` comme dans `i`gloo"
+          }
+        }
+      }
+    },
+    "Mnemonics.う" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A `u` is hidden in the `u` hiragana, do you see it ?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Un `u` est caché dans l'hiragana `u`, le vois-tu ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.ウ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`U` ressembles its hiragana counterpart"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`U` ressemble a sa contrepartie hiragana"
+          }
+        }
+      }
+    },
+    "Mnemonics.え" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`e` is `e`lectric"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`e` est un `é`clair, c'est `é`lectrique !"
+          }
+        }
+      }
+    },
+    "Mnemonics.エ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`E` is a construction beam made by `e`ngineneers"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`E` est une superbe `haie`"
+          }
+        }
+      }
+    },
+    "Mnemonics.お" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`o` Get ready to get into `o`rbit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`o` Prépare toi a décoller en `o`rbite"
+          }
+        }
+      }
+    },
+    "Mnemonics.オ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`O`! Here comes the `o`pera singer `OoooOoooooh`!~"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`O`! Voici venir le chanteur d'`o`pera `OoooOoooooh`!~"
+          }
+        }
+      }
+    },
+    "Mnemonics.か" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ka` looks like a mosquito! Guess what ? `ka` is the way you say mosquito in japanese. What horrendous creatures, at least they help you remember your kanas"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ka` ressemble a un moustique ! Devine quoi ? `ka` veut dire moustique en japonais, au moins ces horribles créatures t'aident à apprendre tes kanas"
+          }
+        }
+      }
+    },
+    "Mnemonics.カ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KA` This `ka`takana ressembles its hiragana, nice !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KA` Ce `ka`takana ressemble a sa version hiragana, super !"
+          }
+        }
+      }
+    },
+    "Mnemonics.き" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ki` looks like a key"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ki` ressemble a une clé. En anglais c'est key"
+          }
+        }
+      }
+    },
+    "Mnemonics.キ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KI` Again that's just the top part of `き`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KI` Encore une fois c'est juste la partie du haut de `き`"
+          }
+        }
+      }
+    },
+    "Mnemonics.く" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ku` is the beak of the nasty cuc`koo` that keeps waking you up, it will never stop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ku` est le bec du `cou``cou` qui ne cesse de te réveiller, il ne s'arrêtera jamais"
+          }
+        }
+      }
+    },
+    "Mnemonics.ク" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KU` Guess who made all the delicious noodles you've been slurping? That's the `coo`k of course!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KU` Devine qui a fait toutes les délicieuses nouilles que tu a dégusté ? C'est le `cu`isinier bien sur !"
+          }
+        }
+      }
+    },
+    "Mnemonics.け" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ke` is a mix of `ke`lp"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ke` est une pile de `ke`lp (c'est une algue que tu peux manger)"
+          }
+        }
+      }
+    },
+    "Mnemonics.ケ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KE` Its a `K` `ok`???"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KE` C'est `ok` okay ???"
+          }
+        }
+      }
+    },
+    "Mnemonics.こ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ko` is a mini snake with a `co`mpagnon. Look how cute they are"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ko` est un mini serpent avec son `co`pain. `Co`mme c'est mignon"
+          }
+        }
+      }
+    },
+    "Mnemonics.コ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KO` Perfect `co`rners, you're good at drawing !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`KO` Deux `co`ins parfaits, tu te débrouilles en dessin !"
+          }
+        }
+      }
+    },
+    "Mnemonics.さ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`sa`! Now that's some good `sa`lsa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`sa`! Ça c'est de la bonne `sa`lsa"
+          }
+        }
+      }
+    },
+    "Mnemonics.サ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SA` Get ready, the cook's made you some nice `sa`rdines on the grill"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SA` Prépare toi, le chef nous a fait griller des `sa`rdines... miam miam"
+          }
+        }
+      }
+    },
+    "Mnemonics.し" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`shi` The `she`ep is well kept by its shepherd"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`shi` Le `chi`en de berger garde le troupeau"
+          }
+        }
+      }
+    },
+    "Mnemonics.シ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SHI` Now `she` has quite the smile"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SHI` Aller hop ! On passe le `chi`ffon. Le nettoyage c'est important"
+          }
+        }
+      }
+    },
+    "Mnemonics.す" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`su` Be careful that's one perilous `sw`ing"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`su` Fais attention tu viens de glisser et tu te retrouves `su`spendu au des`su`s du vide. Remonte vite !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ス" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SU` Its a bird, its a plane... no its a kana in a `su`perman `su`it"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SU` C'est un oiseau, c'est un avion... non c'est un kana en costume de `su`perman"
+          }
+        }
+      }
+    },
+    "Mnemonics.せ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`se` is for your `se`npai. He's so `se`xy ! Please notice meeee!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`se` c'est ton `se`npai. Il est tellement `se`xy. Notice meeeee!"
+          }
+        }
+      }
+    },
+    "Mnemonics.セ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SE` Is like `せ`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SE` C'est `せ"
+          }
+        }
+      }
+    },
+    "Mnemonics.そ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`so` Now that's `so`da"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`so` Ça c'est du `so`da"
+          }
+        }
+      }
+    },
+    "Mnemonics.ソ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SO` You're ready for helping with needles, get set... `saw`!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`SO` Trop bien ! Des `sau`cisses !"
+          }
+        }
+      }
+    },
+    "Mnemonics.た" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ta` Yum ! `Ta`cos !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ta` Miam ! Des `ta`cos"
+          }
+        }
+      }
+    },
+    "Mnemonics.タ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TA` In japanese `ta`ko means kite, it even has an image of `ta`cos"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TA` En japonais `ta`ko veut dire cerf-volant, il a même une image de `ta`cos"
+          }
+        }
+      }
+    },
+    "Mnemonics.ち" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`chi` say `chee`se!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`chi` dis `chee`se !"
+          }
+        }
+      }
+    },
+    "Mnemonics.チ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`CHI` You recognise this foot. That a `chi`cken!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`CHI` Tu nous prépare ton meilleur `chi`lli. Le piment ça ne te fais pas peur"
+          }
+        }
+      }
+    },
+    "Mnemonics.つ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`tsu` Aaaah! Here comes a `tsu`nami"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`tsu` Aaah ! Voici venir un `tsu`nami"
+          }
+        }
+      }
+    },
+    "Mnemonics.ツ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TSU` You've become good at sawing you can now handle `two` needles at the same time. Quite skillfull"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TSU` Woah ! Un mega `tsu`nami !"
+          }
+        }
+      }
+    },
+    "Mnemonics.て" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`te` is a `T`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`te` c'est littéralement un `T`"
+          }
+        }
+      }
+    },
+    "Mnemonics.テ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TE` Again this is just a T"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TE` C'est encore juste un T"
+          }
+        }
+      }
+    },
+    "Mnemonics.と" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`to` Someone put a needle in your `toe`. That's `to`rture"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`To` Quelqu'un a mis une aiguille dans ton orteil, c'est de la `to`rture !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ト" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TO` Your favorite `to`tem is here"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`TO` Ton `to`tems préféré est là"
+          }
+        }
+      }
+    },
+    "Mnemonics.な" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`na` What's that? `Na`ni????"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`na` C'est quoi ça ? `Na`ni???"
+          }
+        }
+      }
+    },
+    "Mnemonics.ナ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NA` Ohh what a cute `na`rwal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NA` Ohh quel mignon `na`rval"
+          }
+        }
+      }
+    },
+    "Mnemonics.に" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ni` Is a pack of `nee`dles"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ni` Regarde un `nid` ! C'est peut être la que vis ton coucou"
+          }
+        }
+      }
+    },
+    "Mnemonics.ニ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NI` Your two now famous `nee`dles. You take them everywhere"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NI` Tu as fi`ni` ton `nid` il ne te reste que deux maigres brindilles"
+          }
+        }
+      }
+    },
+    "Mnemonics.ぬ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`nu` Yum ! `Noo`dles"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`nu` Miam ! Des `nou`illes"
+          }
+        }
+      }
+    },
+    "Mnemonics.ヌ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NU` Bam! A second serving of `noo`dles!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NU` Bam du rab de `nou`illes !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ね" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ne` looks like a `ne`ko. Cat in japanese"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ne` ressemble a un `ne`ko. Chat en japonais"
+          }
+        }
+      }
+    },
+    "Mnemonics.ネ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NE` Hey that's the `ne`st of your infamous cuckoo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NE` Le `ne`ttoyage n'attends pas"
+          }
+        }
+      }
+    },
+    "Mnemonics.の" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`no` Are the `no`strils of a massive pig"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`no` C'est ton `no`mbril"
+          }
+        }
+      }
+    },
+    "Mnemonics.ノ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NO` Its `no`t what you meant, so you strike it saying `Nooooooo`!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`NO` Ce n'est pas ce que tu voulais dire, tu raies le mot en criant `Noooooooo`n !"
+          }
+        }
+      }
+    },
+    "Mnemonics.は" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ha` contains `ha` easy !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ha` contient `ha` facile !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ハ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HA` What a cool `ha`t"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HA` c'est un beau `H` il ne manque que la barre du milieu"
+          }
+        }
+      }
+    },
+    "Mnemonics.ひ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`hi` Now `he` has a big nose"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`hi` C'est un gros `hi`boux (prononce bien le H)"
+          }
+        }
+      }
+    },
+    "Mnemonics.ヒ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HI` `hi` `hi` `hi` Look at you, mastering all these kanas in a breeze"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HI` `hi` `hi` `hi` Regarde toi, tu maitrises tous ces kanas si facilement c'est a en rire"
+          }
+        }
+      }
+    },
+    "Mnemonics.ふ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`fu` This `foo`l is dancing like crazy with his `hu`lahoop"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`fu` Ce gars danse comme un `fou` avec son `hu`lahoop"
+          }
+        }
+      }
+    },
+    "Mnemonics.フ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`FU` Tutuutuuuuu ! Rrrrraise the `fl`ag ! Hail reina kana !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`FU` 3.. 2.. 1.. décollage de la `fu`sée !"
+          }
+        }
+      }
+    },
+    "Mnemonics.へ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`he`! Someone calls you from Mt. St.`He`llens"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`he` ! Quelqu'un t'appelle depuis le Mont St.`He`llens"
+          }
+        }
+      }
+    },
+    "Mnemonics.ヘ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HE` `Hey` ! That's the same as the hiragana"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HE` `Hey` ! C'est le même que l'hiragana"
+          }
+        }
+      }
+    },
+    "Mnemonics.ほ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ho` `ho` `ho` !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ho` `ho` `ho` !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ホ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HO` You stumbled upon the `ho`ly cross `hoooo~~~~`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`HO` Tu viens de tomber sur la croix sacrée `hoooooo~~~`"
+          }
+        }
+      }
+    },
+    "Mnemonics.ま" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ma` Oh oh... someone like your `ma`ma is really angry. She's `ma`sked so you not might be safe (ᵕ•_•)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ma` Oh oh... une personne ressemblant à ta `ma`man est vraiment mécontente. Elle est `ma`squée et tu n'est peut être pas en sécurité (ᵕ•_•)"
+          }
+        }
+      }
+    },
+    "Mnemonics.マ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MA` Get ready to do some `ma`ths, you're good at making corners, this one will be easy"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MA` Prépares toi à faire des `ma`ths, tu sais y faire avec les coins, ça va être facile"
+          }
+        }
+      }
+    },
+    "Mnemonics.み" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`mi` Hey that's the `mi`ni snake from earlier. He's friend has grown up but he's still a cutie"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`mi` Hey c'est le `mi`ni serpent de tout à l'heure. Son ami a grossi mais lui est toujours petit"
+          }
+        }
+      }
+    },
+    "Mnemonics.ミ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MI` AAAH `MI`SSILES INCOMING !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MI` AAAH DES `MI`SSILES APPROCHENT !"
+          }
+        }
+      }
+    },
+    "Mnemonics.む" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`mu` MooooOoooOOoooo!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`mu` MooooOoooOOoooo!"
+          }
+        }
+      }
+    },
+    "Mnemonics.ム" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MU` MooooooooOOoOOOoOoooo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MU` MooooooooOOoOOOoOoooo"
+          }
+        }
+      }
+    },
+    "Mnemonics.め" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`me` That's eye in japanese. Look at it, isn't it a beautiful eye ?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`me` C'est un oeil en japonais. Regarde, n'est-ce pas un superbe oeil ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.メ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ME` That's a nasty `me`ssage someone sent you... Put a big X over it and let's not talk about it"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ME` C'est un `me`chant `me`ssage qu'on vient de t'envoyer... `Mets`une gross croix dessus et on n'en parle plus"
+          }
+        }
+      }
+    },
+    "Mnemonics.も" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`mo` It's time for you to `mo`p. Your mama is still angry about you, remember?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`mo` La classe c'est ta `mo`bilette. Bientot tu pourras te prendre une `mo`to"
+          }
+        }
+      }
+    },
+    "Mnemonics.モ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MO` Is like `も` nothing `mo`re to say"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`MO` Est comme `も` je n'ai pas d'autres `mots` à dire"
+          }
+        }
+      }
+    },
+    "Mnemonics.や" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ya` Look a `ya`k !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ya` Regarde c'est un `ya`k !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ヤ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`YA` Is just like the hiragana `や`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YA` Ressemble comme deux gouttes d'eau à l'hiragana `や`"
+          }
+        }
+      }
+    },
+    "Mnemonics.ゆ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`yu` The shiniest fish in the world. This one's `u`nique"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`yu` Le poisson le plus brillant au monde. Il est `u`nique ! Pf`iouu` tu ne l'as pas loupé"
+          }
+        }
+      }
+    },
+    "Mnemonics.ユ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`YU` `YOU` !! Says someone nasty pointing at `you`... What did `you` do... I dont know but it's a bit scary"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`YU` Hey `YOU` ! Quelqu'un t'interpelle en anglais en te pointant du doigt, est ce qu'il s'adresse à toi ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.よ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`yo` `yo` `yo` check this! There's a `yo` in the `yo`! Easy!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`yo` `yo` `yo` check moi ça ! Il y a un `yo` dans le `yo` ! Facile !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ヨ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`YO` Get ready for some `yo`ga , are you all warmed up ?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`YO` Prépare toi à faire du `yo`ga, tu t'es bien échauffé ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.ら" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ra` Ooh a cute `ra`bbit (づ> v <)づ♡"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ra` Ooh c'est un mignon petit `ra`ton (づ> v <)づ♡"
+          }
+        }
+      }
+    },
+    "Mnemonics.ラ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RA` Yo! That's the cool `ra`pping `ra`ptor! Quick get a picture with him, he's so cool!"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RA` Yo! C'est le `ra`ptor `ra`ppeur! Vite prend une photo avec lui, il est stop stylé !"
+          }
+        }
+      }
+    },
+    "Mnemonics.り" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ri` Two `ree`ds"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ri` Deux petites pousses de `ri`z"
+          }
+        }
+      }
+    },
+    "Mnemonics.リ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RI` Just like the hiragana `り`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RI` Tout comme l'hiragana `り`, c'est si facile, j'en `ris`"
+          }
+        }
+      }
+    },
+    "Mnemonics.る" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ru` Now that's a dangerous `rou`te! But you know your itinerary like noone else so no sweat... right?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ru` Cette `rou`te est sacrément escarpée ! Mais tu connais ton itinéraire comme personne, pas de quoi s'inquiéter... n'est-ce pas ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.ル" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RU` Ah! Now you've found out an easy `rou`te. That's reassuring"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RU` Ah! Maintenant tu as trouvé une `rou`te sure. C'est rassurant"
+          }
+        }
+      }
+    },
+    "Mnemonics.れ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`re` The dog's has a grand day, now it needs to `re`st for a bit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`re` Le chien a eu une grosse journée à garder les moutons, maintenant il doit se `re`poser"
+          }
+        }
+      }
+    },
+    "Mnemonics.レ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RE` Careful that's a sharp `ra`sor"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RE` Tu a un rasoir pour te p`ré`parer, attention a ne pas te couper"
+          }
+        }
+      }
+    },
+    "Mnemonics.ろ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ro` Hey you found a simpler `ro`ad. That's a relief !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`ro` Au diable les manières. Tu laches un bon `rot` et au dodo !"
+          }
+        }
+      }
+    },
+    "Mnemonics.ロ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RO` Are you sure this is the right `ro`ad? I feel like we're going in circles..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`RO` Ca c'est du `rot` !"
+          }
+        }
+      }
+    },
+    "Mnemonics.わ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`wa` Bzzzz~ Aahh you almost got stuck by this `wa`sp"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`wa` Quel magestueux `wa`piti ! On n'en voit pas tous les jours"
+          }
+        }
+      }
+    },
+    "Mnemonics.ワ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`WA` `Wha`t ?? Is that ? You ask; Simple that's the `wa` katakana I answer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`WA` C'est qu`oiiiiii` ce truc ?? Simple ! C'est le katakana `wa`"
+          }
+        }
+      }
+    },
+    "Mnemonics.を" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`wo` That's you looking at `wo` saying `wooo`. Quite similar if I may"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`wo` C'est ta tête quand tu as vu `wo` pour la première fois `woooo`. Vous vous ressemblez si je peux me permette."
+          }
+        }
+      }
+    },
+    "Mnemonics.ヲ" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`WO` Wo! wo! wo! Your dog is so happy to see you"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`WO` Wo! wo! wo! Ton chien est tout content de te voir"
+          }
+        }
+      }
+    },
+    "Mnemonics.ん" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`n` Now that's just `n` with extra long lines"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`n` C'est juste un `n` avec des traits super longs"
+          }
+        }
+      }
+    },
+    "Mnemonics.ン" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`N` That's the final kataka`n`a here have a ba`n`a`n`a !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`N` C'est le dernier kataka`n`a tiens prend une ba`n`a`n`e"
+          }
+        }
+      }
     },
     "Mode" : {
       "extractionState" : "manual",
@@ -349,10 +1988,24 @@
       }
     },
     "Save" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sauvegarder"
+          }
+        }
+      }
     },
     "Search a kana" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chercher un kana"
+          }
+        }
+      }
     },
     "Select the rows you want to train on and pick a mode below." : {
       "extractionState" : "manual",
@@ -366,7 +2019,14 @@
       }
     },
     "Show kana behind drawing" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher kana derrière dessin"
+          }
+        }
+      }
     },
     "Show romaji" : {
       "localizations" : {
@@ -379,7 +2039,14 @@
       }
     },
     "Show Romaji for failed" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher les Romaji pour les erronés"
+          }
+        }
+      }
     },
     "Skip" : {
       "extractionState" : "manual",
@@ -413,8 +2080,26 @@
         }
       }
     },
+    "This is the right kana but with incorrect writing. Try again!" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "C’est le bon kana mais cette écriture n’est pas standard. Essaie encore !"
+          }
+        }
+      }
+    },
     "Training" : {
-
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrainement"
+          }
+        }
+      }
     },
     "Training mode" : {
       "extractionState" : "manual",

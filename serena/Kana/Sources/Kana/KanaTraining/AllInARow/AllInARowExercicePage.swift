@@ -128,7 +128,7 @@ struct AllInARowExercicePage: View {
             withAnimation(.default) {
                 truthColor = .orange
                 shakeTrigger += 1
-                info = "This is the right kana but with incorrect writing. Try again!"
+                info = localized("This is the right kana but with incorrect writing. Try again!")
             } completion: {
                 withAnimation {
                     truthColor = .primary

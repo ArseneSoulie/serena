@@ -119,7 +119,7 @@ struct CompletedAllInARowPage: View {
         .toolbar {
             if result.failedKanas.count != 0 {
                 Toggle(isOn: $shouldShowRomajiForFailedKanas) {
-                    Text("Show Romaji for failed")
+                    Text(localized("Show Romaji for failed"))
                 }.padding()
             }
         }
