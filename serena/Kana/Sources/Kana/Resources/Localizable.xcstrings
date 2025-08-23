@@ -337,7 +337,17 @@
         }
       }
     },
-    "Mnemonic.あ" : {
+    "Mnemonics" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mnemotechniques"
+          }
+        }
+      }
+    },
+    "Mnemonics.あ" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -350,33 +360,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Peux-tu trouver le `a` dans l’hiragana `a` ?"
-          }
-        }
-      }
-    },
-    "Mnemonic.い" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "`i` looks like a pair of ee(い)ls"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "`i` ressemble à deux angu`i`lles"
-          }
-        }
-      }
-    },
-    "Mnemonics" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mnemotechniques"
           }
         }
       }
@@ -394,6 +377,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "`A` contient un `a` comme pour l'hiragana, est-ce que tu le vois ?"
+          }
+        }
+      }
+    },
+    "Mnemonics.い" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`i` looks like a pair of ee(い)ls"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "`i` ressemble à deux angu`i`lles"
           }
         }
       }
@@ -489,13 +489,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "`o` Get ready to get into `o`rbit"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "`o` Prépare toi a décoller en `o`rbite"
           }
         }
       }
@@ -2043,7 +2043,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Afficher les Romaji pour les incorrects"
+            "value" : "Afficher les Romaji pour les erronés"
           }
         }
       }

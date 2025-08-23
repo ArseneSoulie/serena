@@ -26,7 +26,7 @@ public struct KanaSelectionPage: View {
 
                 Picker(localized("Training mode"), selection: $kanaSelectionType) {
                     ForEach(KanaSelectionType.allCases, id: \.self) {
-                        Text(localized($0.rawValue))
+                        Text($0.localisedDescription)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -180,7 +180,7 @@ struct BottomViews: View {
         VStack(spacing: 4) {
             HStack {
                 Picker(localized("Training mode"), selection: $kanaSelectionType) {
-                    ForEach(KanaSelectionType.allCases, id: \.self) { Text(localized($0.rawValue)) }
+                    ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.localisedDescription) }
                 }
                 .pickerStyle(.segmented)
                 Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)

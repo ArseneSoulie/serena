@@ -170,7 +170,7 @@ struct MnemonicDrawingView: View {
                     )
                 }
             }
-            .navigationTitle(localized("Make your mnemonic for \(data.kanaString)"))
+            .navigationTitle(localized("Make your mnemonic for %@", data.kanaString))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
