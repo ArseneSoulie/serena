@@ -26,7 +26,7 @@ public struct ExerciseSelectionPage: View {
 
                 ExerciceBanner(
                     title: localized("Learn the selected kanas by doing challenges of increasing difficulty"),
-                    imageResource: .TrainingBanner.allInARow,
+                    imageResource: .TrainingBanner.levelUp,
                     onBannerTapped: onLevelUpsTapped,
                 )
 
@@ -38,7 +38,7 @@ public struct ExerciseSelectionPage: View {
                     title: localized("Try to get all selected kanas right in a row !"),
                     imageResource: .TrainingBanner.allInARow,
                     onBannerTapped: onAllInARowTapped,
-                ).tint(.orange)
+                )
             }.padding()
         }.navigationTitle(localized("Pick an exercise type"))
     }
@@ -78,8 +78,8 @@ struct ExerciceBanner: View {
             }
             .padding()
             .background(.quinary)
-            .foregroundStyle(.primary)
             .clipShape(RoundedRectangle(cornerRadius: 16))
         }
+        .foregroundStyle(.primary)
     }
 }

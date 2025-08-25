@@ -175,6 +175,7 @@
       }
     },
     "Explanation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -261,6 +262,7 @@
       }
     },
     "It reminds me of..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2104,6 +2106,7 @@
       }
     },
     "Training" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

@@ -65,7 +65,7 @@ public struct DrawingView<ContentView: View>: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 16) {
             Text(localized("Draw"))
             contentView()
                 .overlay {
