@@ -1,8 +1,10 @@
 import SwiftUI
 
+typealias UserKanaMnemonics = [String: UserKanaMnemonic]
+
 @Observable
 class KanaMnemonicsManager: ObservableObject {
-    var userMnemonics: UserKanaMnemonics = .init(mnemonics: [:])
+    var userMnemonics: UserKanaMnemonics = [:]
 
     private let fileName = "UserKanaMnemonics.json"
 
@@ -22,7 +24,7 @@ class KanaMnemonicsManager: ObservableObject {
             userMnemonics = decoded
         } catch {
             print("Failed to load mnemonics: \(error)")
-            userMnemonics = .init(mnemonics: [:])
+            userMnemonics = [:]
         }
     }
 
@@ -36,7 +38,7 @@ class KanaMnemonicsManager: ObservableObject {
     }
 
     func updateMnemonic(for kana: String, written: String?, drawing: String?) {
-        userMnemonics.mnemonics[kana] = .init(
+        userMnemonics[kana] = .init(
             writtenMnemonic: written,
             drawingMnemonic: drawing,
         )

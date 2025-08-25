@@ -23,7 +23,7 @@ struct MnemonicSection: View {
                     .id(mnemonic)
                     .foregroundStyle(group.color)
                 Text(localized("Mnemonics.\(mnemonic.kanaString)"))
-                let currentMnemonic = mnemonicsManager.userMnemonics.mnemonics[mnemonic.kanaString]
+                let currentMnemonic = mnemonicsManager.userMnemonics[mnemonic.kanaString]
                 if let personalMnemonic = currentMnemonic?.writtenMnemonic {
                     Text(personalMnemonic).foregroundStyle(.secondary)
                 }

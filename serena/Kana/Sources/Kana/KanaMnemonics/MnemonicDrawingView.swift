@@ -64,7 +64,7 @@ struct MnemonicDrawingView: View {
             }
         }
         .onAppear {
-            let currentMnemonic = mnemonicsManager.userMnemonics.mnemonics[data.kanaString]
+            let currentMnemonic = mnemonicsManager.userMnemonics[data.kanaString]
             explanationText = currentMnemonic?.writtenMnemonic ?? ""
             if let currentPath = Path(currentMnemonic?.drawingMnemonic ?? "") {
                 drawnPaths = [currentPath]
