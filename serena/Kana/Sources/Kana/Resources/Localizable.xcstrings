@@ -305,6 +305,17 @@
         }
       }
     },
+    "Learn the selected kanas by doing challenges of increasing difficulty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprenez les kanas sélectionnés par défis de difficulté croissante"
+          }
+        }
+      }
+    },
     "Let's go ! %lld" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2067,17 +2078,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passer"
-          }
-        }
-      }
-    },
-    "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Testez vos connaissances sur 10 kanas choisis aléatoirement parmi la sélection avec une difficulté croissante."
           }
         }
       }
