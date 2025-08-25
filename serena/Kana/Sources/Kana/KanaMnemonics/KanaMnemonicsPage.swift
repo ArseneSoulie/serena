@@ -5,10 +5,7 @@ import SwiftUI
 
 public struct KanaMnemonicsPage: View {
     @State private var presentedMnemonic: KanaMnemonicData?
-    @State private var kanaMnemonicsPaths = UserDefaults.standard
-        .dictionary(forKey: UserDefaultsKeys.kanaMnemonicsPaths) as? [String: String] ?? [:]
-    @State private var kanaMnemonicsExplanations = UserDefaults.standard
-        .dictionary(forKey: UserDefaultsKeys.kanaMnemonicsExplanations) as? [String: String] ?? [:]
+    @State private var mnemonicsManager = KanaMnemonicsManager()
 
     @State var searchText: String = ""
 
@@ -30,8 +27,7 @@ public struct KanaMnemonicsPage: View {
 
                         ForEach(kanaType.mnemonicGroups, id: \.title) { mnemonicGroup in
                             MnemonicSection(
-                                kanaMnemonicsPaths: kanaMnemonicsPaths,
-                                kanaMnemonicsExplanations: kanaMnemonicsExplanations,
+                                mnemonicsManager: mnemonicsManager,
                                 group: mnemonicGroup,
                                 showGlyphBehindMnemonic: showGlyphBehindMnemonic,
                                 onDrawMnemonicTapped: onDrawMnemonicTapped,
@@ -62,8 +58,7 @@ public struct KanaMnemonicsPage: View {
         .sheet(item: $presentedMnemonic) { data in
             MnemonicDrawingView(
                 data: data,
-                kanaMnemonicsPaths: $kanaMnemonicsPaths,
-                kanaMnemonicsExplanations: $kanaMnemonicsExplanations,
+                mnemonicsManager: mnemonicsManager,
             )
         }
         .toolbar(content: {
@@ -75,6 +70,9 @@ public struct KanaMnemonicsPage: View {
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: localized("Search a kana"),
         )
+        .onAppear {
+            mnemonicsManager.load()
+        }
     }
 
     func onDrawMnemonicTapped(mnemonic: KanaMnemonicData) {

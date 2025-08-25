@@ -1,5 +1,5 @@
 {
-  "originHash" : "3ebbdcb6e1614ed676efb39dce0e5caeb3fc8b52a71890004576d710cf6c0f38",
+  "originHash" : "bd360013ae47972bf563ad85a9f40be252ae6f15cdacb96c942605cd0ce20609",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/sharing-grdb",
       "state" : {
-        "revision" : "9ccd88799dcf20c2f2ba8cd2771de5031bebab05",
-        "version" : "0.5.0"
+        "revision" : "46f8561d442cd49d0f8f42234f0d97da33544dda",
+        "version" : "0.6.0"
       }
     },
     {
@@ -114,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-structured-queries",
       "state" : {
-        "revision" : "bb12b34a8bf88af3307784da94caee3765a066f2",
-        "version" : "0.11.0"
+        "revision" : "b5b5a9ed9ff321f43a02f07394f2831eba5e11f2",
+        "version" : "0.13.0"
       }
     },
     {

@@ -15,7 +15,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "FoundationModels", path: "./FoundationModels"),
+        .package(name: "FoundationModels", path: "../FoundationModels"),
     ],
     targets: [
         .target(

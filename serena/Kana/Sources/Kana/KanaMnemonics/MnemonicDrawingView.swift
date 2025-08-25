@@ -3,34 +3,16 @@ import SwiftUI
 
 struct MnemonicDrawingView: View {
     let data: KanaMnemonicData
-    @Binding var kanaMnemonicsPaths: [String: String]
-    @Binding var kanaMnemonicsExplanations: [String: String]
+    @Bindable var mnemonicsManager: KanaMnemonicsManager
+
     @Environment(\.dismiss) var dismiss
 
-    @State var explanationText: String
-    @State var drawnPaths: [Path]
+    @State var explanationText: String = ""
+    @State var drawnPaths: [Path] = []
 
-    let strokes: KanjiStrokes?
-
-    init(
-        data: KanaMnemonicData,
-        kanaMnemonicsPaths: Binding<[String: String]>,
-        kanaMnemonicsExplanations: Binding<[String: String]>,
-    ) {
-        self.data = data
-        _kanaMnemonicsPaths = kanaMnemonicsPaths
-        _kanaMnemonicsExplanations = kanaMnemonicsExplanations
-
+    var strokes: KanjiStrokes? {
         let url = Bundle.module.url(forResource: "0\(data.unicodeID)", withExtension: "svg")
-        strokes = KanjiStrokes(from: url)
-        if
-            let savedDrawing = kanaMnemonicsPaths.wrappedValue[data.kanaString],
-            let combinedSavedPaths = Path(savedDrawing) {
-            drawnPaths = [combinedSavedPaths]
-        } else {
-            drawnPaths = []
-        }
-        explanationText = kanaMnemonicsExplanations.wrappedValue[data.kanaString] ?? ""
+        return KanjiStrokes(from: url)
     }
 
     @FocusState private var isFocused: Bool
@@ -81,6 +63,13 @@ struct MnemonicDrawingView: View {
                 }
             }
         }
+        .onAppear {
+            let currentMnemonic = mnemonicsManager.userMnemonics[data.kanaString]
+            explanationText = currentMnemonic?.writtenMnemonic ?? ""
+            if let currentPath = Path(currentMnemonic?.drawingMnemonic ?? "") {
+                drawnPaths = [currentPath]
+            }
+        }
     }
 
     func onSave() {
@@ -92,10 +81,11 @@ struct MnemonicDrawingView: View {
         let simplified = pathToSave.description
             .replacingOccurrences(of: #"(\d+)\.\d+"#, with: "$1", options: .regularExpression)
 
-        kanaMnemonicsPaths[data.kanaString] = simplified
-        kanaMnemonicsExplanations[data.kanaString] = explanationText
-        UserDefaults.standard.set(kanaMnemonicsPaths, forKey: UserDefaultsKeys.kanaMnemonicsPaths)
-        UserDefaults.standard.set(kanaMnemonicsExplanations, forKey: UserDefaultsKeys.kanaMnemonicsExplanations)
+        mnemonicsManager.updateMnemonic(
+            for: data.kanaString,
+            written: explanationText,
+            drawing: simplified,
+        )
         dismiss()
     }
 }
