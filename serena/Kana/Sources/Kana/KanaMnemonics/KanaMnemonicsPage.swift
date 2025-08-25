@@ -17,7 +17,7 @@ public struct KanaMnemonicsPage: View {
         ZStack(alignment: .bottomTrailing) {
             ScrollViewReader { proxy in
                 ScrollView {
-                    LazyVStack(alignment: .leading) {
+                    VStack(alignment: .leading) {
                         Text(
                             localized(
                                 "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !",
@@ -26,19 +26,28 @@ public struct KanaMnemonicsPage: View {
                         Divider()
 
                         ForEach(kanaType.mnemonicGroups, id: \.title) { mnemonicGroup in
-                            MnemonicSection(
-                                mnemonicsManager: mnemonicsManager,
-                                group: mnemonicGroup,
-                                showGlyphBehindMnemonic: showGlyphBehindMnemonic,
-                                onDrawMnemonicTapped: onDrawMnemonicTapped,
-                            )
+                            VStack(alignment: .leading) {
+                                Text(mnemonicGroup.title)
+                                    .typography(.title).bold()
+                                    .foregroundStyle(mnemonicGroup.color)
+                                ForEach(mnemonicGroup.data, id: \.kanaString) { mnemonic in
+                                    MnemonicView(
+                                        mnemonicsManager: mnemonicsManager,
+                                        color: mnemonicGroup.color,
+                                        showGlyphBehindMnemonic: showGlyphBehindMnemonic,
+                                        onDrawMnemonicTapped: onDrawMnemonicTapped,
+                                        mnemonic: mnemonic,
+                                    ).id(mnemonic.kanaString.standardisedRomaji)
+                                }
+                            }
                         }
                     }
                     .padding()
                     .onChange(of: searchText) { _, newValue in
+                        let allKanas = kanaType.mnemonicGroups.flatMap(\.data).map(\.kanaString.standardisedRomaji)
                         if
-                            let match = kanaType.mnemonicGroups.flatMap(\.searchableIds)
-                                .first(where: { $0.standardisedRomaji == newValue.standardisedRomaji }) {
+                            let match = allKanas
+                                .first(where: { $0.contains(newValue.standardisedRomaji) }) {
                             withAnimation {
                                 proxy.scrollTo(match, anchor: .top)
                             }
@@ -77,12 +86,6 @@ public struct KanaMnemonicsPage: View {
 
     func onDrawMnemonicTapped(mnemonic: KanaMnemonicData) {
         presentedMnemonic = mnemonic
-    }
-}
-
-extension MnemonicGroup {
-    var searchableIds: [String] {
-        [title] + data.map(\.kanaString)
     }
 }
 

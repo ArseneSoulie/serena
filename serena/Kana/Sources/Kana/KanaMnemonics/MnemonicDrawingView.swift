@@ -29,6 +29,7 @@ struct MnemonicDrawingView: View {
                                     .foregroundStyle(Color(white: 0.95))
                                     .aspectRatio(1, contentMode: .fit)
                                     .padding(48)
+                                    .frame(maxWidth: 400)
                             },
                         )
                         Divider()

@@ -7,15 +7,14 @@ public struct KanaMainPage: View {
     public init() {}
 
     public var body: some View {
-        NavigationStack(path: coordinator.binding(for: \.path)) {
-            TabView {
-                NavigationView {
-                    KanaMnemonicsPage()
-                }
-                .tabItem {
-                    Image(systemName: "brain")
-                    Text(localized("Mnemonics"))
-                }
+        TabView {
+            NavigationStack {
+                KanaMnemonicsPage()
+            }
+            .tabItem {
+                Image(systemName: "brain")
+                Text(localized("Mnemonics"))
+            }
 
 //                NavigationView {
 //                    KanaLearningPage()
@@ -25,23 +24,22 @@ public struct KanaMainPage: View {
 //                    Text("Learning")
 //                }
 
-                NavigationView {
-                    KanaSelectionPage()
-                }
-                .tabItem {
-                    Image(systemName: "figure.run")
-                    Text(localized("Training"))
-                }
+            NavigationStack(path: coordinator.binding(for: \.path)) {
+                KanaSelectionPage()
+                    .navigationDestination(for: Destination.self) { destination in
+                        switch destination {
+                        case let .levelUps(kanas):
+                            LevelUpsPage(kanas: kanas)
+                        case let .allInARow(kanas):
+                            AllInARowPage(kanas: kanas)
+                        case let .exerciseSelection(kanas):
+                            ExerciseSelectionPage(kanaPool: kanas)
+                        }
+                    }
             }
-            .navigationDestination(for: Destination.self) { destination in
-                switch destination {
-                case let .levelUps(kanas):
-                    LevelUpsPage(kanas: kanas)
-                case let .allInARow(kanas):
-                    AllInARowPage(kanas: kanas)
-                case let .exerciseSelection(kanas):
-                    ExerciseSelectionPage(kanaPool: kanas)
-                }
+            .tabItem {
+                Image(systemName: "figure.run")
+                Text(localized("Training"))
             }
         }
     }
