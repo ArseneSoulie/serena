@@ -66,6 +66,7 @@ struct AllInARowExercicePage: View {
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.center)
                         .textEditorStyle(.plain)
+                        .submitLabel(.send)
                         .typography(.title)
                         .focused($isFocused)
 
@@ -107,7 +108,8 @@ struct AllInARowExercicePage: View {
     }
 
     func onSubmit() {
-        let (cleanedText, containsInvalidRomaji) = inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let (cleanedText, containsInvalidRomaji) = inputText
+            .filter { !$0.isWhitespace && !$0.isNewline }
             .standardizedRomajiWithWarningInfo
         let convertedTruth = truth.kanaValue.standardisedRomaji
         let isCorrect = cleanedText == convertedTruth

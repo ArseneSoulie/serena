@@ -65,28 +65,30 @@ public struct DrawingView<ContentView: View>: View {
     }
 
     public var body: some View {
-        contentView()
-            .overlay {
-                driedPath.stroke(driedStrokeColor, style: strokeStyle)
-                currentPath.stroke(driedStrokeColor, style: strokeStyle)
-                wetPath.stroke(wetStrokeColor, style: strokeStyle).opacity(isDrawing ? 1 : 0)
+        VStack(alignment: .leading) {
+            Text(localized("Draw"))
+            contentView()
+                .overlay {
+                    driedPath.stroke(driedStrokeColor, style: strokeStyle)
+                    currentPath.stroke(driedStrokeColor, style: strokeStyle)
+                    wetPath.stroke(wetStrokeColor, style: strokeStyle).opacity(isDrawing ? 1 : 0)
 
-                Circle()
-                    .fill(wetStrokeColor)
-                    .frame(width: isDrawing ? 30 : 0, height: isDrawing ? 30 : 0)
-                    .position(currentPoint)
-                    .animation(.default, value: isDrawing)
-            }
-            .allowsHitTesting(false)
-            .background {
-                Color(white: 0.9)
-                    .gesture(dragGesture)
-                    .allowsHitTesting(true)
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .padding(24)
-            .onReceive(timer) { _ in updateWetness() }
-        drawingToolBar
+                    Circle()
+                        .fill(wetStrokeColor)
+                        .frame(width: isDrawing ? 30 : 0, height: isDrawing ? 30 : 0)
+                        .position(currentPoint)
+                        .animation(.default, value: isDrawing)
+                }
+                .allowsHitTesting(false)
+                .background {
+                    Color(white: 0.9)
+                        .gesture(dragGesture)
+                        .allowsHitTesting(true)
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .onReceive(timer) { _ in updateWetness() }
+            drawingToolBar
+        }
     }
 
     func addPointToCurrent(location: CGPoint) {
@@ -142,7 +144,6 @@ public struct DrawingView<ContentView: View>: View {
             )
             Spacer()
         }
-        .padding(24)
     }
 }
 

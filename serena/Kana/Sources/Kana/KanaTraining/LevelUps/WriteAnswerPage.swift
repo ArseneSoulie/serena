@@ -75,6 +75,7 @@ struct WriteAnswerPage: View {
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.center)
                         .textEditorStyle(.plain)
+                        .submitLabel(.send)
                         .typography(.title)
                         .focused($isFocused)
 
@@ -126,7 +127,7 @@ struct WriteAnswerPage: View {
     func onSubmit() {
         if !canSubmit { return }
         let (cleanedText, containsInvalidRomaji) = inputText
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .filter { !$0.isWhitespace && !$0.isNewline }
             .standardizedRomajiWithWarningInfo
         let convertedTruth: String = truth.map(\.kanaValue).joined().standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
