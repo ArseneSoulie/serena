@@ -2,8 +2,7 @@ import KanjiVGParser
 import SwiftUI
 
 struct MnemonicSection: View {
-    let kanaMnemonicsPaths: [String: String]
-    let kanaMnemonicsExplanations: [String: String]
+    @Bindable var mnemonicsManager: KanaMnemonicsManager
 
     let group: MnemonicGroup
     let showGlyphBehindMnemonic: Bool
@@ -24,7 +23,8 @@ struct MnemonicSection: View {
                     .id(mnemonic)
                     .foregroundStyle(group.color)
                 Text(localized("Mnemonics.\(mnemonic.kanaString)"))
-                if let personalMnemonic = kanaMnemonicsExplanations[mnemonic.kanaString] {
+                let currentMnemonic = mnemonicsManager.userMnemonics.mnemonics[mnemonic.kanaString]
+                if let personalMnemonic = currentMnemonic?.writtenMnemonic {
                     Text(personalMnemonic).foregroundStyle(.secondary)
                 }
 
@@ -35,9 +35,9 @@ struct MnemonicSection: View {
                         .resizable()
                         .frame(width: 200, height: 100)
 
-                    let kanaCustomMnemonic = kanaMnemonicsPaths[mnemonic.kanaString]
-
-                    if let kanaCustomMnemonic, let kanaPath = Path(kanaCustomMnemonic) {
+                    if
+                        let kanaCustomMnemonic = currentMnemonic?.drawingMnemonic,
+                        let kanaPath = Path(kanaCustomMnemonic) {
                         ZStack {
                             if showGlyphBehindMnemonic {
                                 KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
