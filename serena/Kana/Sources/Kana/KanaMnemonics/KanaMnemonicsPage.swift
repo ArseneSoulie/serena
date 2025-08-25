@@ -62,7 +62,7 @@ public struct KanaMnemonicsPage: View {
                                     }
                                 } else {
                                     Button(
-                                        localized("Make your own"),
+                                        localized("Draw your own"),
                                         systemImage: "pencil",
                                         action: { onDrawMnemonicTapped(mnemonic: mnemonic) },
                                     )
@@ -150,15 +150,21 @@ struct MnemonicDrawingView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack {
-                    TextField(
-                        localized("Explanation"),
-                        text: $explanationText,
-                        prompt: Text(localized("It reminds me of...")),
-                        axis: .vertical,
-                    )
-                    .textFieldStyle(.roundedBorder)
-                    .padding()
+                VStack(spacing: 16) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(localized("Write what the kana reminds you of"))
+                            .typography(.headline)
+                        TextField(
+                            localized("Explanation"),
+                            text: $explanationText,
+                            prompt: Text(localized("It reminds me of...")),
+                            axis: .vertical,
+                        )
+                        .textFieldStyle(.roundedBorder)
+                    }
+                    Divider()
+                        .padding()
+
                     DrawingView(
                         finishedPaths: $drawnPaths,
                         contentView: {
@@ -169,8 +175,9 @@ struct MnemonicDrawingView: View {
                         },
                     )
                 }
+                .padding(24)
             }
-            .navigationTitle(localized("Make your mnemonic for %@", data.kanaString))
+            .navigationTitle(localized("Draw your mnemonic for %@", data.kanaString))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

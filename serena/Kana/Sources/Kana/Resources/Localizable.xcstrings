@@ -142,6 +142,38 @@
         }
       }
     },
+    "Draw" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dessine"
+          }
+        }
+      }
+    },
+    "Draw your mnemonic for %@" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dessine ton mnémotechnique pour %@"
+          }
+        }
+      }
+    },
+    "Draw your own" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dessine le tien"
+          }
+        }
+      }
+    },
     "Explanation" : {
       "localizations" : {
         "fr" : {
@@ -313,26 +345,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paliers"
-          }
-        }
-      }
-    },
-    "Make your mnemonic for %@" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crée ton mnémotechnique pour %@"
-          }
-        }
-      }
-    },
-    "Make your own" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Crée le tien"
           }
         }
       }
@@ -2166,6 +2178,9 @@
           }
         }
       }
+    },
+    "Write what the kana reminds you of" : {
+
     }
   },
   "version" : "1.1"
