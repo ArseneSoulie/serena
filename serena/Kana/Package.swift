@@ -15,15 +15,17 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(name: "Navigation", path: "./Navigation"),
-        .package(name: "DesignSystem", path: "./DesignSystem"),
-        .package(name: "FoundationModels", path: "./FoundationModels"),
-        .package(name: "KanjiVGParser", path: "./KanjiVGParser"),
+        //        .package(url: "https://github.com/pointfreeco/sharing-grdb", from: "0.6.0"),
+        .package(name: "Navigation", path: "../Navigation"),
+        .package(name: "DesignSystem", path: "../DesignSystem"),
+        .package(name: "FoundationModels", path: "../FoundationModels"),
+        .package(name: "KanjiVGParser", path: "../KanjiVGParser"),
     ],
     targets: [
         .target(
             name: "Kana",
             dependencies: [
+                //                .product(name: "SharingGRDB", package: "sharing-grdb"),
                 "Navigation",
                 "DesignSystem",
                 "FoundationModels",
