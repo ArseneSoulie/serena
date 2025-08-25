@@ -10,9 +10,6 @@ public struct KanaMnemonicsPage: View {
     @State private var kanaMnemonicsExplanations = UserDefaults.standard
         .dictionary(forKey: UserDefaultsKeys.kanaMnemonicsExplanations) as? [String: String] ?? [:]
 
-    let mnemonicLineStyle: StrokeStyle = .init(lineWidth: 6, lineCap: .round, lineJoin: .round)
-    let mnemonicDrawingStyle: StrokeStyle = .init(lineWidth: 2, lineCap: .round, lineJoin: .round)
-
     @State var searchText: String = ""
 
     @State var kanaType: KanaType = .hiragana
@@ -30,52 +27,22 @@ public struct KanaMnemonicsPage: View {
                             ),
                         )
                         Divider()
-                        ForEach(kanaType.mnemonicsData) { mnemonic in
-                            Text(mnemonic.kanaString)
-                                .typography(.title2).bold()
-                                .id(mnemonic)
-                            Text(localized("Mnemonics.\(mnemonic.kanaString)"))
-                            if let personalMnemonic = kanaMnemonicsExplanations[mnemonic.kanaString] {
-                                Text(personalMnemonic).foregroundStyle(.secondary)
-                            }
 
-                            HStack(alignment: .center) {
-                                let url = Bundle.module.url(forResource: "0\(mnemonic.unicodeID)", withExtension: "svg")
-
-                                Image("KanaMnemonics/\(mnemonic.unicodeID)", bundle: Bundle.module)
-                                    .resizable()
-                                    .frame(width: 200, height: 100)
-
-                                let kanaCustomMnemonic = kanaMnemonicsPaths[mnemonic.kanaString]
-
-                                if let kanaCustomMnemonic, let kanaPath = Path(kanaCustomMnemonic) {
-                                    ZStack {
-                                        if showGlyphBehindMnemonic {
-                                            KanjiStrokes(from: url)?.stroke(style: mnemonicLineStyle)
-                                                .fill(Color.primary.opacity(0.1))
-                                        }
-                                        ScaledShape(path: kanaPath).stroke(style: mnemonicDrawingStyle)
-                                    }
-                                    .frame(width: 80, height: 80)
-                                    Button(action: { onDrawMnemonicTapped(mnemonic: mnemonic) }) {
-                                        Image(systemName: "pencil")
-                                    }
-                                } else {
-                                    Button(
-                                        localized("Draw your own"),
-                                        systemImage: "pencil",
-                                        action: { onDrawMnemonicTapped(mnemonic: mnemonic) },
-                                    )
-                                }
-                            }
-                            Divider()
+                        ForEach(kanaType.mnemonicGroups, id: \.title) { mnemonicGroup in
+                            MnemonicSection(
+                                kanaMnemonicsPaths: kanaMnemonicsPaths,
+                                kanaMnemonicsExplanations: kanaMnemonicsExplanations,
+                                group: mnemonicGroup,
+                                showGlyphBehindMnemonic: showGlyphBehindMnemonic,
+                                onDrawMnemonicTapped: onDrawMnemonicTapped,
+                            )
                         }
                     }
                     .padding()
                     .onChange(of: searchText) { _, newValue in
                         if
-                            let match = kanaType.mnemonicsData
-                                .first(where: { $0.kanaString.standardisedRomaji == newValue.standardisedRomaji }) {
+                            let match = kanaType.mnemonicGroups.flatMap(\.searchableIds)
+                                .first(where: { $0.standardisedRomaji == newValue.standardisedRomaji }) {
                             withAnimation {
                                 proxy.scrollTo(match, anchor: .top)
                             }
@@ -115,92 +82,9 @@ public struct KanaMnemonicsPage: View {
     }
 }
 
-struct MnemonicDrawingView: View {
-    let data: KanaMnemonicData
-    @Binding var kanaMnemonicsPaths: [String: String]
-    @Binding var kanaMnemonicsExplanations: [String: String]
-    @Environment(\.dismiss) var dismiss
-
-    @State var explanationText: String
-    @State var drawnPaths: [Path]
-
-    let strokes: KanjiStrokes?
-
-    init(
-        data: KanaMnemonicData,
-        kanaMnemonicsPaths: Binding<[String: String]>,
-        kanaMnemonicsExplanations: Binding<[String: String]>,
-    ) {
-        self.data = data
-        _kanaMnemonicsPaths = kanaMnemonicsPaths
-        _kanaMnemonicsExplanations = kanaMnemonicsExplanations
-
-        let url = Bundle.module.url(forResource: "0\(data.unicodeID)", withExtension: "svg")
-        strokes = KanjiStrokes(from: url)
-        if
-            let savedDrawing = kanaMnemonicsPaths.wrappedValue[data.kanaString],
-            let combinedSavedPaths = Path(savedDrawing) {
-            drawnPaths = [combinedSavedPaths]
-        } else {
-            drawnPaths = []
-        }
-        explanationText = kanaMnemonicsExplanations.wrappedValue[data.kanaString] ?? ""
-    }
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 16) {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(localized("Write what the kana reminds you of"))
-                            .typography(.headline)
-                        TextField(
-                            localized("Explanation"),
-                            text: $explanationText,
-                            prompt: Text(localized("It reminds me of...")),
-                            axis: .vertical,
-                        )
-                        .textFieldStyle(.roundedBorder)
-                    }
-                    Divider()
-                        .padding()
-
-                    DrawingView(
-                        finishedPaths: $drawnPaths,
-                        contentView: {
-                            strokes?.stroke(lineWidth: 30)
-                                .foregroundStyle(Color(white: 0.95))
-                                .aspectRatio(1, contentMode: .fit)
-                                .padding(48)
-                        },
-                    )
-                }
-                .padding(24)
-            }
-            .navigationTitle(localized("Draw your mnemonic for %@", data.kanaString))
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(localized("Save"), systemImage: "checkmark.circle", action: onSave)
-                }
-            }
-        }
-    }
-
-    func onSave() {
-        let pathToSave = Path { path in
-            for drawnPath in drawnPaths {
-                path.addPath(drawnPath)
-            }
-        }
-        let simplified = pathToSave.description
-            .replacingOccurrences(of: #"(\d+)\.\d+"#, with: "$1", options: .regularExpression)
-
-        kanaMnemonicsPaths[data.kanaString] = simplified
-        kanaMnemonicsExplanations[data.kanaString] = explanationText
-        UserDefaults.standard.set(kanaMnemonicsPaths, forKey: UserDefaultsKeys.kanaMnemonicsPaths)
-        UserDefaults.standard.set(kanaMnemonicsExplanations, forKey: UserDefaultsKeys.kanaMnemonicsExplanations)
-        dismiss()
+extension MnemonicGroup {
+    var searchableIds: [String] {
+        [title] + data.map(\.kanaString)
     }
 }
 

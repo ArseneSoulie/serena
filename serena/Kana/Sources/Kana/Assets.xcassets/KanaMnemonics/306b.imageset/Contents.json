@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "306b.png",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "306b 1.png",
+      "idiom" : "universal",
+      "locale" : "fr"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "localizable" : true,
+    "template-rendering-intent" : "template"
+  }
+}

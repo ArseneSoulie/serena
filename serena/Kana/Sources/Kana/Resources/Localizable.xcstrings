@@ -175,6 +175,7 @@
       }
     },
     "Explanation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -261,6 +262,7 @@
       }
     },
     "It reminds me of..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -301,6 +303,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katakana"
+          }
+        }
+      }
+    },
+    "Learn the selected kanas by doing challenges of increasing difficulty" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprenez les kanas sélectionnés par défis de difficulté croissante"
           }
         }
       }
@@ -2071,17 +2084,6 @@
         }
       }
     },
-    "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty." : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Testez vos connaissances sur 10 kanas choisis aléatoirement parmi la sélection avec une difficulté croissante."
-          }
-        }
-      }
-    },
     "The extended group will only show characters in the katakana form" : {
       "localizations" : {
         "fr" : {
@@ -2104,6 +2106,7 @@
       }
     },
     "Training" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

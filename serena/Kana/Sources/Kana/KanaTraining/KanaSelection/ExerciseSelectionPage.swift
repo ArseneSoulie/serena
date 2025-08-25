@@ -19,27 +19,28 @@ public struct ExerciseSelectionPage: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading) {
-            Text(localized("Level ups"))
-                .typography(.title)
-            Text(
-                localized(
-                    "Test your knowledge on 10 random kanas chosen from the selection with increasing difficulty.",
-                ),
-            )
+        ScrollView {
+            VStack(alignment: .leading) {
+                Text(localized("Level ups"))
+                    .typography(.title2)
 
-            Button(localized("Go !"), action: onLevelUpsTapped)
-                .buttonStyle(.bordered)
-            Divider().padding()
-            Text(localized("All in a row"))
-                .typography(.title)
-            Text(localized("Try to get all selected kanas right in a row !"))
+                ExerciceBanner(
+                    title: localized("Learn the selected kanas by doing challenges of increasing difficulty"),
+                    imageResource: .TrainingBanner.levelUp,
+                    onBannerTapped: onLevelUpsTapped,
+                )
 
-            Button(localized("Go !"), action: onAllInARowTapped)
+                Divider().padding()
+                Text(localized("All in a row"))
+                    .typography(.title2)
 
-                .buttonStyle(.bordered)
-        }.padding()
-            .navigationTitle(localized("Pick an exercise type"))
+                ExerciceBanner(
+                    title: localized("Try to get all selected kanas right in a row !"),
+                    imageResource: .TrainingBanner.allInARow,
+                    onBannerTapped: onAllInARowTapped,
+                )
+            }.padding()
+        }.navigationTitle(localized("Pick an exercise type"))
     }
 
     func onLevelUpsTapped() {
@@ -54,4 +55,31 @@ public struct ExerciseSelectionPage: View {
 #Preview {
     ExerciseSelectionPage(kanaPool: [])
         .environment(NavigationCoordinator())
+}
+
+struct ExerciceBanner: View {
+    let title: String
+    let imageResource: ImageResource
+    let onBannerTapped: () -> Void
+
+    var body: some View {
+        Button(action: onBannerTapped) {
+            VStack(alignment: .leading, spacing: 16) {
+                Image(imageResource)
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                HStack {
+                    Text(title).multilineTextAlignment(.leading)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .padding()
+                }
+            }
+            .padding()
+            .background(.quinary)
+            .clipShape(RoundedRectangle(cornerRadius: 16))
+        }
+        .foregroundStyle(.primary)
+    }
 }

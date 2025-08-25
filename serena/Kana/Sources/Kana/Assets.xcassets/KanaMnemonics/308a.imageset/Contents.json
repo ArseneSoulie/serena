@@ -1,0 +1,21 @@
+{
+  "images" : [
+    {
+      "filename" : "308a.png",
+      "idiom" : "universal"
+    },
+    {
+      "filename" : "308a 1.png",
+      "idiom" : "universal",
+      "locale" : "fr"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  },
+  "properties" : {
+    "localizable" : true,
+    "template-rendering-intent" : "template"
+  }
+}
