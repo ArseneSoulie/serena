@@ -20,9 +20,13 @@ public struct KanaSelectionPage: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                Text(localized("Select the rows you want to train on and pick a mode below."))
-
-                    .padding()
+                HStack {
+                    Image(.ReinaEmotes.training)
+                        .resizable()
+                        .frame(width: 64, height: 64)
+                    Text(localized("Select the rows you want to train on and pick a mode below."))
+                }
+                .padding()
 
                 Picker(localized("Training mode"), selection: $kanaSelectionType) {
                     ForEach(KanaSelectionType.allCases, id: \.self) {
@@ -38,6 +42,7 @@ public struct KanaSelectionPage: View {
                     selectedLines: $selectedBase,
                     showRomaji: showRomaji,
                     kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.base,
                 )
                 KanaLineGroupView(
                     title: localized("Diacritics"),
@@ -45,6 +50,7 @@ public struct KanaSelectionPage: View {
                     selectedLines: $selectedDiacritic,
                     showRomaji: showRomaji,
                     kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.diacritic,
                 )
                 KanaLineGroupView(
                     title: localized("Combinatory"),
@@ -52,6 +58,7 @@ public struct KanaSelectionPage: View {
                     selectedLines: $selectedCombinatory,
                     showRomaji: showRomaji,
                     kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.combinatory,
                 )
                 KanaLineGroupView(
                     title: localized("Combinatory diacritics"),
@@ -59,19 +66,18 @@ public struct KanaSelectionPage: View {
                     selectedLines: $selectedCombinatoryDiacritic,
                     showRomaji: showRomaji,
                     kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.combinarotyDiacritic,
                 )
-                let willPartiallyRepresentSelection = (kanaSelectionType == .hiragana || kanaSelectionType == .both) &&
-                    !selectedExtendedKatakana.isEmpty
-                KanaLineGroupView(
-                    title: localized("Extended katakana"),
-                    subtitle: willPartiallyRepresentSelection ?
-                        localized("The extended group will only show characters in the katakana form") : nil,
-                    lines: extendedKatakana,
-                    selectedLines: $selectedExtendedKatakana,
-                    showRomaji: showRomaji,
-                    kanaSelectionType: .katakana,
-                )
-                .opacity(kanaSelectionType == .hiragana ? 0.3 : 1)
+                if kanaSelectionType != .hiragana {
+                    KanaLineGroupView(
+                        title: localized("Extended katakana"),
+                        lines: extendedKatakana,
+                        selectedLines: $selectedExtendedKatakana,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: .katakana,
+                        tint: CatagoryColor.extendedKatakana,
+                    )
+                }
                 Spacer()
                     .frame(height: 160)
             }
@@ -156,7 +162,7 @@ struct ToolbarViews: View {
 
     var body: some View {
         Toggle(localized("Show romaji"), isOn: $showRomaji)
-        Button(localized("Fast select")) { showsFastSelect.toggle() }
+        Button(action: { showsFastSelect.toggle() }) { Image(systemName: "text.line.first.and.arrowtriangle.forward") }
             .popover(isPresented: $showsFastSelect) {
                 FastSelectPopoverView(
                     selectedBase: $selectedBase,
@@ -194,12 +200,15 @@ struct BottomViews: View {
         .padding(4)
         .padding(.top, 16)
         .background {
-            Rectangle()
-                .fill(Gradient(stops: [
-                    .init(color: Color.bgColor.opacity(0), location: 0),
-                    .init(color: Color.bgColor.opacity(0.2), location: 0.05),
-                    .init(color: Color.bgColor, location: 0.2),
-                ]))
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Gradient(stops: [
+                        .init(color: Color.bgColor.opacity(0), location: 0),
+                        .init(color: Color.bgColor.opacity(0.2), location: 0.05),
+                        .init(color: Color.bgColor, location: 0.2),
+                    ]))
+                Color.bgColor.ignoresSafeArea(.all)
+            }
         }
     }
 }
@@ -235,4 +244,12 @@ extension Color {
             Color(NSColor.controlBackgroundColor)
         #endif
     }()
+}
+
+enum CatagoryColor {
+    static let base: Color = .green
+    static let diacritic: Color = .yellow
+    static let combinatory: Color = .orange
+    static let combinarotyDiacritic: Color = .pink
+    static let extendedKatakana: Color = .purple
 }
