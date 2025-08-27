@@ -52,11 +52,13 @@ struct KanaLineGroupView: View {
             } label: {
                 HStack {
                     Button(action: toggleSelectBase) {
-                        Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
+                        HStack {
+                            Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
+                            Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
+                                .bold()
+                        }
                     }
                     .tint(hasSelectedAll ? .green : .gray)
-                    Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
-                        .bold()
                 }
             }
             Divider()
