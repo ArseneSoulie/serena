@@ -175,7 +175,7 @@
       }
     },
     "Explanation" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -262,7 +262,7 @@
       }
     },
     "It reminds me of..." : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -319,7 +319,7 @@
       }
     },
     "Let's go ! %lld" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2106,7 +2106,7 @@
       }
     },
     "Training" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
