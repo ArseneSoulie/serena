@@ -1,7 +1,17 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-
+    "App" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        }
+      }
+    }
   },
   "version" : "1.0"
 }
