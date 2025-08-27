@@ -68,16 +68,16 @@ public struct KanaSelectionPage: View {
                     kanaSelectionType: kanaSelectionType,
                     tint: CatagoryColor.combinarotyDiacritic,
                 )
-                KanaLineGroupView(
-                    title: localized("Extended katakana"),
-                    lines: extendedKatakana,
-                    selectedLines: $selectedExtendedKatakana,
-                    showRomaji: showRomaji,
-                    kanaSelectionType: .katakana,
-                    tint: CatagoryColor.extendedKatakana,
-                )
-                .disabled(kanaSelectionType == .hiragana)
-                .opacity(kanaSelectionType == .hiragana ? 0.3 : 1)
+                if kanaSelectionType != .hiragana {
+                    KanaLineGroupView(
+                        title: localized("Extended katakana"),
+                        lines: extendedKatakana,
+                        selectedLines: $selectedExtendedKatakana,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: .katakana,
+                        tint: CatagoryColor.extendedKatakana,
+                    )
+                }
                 Spacer()
                     .frame(height: 160)
             }

@@ -24,7 +24,10 @@ public struct KanaMnemonicsPage: View {
                                 .frame(width: 64, height: 64)
                             Text(
                                 localized(
-                                    "Here's a list of helpful mnemonics and explanations for each kana we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !",
+                                    """
+                                    Here's a list of helpful mnemonics and explanations we've prepared for you.
+                                    The best remains for you to make them your own so have fun and experiment by creating your own story !
+                                    """,
                                 ),
                             )
                         }

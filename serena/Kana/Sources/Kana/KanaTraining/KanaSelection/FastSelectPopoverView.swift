@@ -49,19 +49,23 @@ struct FastSelectPopoverView: View {
     }
 
     func selectAll() {
-        selectedBase.formUnion(base)
-        selectedDiacritic.formUnion(diacritic)
-        selectedCombinatory.formUnion(combinatory)
-        selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic)
-        selectedExtendedKatakana.formUnion(extendedKatakana)
+        withAnimation {
+            selectedBase.formUnion(base)
+            selectedDiacritic.formUnion(diacritic)
+            selectedCombinatory.formUnion(combinatory)
+            selectedCombinatoryDiacritic.formUnion(combinatoryDiacritic)
+            selectedExtendedKatakana.formUnion(extendedKatakana)
+        }
     }
 
     func clearAll() {
-        selectedBase.removeAll()
-        selectedDiacritic.removeAll()
-        selectedCombinatory.removeAll()
-        selectedCombinatoryDiacritic.removeAll()
-        selectedExtendedKatakana.removeAll()
+        withAnimation {
+            selectedBase.removeAll()
+            selectedDiacritic.removeAll()
+            selectedCombinatory.removeAll()
+            selectedCombinatoryDiacritic.removeAll()
+            selectedExtendedKatakana.removeAll()
+        }
     }
 }
 
