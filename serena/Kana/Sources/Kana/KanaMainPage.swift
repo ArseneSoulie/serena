@@ -1,45 +1,48 @@
 import Navigation
 import SwiftUI
 
+enum SelectedTab {
+    case mnemonics
+    case training
+}
+
 public struct KanaMainPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
+
+    @State var selectedTab: SelectedTab = .training
 
     public init() {}
 
     public var body: some View {
-        TabView {
-            NavigationStack {
-                KanaMnemonicsPage()
-            }
-            .tabItem {
-                Image(systemName: "brain")
-                Text(localized("Mnemonics"))
+        TabView(selection: $selectedTab) {
+            Tab(
+                localized("Mnemonics"),
+                systemImage: "brain",
+                value: .mnemonics,
+            ) {
+                NavigationStack {
+                    KanaMnemonicsPage()
+                }
             }
 
-//                NavigationView {
-//                    KanaLearningPage()
-//                }
-//                .tabItem {
-//                    Image(systemName: "book")
-//                    Text("Learning")
-//                }
-
-            NavigationStack(path: coordinator.binding(for: \.path)) {
-                KanaSelectionPage()
-                    .navigationDestination(for: Destination.self) { destination in
-                        switch destination {
-                        case let .levelUps(kanas):
-                            LevelUpsPage(kanas: kanas)
-                        case let .allInARow(kanas):
-                            AllInARowPage(kanas: kanas)
-                        case let .exerciseSelection(kanas):
-                            ExerciseSelectionPage(kanaPool: kanas)
+            Tab(
+                localized("Training"),
+                systemImage: "figure.run",
+                value: .training,
+            ) {
+                NavigationStack(path: coordinator.binding(for: \.path)) {
+                    KanaSelectionPage()
+                        .navigationDestination(for: Destination.self) { destination in
+                            switch destination {
+                            case let .levelUps(kanas):
+                                LevelUpsPage(kanas: kanas)
+                            case let .allInARow(kanas):
+                                AllInARowPage(kanas: kanas)
+                            case let .exerciseSelection(kanas):
+                                ExerciseSelectionPage(kanaPool: kanas)
+                            }
                         }
-                    }
-            }
-            .tabItem {
-                Image(systemName: "figure.run")
-                Text(localized("Training"))
+                }
             }
         }
     }

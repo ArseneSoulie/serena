@@ -5,12 +5,13 @@
 //  Created by A S on 11/08/2025.
 //
 
+import DesignSystem
 import FoundationModels
 import Navigation
 import SwiftUI
 
 public struct ExerciseSelectionPage: View {
-    @Environment(NavigationCoordinator.self) private var coordinator
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
 
     let kanaPool: [Kana]
 
@@ -20,35 +21,17 @@ public struct ExerciseSelectionPage: View {
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                Text(localized("Level ups"))
-                    .typography(.title2)
-
-                ExerciceBanner(
-                    title: localized("Learn the selected kanas by doing challenges of increasing difficulty"),
-                    imageResource: .TrainingBanner.levelUp,
-                    onBannerTapped: onLevelUpsTapped,
-                )
-
-                Divider().padding()
-                Text(localized("All in a row"))
-                    .typography(.title2)
-
-                ExerciceBanner(
-                    title: localized("Try to get all selected kanas right in a row !"),
-                    imageResource: .TrainingBanner.allInARow,
-                    onBannerTapped: onAllInARowTapped,
-                )
-            }.padding()
+            if horizontalSizeClass == .compact {
+                VStack(alignment: .leading) {
+                    SelectionContent(kanaPool: kanaPool)
+                }
+                .padding()
+            } else {
+                HStack {
+                    SelectionContent(kanaPool: kanaPool)
+                }.padding()
+            }
         }.navigationTitle(localized("Pick an exercise type"))
-    }
-
-    func onLevelUpsTapped() {
-        coordinator.push(.levelUps(kanaPool))
-    }
-
-    func onAllInARowTapped() {
-        coordinator.push(.allInARow(kanaPool))
     }
 }
 
@@ -81,5 +64,46 @@ struct ExerciceBanner: View {
             .clipShape(RoundedRectangle(cornerRadius: 16))
         }
         .foregroundStyle(.primary)
+    }
+}
+
+struct SelectionContent: View {
+    @Environment(NavigationCoordinator.self) private var coordinator
+
+    let kanaPool: [Kana]
+
+    var body: some View {
+        VStack {
+            Text(localized("Level ups"))
+                .typography(.title2)
+
+            ExerciceBanner(
+                title: localized("Learn the selected kanas by doing challenges of increasing difficulty"),
+                imageResource: .TrainingBanner.levelUp,
+                onBannerTapped: onLevelUpsTapped,
+            )
+            .padding(.horizontal, 8)
+        }
+
+        Divider()
+        VStack {
+            Text(localized("All in a row"))
+                .typography(.title2)
+
+            ExerciceBanner(
+                title: localized("Try to get all selected kanas right in a row !"),
+                imageResource: .TrainingBanner.allInARow,
+                onBannerTapped: onAllInARowTapped,
+            )
+            .padding(.horizontal, 8)
+        }
+    }
+
+    func onLevelUpsTapped() {
+        coordinator.push(.levelUps(kanaPool))
+    }
+
+    func onAllInARowTapped() {
+        coordinator.push(.allInARow(kanaPool))
     }
 }
