@@ -10,7 +10,7 @@ public struct DrawingView<ContentView: View>: View {
     @State var redoStack: [Path] = []
     @State var isDrawing: Bool = false
 
-    let minimumDistanceToNextPoint: CGFloat = 20
+    let minimumDistanceToNextPoint: CGFloat = 5
 
     let driedStrokeColor = Color(white: 0.2)
     let wetStrokeColor = Color.black
