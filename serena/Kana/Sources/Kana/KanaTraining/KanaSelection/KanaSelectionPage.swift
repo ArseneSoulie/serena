@@ -194,12 +194,15 @@ struct BottomViews: View {
         .padding(4)
         .padding(.top, 16)
         .background {
-            Rectangle()
-                .fill(Gradient(stops: [
-                    .init(color: Color.bgColor.opacity(0), location: 0),
-                    .init(color: Color.bgColor.opacity(0.2), location: 0.05),
-                    .init(color: Color.bgColor, location: 0.2),
-                ]))
+            VStack(spacing: 0) {
+                Rectangle()
+                    .fill(Gradient(stops: [
+                        .init(color: Color.bgColor.opacity(0), location: 0),
+                        .init(color: Color.bgColor.opacity(0.2), location: 0.05),
+                        .init(color: Color.bgColor, location: 0.2),
+                    ]))
+                Color.white.ignoresSafeArea(.all)
+            }
         }
     }
 }
