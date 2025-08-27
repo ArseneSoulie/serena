@@ -202,7 +202,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selection rapide"
+            "value" : "Sélection rapide"
           }
         }
       }
@@ -2085,6 +2085,7 @@
       }
     },
     "The extended group will only show characters in the katakana form" : {
+      "extractionState" : "stale",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
