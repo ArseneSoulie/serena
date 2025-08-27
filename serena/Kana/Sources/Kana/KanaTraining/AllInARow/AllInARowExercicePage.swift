@@ -18,7 +18,7 @@ struct AllInARowExercicePage: View {
     @State var remainingKanas: Set<Kana>
 
     @State var handwrittenFont: CustomFontFamily = .yujiBoku
-    @State var info: String = ""
+    @State var info: String = " "
     @State var showAnswer: Bool = false
 
     let handwrittenFontFamilies: [CustomFontFamily] = [.hachiMaruPop, .yujiBoku, .yujiMai, .yujiSyuku]
@@ -63,7 +63,11 @@ struct AllInARowExercicePage: View {
                         )
                         .padding(8)
                     }
-                    Text(info)
+                    if failedKanas.contains(truth) {
+                        Button(localized("Reveal answer"), action: { showAnswer.toggle() })
+                    } else {
+                        Text(info)
+                    }
                 }
 
                 ZStack(alignment: .trailing) {
@@ -86,9 +90,6 @@ struct AllInARowExercicePage: View {
                 }
                 .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                 .padding()
-                if failedKanas.contains(truth) {
-                    Button(localized("Reveal answer"), action: { showAnswer.toggle() })
-                }
             }
         }
         .navigationTitle(localized("All in a row"))
@@ -126,7 +127,7 @@ struct AllInARowExercicePage: View {
         let convertedTruth = truth.kanaValue.standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
 
-        info = ""
+        info = " "
 
         if !isCorrect {
             failedKanas.insert(truth)
