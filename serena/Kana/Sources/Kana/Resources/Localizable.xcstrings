@@ -2064,7 +2064,7 @@
         }
       }
     },
-    "Select the rows you want to train on and pick a mode below." : {
+    "Select the rows you want to train on and hit \"Let's go\"" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
