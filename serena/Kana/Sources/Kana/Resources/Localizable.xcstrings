@@ -218,6 +218,17 @@
         }
       }
     },
+    "Final level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niveau final"
+          }
+        }
+      }
+    },
     "Finish" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1996,7 +2007,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sélectionne un entrainement"
+            "value" : "Choisis un entrainement"
           }
         }
       }

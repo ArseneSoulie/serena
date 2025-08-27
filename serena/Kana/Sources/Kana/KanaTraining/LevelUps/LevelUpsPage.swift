@@ -62,7 +62,7 @@ public struct LevelUpsPage: View {
             )
         case .level4:
             WriteAnswerPage(
-                title: "\(localized("Level")) 4",
+                title: localized("Final level"),
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,
                 maxStepsCount: 5,
