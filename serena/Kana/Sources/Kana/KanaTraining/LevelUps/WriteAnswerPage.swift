@@ -98,6 +98,9 @@ struct WriteAnswerPage: View {
             isLevelCompleted = false
         }
         .navigationTitle(title)
+        .toolbar {
+            Button(localized("Skip"), action: goToNextRound)
+        }
         .navigationBarTitleDisplayMode(.inline)
         .toast(isPresented: $showToast, message: localized("Level up !"))
     }

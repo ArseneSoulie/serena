@@ -218,6 +218,17 @@
         }
       }
     },
+    "Final level" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niveau final"
+          }
+        }
+      }
+    },
     "Finish" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1996,7 +2007,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sélectionne un entrainement"
+            "value" : "Choisis un entrainement"
           }
         }
       }
@@ -2019,6 +2030,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choisis la bonne écriture pour le kana donné"
+          }
+        }
+      }
+    },
+    "Reveal answer" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher la réponse"
           }
         }
       }
@@ -2178,7 +2199,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Écris ce a quoi le kana te fait penser"
+            "value" : "Écris ce à quoi le kana te fait penser"
           }
         }
       }
