@@ -2034,6 +2034,16 @@
         }
       }
     },
+    "Reveal answer" : {
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher la réponse"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "fr" : {

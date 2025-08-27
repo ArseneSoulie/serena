@@ -19,6 +19,7 @@ struct AllInARowExercicePage: View {
 
     @State var handwrittenFont: CustomFontFamily = .yujiBoku
     @State var info: String = ""
+    @State var showAnswer: Bool = false
 
     let handwrittenFontFamilies: [CustomFontFamily] = [.hachiMaruPop, .yujiBoku, .yujiMai, .yujiSyuku]
 
@@ -42,20 +43,26 @@ struct AllInARowExercicePage: View {
                 Text(localized("Write the writing of all kanas in a row"))
 
                 VStack {
-                    Text(truth.kanaValue)
-                        .foregroundStyle(truthColor)
-                        .modifier(ShakeEffect(animatableData: shakeTrigger))
-                        .typography(.largeTitle, fontFamily: handwrittenFont)
-                        .padding()
-                        .padding(.bottom, 8)
-                        .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                        .overlay(alignment: .bottomTrailing) {
-                            Button(
-                                action: randomizeFont,
-                                label: { Image(systemName: "arrow.trianglehead.2.clockwise") },
-                            )
-                            .padding(8)
+                    ZStack(alignment: .bottom) {
+                        Text(truth.kanaValue)
+                            .foregroundStyle(truthColor)
+                            .modifier(ShakeEffect(animatableData: shakeTrigger))
+                            .typography(.largeTitle, fontFamily: handwrittenFont)
+                            .padding()
+                        if showAnswer {
+                            Text(truth.romajiValue)
+                                .typography(.caption)
                         }
+                    }
+                    .padding(.bottom, 8)
+                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
+                    .overlay(alignment: .bottomTrailing) {
+                        Button(
+                            action: randomizeFont,
+                            label: { Image(systemName: "arrow.trianglehead.2.clockwise") },
+                        )
+                        .padding(8)
+                    }
                     Text(info)
                 }
 
@@ -79,6 +86,9 @@ struct AllInARowExercicePage: View {
                 }
                 .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                 .padding()
+                if failedKanas.contains(truth) {
+                    Button(localized("Reveal answer"), action: { showAnswer.toggle() })
+                }
             }
         }
         .navigationTitle(localized("All in a row"))
@@ -91,6 +101,8 @@ struct AllInARowExercicePage: View {
             Button(localized("Skip"), action: onSkip)
             Button(localized("Finish"), action: finishExercice)
         }
+        .animation(.default, value: failedKanas)
+        .animation(.default, value: showAnswer)
     }
 
     var answerCompletionPercent: Double {
@@ -155,6 +167,7 @@ struct AllInARowExercicePage: View {
     }
 
     func nextRandomKana() {
+        showAnswer = false
         randomizeFont()
         truth = remainingKanas.filter { truth != $0 }.randomElement() ?? remainingKanas.first ?? .empty
     }
