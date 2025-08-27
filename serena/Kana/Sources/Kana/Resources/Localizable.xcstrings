@@ -234,7 +234,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voila une liste de moyens mnémotechniques pour chaque kana préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et crée ta propre histoire !"
+            "value" : "Voila une liste de moyens mnémotechniques préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et fais ta propre histoire !"
           }
         }
       }
@@ -313,7 +313,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apprenez les kanas sélectionnés par défis de difficulté croissante"
+            "value" : "Apprends les kanas sélectionnés par paliers de difficulté croissante ~ Parfait pour débuter"
           }
         }
       }
@@ -418,7 +418,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`i` ressemble à deux angu`i`lles"
+            "value" : "`i` Ressemble à deux angu`i`lles"
           }
         }
       }
@@ -435,7 +435,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`I` contient un `i` comme dans `i`gloo"
+            "value" : "`I` Contient un `i` comme dans `i`gloo"
           }
         }
       }
@@ -452,7 +452,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Un `u` est caché dans l'hiragana `u`, le vois-tu ?"
+            "value" : "`u` Un `u` est caché dans l'hiragana `u`, le vois-tu ?"
           }
         }
       }
@@ -469,7 +469,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`U` ressemble a sa contrepartie hiragana"
+            "value" : "`U` Ressemble a son équivalent hiragana"
           }
         }
       }
@@ -486,7 +486,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`e` est un `é`clair, c'est `é`lectrique !"
+            "value" : "`e` Est un `é`clair, c'est `é`lectrique !"
           }
         }
       }
@@ -503,7 +503,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`E` est une superbe `haie`"
+            "value" : "`E` Est une superbe `haie`"
           }
         }
       }
@@ -554,7 +554,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ka` ressemble a un moustique ! Devine quoi ? `ka` veut dire moustique en japonais, au moins ces horribles créatures t'aident à apprendre tes kanas"
+            "value" : "`ka` Ressemble a un moustique ! Devine quoi ? `ka` veut dire moustique en japonais, au moins ces horribles créatures t'aident à apprendre tes kanas"
           }
         }
       }
@@ -588,7 +588,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ki` ressemble a une clé. En anglais c'est key"
+            "value" : "`ki` Ressemble a une clé. En anglais c'est key"
           }
         }
       }
@@ -622,7 +622,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ku` est le bec du `cou``cou` qui ne cesse de te réveiller, il ne s'arrêtera jamais"
+            "value" : "`ku` Est le bec du `cou``cou` qui ne cesse de te réveiller, il ne s'arrêtera jamais"
           }
         }
       }
@@ -639,7 +639,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`KU` Devine qui a fait toutes les délicieuses nouilles que tu a dégusté ? C'est le `cu`isinier bien sur !"
+            "value" : "`KU` Devine qui a fait toutes les délicieuses nouilles que tu as dégustées ? C'est le `cu`isinier bien sur !"
           }
         }
       }
@@ -690,7 +690,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ko` est un mini serpent avec son `co`pain. `Co`mme c'est mignon"
+            "value" : "`ko` Est un mini `co`bra avec son `co`pain. `Co`mme c'est mignon"
           }
         }
       }
@@ -826,7 +826,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`se` c'est ton `se`npai. Il est tellement `se`xy. Notice meeeee!"
+            "value" : "`se` C’est ton `se`npai. Il est tellement `se`xy. Notice meeeee!"
           }
         }
       }
@@ -928,7 +928,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`chi` dis `chee`se !"
+            "value" : "`chi` Dis `chee`se !"
           }
         }
       }
@@ -945,7 +945,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`CHI` Tu nous prépare ton meilleur `chi`lli. Le piment ça ne te fais pas peur"
+            "value" : "`CHI` Tu nous prépares ton meilleur `chi`li. Le piment ça ne te fais pas peur"
           }
         }
       }
@@ -996,7 +996,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`te` c'est littéralement un `T`"
+            "value" : "`te` C’est littéralement un `T`"
           }
         }
       }
@@ -1047,7 +1047,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`TO` Ton `to`tems préféré est là"
+            "value" : "`TO` Ton `to`tem préféré est là"
           }
         }
       }
@@ -1166,7 +1166,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ne` ressemble a un `ne`ko. Chat en japonais"
+            "value" : "`ne` Ressemble a un `ne`ko. Chat en japonais"
           }
         }
       }
@@ -1234,7 +1234,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ha` contient `ha` facile !"
+            "value" : "`ha` Contient `ha` facile !"
           }
         }
       }
@@ -1421,7 +1421,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`MA` Prépares toi à faire des `ma`ths, tu sais y faire avec les coins, ça va être facile"
+            "value" : "`MA` Prépare-toi à faire des `ma`ths, tu sais y faire avec les coins, ça va être facile"
           }
         }
       }
@@ -1523,7 +1523,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ME` C'est un `me`chant `me`ssage qu'on vient de t'envoyer... `Mets`une gross croix dessus et on n'en parle plus"
+            "value" : "`ME` C'est un `me`chant `me`ssage qu'on vient de t'envoyer... `Mets` une grosse croix dessus et on n'en parle plus"
           }
         }
       }
@@ -1540,7 +1540,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`mo` La classe c'est ta `mo`bilette. Bientot tu pourras te prendre une `mo`to"
+            "value" : "`mo` La classe c'est ta `mo`bilette. Bientôt tu pourras te prendre une `mo`to"
           }
         }
       }
@@ -1659,7 +1659,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`YO` Prépare toi à faire du `yo`ga, tu t'es bien échauffé ?"
+            "value" : "`YO` Prépare-toi à faire du `yo`ga, tu t'es bien échauffé ?"
           }
         }
       }
@@ -1676,7 +1676,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`ra` Ooh c'est un mignon petit `ra`ton (づ> v <)づ♡"
+            "value" : "`ra` Ooh c'est un mignon petit `ra`ton\\n(づ> v <)づ♡"
           }
         }
       }
@@ -1693,7 +1693,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`RA` Yo! C'est le `ra`ptor `ra`ppeur! Vite prend une photo avec lui, il est stop stylé !"
+            "value" : "`RA` Yo! C'est le `ra`ptor `ra`ppeur! Vite prends une photo avec lui, il est trop stylé !"
           }
         }
       }
@@ -1829,7 +1829,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`RO` Ca c'est du `rot` !"
+            "value" : "`RO` Ça c'est du `rot` !"
           }
         }
       }
@@ -1931,7 +1931,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "`N` C'est le dernier kataka`n`a tiens prend une ba`n`a`n`e"
+            "value" : "`N` C'est le dernier kataka`n`a, tiens prend une ba`n`a`n`e"
           }
         }
       }
@@ -1985,7 +1985,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisissez un type d’exercice"
+            "value" : "Sélectionne un entrainement"
           }
         }
       }
@@ -1996,7 +1996,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisissez le bon kana pour l’écriture donnée."
+            "value" : "Choisis le bon kana pour l’écriture donnée"
           }
         }
       }
@@ -2007,7 +2007,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Choisissez la bonne écriture pour le kana donné."
+            "value" : "Choisis la bonne écriture pour le kana donné"
           }
         }
       }
@@ -2027,7 +2027,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Chercher un kana"
+            "value" : "Rechercher un kana"
           }
         }
       }
@@ -2038,7 +2038,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sélectionnez les lignes sur lesquelles vous voulez vous entraîner, puis choisissez un mode ci-dessous."
+            "value" : "Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur “C’est parti !”"
           }
         }
       }
@@ -2144,7 +2144,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Essayez d’écrire tous les kanas sélectionnés d'affilée !"
+            "value" : "Tente d’écrire tous les kanas d’affilée"
           }
         }
       }
@@ -2155,7 +2155,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Écrivez la combinaison des trois kanas"
+            "value" : "Écris la combinaison des 3 kanas"
           }
         }
       }
@@ -2166,7 +2166,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Écrivez le kana"
+            "value" : "Écris le kana"
           }
         }
       }
@@ -2177,7 +2177,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Écrivez tous les kanas à la suite"
+            "value" : "Écris tous les kanas à la suite"
           }
         }
       }
@@ -2187,7 +2187,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Écrivez ce a quoi le kana vous fait penser"
+            "value" : "Écris ce a quoi le kana te fait penser"
           }
         }
       }
