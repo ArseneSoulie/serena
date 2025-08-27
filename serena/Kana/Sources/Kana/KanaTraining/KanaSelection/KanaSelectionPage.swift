@@ -24,7 +24,7 @@ public struct KanaSelectionPage: View {
                     Image(.ReinaEmotes.training)
                         .resizable()
                         .frame(width: 64, height: 64)
-                    Text(localized("Select the rows you want to train on and pick a mode below."))
+                    Text(localized("Select the rows you want to train on and hit \"Let's go\""))
                 }
                 .padding()
 
