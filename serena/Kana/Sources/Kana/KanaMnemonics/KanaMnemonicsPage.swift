@@ -11,8 +11,6 @@ public struct KanaMnemonicsPage: View {
 
     @State var kanaType: KanaType = .hiragana
 
-    @State var showGlyphBehindMnemonic: Bool = false
-
     public var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ScrollViewReader { proxy in
@@ -42,10 +40,9 @@ public struct KanaMnemonicsPage: View {
                                 ForEach(mnemonicGroup.data, id: \.kanaString) { mnemonic in
                                     MnemonicView(
                                         mnemonicsManager: mnemonicsManager,
-                                        color: mnemonicGroup.color,
-                                        showGlyphBehindMnemonic: showGlyphBehindMnemonic,
-                                        onDrawMnemonicTapped: onDrawMnemonicTapped,
                                         mnemonic: mnemonic,
+                                        color: mnemonicGroup.color,
+                                        onDrawMnemonicTapped: onDrawMnemonicTapped,
                                     ).id(mnemonic.kanaString.standardisedRomaji)
                                 }
                             }
@@ -79,9 +76,6 @@ public struct KanaMnemonicsPage: View {
                 mnemonicsManager: mnemonicsManager,
             )
         }
-        .toolbar(content: {
-            Toggle(localized("Show kana behind drawing"), isOn: $showGlyphBehindMnemonic)
-        })
         .navigationTitle(localized("Mnemonics"))
         .searchable(
             text: $searchText,

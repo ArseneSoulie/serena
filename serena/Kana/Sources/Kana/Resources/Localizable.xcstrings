@@ -169,7 +169,18 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dessine le tien"
+            "value" : "Crée le tien"
+          }
+        }
+      }
+    },
+    "Edit" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifier"
           }
         }
       }
@@ -2039,16 +2050,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur “C’est parti !”"
-          }
-        }
-      }
-    },
-    "Show kana behind drawing" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Afficher le kana derrière ton dessin"
           }
         }
       }
