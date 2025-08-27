@@ -36,7 +36,9 @@ public struct DrawingView<ContentView: View>: View {
                     currentPath.move(to: nextPoint)
                     currentPoints = []
                 }
-                isDrawing = true
+                withAnimation {
+                    isDrawing = true
+                }
 
                 currentLocation = $0.location
                 if currentLocation.distance(lastLocation) > minimumDistanceToNextPoint {
@@ -50,7 +52,9 @@ public struct DrawingView<ContentView: View>: View {
     }
 
     func onEndPath() {
-        isDrawing = false
+        withAnimation {
+            isDrawing = false
+        }
         if currentPath.isEmpty { return }
         finishedPaths.append(currentPath)
         redoStack = []
@@ -87,7 +91,6 @@ public struct DrawingView<ContentView: View>: View {
                         .fill(wetStrokeColor)
                         .frame(width: isDrawing ? 30 : 0, height: isDrawing ? 30 : 0)
                         .position(currentLocation)
-                        .animation(.default, value: isDrawing)
                 }
                 .allowsHitTesting(false)
                 .background {
