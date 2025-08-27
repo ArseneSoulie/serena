@@ -22,16 +22,13 @@ struct MnemonicDrawingView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     VStack(alignment: .leading, spacing: 16) {
-                        DrawingView(
-                            finishedPaths: $drawnPaths,
-                            contentView: {
-                                strokes?.stroke(lineWidth: 30)
-                                    .foregroundStyle(Color(white: 0.95))
-                                    .aspectRatio(1, contentMode: .fit)
-                                    .padding(48)
-                                    .frame(maxWidth: 400)
-                            },
-                        )
+                        DrawingView(finishedPaths: $drawnPaths) {
+                            strokes?.stroke(lineWidth: 30)
+                                .foregroundStyle(Color(white: 0.95))
+                                .aspectRatio(1, contentMode: .fit)
+                                .padding(48)
+                                .frame(maxWidth: 400)
+                        }
                         Divider()
                             .padding()
                         Text(localized("Write what the kana reminds you of"))
@@ -67,26 +64,25 @@ struct MnemonicDrawingView: View {
         .onAppear {
             let currentMnemonic = mnemonicsManager.userMnemonics[data.kanaString]
             explanationText = currentMnemonic?.writtenMnemonic ?? ""
-            if let currentPath = Path(currentMnemonic?.drawingMnemonic ?? "") {
+            if let currentDrawing = currentMnemonic?.drawingMnemonic, let currentPath = Path(currentDrawing) {
                 drawnPaths = [currentPath]
             }
         }
     }
 
     func onSave() {
-        let pathToSave = Path { path in
+        let combinedPaths = Path { path in
             for drawnPath in drawnPaths {
                 path.addPath(drawnPath)
             }
         }
-        let simplified = pathToSave.description
-            .replacingOccurrences(of: #"(\d+)\.\d+"#, with: "$1", options: .regularExpression)
 
         mnemonicsManager.updateMnemonic(
             for: data.kanaString,
             written: explanationText,
-            drawing: simplified,
+            drawing: drawnPaths.isEmpty ? nil : combinedPaths.description,
         )
+
         dismiss()
     }
 }

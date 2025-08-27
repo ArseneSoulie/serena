@@ -3,9 +3,9 @@ import SwiftUI
 
 public struct DrawingView<ContentView: View>: View {
     @State var currentPoints: [CGPoint] = []
-    @State var currentPoint: CGPoint = .zero
-    @State var currentPath: Path = .init()
+    @State var currentLocation: CGPoint = .zero
     @State var lastLocation: CGPoint = .zero
+    @State var currentPath: Path = .init()
     @Binding var finishedPaths: [Path]
     @State var redoStack: [Path] = []
     @State var isDrawing: Bool = false
@@ -20,39 +20,45 @@ public struct DrawingView<ContentView: View>: View {
 
     @ViewBuilder let contentView: () -> ContentView
 
-    private var dragGesture: some Gesture {
-        DragGesture(minimumDistance: 1, coordinateSpace: .local)
+    @State private var drawingBounds: CGSize?
+
+    private func dragGesture(bounds: CGSize) -> some Gesture {
+        DragGesture(minimumDistance: 0, coordinateSpace: .local)
             .onChanged {
+                let nextPoint = normalizePoint($0.location, bounds: bounds)
+                if !CGRect(x: 0, y: 0, width: 1, height: 1).contains(nextPoint) {
+                    onEndPath()
+                    return
+                }
+
                 if !isDrawing {
                     currentPath = Path()
-                    currentPath.move(to: $0.startLocation)
+                    currentPath.move(to: nextPoint)
                     currentPoints = []
                 }
                 isDrawing = true
 
-                let nextLocation = $0.location
-                currentPoint = nextLocation
-                if nextLocation.distance(lastLocation) > minimumDistanceToNextPoint {
-                    addPointToCurrent(location: nextLocation)
+                currentLocation = $0.location
+                if currentLocation.distance(lastLocation) > minimumDistanceToNextPoint {
+                    lastLocation = currentLocation
+                    addPointToCurrent(point: nextPoint)
                 }
             }
             .onEnded { _ in
-                isDrawing = false
-                finishedPaths.append(currentPath)
-                redoStack = []
-                currentPath = Path()
-                lastLocation = .zero
+                onEndPath()
             }
     }
 
-    var wetPath: Path {
-        guard let firstPoint = currentPoints.first else { return Path() }
-        return Path { path in
-            path.move(to: firstPoint)
-            for point in currentPoints {
-                path.addLine(to: point)
-            }
-        }
+    func onEndPath() {
+        isDrawing = false
+        if currentPath.isEmpty { return }
+        finishedPaths.append(currentPath)
+        redoStack = []
+        currentPath = Path()
+    }
+
+    func normalizePoint(_ point: CGPoint, bounds: CGSize) -> CGPoint {
+        CGPoint(x: point.x / bounds.width, y: point.y / bounds.height)
     }
 
     var driedPath: Path {
@@ -69,32 +75,37 @@ public struct DrawingView<ContentView: View>: View {
             Text(localized("Draw"))
             contentView()
                 .overlay {
-                    driedPath.stroke(driedStrokeColor, style: strokeStyle)
-                    currentPath.stroke(driedStrokeColor, style: strokeStyle)
-                    wetPath.stroke(wetStrokeColor, style: strokeStyle).opacity(isDrawing ? 1 : 0)
-
+                    GeometryReader { geo in
+                        currentPath
+                            .applying(CGAffineTransform.identity.scaledBy(x: geo.size.width, y: geo.size.height))
+                            .stroke(driedStrokeColor, style: strokeStyle)
+                        driedPath
+                            .applying(CGAffineTransform.identity.scaledBy(x: geo.size.width, y: geo.size.height))
+                            .stroke(driedStrokeColor, style: strokeStyle)
+                    }
                     Circle()
                         .fill(wetStrokeColor)
                         .frame(width: isDrawing ? 30 : 0, height: isDrawing ? 30 : 0)
-                        .position(currentPoint)
+                        .position(currentLocation)
                         .animation(.default, value: isDrawing)
                 }
                 .allowsHitTesting(false)
                 .background {
-                    Color(white: 0.9)
-                        .gesture(dragGesture)
-                        .allowsHitTesting(true)
+                    GeometryReader { geo in
+                        Color(white: 0.9)
+                            .gesture(dragGesture(bounds: geo.size))
+                    }
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 16))
+                .allowsHitTesting(true)
+                .clipShape(UnevenRoundedRectangle(cornerRadii: .init(bottomLeading: 16, topTrailing: 16)))
                 .onReceive(timer) { _ in updateWetness() }
             drawingToolBar
         }
     }
 
-    func addPointToCurrent(location: CGPoint) {
-        lastLocation = location
-        currentPoints.append(location)
-        currentPath.addLine(to: location)
+    func addPointToCurrent(point: CGPoint) {
+        currentPoints.append(point)
+        currentPath.addLine(to: point)
     }
 
     func updateWetness() {
@@ -132,10 +143,7 @@ public struct DrawingView<ContentView: View>: View {
                 },
             )
             Button(
-                action: {
-                    redoStack = []
-                    finishedPaths = []
-                },
+                action: onEraseButtonTapped,
                 label: {
                     Image(systemName: "eraser.fill")
                         .resizable()
@@ -144,6 +152,11 @@ public struct DrawingView<ContentView: View>: View {
             )
             Spacer()
         }
+    }
+
+    func onEraseButtonTapped() {
+        redoStack = []
+        finishedPaths = []
     }
 }
 
@@ -159,9 +172,10 @@ extension CGPoint {
         finishedPaths: $paths,
         contentView: {
             Text("あ")
+                .typography(.largeTitle)
                 .foregroundStyle(Color(white: 0.8))
                 .aspectRatio(1, contentMode: .fit)
-                .padding(48)
+                .padding(148)
         },
     )
 }

@@ -15,3 +15,19 @@ extension ScaledShape: Shape {
         return scaled.offsetBy(dx: -offsetX, dy: -offsetY)
     }
 }
+
+public struct ScaledShapeInBounds {
+    let path: Path
+    let bounds: CGRect
+}
+
+extension ScaledShapeInBounds: Shape {
+    public func path(in rect: CGRect) -> Path {
+        let scale = min(rect.width / bounds.width, rect.height / bounds.height)
+        let scaled = path.applying(.init(scaleX: scale, y: scale))
+        let scaledBoundingRect = scaled.boundingRect
+        let offsetX = scaledBoundingRect.midX - rect.midX
+        let offsetY = scaledBoundingRect.midY - rect.midY
+        return scaled.offsetBy(dx: -offsetX, dy: -offsetY)
+    }
+}
