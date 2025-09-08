@@ -1,9 +1,11 @@
 import Navigation
 import SwiftUI
+import Typist
 
 enum SelectedTab {
     case mnemonics
     case training
+    case typist
 }
 
 public struct KanaMainPage: View {
@@ -42,6 +44,16 @@ public struct KanaMainPage: View {
                                 ExerciseSelectionPage(kanaPool: kanas)
                             }
                         }
+                }
+            }
+
+            Tab(
+                localized("Typist"),
+                systemImage: "keyboard",
+                value: .typist,
+            ) {
+                NavigationStack {
+                    TypingPage()
                 }
             }
         }

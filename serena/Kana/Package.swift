@@ -20,6 +20,7 @@ let package = Package(
         .package(name: "DesignSystem", path: "../DesignSystem"),
         .package(name: "FoundationModels", path: "../FoundationModels"),
         .package(name: "KanjiVGParser", path: "../KanjiVGParser"),
+        .package(name: "Typist", path: "../Typist"),
     ],
     targets: [
         .target(
@@ -30,6 +31,7 @@ let package = Package(
                 "DesignSystem",
                 "FoundationModels",
                 "KanjiVGParser",
+                "Typist",
             ],
             resources: [
                 .process("Resources"),
