@@ -9,80 +9,180 @@ struct TextToType {
 
 public struct TypingPage: View {
     @State private var text: String = ""
-    @State private var textsToType: [TextToType] = [
-        .init(value: "arigatou", x: 0.2, y: 0),
-        .init(value: "ありがとう", x: 0.5, y: 0),
-        .init(value: "フラン", x: 0.8, y: 0),
-    ]
+    @State private var textsToType: [TextToType] = []
 
-    public init() {}
-
-    @State var score: Int = 0
-
-    let timeToReachTheBottom: CGFloat = 20
-    var fallSpeed: CGFloat {
-        1 / timeToReachTheBottom
+    public init() {
+        difficultyScale = startingDifficulty
+        health = maxHealth
     }
 
+    @State var isPlaying: Bool = true
+    @State var score: Int = 0
+    @State var health: Int
+    @State var difficultyScale: Double
+
     @State var lastTime: Date = .now
+    @State var timeSinceLastSpawn: TimeInterval = 0
+    @State var deltaTime: TimeInterval = 0
+
+    @State var shakeTrigger: CGFloat = 0
+
+    var fallSpeed: CGFloat {
+        (1 / timeToReachTheBottom) * difficultyScale
+    }
+
+    var timeUntilNextSpawn: TimeInterval { 10 / difficultyScale }
+
+    let maxHealth = 3
+    let timeToReachTheBottom: CGFloat = 20
+    let startingDifficulty: Double = 1
 
     public var body: some View {
         VStack {
-            Text("Kana Typing Page")
             HStack {
-                Text("Points: 124")
-                Spacer()
-                Text("Level 1")
+                ForEach(1 ... maxHealth, id: \.self) { index in
+                    if index <= health {
+                        Image(systemName: "circle.fill")
+                    } else {
+                        Image(systemName: "circle")
+                    }
+                }
             }.padding(.horizontal)
-            Color.yellow
-                .overlay {
-                    GeometryReader { geometry in
-                        ForEach(textsToType, id: \.value) { textToType in
-                            HStack {
-                                Spacer().frame(maxWidth: textToType.x * geometry.size.width)
-                                TextWithHighlight(fullText: textToType.value, textToMatch: text)
-                                Spacer().frame(maxWidth: (1 - textToType.x) * geometry.size.width)
-                            }.offset(.init(width: 0, height: textToType.y * geometry.size.height))
+            HStack {
+                Text("Points: \(score)")
+                Spacer()
+                Text("Difficulty \(difficultyScale.formatted(.number.precision(.significantDigits(2))))")
+            }.padding(.horizontal)
+
+            if isPlaying {
+                Color.yellow
+                    .overlay {
+                        GeometryReader { geometry in
+                            ForEach(textsToType, id: \.value) { textToType in
+                                HStack {
+                                    Spacer().frame(maxWidth: textToType.x * geometry.size.width)
+                                    TextWithHighlight(fullText: textToType.value, textToMatch: text)
+                                    Spacer().frame(maxWidth: (1 - textToType.x) * geometry.size.width)
+                                }.offset(.init(width: 0, height: textToType.y * geometry.size.height))
+                            }
                         }
                     }
-                }
-                .onReceive(Timer.publish(every: 1.0 / 60.0, on: .main, in: .common).autoconnect()) {
-                    slideDown(currentFrameTime: $0)
-                    cleanupAndTakeDamage()
-                }
-                .typography(.body)
-
-            VStack(alignment: .trailing) {
-                KanaTextFieldView(text: $text, preferredLanguageCode: "ja", onSubmit: onSubmit)
-                    .border(.red)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .onSubmit {
-                        print("hei")
+                    .shake(amount: 2, shakesPerUnit: 5, shakeTrigger)
+                    .onReceive(Timer.publish(every: 1.0 / 60.0, on: .main, in: .common).autoconnect()) {
+                        guard isPlaying else { return }
+                        updateTimingInternals(currentFrameTime: $0)
+                        slideDown()
+                        takeDamage()
+                        spawnIfNeeded()
                     }
+                    .typography(.body)
+            } else {
+                Color.orange.overlay {
+                    VStack {
+                        Spacer()
+                        Text("Finished")
+                        Text("Total score: \(score)")
+                            .typography(.largeTitle)
+                        Button("Start again ?") { onStartAgainTapped() }
+                        Spacer()
+                    }
+                }
             }
+
+            KanaTextFieldView(text: $text, preferredLanguageCode: "ja", onSubmit: onSubmit)
+                .border(.red)
+                .fixedSize(horizontal: false, vertical: true)
             Button("add") {
-                textsToType.append(.init(value: String("あいうえお".shuffled()), x: Double.random(in: 0 ... 1), y: 0))
+                spawnNewText()
             }
+        }.onAppear(perform: spawnNewText)
+    }
+
+    func onStartAgainTapped() {
+        difficultyScale = startingDifficulty
+        health = maxHealth
+        score = 0
+        isPlaying = true
+        textsToType = []
+    }
+
+    func isTextMatchingInput(textToType: TextToType) -> Bool {
+        text == textToType.value
+    }
+
+    func updateTimingInternals(currentFrameTime: Date) {
+        deltaTime = currentFrameTime.timeIntervalSince(lastTime)
+        timeSinceLastSpawn += deltaTime
+        lastTime = currentFrameTime
+    }
+
+    func spawnIfNeeded() {
+        if timeSinceLastSpawn >= timeUntilNextSpawn {
+            spawnNewText()
         }
     }
 
-    func slideDown(currentFrameTime: Date) {
-        let deltaTime = currentFrameTime.timeIntervalSince(lastTime)
-        lastTime = currentFrameTime
+    func slideDown() {
         for index in textsToType.indices {
             textsToType[index].y += fallSpeed * deltaTime
+            textsToType[index].y += fallSpeed * deltaTime * (1 / Double(textsToType[index].value.count * 2))
         }
     }
 
-    func cleanupAndTakeDamage() {
-        textsToType = textsToType.filter { $0.y < 1 }
+    func spawnNewText() {
+        textsToType.append(.init(value: generateRandomString(), x: Double.random(in: 0 ... 1), y: 0))
+        timeSinceLastSpawn = 0
+    }
+
+    func takeDamage() {
+        let filteredTextsToType = textsToType.filter { $0.y < 1 }
+        guard filteredTextsToType.count != textsToType.count else { return }
+
+        textsToType = filteredTextsToType
+
+        withAnimation(.easeOut(duration: 0.2)) {
+            health -= 1
+            shakeTrigger += 1
+        }
+
+        let difficultyToReduce = (difficultyScale - startingDifficulty) / 2
+        difficultyScale -= max(difficultyToReduce, 0.05)
+
+        if health <= 0 {
+            isPlaying = false
+        }
     }
 
     func onSubmit() {
-        print("eoifnezoizen")
+        checkWordsAndGainPoints()
+        text = ""
+    }
+
+    func checkWordsAndGainPoints() {
+        let successfullyTypedTexts = textsToType.filter(isTextMatchingInput(textToType:))
+        guard successfullyTypedTexts.count > 0 else { return }
+
+        textsToType.removeAll(where: isTextMatchingInput(textToType:))
+
+        score += successfullyTypedTexts.reduce(0) { partialResult, textToType in
+            partialResult + Int(Double(textToType.value.count) * difficultyScale)
+        }
+        difficultyScale += 0.05
+
+        spawnNewText()
     }
 }
 
 #Preview {
     TypingPage()
+}
+
+func generateRandomString() -> String {
+    let characters = "あいうえお"
+    let randomLength = Int.random(in: 1 ... 5)
+    let randomString = String((0 ..< randomLength).compactMap { _ in
+        characters.randomElement()
+    })
+
+    return randomString
 }

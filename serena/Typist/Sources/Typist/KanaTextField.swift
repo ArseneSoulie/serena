@@ -5,11 +5,9 @@ class KanaTextField: UITextField {
 
     override var textInputMode: UITextInputMode? {
         if let code = preferredLanguageCode {
-            for tim in UITextInputMode.activeInputModes {
-                if
-                    let primary = tim.primaryLanguage,
-                    primary.contains(code) {
-                    return tim
+            for inputMode in UITextInputMode.activeInputModes {
+                if let primary = inputMode.primaryLanguage, primary.contains(code) {
+                    return inputMode
                 }
             }
         }
@@ -26,11 +24,20 @@ struct KanaTextFieldView: UIViewRepresentable {
         let field = KanaTextField()
         field.preferredLanguageCode = preferredLanguageCode
         field.delegate = context.coordinator
+
+        field.addTarget(
+            context.coordinator,
+            action: #selector(Coordinator.textFieldDidChange(_:)),
+            for: .editingChanged,
+        )
+
         return field
     }
 
     func updateUIView(_ uiView: KanaTextField, context _: Context) {
-        uiView.text = text
+        if uiView.text != text {
+            uiView.text = text
+        }
         uiView.preferredLanguageCode = preferredLanguageCode
     }
 
@@ -40,9 +47,12 @@ struct KanaTextFieldView: UIViewRepresentable {
 
     class Coordinator: NSObject, UITextFieldDelegate {
         var parent: KanaTextFieldView
-        init(_ parent: KanaTextFieldView) { self.parent = parent }
 
-        func textFieldDidChangeSelection(_ textField: UITextField) {
+        init(_ parent: KanaTextFieldView) {
+            self.parent = parent
+        }
+
+        @objc func textFieldDidChange(_ textField: UITextField) {
             parent.text = textField.text ?? ""
         }
 
