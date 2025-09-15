@@ -1,6 +1,6 @@
 import Foundation
 import FoundationModels
-import SwiftUICore
+import SwiftUI
 
 struct KanaMnemonicData: Identifiable, Hashable {
     let unicodeID: String
