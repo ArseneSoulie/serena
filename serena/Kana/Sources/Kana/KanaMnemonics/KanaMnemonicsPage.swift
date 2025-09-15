@@ -6,6 +6,7 @@ import SwiftUI
 public struct KanaMnemonicsPage: View {
     @State private var presentedMnemonic: KanaMnemonicData?
     @State private var mnemonicsManager = KanaMnemonicsManager()
+    private let audioManager = KanaAudioManager()
 
     @State var searchText: String = ""
 
@@ -40,6 +41,7 @@ public struct KanaMnemonicsPage: View {
                                 ForEach(mnemonicGroup.data, id: \.kanaString) { mnemonic in
                                     MnemonicView(
                                         mnemonicsManager: mnemonicsManager,
+                                        audioManager: audioManager,
                                         mnemonic: mnemonic,
                                         color: mnemonicGroup.color,
                                         onDrawMnemonicTapped: onDrawMnemonicTapped,

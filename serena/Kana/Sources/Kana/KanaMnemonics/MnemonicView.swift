@@ -4,6 +4,7 @@ import SwiftUI
 
 struct MnemonicView: View {
     @Bindable var mnemonicsManager: KanaMnemonicsManager
+    let audioManager: KanaAudioManager
 
     let mnemonic: KanaMnemonicData
     let color: Color
@@ -19,10 +20,13 @@ struct MnemonicView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(mnemonic.kanaString)
-                .typography(.title2)
-                .bold()
-                .foregroundStyle(color)
+            HStack {
+                Text(mnemonic.kanaString)
+                    .typography(.title2)
+                    .bold()
+                    .foregroundStyle(color)
+                Button(localized("Pronunciation"), systemImage: "speaker.wave.2.fill", action: onPlayAudioButtonTapped)
+            }
 
             Text(localized("Mnemonics.\(mnemonic.kanaString)"))
 
@@ -60,5 +64,9 @@ struct MnemonicView: View {
             )
             Divider()
         }
+    }
+
+    func onPlayAudioButtonTapped() {
+        audioManager.play(kanaString: mnemonic.kanaString.romajiToHiragana)
     }
 }
