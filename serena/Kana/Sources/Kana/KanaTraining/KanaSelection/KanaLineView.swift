@@ -24,20 +24,14 @@ struct KanaLineView: View {
                             .padding(.all, 6)
                             .frame(maxWidth: .infinity)
                             .background { isOn ? Color(white: 1) : Color(white: 0.96) }
-                            .clipShape(RoundedRectangle(cornerRadius: 6))
+                            .clipShape(RoundedRectangle(cornerRadius: 16))
                             .opacity(kana == nil ? 0 : 1)
                     }
                 }
                 .padding(.all, 4)
                 .foregroundStyle(isOn ? Color(white: 0.2) : Color(white: 0.4))
-                .background { Color(white: 0.92) }
-                .overlay {
-                    if isOn {
-                        RoundedRectangle(cornerRadius: 8).stroke(lineWidth: 4)
-                            .fill(.gray)
-                    }
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .background(isOn ? tint.mix(with: .white, by: 0.2) : Color(white: 0.92), in: .rect)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
                 .overlay(alignment: .topTrailing) {
                     if isOn {
                         ZStack {
@@ -74,40 +68,28 @@ struct KanaWritingPreview: View {
         self.kanaSelectionType = kanaSelectionType
     }
 
-    var body: some View {
+    var kanaToShow: String {
         switch kanaSelectionType {
-        case .hiragana:
-            VStack {
-                Text(text.romajiToHiragana).bold()
-                if showRomaji {
-                    Text(text.lowercased())
-                        .typography(.caption)
-                }
-            }
-        case .katakana:
-            VStack {
-                Text(text.romajiToKatakana).bold()
-                if showRomaji {
-                    Text(text.uppercased())
-                        .typography(.caption)
-                }
-            }
-        case .both:
-            HStack {
-                VStack {
-                    Text(text.romajiToHiragana).bold()
-                    if showRomaji {
-                        Text(text.lowercased())
-                            .typography(.caption)
-                    }
-                }
-                VStack {
-                    Text(text.romajiToKatakana).bold()
-                    if showRomaji {
-                        Text(text.uppercased())
-                            .typography(.caption)
-                    }
-                }
+        case .hiragana: text.romajiToHiragana
+        case .katakana: text.romajiToKatakana
+        case .both: "\(text.romajiToHiragana) \(text.romajiToKatakana)"
+        }
+    }
+
+    var romajiToShow: String {
+        switch kanaSelectionType {
+        case .hiragana: text.lowercased()
+        case .katakana: text.uppercased()
+        case .both: "\(text.lowercased()) \(text.uppercased())"
+        }
+    }
+
+    var body: some View {
+        VStack {
+            Text(kanaToShow).bold()
+            if showRomaji {
+                Text(romajiToShow)
+                    .typography(.caption)
             }
         }
     }
@@ -115,6 +97,7 @@ struct KanaWritingPreview: View {
 
 #Preview {
     @Previewable @State var isOn = true
+    @Previewable @State var isnOn = false
     Grid {
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
@@ -128,7 +111,7 @@ struct KanaWritingPreview: View {
             showRomaji: true,
             kanaSelectionType: .katakana,
             tint: .green,
-            isOn: $isOn,
+            isOn: $isnOn,
         )
         KanaLineView(
             kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
@@ -142,7 +125,7 @@ struct KanaWritingPreview: View {
             showRomaji: false,
             kanaSelectionType: .hiragana,
             tint: .green,
-            isOn: $isOn,
+            isOn: $isnOn,
         )
     }
 }

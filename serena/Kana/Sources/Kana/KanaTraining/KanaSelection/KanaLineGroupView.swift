@@ -5,8 +5,6 @@ struct KanaLineGroupView: View {
     let lines: [KanaLine]
     @Binding var selectedLines: Set<KanaLine>
 
-    @State var isExpanded: Bool = true
-
     let showRomaji: Bool
     let kanaSelectionType: KanaSelectionType
     let tint: Color
@@ -28,36 +26,38 @@ struct KanaLineGroupView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading) {
-            DisclosureGroup(isExpanded: $isExpanded) {
-                Grid(alignment: .leading) {
-                    ForEach(lines) { kanaLine in
-                        KanaLineView(
-                            kanaLine: kanaLine,
-                            showRomaji: showRomaji,
-                            kanaSelectionType: kanaSelectionType,
-                            tint: tint,
-                            isOn: $selectedLines[containsLine: kanaLine],
-                        )
-                    }
-                }.padding(.vertical, 8)
-            } label: {
-                HStack {
-                    Button(action: toggleSelectBase) {
-                        HStack {
-                            Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
-                                .foregroundStyle(hasSelectedAll ? tint : .secondary)
-                            Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
-                                .bold(!selectedLines.isEmpty)
-                                .foregroundStyle(!selectedLines.isEmpty ? Color.primary : Color.secondary)
-                        }
+        Section {
+            Grid(alignment: .leading) {
+                ForEach(lines) { kanaLine in
+                    KanaLineView(
+                        kanaLine: kanaLine,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
+                        tint: tint,
+                        isOn: $selectedLines[containsLine: kanaLine],
+                    )
+                }
+            }.padding(.vertical, 8)
+            Divider()
+        } header: {
+            HStack {
+                Button(action: toggleSelectBase) {
+                    HStack {
+                        Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
+                            .foregroundStyle(hasSelectedAll ? tint : .secondary)
+                        Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
+                            .bold(!selectedLines.isEmpty)
+                            .foregroundStyle(!selectedLines.isEmpty ? Color.primary : Color.secondary)
                     }
                 }
+                .padding(.vertical, 8)
+                .padding(.horizontal, 12)
+                .background(Color.bgColor, in: .capsule)
+                .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
+                Spacer()
             }
-            Divider()
         }
         .padding(.horizontal)
-        .tint(selectedLines.isEmpty ? .secondary : .primary)
     }
 
     var hasSelectedAll: Bool {

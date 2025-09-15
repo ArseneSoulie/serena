@@ -2055,6 +2055,17 @@
         }
       }
     },
+    "Romaji" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Romaji"
+          }
+        }
+      }
+    },
     "Save" : {
       "localizations" : {
         "fr" : {
@@ -2082,16 +2093,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur “C’est parti !”"
-          }
-        }
-      }
-    },
-    "Show romaji" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Afficher Romaji"
           }
         }
       }
