@@ -28,56 +28,51 @@ public struct KanaSelectionPage: View {
                 }
                 .padding()
 
-                Picker(localized("Training mode"), selection: $kanaSelectionType) {
-                    ForEach(KanaSelectionType.allCases, id: \.self) {
-                        Text($0.localisedDescription)
+                LazyVStack(pinnedViews: .sectionHeaders) {
+                    KanaLineGroupView(
+                        title: localized("Base"),
+                        lines: base,
+                        selectedLines: $selectedBase,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
+                        tint: CatagoryColor.base,
+                    )
+                    KanaLineGroupView(
+                        title: localized("Diacritics"),
+                        lines: diacritic,
+                        selectedLines: $selectedDiacritic,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
+                        tint: CatagoryColor.diacritic,
+                    )
+                    KanaLineGroupView(
+                        title: localized("Combinatory"),
+                        lines: combinatory,
+                        selectedLines: $selectedCombinatory,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
+                        tint: CatagoryColor.combinatory,
+                    )
+                    KanaLineGroupView(
+                        title: localized("Combinatory diacritics"),
+                        lines: combinatoryDiacritic,
+                        selectedLines: $selectedCombinatoryDiacritic,
+                        showRomaji: showRomaji,
+                        kanaSelectionType: kanaSelectionType,
+                        tint: CatagoryColor.combinarotyDiacritic,
+                    )
+                    if kanaSelectionType != .hiragana {
+                        KanaLineGroupView(
+                            title: localized("Extended katakana"),
+                            lines: extendedKatakana,
+                            selectedLines: $selectedExtendedKatakana,
+                            showRomaji: showRomaji,
+                            kanaSelectionType: .katakana,
+                            tint: CatagoryColor.extendedKatakana,
+                        )
                     }
                 }
-                .pickerStyle(.segmented)
-                .padding()
 
-                KanaLineGroupView(
-                    title: localized("Base"),
-                    lines: base,
-                    selectedLines: $selectedBase,
-                    showRomaji: showRomaji,
-                    kanaSelectionType: kanaSelectionType,
-                    tint: CatagoryColor.base,
-                )
-                KanaLineGroupView(
-                    title: localized("Diacritics"),
-                    lines: diacritic,
-                    selectedLines: $selectedDiacritic,
-                    showRomaji: showRomaji,
-                    kanaSelectionType: kanaSelectionType,
-                    tint: CatagoryColor.diacritic,
-                )
-                KanaLineGroupView(
-                    title: localized("Combinatory"),
-                    lines: combinatory,
-                    selectedLines: $selectedCombinatory,
-                    showRomaji: showRomaji,
-                    kanaSelectionType: kanaSelectionType,
-                    tint: CatagoryColor.combinatory,
-                )
-                KanaLineGroupView(
-                    title: localized("Combinatory diacritics"),
-                    lines: combinatoryDiacritic,
-                    selectedLines: $selectedCombinatoryDiacritic,
-                    showRomaji: showRomaji,
-                    kanaSelectionType: kanaSelectionType,
-                    tint: CatagoryColor.combinarotyDiacritic,
-                )
-                if kanaSelectionType != .hiragana {
-                    KanaLineGroupView(
-                        title: localized("Extended katakana"),
-                        lines: extendedKatakana,
-                        selectedLines: $selectedExtendedKatakana,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: .katakana,
-                        tint: CatagoryColor.extendedKatakana,
-                    )
-                }
                 Spacer()
                     .frame(height: 160)
             }
@@ -85,15 +80,20 @@ public struct KanaSelectionPage: View {
         .animation(.default, value: showRomaji)
         .animation(.default, value: kanaSelectionType)
         .overlay(alignment: .bottom) {
-            BottomViews(
-                kanaSelectionType: $kanaSelectionType,
-                textForSelectedKanas: textForSelectedKanas,
-                totalSelectedKanas: selectedKanasForExercise.count,
-                onExerciceSelectionTapped: onExerciceSelectionTapped,
-            )
+            let totalSelectedKanas = selectedKanasForExercise.count
+            if totalSelectedKanas != 0 {
+                Button(
+                    localized("Let's go ! %lld", totalSelectedKanas),
+                    systemImage: "arrow.right",
+                    action: onExerciceSelectionTapped,
+                )
+                .buttonStyle(.borderedProminent)
+                .padding(.all)
+            }
         }
         .toolbar {
             ToolbarViews(
+                kanaSelectionType: $kanaSelectionType,
                 showRomaji: $showRomaji,
                 selectedBase: $selectedBase,
                 selectedDiacritic: $selectedDiacritic,
@@ -150,6 +150,7 @@ public struct KanaSelectionPage: View {
 }
 
 struct ToolbarViews: View {
+    @Binding var kanaSelectionType: KanaSelectionType
     @State var showsFastSelect: Bool = false
 
     @Binding var showRomaji: Bool
@@ -161,7 +162,11 @@ struct ToolbarViews: View {
     @Binding var selectedExtendedKatakana: Set<KanaLine>
 
     var body: some View {
-        Toggle(localized("Show romaji"), isOn: $showRomaji)
+        Picker(localized("Training mode"), selection: $kanaSelectionType) {
+            ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.localisedDescription) }
+        }
+        .pickerStyle(.menu)
+        Toggle(localized("Romaji"), isOn: $showRomaji)
         Button(action: { showsFastSelect.toggle() }) { Image(systemName: "text.line.first.and.arrowtriangle.forward") }
             .popover(isPresented: $showsFastSelect) {
                 FastSelectPopoverView(
@@ -172,44 +177,6 @@ struct ToolbarViews: View {
                     selectedExtendedKatakana: $selectedExtendedKatakana,
                 )
             }
-    }
-}
-
-struct BottomViews: View {
-    @Binding var kanaSelectionType: KanaSelectionType
-
-    let textForSelectedKanas: String
-    let totalSelectedKanas: Int
-    let onExerciceSelectionTapped: () -> Void
-
-    var body: some View {
-        VStack(spacing: 4) {
-            HStack {
-                Picker(localized("Training mode"), selection: $kanaSelectionType) {
-                    ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.localisedDescription) }
-                }
-                .pickerStyle(.segmented)
-                Button(localized("Let's go ! %lld", totalSelectedKanas), action: onExerciceSelectionTapped)
-                    .buttonStyle(.borderedProminent)
-                    .disabled(totalSelectedKanas == 0)
-            }
-            .padding(.horizontal)
-            Text(textForSelectedKanas)
-                .typography(.footnote)
-        }
-        .padding(4)
-        .padding(.top, 16)
-        .background {
-            VStack(spacing: 0) {
-                Rectangle()
-                    .fill(Gradient(stops: [
-                        .init(color: Color.bgColor.opacity(0), location: 0),
-                        .init(color: Color.bgColor.opacity(0.2), location: 0.05),
-                        .init(color: Color.bgColor, location: 0.2),
-                    ]))
-                Color.bgColor.ignoresSafeArea(.all)
-            }
-        }
     }
 }
 
