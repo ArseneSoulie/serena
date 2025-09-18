@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "group:JMdictTools"
+      name = "JMdictTools">
+      <FileRef
+         location = "group:Package.swift">
+      </FileRef>
+      <Group
+         location = "group:Sources"
+         name = "Sources">
+         <Group
+            location = "group:JMdictTools"
+            name = "JMdictTools">
+            <FileSystemSynchronizedGroup
+               location = "group:JMdictParser"
+               name = "JMdictParser">
+            </FileSystemSynchronizedGroup>
+            <FileRef
+               location = "group:Main.swift">
+            </FileRef>
+         </Group>
+      </Group>
+   </Group>
    <FileRef
       location = "group:reina/reina.xcodeproj">
    </FileRef>
