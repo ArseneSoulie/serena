@@ -14,7 +14,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/sharing-grdb", from: "0.6.0"),
         .package(name: "KanjiVGParser", path: "../KanjiVGParser"),
         .package(name: "Kana", path: "../Kana"),
         .package(name: "Navigation", path: "../Navigation"),
@@ -24,7 +23,6 @@ let package = Package(
         .target(
             name: "SerenaApp",
             dependencies: [
-                .product(name: "SharingGRDB", package: "sharing-grdb"),
                 "KanjiVGParser",
                 "DesignSystem",
                 "Navigation",

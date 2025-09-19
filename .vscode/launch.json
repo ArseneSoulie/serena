@@ -1,0 +1,44 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [
+                "../../small-dict.xml"
+            ],
+            "cwd": "${workspaceFolder:serena}/serena/JMdictTools",
+            "name": "Debug JMdictTools (serena/JMdictTools)",
+            "program": "${workspaceFolder:serena}/serena/JMdictTools/.build/debug/JMdictTools",
+            "preLaunchTask": "swift: Build Debug JMdictTools (serena/JMdictTools)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [
+                "../../small-dict.xml"
+            ],
+            "cwd": "${workspaceFolder:serena}/serena/JMdictTools",
+            "name": "Release JMdictTools (serena/JMdictTools)",
+            "program": "${workspaceFolder:serena}/serena/JMdictTools/.build/release/JMdictTools",
+            "preLaunchTask": "swift: Build Release JMdictTools (serena/JMdictTools)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:serena}/serena/JMdictTools",
+            "name": "Debug JMdictToolsCLI (serena/JMdictTools)",
+            "program": "${workspaceFolder:serena}/serena/JMdictTools/.build/debug/JMdictToolsCLI",
+            "preLaunchTask": "swift: Build Debug JMdictToolsCLI (serena/JMdictTools)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:serena}/serena/JMdictTools",
+            "name": "Release JMdictToolsCLI (serena/JMdictTools)",
+            "program": "${workspaceFolder:serena}/serena/JMdictTools/.build/release/JMdictToolsCLI",
+            "preLaunchTask": "swift: Build Release JMdictToolsCLI (serena/JMdictTools)"
+        }
+    ]
+}
