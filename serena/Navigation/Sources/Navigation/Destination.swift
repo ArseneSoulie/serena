@@ -4,4 +4,5 @@ public enum Destination: Hashable, Equatable {
     case levelUps([Kana])
     case allInARow([Kana])
     case exerciseSelection([Kana])
+    case typing
 }

@@ -16,12 +16,14 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "DesignSystem", path: "../DesignSystem"),
+        .package(name: "Navigation", path: "../Navigation"),
     ],
     targets: [
         .target(
             name: "Typist",
             dependencies: [
                 "DesignSystem",
+                "Navigation",
             ],
         ),
     ],

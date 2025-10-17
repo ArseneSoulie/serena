@@ -12,8 +12,6 @@ import SwiftUI
 
 @main
 struct ReinaApp: App {
-    var coordinator = NavigationCoordinator()
-
     init() {
         registerFontForUIKitComponents()
     }
@@ -21,7 +19,6 @@ struct ReinaApp: App {
     var body: some Scene {
         WindowGroup {
             KanaMainPage()
-                .environment(coordinator)
                 .registerFontForSwiftUIComponents()
         }
     }
