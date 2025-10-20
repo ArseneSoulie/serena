@@ -1,6 +1,7 @@
 import SwiftUI
+import UIKit
 
-// MARK: - UITextField subclass with preferred input mode
+// MARK: - UITextField Subclass (Unchanged)
 
 final class KanaTextField: UITextField {
     var preferredLanguageCode: String?
@@ -18,91 +19,41 @@ final class KanaTextField: UITextField {
     }
 }
 
-// MARK: - UIViewRepresentable
+// MARK: - UIViewRepresentable (Rollback Version)
 
 struct KanaTextFieldView: UIViewRepresentable {
-    // MARK: Bindings
-
     @Binding var text: String
     @Binding var isFirstResponder: Bool
 
-    // MARK: Configuration
-
-    let preferredLanguageCode: String?
-    let onSubmit: () -> Void
-
-    // MARK: Init
-
-    init(
-        text: Binding<String>,
-        preferredLanguageCode: String?,
-        onSubmit: @escaping () -> Void,
-        isFirstResponder: Binding<Bool> = .constant(false),
-    ) {
-        _text = text
-        self.preferredLanguageCode = preferredLanguageCode
-        self.onSubmit = onSubmit
-        _isFirstResponder = isFirstResponder
-    }
-
-    // MARK: UIViewRepresentable
+    let languageCode: String
+    var placeholder: String = ""
+    var onSubmit: () -> Void = {}
 
     func makeUIView(context: Context) -> KanaTextField {
-        let field = KanaTextField()
-        field.preferredLanguageCode = preferredLanguageCode
-        field.delegate = context.coordinator
-
-        field.addTarget(
+        let textField = KanaTextField()
+        textField.preferredLanguageCode = languageCode
+        textField.placeholder = placeholder
+        textField.returnKeyType = .done
+        textField.clearButtonMode = .whileEditing
+        textField.delegate = context.coordinator
+        textField.addTarget(
             context.coordinator,
-            action: #selector(Coordinator.textFieldDidChange(_:)),
+            action: #selector(Coordinator.textFieldDidChange),
             for: .editingChanged,
         )
-
-        field.borderStyle = .none
-        field.returnKeyType = .done
-        field.clearButtonMode = .whileEditing
-
-        // Defer initial focus until the field is in the view hierarchy.
-        if isFirstResponder {
-            DispatchQueue.main.async {
-                guard field.window != nil else { return }
-                if !field.isFirstResponder {
-                    field.becomeFirstResponder()
-                    context.coordinator.didBecomeFirstResponder = true
-                }
-            }
-        }
-
-        return field
+        return textField
     }
 
     func updateUIView(_ uiView: KanaTextField, context: Context) {
-        if uiView.text != text {
-            uiView.text = text
-        }
+        uiView.text = text
 
-        if uiView.preferredLanguageCode != preferredLanguageCode {
-            uiView.preferredLanguageCode = preferredLanguageCode
-        }
-
-        if isFirstResponder {
-            if !context.coordinator.didBecomeFirstResponder {
-                DispatchQueue.main.async {
-                    guard uiView.window != nil else { return }
-                    if !uiView.isFirstResponder {
-                        uiView.becomeFirstResponder()
-                    }
-                    context.coordinator.didBecomeFirstResponder = true
-                }
+        if isFirstResponder, !context.coordinator.isEditing {
+            DispatchQueue.main.async {
+                uiView.becomeFirstResponder()
             }
-        } else {
-            if uiView.isFirstResponder {
-                DispatchQueue.main.async {
-                    uiView.resignFirstResponder()
-                }
-            }
-            if context.coordinator.didBecomeFirstResponder {
-                context.coordinator.didBecomeFirstResponder = false
+        } else if !isFirstResponder, context.coordinator.isEditing {
+            DispatchQueue.main.async {
+                uiView.resignFirstResponder()
             }
         }
     }
@@ -111,44 +62,32 @@ struct KanaTextFieldView: UIViewRepresentable {
         Coordinator(self)
     }
 
-    // MARK: - Coordinator
+    // MARK: - Coordinator (Rollback Version)
 
     class Coordinator: NSObject, UITextFieldDelegate {
         var parent: KanaTextFieldView
-        var didBecomeFirstResponder: Bool = false
+        var isEditing: Bool = false
 
         init(_ parent: KanaTextFieldView) {
             self.parent = parent
         }
 
         @objc func textFieldDidChange(_ textField: UITextField) {
-            // Defer binding write to avoid "Modifying state during view update"
-            let newText = textField.text ?? ""
-            if parent.text == newText { return }
-            DispatchQueue.main.async {
-                self.parent.text = newText
-            }
+            parent.text = textField.text ?? ""
         }
 
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        func textFieldDidBeginEditing(_: UITextField) {
+            isEditing = true
+            parent.isFirstResponder = true
+        }
+
+        func textFieldDidEndEditing(_: UITextField) {
+            isEditing = false
+            parent.isFirstResponder = false
+        }
+
+        func textFieldShouldReturn(_: UITextField) -> Bool {
             parent.onSubmit()
-            // Maintain requested focus state after submit
-            if parent.isFirstResponder {
-                // Defer to avoid cycles during submit
-                DispatchQueue.main.async {
-                    if !textField.isFirstResponder {
-                        textField.becomeFirstResponder()
-                    }
-                }
-                didBecomeFirstResponder = true
-            } else {
-                DispatchQueue.main.async {
-                    if textField.isFirstResponder {
-                        textField.resignFirstResponder()
-                    }
-                }
-                didBecomeFirstResponder = false
-            }
             return false
         }
     }
