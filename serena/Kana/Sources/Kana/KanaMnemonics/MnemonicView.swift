@@ -28,8 +28,7 @@ struct MnemonicView: View {
                 Button(.pronunciation, systemImage: "speaker.wave.2.fill", action: onPlayAudioButtonTapped)
             }
 
-            let key: String.LocalizationValue = "Mnemonics.\(mnemonic.kanaString)"
-            Text(String(localized: key))
+            Text(String(localizedInterpolated: "Mnemonics.\(mnemonic.kanaString)"))
 
             if let currentExplanation, !currentExplanation.isEmpty {
                 Text(currentExplanation).foregroundStyle(.secondary)
