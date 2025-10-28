@@ -5,16 +5,16 @@ enum WriteExerciceType {
     case single
     case groupOfThree
 
-    var prompt: String {
+    var prompt: LocalizedStringResource {
         switch self {
-        case .single: localized("Write the kana.")
-        case .groupOfThree: localized("Write the combinaison of the three kanas.")
+        case .single: .writeTheKana
+        case .groupOfThree: .writeTheCombinaisonOfTheThreeKanas
         }
     }
 }
 
 struct WriteAnswerPage: View {
-    let title: String
+    let title: LocalizedStringResource
 
     let writingExerciceType: WriteExerciceType
     let kanaPool: [Kana]
@@ -32,10 +32,10 @@ struct WriteAnswerPage: View {
 
     @State private var showToast = false
 
-    @State var info: String = ""
+    @State var info: LocalizedStringResource?
 
     init(
-        title: String,
+        title: LocalizedStringResource,
         writingExerciceType: WriteExerciceType,
         kanaPool: [Kana],
         maxStepsCount: Int,
@@ -65,7 +65,9 @@ struct WriteAnswerPage: View {
                         .shake(shakeTrigger)
                         .padding()
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                    Text(info)
+                    if let info {
+                        Text(info)
+                    }
                 }
 
                 ZStack(alignment: .trailing) {
@@ -99,10 +101,10 @@ struct WriteAnswerPage: View {
         }
         .navigationTitle(title)
         .toolbar {
-            Button(localized("Skip"), action: goToNextRound)
+            Button(.skip, action: goToNextRound)
         }
         .navigationBarTitleDisplayMode(.inline)
-        .toast(isPresented: $showToast, message: localized("Level up !"))
+        .toast(isPresented: $showToast, message: .levelUp)
     }
 
     func goToNextRound() {
@@ -136,7 +138,7 @@ struct WriteAnswerPage: View {
         let isCorrect = cleanedText == convertedTruth
 
         inputText = ""
-        info = ""
+        info = nil
 
         if !isCorrect {
             triggerWrongAnswer()
@@ -184,7 +186,7 @@ struct WriteAnswerPage: View {
         withAnimation(.default) {
             truthColor = .orange
             shakeTrigger += 1
-            info = localized("This is the right kana but with incorrect writing. Try again!")
+            info = .thisIsTheRightKanaButWithIncorrectWritingTryAgain
         } completion: {
             withAnimation {
                 truthColor = .primary

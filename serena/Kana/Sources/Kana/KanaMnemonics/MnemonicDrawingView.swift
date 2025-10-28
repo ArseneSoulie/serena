@@ -31,12 +31,12 @@ struct MnemonicDrawingView: View {
                         }
                         Divider()
                             .padding()
-                        Text(localized("Write what the kana reminds you of"))
+                        Text(.writeWhatTheKanaRemindsYouOf)
                             .typography(.headline)
                         TextField(
-                            localized("Explanation"),
+                            .explanation,
                             text: $explanationText,
-                            prompt: Text(localized("It reminds me of...")),
+                            prompt: Text(.itRemindsMeOf),
                             axis: .vertical,
                         )
                         .lineLimit(1 ... 5)
@@ -53,11 +53,11 @@ struct MnemonicDrawingView: View {
                 }
                 .padding(24)
             }
-            .navigationTitle(localized("Draw your mnemonic for %@", data.kanaString))
+            .navigationTitle(.drawYourMnemonicFor(data.kanaString))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(localized("Save"), systemImage: "checkmark.circle", action: onSave)
+                    Button(.save, systemImage: "checkmark.circle", action: onSave)
                 }
             }
         }

@@ -38,7 +38,7 @@ public struct LevelUpsPage: View {
         switch level {
         case .level1:
             PickAnswerPage(
-                title: "\(localized("Level")) 1",
+                title: .level(1),
                 pickingExerciceType: .pickRomaji,
                 kanaPool: kanaPool,
                 maxStepsCount: 10,
@@ -46,7 +46,7 @@ public struct LevelUpsPage: View {
             )
         case .level2:
             PickAnswerPage(
-                title: "\(localized("Level")) 2",
+                title: .level(2),
                 pickingExerciceType: .pickKana,
                 kanaPool: kanaPool,
                 maxStepsCount: 10,
@@ -54,7 +54,7 @@ public struct LevelUpsPage: View {
             )
         case .level3:
             WriteAnswerPage(
-                title: "\(localized("Level")) 3",
+                title: .level(3),
                 writingExerciceType: .single,
                 kanaPool: kanaPool,
                 maxStepsCount: 8,
@@ -62,7 +62,7 @@ public struct LevelUpsPage: View {
             )
         case .level4:
             WriteAnswerPage(
-                title: localized("Final level"),
+                title: .finalLevel,
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,
                 maxStepsCount: 5,

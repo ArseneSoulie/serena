@@ -40,7 +40,7 @@ struct AllInARowExercicePage: View {
         ScrollView {
             VStack(spacing: 10) {
                 ProgressBarView(progress: $progress)
-                Text(localized("Write the writing of all kanas in a row"))
+                Text(.writeTheWritingOfAllKanasInARow)
 
                 VStack {
                     ZStack(alignment: .bottom) {
@@ -64,7 +64,7 @@ struct AllInARowExercicePage: View {
                         .padding(8)
                     }
                     if failedKanas.contains(truth) {
-                        Button(localized("Reveal answer"), action: { showAnswer.toggle() })
+                        Button(.revealAnswer, action: { showAnswer.toggle() })
                     } else {
                         Text(info)
                     }
@@ -92,15 +92,15 @@ struct AllInARowExercicePage: View {
                 .padding()
             }
         }
-        .navigationTitle(localized("All in a row"))
+        .navigationTitle(.allInARow)
         .navigationBarTitleDisplayMode(.inline)
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
         .toolbar {
-            Button(localized("Skip"), action: onSkip)
-            Button(localized("Finish"), action: finishExercice)
+            Button(.skip, action: onSkip)
+            Button(.finish, action: finishExercice)
         }
         .animation(.default, value: failedKanas)
         .animation(.default, value: showAnswer)
@@ -143,7 +143,7 @@ struct AllInARowExercicePage: View {
             withAnimation(.default) {
                 truthColor = .orange
                 shakeTrigger += 1
-                info = localized("This is the right kana but with incorrect writing. Try again!")
+                info = String(localized: .thisIsTheRightKanaButWithIncorrectWritingTryAgain)
             } completion: {
                 withAnimation {
                     truthColor = .primary

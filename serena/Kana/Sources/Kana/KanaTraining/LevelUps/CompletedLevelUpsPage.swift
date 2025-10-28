@@ -10,7 +10,7 @@ struct CompletedLevelUpsPage: View {
             VStack {
                 ScrollView {
                     VStack {
-                        Text(localized("Completed !"))
+                        Text(.completed)
                             .typography(.headline)
                         Spacer()
                         Image(systemName: "party.popper")
@@ -23,11 +23,11 @@ struct CompletedLevelUpsPage: View {
                     }
                 }
                 HStack {
-                    Button(localized("Try again with selection"), action: onTryAgainTapped)
-                    Button(localized("All in a row"), action: onAllInARowTapped)
+                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
+                    Button(.allInARow, action: onAllInARowTapped)
                 }.buttonStyle(.borderedProminent)
                     .padding()
-                Button(localized("Go back to selection"), action: onGoBackTapped)
+                Button(.goBackToSelection, action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }.padding()
             ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))

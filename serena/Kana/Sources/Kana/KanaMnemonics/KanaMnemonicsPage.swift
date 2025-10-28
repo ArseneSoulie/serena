@@ -22,12 +22,7 @@ public struct KanaMnemonicsPage: View {
                                 .resizable()
                                 .frame(width: 64, height: 64)
                             Text(
-                                localized(
-                                    """
-                                    Here's a list of helpful mnemonics and explanations we've prepared for you.
-                                    The best remains for you to make them your own so have fun and experiment by creating your own story !
-                                    """,
-                                ),
+                                .heresAListOfHelpfulMnemonicsAndExplanationsWevePreparedForYouTheBestRemainsForYouToMakeThemYourOwnSoHaveFunAndExperimentByCreatingYourOwnStory,
                             )
                         }
 
@@ -63,7 +58,7 @@ public struct KanaMnemonicsPage: View {
                     }
                 }
             }
-            Picker(localized("Kana"), selection: $kanaType) {
+            Picker(.kana, selection: $kanaType) {
                 ForEach(KanaType.allCases, id: \.self) {
                     Text($0.rawValue)
                 }
@@ -78,11 +73,11 @@ public struct KanaMnemonicsPage: View {
                 mnemonicsManager: mnemonicsManager,
             )
         }
-        .navigationTitle(localized("Mnemonics"))
+        .navigationTitle(.mnemonics)
         .searchable(
             text: $searchText,
             placement: .navigationBarDrawer(displayMode: .always),
-            prompt: localized("Search a kana"),
+            prompt: .searchAKana,
         )
         .onAppear {
             mnemonicsManager.load()

@@ -5,16 +5,16 @@ enum PickExerciceType {
     case pickRomaji
     case pickKana
 
-    var prompt: String {
+    var prompt: LocalizedStringResource {
         switch self {
-        case .pickRomaji: localized("Pick the correct writing for the kana.")
-        case .pickKana: localized("Pick the correct kana word for the writing.")
+        case .pickRomaji: .pickTheCorrectWritingForTheKana
+        case .pickKana: .pickTheCorrectKanaWordForTheWriting
         }
     }
 }
 
 struct PickAnswerPage: View {
-    let title: String
+    let title: LocalizedStringResource
 
     let pickingExerciceType: PickExerciceType
     let maxStepsCount: Int
@@ -30,7 +30,7 @@ struct PickAnswerPage: View {
     @State private var disableButtons: Bool = false
 
     init(
-        title: String,
+        title: LocalizedStringResource,
         pickingExerciceType: PickExerciceType,
         kanaPool: [Kana],
         maxStepsCount: Int,
@@ -88,7 +88,7 @@ struct PickAnswerPage: View {
                 .transaction { $0.disablesAnimations = true }
         }
         .navigationTitle(title)
-        .toast(isPresented: $showToast, message: localized("Level up !"))
+        .toast(isPresented: $showToast, message: .levelUp)
     }
 
     func nextRound() {

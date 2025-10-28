@@ -31,7 +31,7 @@ public struct ExerciseSelectionPage: View {
                     SelectionContent(kanaPool: kanaPool)
                 }.padding()
             }
-        }.navigationTitle(localized("Pick an exercise type"))
+        }.navigationTitle(.pickAnExerciseType)
     }
 }
 
@@ -41,7 +41,7 @@ public struct ExerciseSelectionPage: View {
 }
 
 struct ExerciceBanner: View {
-    let title: String
+    let title: LocalizedStringResource
     let imageResource: ImageResource
     let onBannerTapped: () -> Void
 
@@ -74,11 +74,11 @@ struct SelectionContent: View {
 
     var body: some View {
         VStack {
-            Text(localized("Level ups"))
+            Text(.levelUps)
                 .typography(.title2)
 
             ExerciceBanner(
-                title: localized("Learn the selected kanas by doing challenges of increasing difficulty"),
+                title: .learnTheSelectedKanasByDoingChallengesOfIncreasingDifficulty,
                 imageResource: .TrainingBanner.levelUp,
                 onBannerTapped: onLevelUpsTapped,
             )
@@ -87,11 +87,11 @@ struct SelectionContent: View {
 
         Divider()
         VStack {
-            Text(localized("All in a row"))
+            Text(.allInARow)
                 .typography(.title2)
 
             ExerciceBanner(
-                title: localized("Try to get all selected kanas right in a row !"),
+                title: .tryToGetAllSelectedKanasRightInARow,
                 imageResource: .TrainingBanner.allInARow,
                 onBannerTapped: onAllInARowTapped,
             )
