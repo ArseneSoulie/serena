@@ -13,7 +13,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0318711C2E7D5B2900254114 /* JMdictTools */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = JMdictTools; sourceTree = "<group>"; };
 		033850D82E508E9C00ED6084 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 		033850D92E508E9C00ED6084 /* FoundationModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FoundationModels; sourceTree = "<group>"; };
 		033850DA2E508E9C00ED6084 /* Kana */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Kana; sourceTree = "<group>"; };
@@ -41,7 +40,6 @@
 		03BC51602E311EEB0081F67B = {
 			isa = PBXGroup;
 			children = (
-				0318711C2E7D5B2900254114 /* JMdictTools */,
 				035765DB2E61AD2E00524861 /* Typist */,
 				033850D82E508E9C00ED6084 /* DesignSystem */,
 				033850D92E508E9C00ED6084 /* FoundationModels */,
