@@ -9,6 +9,7 @@ extension ReinaWord: TableRecord, PersistableRecord {
         case id
         case writings
         case readings
+        case easinessScore
     }
 
     public init(from decoder: Decoder) throws {
@@ -21,7 +22,9 @@ extension ReinaWord: TableRecord, PersistableRecord {
         let readingsData = try container.decode(Data.self, forKey: .readings)
         let readings = try JSONDecoder().decode([String].self, from: readingsData)
 
-        self.init(id: id, writings: writings, readings: readings)
+        let easinessScore = try container.decode(Int.self, forKey: .easinessScore)
+
+        self.init(id: id, writings: writings, readings: readings, easinessScore: easinessScore)
     }
 
     public func encode(to container: inout PersistenceContainer) {
@@ -32,6 +35,10 @@ extension ReinaWord: TableRecord, PersistableRecord {
         }
         if let readingsData = try? JSONEncoder().encode(readings) {
             container[Columns.readings] = readingsData
+        }
+
+        if let easinessData = try? JSONEncoder().encode(easinessScore) {
+            container[Columns.easinessScore] = easinessData
         }
     }
 }

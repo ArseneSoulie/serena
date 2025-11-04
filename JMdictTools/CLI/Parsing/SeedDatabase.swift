@@ -19,6 +19,7 @@ func seedDatabase(dbPath: String, from words: [ReinaWord]) throws {
             t.column(ReinaWord.Columns.id.rawValue, .text).primaryKey()
             t.column(ReinaWord.Columns.writings.rawValue, .blob)
             t.column(ReinaWord.Columns.readings.rawValue, .blob)
+            t.column(ReinaWord.Columns.easinessScore.rawValue, .integer)
         }
     }
 
