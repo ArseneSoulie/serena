@@ -36,7 +36,6 @@ extension ReinaWord: TableRecord, PersistableRecord {
         if let readingsData = try? JSONEncoder().encode(readings) {
             container[Columns.readings] = readingsData
         }
-
         if let easinessData = try? JSONEncoder().encode(easinessScore) {
             container[Columns.easinessScore] = easinessData
         }

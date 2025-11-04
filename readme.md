@@ -17,6 +17,9 @@ Query it using sqlite
 ```sql
 sqlite3 reina_words.sqlite
 
+-- To get the table description
+pragma table_info('reinawords');
+
 -- See the easiness scores with their count (higher is simpler 1 - 10)
 select easinessScore, count(easinessScore) from reinawords group by easinessScore;
 
