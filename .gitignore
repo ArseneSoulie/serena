@@ -63,6 +63,6 @@ packages_cacheV2
 .mint
 
 #DB
-.sqlite
-.sqlite-shm
-.sqlite-wal
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
