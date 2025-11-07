@@ -6,6 +6,8 @@
 //
 
 import Navigation
+import ReinaDB
+import SQLiteData
 import SwiftUI
 
 public struct BestScore {
@@ -15,14 +17,22 @@ public struct BestScore {
 }
 
 public struct TypingMenuPage: View {
+    @Dependency(\.defaultDatabase) var database
+
     @Environment(NavigationCoordinator.self) private var coordinator
     @State var bestScore: BestScore = .init()
+
+    @State var randomWord: ReinaWord?
 
     public init() {}
 
     public var body: some View {
         ScrollView {
             VStack {
+                if let randomWord {
+                    Text("aa: \(randomWord.readings)")
+                }
+
                 Text("Get better at typing with a japanese keyboard !")
                 Spacer()
                 Grid(alignment: .leading, horizontalSpacing: 20) {
@@ -43,10 +53,24 @@ public struct TypingMenuPage: View {
                         Text(String(bestScore.kanaOnly))
                     }
                 }.padding(.horizontal, 8)
+
+                Button("Pick random", action: pickRandomWord)
             }
         }
         .navigationTitle("Typing test")
         .navigationBarTitleDisplayMode(.large)
+        .onAppear(perform: pickRandomWord)
+    }
+
+    func pickRandomWord() {
+        withErrorReporting {
+            randomWord = try database.read { db in
+                try ReinaWord
+                    .where { $0.easinessScore == 8 }
+                    .order { _ in #sql("RANDOM()") }
+                    .fetchOne(db)
+            }
+        }
     }
 
     func onKanaOnlyTapped() {
@@ -63,6 +87,10 @@ public struct TypingMenuPage: View {
 }
 
 #Preview {
+    _ = prepareDependencies {
+        $0.defaultDatabase = try! reinaAppDatabase(at: DatabaseLocator.reinaDatabaseURL)
+    }
+
     NavigationView {
         TypingMenuPage()
     }.environment(NavigationCoordinator())

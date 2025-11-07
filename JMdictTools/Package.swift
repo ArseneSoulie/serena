@@ -4,24 +4,30 @@ import PackageDescription
 
 let package = Package(
     name: "JMdictTools",
+    platforms: [
+        .macOS(.v13),
+        .iOS(.v15),
+    ],
     products: [
         .executable(name: "JMdictToolsCLI", targets: ["JMdictToolsCLI"]),
-        .library(name: "JMdictTools", targets: ["JMdictToolsCore"]),
+        .library(name: "ReinaDB", targets: ["ReinaDB"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.6.0"),
-        .package(url: "https://github.com/groue/GRDB.swift.git", from: "6.0.0"),
+        .package(url: "https://github.com/pointfreeco/sqlite-data", from: "1.3.0"),
     ],
     targets: [
         .target(
-            name: "JMdictToolsCore",
-            path: "Core",
+            name: "ReinaDB",
+            dependencies: [
+                .product(name: "SQLiteData", package: "sqlite-data"),
+            ],
+            path: "ReinaDB",
         ),
         .executableTarget(
             name: "JMdictToolsCLI",
             dependencies: [
-                "JMdictToolsCore",
-                .product(name: "GRDB", package: "GRDB.swift"),
+                "ReinaDB",
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
             ],
             path: "CLI",

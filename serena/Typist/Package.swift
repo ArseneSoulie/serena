@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(name: "DesignSystem", path: "../DesignSystem"),
         .package(name: "Navigation", path: "../Navigation"),
+        .package(name: "ReinaDB", path: "../../JMDictTools"),
     ],
     targets: [
         .target(
@@ -24,6 +25,12 @@ let package = Package(
             dependencies: [
                 "DesignSystem",
                 "Navigation",
+                "ReinaDB",
+            ],
+            resources: [
+                .copy("DB/reina.sqlite"),
+                .copy("DB/reina.sqlite-shm"),
+                .copy("DB/reina.sqlite-wal"),
             ],
         ),
     ],

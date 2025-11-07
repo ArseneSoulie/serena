@@ -24,5 +24,5 @@ pragma table_info('reinawords');
 select easinessScore, count(easinessScore) from reinawords group by easinessScore;
 
 -- Get a random easy element
-SELECT * FROM reinawords WHERE CAST(easinessscore AS REAL) = 10 ORDER BY RANDOM() LIMIT 1;
+SELECT * FROM reinawords WHERE easinessscore = 9 ORDER BY RANDOM() LIMIT 1;
 ```
