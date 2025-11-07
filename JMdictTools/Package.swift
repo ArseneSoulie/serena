@@ -9,7 +9,7 @@ let package = Package(
         .iOS(.v15),
     ],
     products: [
-        .executable(name: "JMdictToolsCLI", targets: ["JMdictToolsCLI"]),
+        .executable(name: "jmdict-tools", targets: ["JMdictToolsCLI"]),
         .library(name: "ReinaDB", targets: ["ReinaDB"]),
     ],
     dependencies: [

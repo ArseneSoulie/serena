@@ -2,19 +2,22 @@ import ArgumentParser
 import Foundation
 import ReinaDB
 
+private nonisolated(unsafe) var isAlreadyPrepared: Bool = false
+
 @main
 struct JMdictToolsCLI: ParsableCommand {
     init() {
-        if JMdictToolsCLI.isAlreadyInstantiated {
-            return
-        }
-        let databaseURL = URL(fileURLWithPath: "reina.sqlite")
-        prepareReinaDB(at: databaseURL)
-        reinaLogger.info("CLI using database at: \(databaseURL.path)")
-        JMdictToolsCLI.isAlreadyInstantiated = true
+        prepareDB()
     }
 
-    nonisolated(unsafe) static var isAlreadyInstantiated: Bool = false
+    func prepareDB() {
+        if !isAlreadyPrepared {
+            let databaseURL = URL(fileURLWithPath: "reina.sqlite")
+            prepareReinaDB(at: databaseURL)
+            reinaLogger.info("CLI using database at: \(databaseURL.path)")
+            isAlreadyPrepared = true
+        }
+    }
 
     static let configuration = CommandConfiguration(
         commandName: "jmdict-tools",
