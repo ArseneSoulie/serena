@@ -1,8 +1,13 @@
 import Combine
+import FoundationModels
+import ReinaDB
+import SQLiteData
 import SwiftUI
 
 @MainActor
 class GameEngine: ObservableObject {
+    @Dependency(\.defaultDatabase) var database
+
     @Published private(set) var textsToType: [TextToType] = []
     @Published private(set) var scorePopups: [ScorePopup] = []
     @Published private(set) var score: Int = 0
@@ -34,7 +39,10 @@ class GameEngine: ObservableObject {
     private let startingDifficulty: Double = 1
     private var comboMultiplier: Double { 1.0 + Double(comboCount) * 0.1 }
 
-    init() {
+    let level: TypingLevel
+
+    init(level: TypingLevel) {
+        self.level = level
         health = maxHealth
         difficultyScale = startingDifficulty
 
@@ -126,10 +134,47 @@ class GameEngine: ObservableObject {
     }
 
     private func spawnNewText() {
+        guard let nextWord = getWordForCurrentLevel() else {
+            assertionFailure("Word not found check the query !")
+            return
+        }
+
         withAnimation {
-            textsToType.append(.init(value: generateRandomString(), x: Double.random(in: 0.1 ... 0.9), y: 0))
+            textsToType.append(.init(value: nextWord, x: Double.random(in: 0.1 ... 0.9), y: 0))
         }
         timeSinceLastSpawn = 0
+    }
+
+    private func getWordForCurrentLevel() -> String? {
+        switch level {
+        case .kanaOnly:
+            let characters = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
+            return characters.randomElement().flatMap(String.init)
+
+        case .easyWords:
+            var randomWord: ReinaWord?
+            withErrorReporting {
+                randomWord = try database.read { db in
+                    try ReinaWord
+                        .where { $0.easinessScore == 8 }
+                        .order { _ in #sql("RANDOM()") }
+                        .fetchOne(db)
+                }
+            }
+            return randomWord?.reading
+
+        case .fullDictionnary:
+            var randomWord: ReinaWord?
+            withErrorReporting {
+                randomWord = try database.read { db in
+                    try ReinaWord
+                        .where { $0.easinessScore >= 1 }
+                        .order { _ in #sql("RANDOM()") }
+                        .fetchOne(db)
+                }
+            }
+            return randomWord?.reading
+        }
     }
 
     private func applyDamageIfNeeded() {

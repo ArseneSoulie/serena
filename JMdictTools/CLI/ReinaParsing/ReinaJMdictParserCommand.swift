@@ -43,11 +43,18 @@ struct JMdictParserCommand: ParsableCommand {
     func sqliteOutput(words: [ReinaWord]) {
         @Dependency(\.defaultDatabase) var database
 
+        let maximumSqliteTransactionSize = 32766
+        let wordChunks = words.chunked(into: maximumSqliteTransactionSize)
+
         withErrorReporting {
             try database.write { db in
-                try ReinaWord.upsert {
-                    words
-                }.execute(db)
+                for (index, chunk) in wordChunks.enumerated() {
+                    try ReinaWord.upsert {
+                        Array(chunk)
+                    }.execute(db)
+
+                    print("... Processed chunk \(index + 1)/\(wordChunks.count) (\(chunk.count) words)")
+                }
             }
             print("SQLite database successfully seeded \(words.count) words into reina.sqlite at \(database.path)")
             print("Don't forget to copy it to Typist/DB to apply the changes to the app")
@@ -57,5 +64,13 @@ struct JMdictParserCommand: ParsableCommand {
     enum OutputFormat: String, ExpressibleByArgument, CaseIterable {
         case json
         case sqlite
+    }
+}
+
+extension Array {
+    func chunked(into size: Int) -> [ArraySlice<Element>] {
+        stride(from: 0, to: count, by: size).map {
+            self[$0 ..< Swift.min($0 + size, self.count)]
+        }
     }
 }

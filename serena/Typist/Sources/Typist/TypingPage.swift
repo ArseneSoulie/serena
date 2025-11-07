@@ -1,17 +1,20 @@
 import DesignSystem
+import FoundationModels
 import SwiftUI
 
 public struct TypingPage: View {
     // MARK: State
 
-    @StateObject private var gameEngine = GameEngine()
+    @StateObject private var gameEngine: GameEngine
     @State private var isFocused: Bool = false
 
     // MARK: Environment / Accessibility
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
-    public init() {}
+    public init(level: TypingLevel) {
+        _gameEngine = StateObject(wrappedValue: GameEngine(level: level))
+    }
 
     public var body: some View {
         ZStack {

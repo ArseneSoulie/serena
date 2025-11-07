@@ -47,8 +47,8 @@ func reinaDatabaseMigrator() -> DatabaseMigrator {
         try #sql("""
         CREATE TABLE "reinawords" (
             "id" TEXT NOT NULL PRIMARY KEY,
-            "writings" TEXT NOT NULL,
-            "readings" TEXT NOT NULL,
+            "writing" TEXT,
+            "reading" TEXT NOT NULL,
             "easinessScore" INTEGER NOT NULL
         ) STRICT ;
         """)

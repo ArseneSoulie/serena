@@ -64,8 +64,8 @@ extension View {
                 AllInARowPage(kanas: kanas)
             case let .exerciseSelection(kanas):
                 ExerciseSelectionPage(kanaPool: kanas)
-            case .typing:
-                TypingPage()
+            case let .typing(level):
+                TypingPage(level: level)
             }
         }
     }

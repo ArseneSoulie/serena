@@ -22,17 +22,11 @@ public struct TypingMenuPage: View {
     @Environment(NavigationCoordinator.self) private var coordinator
     @State var bestScore: BestScore = .init()
 
-    @State var randomWord: ReinaWord?
-
     public init() {}
 
     public var body: some View {
         ScrollView {
             VStack {
-                if let randomWord {
-                    Text("Random word: \(randomWord.readings)")
-                }
-
                 Text("Get better at typing with a japanese keyboard !")
                 Spacer()
                 Grid(alignment: .leading, horizontalSpacing: 20) {
@@ -53,36 +47,22 @@ public struct TypingMenuPage: View {
                         Text(String(bestScore.kanaOnly))
                     }
                 }.padding(.horizontal, 8)
-
-                Button("Pick random", action: pickRandomWord)
             }
         }
         .navigationTitle("Typing test")
         .navigationBarTitleDisplayMode(.large)
-        .onAppear(perform: pickRandomWord)
-    }
-
-    func pickRandomWord() {
-        withErrorReporting {
-            randomWord = try database.read { db in
-                try ReinaWord
-                    .where { $0.easinessScore == 8 }
-                    .order { _ in #sql("RANDOM()") }
-                    .fetchOne(db)
-            }
-        }
     }
 
     func onKanaOnlyTapped() {
-        coordinator.push(.typing)
+        coordinator.push(.typing(.kanaOnly))
     }
 
     func onEasyWordsTapped() {
-        coordinator.push(.typing)
+        coordinator.push(.typing(.easyWords))
     }
 
     func onFullDictionnaryTapped() {
-        coordinator.push(.typing)
+        coordinator.push(.typing(.fullDictionnary))
     }
 }
 

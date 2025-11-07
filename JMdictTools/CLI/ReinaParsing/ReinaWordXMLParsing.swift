@@ -3,8 +3,8 @@ import ReinaDB
 
 struct ReinaWordDraft {
     var id: String?
-    var writings: [String] = []
-    var readings: [String] = []
+    var mainWriting: String?
+    var mainReading: String?
     var easinessScore: Int = 1
 }
 
@@ -46,18 +46,18 @@ class ReinaWordXMLParsing: NSObject, XMLParserDelegate {
         case "ent_seq":
             currentWord.id = currentElementValue
         case "keb":
-            currentWord.writings.append(currentElementValue)
+            currentWord.mainWriting = currentElementValue
         case "reb":
-            currentWord.readings.append(currentElementValue)
+            currentWord.mainReading = currentElementValue
         case "re_pri", "ke_pri":
             currentWord.easinessScore = max(currentWord.easinessScore, easinessScore(for: currentElementValue))
         case "entry":
-            if let id = currentWord.id {
+            if let id = currentWord.id, let reading = currentWord.mainReading {
                 words.append(
                     ReinaWord(
                         id: id,
-                        writings: currentWord.writings.joined(separator: ","),
-                        readings: currentWord.readings.joined(separator: ","),
+                        writing: currentWord.mainWriting,
+                        reading: reading,
                         easinessScore: currentWord.easinessScore,
                     ),
                 )
