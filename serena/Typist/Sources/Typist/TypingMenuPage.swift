@@ -30,7 +30,7 @@ public struct TypingMenuPage: View {
         ScrollView {
             VStack {
                 if let randomWord {
-                    Text("aa: \(randomWord.readings)")
+                    Text("Random word: \(randomWord.readings)")
                 }
 
                 Text("Get better at typing with a japanese keyboard !")
@@ -87,11 +87,14 @@ public struct TypingMenuPage: View {
 }
 
 #Preview {
-    _ = prepareDependencies {
-        $0.defaultDatabase = try! reinaAppDatabase(at: DatabaseLocator.reinaDatabaseURL)
-    }
+    prepareDependenciesForPreview()
 
     NavigationView {
         TypingMenuPage()
     }.environment(NavigationCoordinator())
+}
+
+func prepareDependenciesForPreview() -> some View {
+    prepareReinaDB(at: DatabaseLocator.reinaDatabaseURL)
+    return EmptyView()
 }

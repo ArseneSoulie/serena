@@ -39,6 +39,26 @@
             "name": "Release JMdictToolsCLI (serena/JMdictTools)",
             "program": "${workspaceFolder:serena}/serena/JMdictTools/.build/release/JMdictToolsCLI",
             "preLaunchTask": "swift: Build Release JMdictToolsCLI (serena/JMdictTools)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:serena}/JMdictTools",
+            "name": "Debug jmdict-tools (JMdictTools)",
+            "target": "jmdict-tools",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug jmdict-tools (JMdictTools)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:serena}/JMdictTools",
+            "name": "Release jmdict-tools (JMdictTools)",
+            "target": "jmdict-tools",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release jmdict-tools (JMdictTools)"
         }
     ]
 }
