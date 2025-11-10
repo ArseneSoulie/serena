@@ -24,7 +24,7 @@ class TypingViewModel: ObservableObject {
     @Published var inputText: String = ""
     @Published var autoSubmitEnabled: Bool = true
 
-    // MARK: Internal Game State
+    // MARK: - Internal Game State
 
     private var lastFrameTime: Date = .now
     private var timeSinceLastSpawn: TimeInterval = 0
@@ -32,8 +32,9 @@ class TypingViewModel: ObservableObject {
     private var lastLevelUpAt: Date = .distantPast
     private var gameLoopTimer: AnyCancellable?
     private var cancellables = Set<AnyCancellable>()
+    private let level: TypingLevel
 
-    // MARK: Tuning
+    // MARK: - Tuning
 
     private var fallSpeed: CGFloat { (1 / timeToReachTheBottom) * difficultyScale }
     private var timeUntilNextSpawn: TimeInterval { 10 / difficultyScale }
@@ -41,8 +42,6 @@ class TypingViewModel: ObservableObject {
     private let timeToReachTheBottom: CGFloat = 20
     private let startingDifficulty: Double = 1
     private var comboMultiplier: Double { 1.0 + Double(comboCount) * 0.1 }
-
-    let level: TypingLevel
 
     init(level: TypingLevel) {
         self.level = level
@@ -61,7 +60,7 @@ class TypingViewModel: ObservableObject {
 
     func startGame() {
         DispatchQueue.main.async {
-            self.gameLoopTimer = Timer.publish(every: 1.0 / 60.0, on: .main, in: .common)
+            self.gameLoopTimer = Timer.publish(every: 1.0 / 20.0, on: .main, in: .common)
                 .autoconnect()
                 .sink { [weak self] currentTime in
                     self?.onTick(currentTime: currentTime)
@@ -71,7 +70,9 @@ class TypingViewModel: ObservableObject {
     }
 
     func stopGame() {
-        isPlaying = false
+        withAnimation {
+            isPlaying = false
+        }
         showLevelUp = false
         textsToType = []
         scorePopups = []
@@ -90,6 +91,13 @@ class TypingViewModel: ObservableObject {
 
     // MARK: - Public Game Actions
 
+    func endGame() {
+        bestCombo = max(bestCombo, comboCount)
+
+        saveNewHighScoreIfNeeded()
+        stopGame()
+    }
+
     func restartGame() {
         lastFrameTime = .now
         timeSinceLastSpawn = 0
@@ -102,7 +110,9 @@ class TypingViewModel: ObservableObject {
         comboCount = 0
         bestCombo = 0
         showLevelUp = false
-        isPlaying = true
+        withAnimation {
+            isPlaying = true
+        }
         isHighScore = false
         startGame()
     }
@@ -112,12 +122,7 @@ class TypingViewModel: ObservableObject {
         inputText = ""
     }
 
-    private func handleAutoSubmit(for text: String) {
-        guard autoSubmitEnabled, !text.isEmpty else { return }
-        evaluateMatchesAndScore(with: text, onSuccess: { [weak self] in self?.inputText = "" })
-    }
-
-    // MARK: - Game Logic (All private)
+    // MARK: - Game Logic
 
     private func updateTiming(currentFrameTime: Date) {
         deltaTime = currentFrameTime.timeIntervalSince(lastFrameTime)
@@ -182,6 +187,11 @@ class TypingViewModel: ObservableObject {
         }
     }
 
+    private func handleAutoSubmit(for text: String) {
+        guard autoSubmitEnabled, !text.isEmpty else { return }
+        evaluateMatchesAndScore(with: text, onSuccess: { [weak self] in self?.inputText = "" })
+    }
+
     private func applyDamageIfNeeded() {
         let countBefore = textsToType.count
         textsToType.removeAll { $0.y >= 1.0 }
@@ -206,14 +216,7 @@ class TypingViewModel: ObservableObject {
         }
     }
 
-    private func endGame() {
-        bestCombo = max(bestCombo, comboCount)
-
-        saveNewHighScoreIfNeeded()
-        stopGame()
-    }
-
-    func saveNewHighScoreIfNeeded() {
+    private func saveNewHighScoreIfNeeded() {
         let previousHighScore = typingScore[level] ?? 0
         isHighScore = score > previousHighScore
         if isHighScore {

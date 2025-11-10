@@ -3,14 +3,10 @@ import FoundationModels
 import SwiftUI
 
 public struct TypingPage: View {
-    // MARK: State
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @StateObject private var typingViewModel: TypingViewModel
     @State private var isFocused: Bool = false
-
-    // MARK: Environment / Accessibility
-
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(level: TypingLevel) {
         _typingViewModel = StateObject(wrappedValue: TypingViewModel(level: level))
@@ -30,35 +26,31 @@ public struct TypingPage: View {
                     )
                 }
 
-                Group {
-                    if typingViewModel.isPlaying {
-                        Playfield(
-                            textsToType: typingViewModel.textsToType,
-                            scorePopups: typingViewModel.scorePopups,
-                            showLevelUp: typingViewModel.showLevelUp,
-                            inputText: typingViewModel.inputText,
-                        )
-                        .modifier(ShakeEffect(
-                            amount: reduceMotion ? 0 : 2,
-                            shakesPerUnit: 5,
-                            animatableData: typingViewModel.shakeTrigger,
-                        ))
-                        .animation(.easeOut(duration: 0.4), value: typingViewModel.shakeTrigger)
+                if typingViewModel.isPlaying {
+                    Playfield(
+                        textsToType: typingViewModel.textsToType,
+                        scorePopups: typingViewModel.scorePopups,
+                        showLevelUp: typingViewModel.showLevelUp,
+                        inputText: typingViewModel.inputText,
+                    )
+                    .modifier(ShakeEffect(
+                        amount: reduceMotion ? 0 : 2,
+                        shakesPerUnit: 5,
+                        animatableData: typingViewModel.shakeTrigger,
+                    ))
+                    .animation(.easeOut(duration: 0.4), value: typingViewModel.shakeTrigger)
 
-                    } else {
-                        FinishCard(
-                            score: typingViewModel.score,
-                            bestCombo: typingViewModel.bestCombo,
-                            isHighScore: typingViewModel.isHighScore,
-                            onRestart: {
-                                typingViewModel.restartGame()
-                                isFocused = true
-                            },
-                        )
-                    }
+                } else {
+                    FinishCard(
+                        score: typingViewModel.score,
+                        bestCombo: typingViewModel.bestCombo,
+                        isHighScore: typingViewModel.isHighScore,
+                        onRestart: {
+                            typingViewModel.restartGame()
+                            isFocused = true
+                        },
+                    )
                 }
-                .transaction { tx in tx.disablesAnimations = true }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
 
                 if typingViewModel.isPlaying {
                     inputBar
@@ -75,6 +67,9 @@ public struct TypingPage: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Toggle("Auto-submit", isOn: $typingViewModel.autoSubmitEnabled)
             }
+        }
+        .onDisappear {
+            typingViewModel.endGame()
         }
         .navigationTitle("Typing")
         .navigationBarTitleDisplayMode(.inline)
