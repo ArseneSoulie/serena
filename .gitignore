@@ -66,3 +66,6 @@ packages_cacheV2
 *.sqlite
 *.sqlite-shm
 *.sqlite-wal
+
+#Dictionary
+small-dict.xml
