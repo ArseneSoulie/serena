@@ -40,7 +40,7 @@ public struct KanaMainPage: View {
             }
 
             Tab(
-                localized("Typing"),
+                String(localized: .typing),
                 systemImage: "keyboard",
                 value: .typist,
             ) {

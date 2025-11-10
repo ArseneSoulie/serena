@@ -58,7 +58,7 @@ struct MnemonicView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             Button(
-                (currentDrawing ?? "").isEmpty ? String(localized: .drawYourOwn) : String(localized: .edit),
+                (currentDrawing ?? "").isEmpty ? .drawYourOwn : .edit,
                 systemImage: "pencil",
                 action: { onDrawMnemonicTapped(mnemonic) },
             )

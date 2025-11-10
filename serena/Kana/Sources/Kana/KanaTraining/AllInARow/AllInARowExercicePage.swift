@@ -18,7 +18,7 @@ struct AllInARowExercicePage: View {
     @State var remainingKanas: Set<Kana>
 
     @State var handwrittenFont: CustomFontFamily = .yujiBoku
-    @State var info: String = " "
+    @State var info: LocalizedStringResource?
     @State var showAnswer: Bool = false
 
     let handwrittenFontFamilies: [CustomFontFamily] = [.hachiMaruPop, .yujiBoku, .yujiMai, .yujiSyuku]
@@ -65,7 +65,7 @@ struct AllInARowExercicePage: View {
                     }
                     if failedKanas.contains(truth) {
                         Button(.revealAnswer, action: { showAnswer.toggle() })
-                    } else {
+                    } else if let info {
                         Text(info)
                     }
                 }
@@ -127,7 +127,7 @@ struct AllInARowExercicePage: View {
         let convertedTruth = truth.kanaValue.standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
 
-        info = " "
+        info = nil
 
         if !isCorrect {
             failedKanas.insert(truth)
@@ -143,7 +143,7 @@ struct AllInARowExercicePage: View {
             withAnimation(.default) {
                 truthColor = .orange
                 shakeTrigger += 1
-                info = String(localized: .thisIsTheRightKanaButWithIncorrectWritingTryAgain)
+                info = .thisIsTheRightKanaButWithIncorrectWritingTryAgain
             } completion: {
                 withAnimation {
                     truthColor = .primary

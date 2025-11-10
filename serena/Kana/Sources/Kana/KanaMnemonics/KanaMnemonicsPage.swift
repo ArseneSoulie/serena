@@ -21,9 +21,7 @@ public struct KanaMnemonicsPage: View {
                             Image(.ReinaEmotes.mnemonics)
                                 .resizable()
                                 .frame(width: 64, height: 64)
-                            Text(
-                                .heresAListOfHelpfulMnemonicsAndExplanationsWevePreparedForYouTheBestRemainsForYouToMakeThemYourOwnSoHaveFunAndExperimentByCreatingYourOwnStory,
-                            )
+                            Text(.mnemonicsExplanation)
                         }
 
                         Divider()

@@ -12,17 +12,6 @@
       },
       "shouldTranslate" : false
     },
-    "%@: %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@: %2$lld"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
     "All" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -111,13 +100,13 @@
         }
       }
     },
-    "Correct" : {
+    "Correct: %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Corrects"
+            "value" : "Correct: %lld"
           }
         }
       }
@@ -243,17 +232,6 @@
         }
       }
     },
-    "Here's a list of helpful mnemonics and explanations we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Voila une liste de moyens mnémotechniques préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et fais ta propre histoire !"
-          }
-        }
-      }
-    },
     "Hiragana" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -265,13 +243,13 @@
         }
       }
     },
-    "Incorrect" : {
+    "Incorrect: %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erronés"
+            "value" : "Erronée: %lld"
           }
         }
       }
@@ -309,9 +287,6 @@
         }
       }
     },
-    "KanaLearningPage" : {
-      "shouldTranslate" : false
-    },
     "Katakana" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -323,13 +298,13 @@
         }
       }
     },
-    "Learn the selected kanas by doing challenges of increasing difficulty" : {
+    "Learn" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apprends les kanas sélectionnés par paliers de difficulté croissante ~ Parfait pour débuter"
+            "value" : "Apprendre"
           }
         }
       }
@@ -385,6 +360,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Paliers"
+          }
+        }
+      }
+    },
+    "levelUpsExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn the selected kanas by doing challenges of increasing difficulty"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprends les kanas sélectionnés par paliers de difficulté croissante ~ Parfait pour débuter"
           }
         }
       }
@@ -2056,6 +2048,23 @@
         }
       }
     },
+    "mnemonicsExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here's a list of helpful mnemonics and explanations we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voila une liste de moyens mnémotechniques préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et fais ta propre histoire !"
+          }
+        }
+      }
+    },
     "Mode" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2078,13 +2087,13 @@
         }
       }
     },
-    "Passed" : {
+    "Passed: %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passés"
+            "value" : "Passés: %lld"
           }
         }
       }
@@ -2272,6 +2281,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tente d’écrire tous les kanas d’affilée"
+          }
+        }
+      }
+    },
+    "Typing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire"
           }
         }
       }

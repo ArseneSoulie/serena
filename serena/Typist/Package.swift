@@ -31,6 +31,7 @@ let package = Package(
                 .copy("DB/reina.sqlite"),
                 .copy("DB/reina.sqlite-shm"),
                 .copy("DB/reina.sqlite-wal"),
+                .process("Resources"),
             ],
         ),
     ],

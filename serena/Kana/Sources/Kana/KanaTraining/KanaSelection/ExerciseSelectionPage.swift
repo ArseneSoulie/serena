@@ -78,7 +78,7 @@ struct SelectionContent: View {
                 .typography(.title2)
 
             ExerciceBanner(
-                title: .learnTheSelectedKanasByDoingChallengesOfIncreasingDifficulty,
+                title: .levelUpsExplanation,
                 imageResource: .TrainingBanner.levelUp,
                 onBannerTapped: onLevelUpsTapped,
             )

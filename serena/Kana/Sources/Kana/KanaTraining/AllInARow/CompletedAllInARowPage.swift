@@ -71,17 +71,17 @@ struct CompletedAllInARowPage: View {
                         .padding()
 
                         if result.succeededKanas.count != 0 {
-                            Text("\(String(localized: .correct)): \(result.succeededKanas.count)")
+                            Text(.correct(result.succeededKanas.count))
                                 .foregroundStyle(.green)
                         }
 
                         if result.skippedKanas.count != 0 {
-                            Text("\(String(localized: .passed)): \(result.skippedKanas.count)")
+                            Text(.passed(result.skippedKanas.count))
                                 .foregroundStyle(.secondary)
                         }
 
                         if result.failedKanas.count != 0 {
-                            Text("\(String(localized: .incorrect)): \(result.failedKanas.count)")
+                            Text(.incorrect(result.failedKanas.count))
                                 .foregroundStyle(.red)
                         }
 
