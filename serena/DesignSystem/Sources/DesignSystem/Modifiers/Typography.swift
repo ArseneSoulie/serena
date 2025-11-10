@@ -33,7 +33,7 @@ public extension Typography {
     )
 
     static let callout: Typography = .init(
-        size: 16,
+        size: 14,
         relativeTo: .callout,
     )
 

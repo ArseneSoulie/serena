@@ -56,6 +56,17 @@
         }
       }
     },
+    "By convention hiragana is lowercased and katakana is uppercased." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par convention les hiragana sont en minuscules et les katakana en majuscules"
+          }
+        }
+      }
+    },
     "Clear" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -337,7 +348,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nivear %lld"
+            "value" : "Niveau %lld"
           }
         }
       }
