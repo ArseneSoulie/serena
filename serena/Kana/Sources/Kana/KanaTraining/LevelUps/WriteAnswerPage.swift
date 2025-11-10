@@ -62,7 +62,7 @@ struct WriteAnswerPage: View {
                     Text(kanaTruth)
                         .foregroundStyle(truthColor)
                         .typography(.largeTitle)
-                        .modifier(ShakeEffect(animatableData: shakeTrigger))
+                        .shake(shakeTrigger)
                         .padding()
                         .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
                     Text(info)

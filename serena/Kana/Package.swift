@@ -15,21 +15,21 @@ let package = Package(
         ),
     ],
     dependencies: [
-        //        .package(url: "https://github.com/pointfreeco/sharing-grdb", from: "0.6.0"),
         .package(name: "Navigation", path: "../Navigation"),
         .package(name: "DesignSystem", path: "../DesignSystem"),
         .package(name: "FoundationModels", path: "../FoundationModels"),
         .package(name: "KanjiVGParser", path: "../KanjiVGParser"),
+        .package(name: "Typist", path: "../Typist"),
     ],
     targets: [
         .target(
             name: "Kana",
             dependencies: [
-                //                .product(name: "SharingGRDB", package: "sharing-grdb"),
                 "Navigation",
                 "DesignSystem",
                 "FoundationModels",
                 "KanjiVGParser",
+                "Typist",
             ],
             resources: [
                 .process("Resources"),

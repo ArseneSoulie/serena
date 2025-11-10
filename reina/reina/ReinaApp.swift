@@ -7,21 +7,20 @@
 
 import DesignSystem
 import Kana
-import Navigation
+import ReinaDB
 import SwiftUI
+import Typist
 
 @main
 struct ReinaApp: App {
-    var coordinator = NavigationCoordinator()
-
     init() {
         registerFontForUIKitComponents()
+        prepareReinaDB(at: DatabaseLocator.reinaDatabaseURL)
     }
 
     var body: some Scene {
         WindowGroup {
             KanaMainPage()
-                .environment(coordinator)
                 .registerFontForSwiftUIComponents()
         }
     }

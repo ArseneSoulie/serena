@@ -9,6 +9,9 @@ setup:
 
 gen: swiftgen swiftlint_exclude
 
+test-dict:
+	swift run  --package-path ./JMdictTools jmdict-tools ./small-dict.xml -o sqlite
+
 # Generate fonts, colors, l10n, images
 swiftgen:
 	$(call pretty_print, Generating swiftgen)

@@ -79,6 +79,8 @@ struct PickAnswerPage: View {
                         label: { Text(formatGuessingOption(option)).padding(.horizontal) },
                     )
                     .typography(.title)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
                     .buttonStyle(.borderedProminent)
                 }
             }.disabled(disableButtons)

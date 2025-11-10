@@ -46,7 +46,7 @@ struct AllInARowExercicePage: View {
                     ZStack(alignment: .bottom) {
                         Text(truth.kanaValue)
                             .foregroundStyle(truthColor)
-                            .modifier(ShakeEffect(animatableData: shakeTrigger))
+                            .shake(shakeTrigger)
                             .typography(.largeTitle, fontFamily: handwrittenFont)
                             .padding()
                         if showAnswer {
