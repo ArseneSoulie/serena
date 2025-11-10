@@ -22,9 +22,10 @@ public struct TypingMenuPage: View {
 
     public var body: some View {
         ScrollView {
-            VStack {
+            VStack(alignment: .leading) {
                 Text(.getBetterAtTypingWithAJapaneseKeyboard)
                 Spacer()
+                    .frame(maxWidth: .infinity)
                 Grid(alignment: .leading, horizontalSpacing: 20) {
                     GridRow {
                         Text(.pickAMode)
@@ -42,11 +43,11 @@ public struct TypingMenuPage: View {
                         Button(.fullDictionary, systemImage: "hare.fill", action: onFullDictionnaryTapped)
                         Text(String(typingScore[.fullDictionnary] ?? 0))
                     }
-                }.padding(.horizontal, 8)
+                }
             }
+            .padding()
         }
         .navigationTitle(.typingTest)
-        .navigationBarTitleDisplayMode(.large)
     }
 
     func onKanaOnlyTapped() {
