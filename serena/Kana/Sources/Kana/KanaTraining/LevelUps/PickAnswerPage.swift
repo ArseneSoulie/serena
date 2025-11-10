@@ -28,6 +28,7 @@ struct PickAnswerPage: View {
     @State private var showToast = false
 
     @State private var disableButtons: Bool = false
+    @State private var capitalizationColorHint: Color = .secondary
 
     init(
         title: LocalizedStringResource,
@@ -61,9 +62,15 @@ struct PickAnswerPage: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 10) {
             ProgressBarView(progress: $progress)
             Text(pickingExerciceType.prompt)
+                .padding(.horizontal)
+            Text(.byConventionHiraganaIsLowercasedAndKatakanaIsUppercased)
+                .foregroundStyle(capitalizationColorHint)
+                .padding(.horizontal)
+                .padding(.bottom)
+                .typography(.callout)
 
             Text(formattedTruth)
                 .typography(.largeTitle)
@@ -73,7 +80,7 @@ struct PickAnswerPage: View {
             Spacer()
 
             HStack(spacing: 20) {
-                ForEach(guessingOptions.shuffled(), id: \.self) { option in
+                ForEach(guessingOptions, id: \.self) { option in
                     Button(
                         action: { onOptionSelected(option) },
                         label: { Text(formatGuessingOption(option)).padding(.horizontal) },
@@ -102,6 +109,18 @@ struct PickAnswerPage: View {
 
     func onOptionSelected(_ option: Kana) {
         let isCorrect = option == truth
+
+        if !isCorrect, option.romajiValue.lowercased() == truth.romajiValue.lowercased() {
+            withAnimation(.bouncy(duration: 0.1)) {
+                capitalizationColorHint = .orange
+            } completion: {
+                withAnimation(.linear(duration: 0.3)) {
+                    capitalizationColorHint = .secondary
+                }
+            }
+            return
+        }
+
         var nextProgress = isCorrect ? progress + answerCompletionPercent : progress - answerCompletionPercent
         nextProgress = min(max(nextProgress, 0), 1)
 
