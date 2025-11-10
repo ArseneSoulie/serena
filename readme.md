@@ -5,11 +5,11 @@ run
 You're ready to use the app
 
 ## To build the full words database
-Download the jmdict.yml file or use the small-dict.yml to test out things on a smaller scale
+Download the jmdict.yml file
 Run the following to build the database
 ```bash
 cd ./JMdictTools
-swift run JMdictToolsCLI ./CLI/small-dict.yml -o sqlite
+swift run JMdictToolsCLI ./jmdict.yml -o sqlite
 ```
 Ignoring the -o will print the output to the console, you can swap the path to your dict
 
