@@ -5,7 +5,7 @@ import SwiftUI
 public struct TypingPage: View {
     // MARK: State
 
-    @StateObject private var gameEngine: GameEngine
+    @StateObject private var typingViewModel: TypingViewModel
     @State private var isFocused: Bool = false
 
     // MARK: Environment / Accessibility
@@ -13,44 +13,44 @@ public struct TypingPage: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     public init(level: TypingLevel) {
-        _gameEngine = StateObject(wrappedValue: GameEngine(level: level))
+        _typingViewModel = StateObject(wrappedValue: TypingViewModel(level: level))
     }
 
     public var body: some View {
         ZStack {
-            AnimatedBackground(difficultyScale: gameEngine.difficultyScale)
+            AnimatedBackground(difficultyScale: typingViewModel.difficultyScale)
                 .ignoresSafeArea()
 
             VStack(spacing: 10) {
-                if gameEngine.isPlaying {
+                if typingViewModel.isPlaying {
                     TopBars(
-                        health: gameEngine.health,
-                        comboCount: gameEngine.comboCount,
-                        score: gameEngine.score,
+                        health: typingViewModel.health,
+                        comboCount: typingViewModel.comboCount,
+                        score: typingViewModel.score,
                     )
                 }
 
                 Group {
-                    if gameEngine.isPlaying {
+                    if typingViewModel.isPlaying {
                         Playfield(
-                            textsToType: gameEngine.textsToType,
-                            scorePopups: gameEngine.scorePopups,
-                            showLevelUp: gameEngine.showLevelUp,
-                            inputText: gameEngine.inputText,
+                            textsToType: typingViewModel.textsToType,
+                            scorePopups: typingViewModel.scorePopups,
+                            showLevelUp: typingViewModel.showLevelUp,
+                            inputText: typingViewModel.inputText,
                         )
                         .modifier(ShakeEffect(
                             amount: reduceMotion ? 0 : 2,
                             shakesPerUnit: 5,
-                            animatableData: gameEngine.shakeTrigger,
+                            animatableData: typingViewModel.shakeTrigger,
                         ))
-                        .animation(.easeOut(duration: 0.4), value: gameEngine.shakeTrigger)
+                        .animation(.easeOut(duration: 0.4), value: typingViewModel.shakeTrigger)
 
                     } else {
                         FinishCard(
-                            score: gameEngine.score,
-                            bestCombo: gameEngine.bestCombo,
+                            score: typingViewModel.score,
+                            bestCombo: typingViewModel.bestCombo,
                             onRestart: {
-                                gameEngine.restartGame()
+                                typingViewModel.restartGame()
                                 isFocused = true
                             },
                         )
@@ -59,20 +59,20 @@ public struct TypingPage: View {
                 .transaction { tx in tx.disablesAnimations = true }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                if gameEngine.isPlaying {
+                if typingViewModel.isPlaying {
                     inputBar
                 }
             }
         }
         .onAppear {
-            gameEngine.startGame()
+            typingViewModel.startGame()
             Task {
                 isFocused = true
             }
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Toggle("Auto-submit", isOn: $gameEngine.autoSubmitEnabled)
+                Toggle("Auto-submit", isOn: $typingViewModel.autoSubmitEnabled)
             }
         }
         .navigationTitle("Typing")
@@ -81,11 +81,11 @@ public struct TypingPage: View {
 
     private var inputBar: some View {
         KanaTextFieldView(
-            text: $gameEngine.inputText,
+            text: $typingViewModel.inputText,
             isFirstResponder: $isFocused,
             languageCode: "ja",
             placeholder: "日本語で入力してください",
-            onSubmit: { gameEngine.onSubmit() },
+            onSubmit: { typingViewModel.onSubmit() },
         )
         .padding(.horizontal, 12)
         .frame(minHeight: 36, maxHeight: 44)

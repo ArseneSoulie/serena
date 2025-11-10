@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-// MARK: - UITextField Subclass (Unchanged)
+// MARK: - UITextField Subclass
 
 final class KanaTextField: UITextField {
     var preferredLanguageCode: String?
@@ -19,7 +19,7 @@ final class KanaTextField: UITextField {
     }
 }
 
-// MARK: - UIViewRepresentable (Rollback Version)
+// MARK: - UIViewRepresentable
 
 struct KanaTextFieldView: UIViewRepresentable {
     @Binding var text: String

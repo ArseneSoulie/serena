@@ -5,7 +5,7 @@ import SQLiteData
 import SwiftUI
 
 @MainActor
-class GameEngine: ObservableObject {
+class TypingViewModel: ObservableObject {
     @Dependency(\.defaultDatabase) var database
 
     @Published private(set) var textsToType: [TextToType] = []
