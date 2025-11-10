@@ -25,10 +25,10 @@ struct MnemonicView: View {
                     .typography(.title2)
                     .bold()
                     .foregroundStyle(color)
-                Button(localized("Pronunciation"), systemImage: "speaker.wave.2.fill", action: onPlayAudioButtonTapped)
+                Button(.pronunciation, systemImage: "speaker.wave.2.fill", action: onPlayAudioButtonTapped)
             }
 
-            Text(localized("Mnemonics.\(mnemonic.kanaString)"))
+            Text(String(localizedInterpolated: "Mnemonics.\(mnemonic.kanaString)"))
 
             if let currentExplanation, !currentExplanation.isEmpty {
                 Text(currentExplanation).foregroundStyle(.secondary)
@@ -58,7 +58,7 @@ struct MnemonicView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             Button(
-                (currentDrawing ?? "").isEmpty ? localized("Draw your own") : localized("Edit"),
+                (currentDrawing ?? "").isEmpty ? .drawYourOwn : .edit,
                 systemImage: "pencil",
                 action: { onDrawMnemonicTapped(mnemonic) },
             )

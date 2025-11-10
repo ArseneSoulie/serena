@@ -40,11 +40,11 @@ struct CompletedAllInARowPage: View {
             VStack {
                 ScrollView {
                     VStack {
-                        Text(localized("Completed !"))
+                        Text(.completed)
                             .typography(.headline)
                             .padding()
                         if isPerfect {
-                            Text(localized("Perfect run ! 🎉"))
+                            Text(.perfectRun🎉)
                         }
 
                         let columns = [GridItem(.adaptive(minimum: 50))]
@@ -71,17 +71,17 @@ struct CompletedAllInARowPage: View {
                         .padding()
 
                         if result.succeededKanas.count != 0 {
-                            Text("\(localized("Correct")): \(result.succeededKanas.count)")
+                            Text(.correct(result.succeededKanas.count))
                                 .foregroundStyle(.green)
                         }
 
                         if result.skippedKanas.count != 0 {
-                            Text("\(localized("Passed")): \(result.skippedKanas.count)")
+                            Text(.passed(result.skippedKanas.count))
                                 .foregroundStyle(.secondary)
                         }
 
                         if result.failedKanas.count != 0 {
-                            Text("\(localized("Incorrect")): \(result.failedKanas.count)")
+                            Text(.incorrect(result.failedKanas.count))
                                 .foregroundStyle(.red)
                         }
 
@@ -93,11 +93,11 @@ struct CompletedAllInARowPage: View {
                 }
 
                 HStack {
-                    Button(localized("Try again with selection"), action: onTryAgainTapped)
-                    Button(localized("Level ups"), action: onLevelUpsTapped)
+                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
+                    Button(.levelUps, action: onLevelUpsTapped)
                 }.buttonStyle(.borderedProminent)
                     .padding()
-                Button(localized("Go back to selection"), action: onGoBackTapped)
+                Button(.goBackToSelection, action: onGoBackTapped)
                     .buttonStyle(.borderless)
             }.padding()
             if isPerfect {
@@ -119,7 +119,7 @@ struct CompletedAllInARowPage: View {
         .toolbar {
             if result.failedKanas.count != 0 {
                 Toggle(isOn: $shouldShowRomajiForFailedKanas) {
-                    Text(localized("Show Romaji for failed"))
+                    Text(.showRomajiForFailed)
                 }.padding()
             }
         }

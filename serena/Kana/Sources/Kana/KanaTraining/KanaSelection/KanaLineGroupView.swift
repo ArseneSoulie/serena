@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct KanaLineGroupView: View {
-    let title: String
+    let title: LocalizedStringResource
     let lines: [KanaLine]
     @Binding var selectedLines: Set<KanaLine>
 
@@ -10,7 +10,7 @@ struct KanaLineGroupView: View {
     let tint: Color
 
     init(
-        title: String,
+        title: LocalizedStringResource,
         lines: [KanaLine],
         selectedLines: Binding<Set<KanaLine>>,
         showRomaji: Bool,

@@ -9,37 +9,37 @@ struct FastSelectPopoverView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(localized("Fast select"))
+            Text(.fastSelect)
                 .typography(.title2)
             Spacer()
             HStack {
-                Button(localized("All"), action: selectAll)
+                Button(.all, action: selectAll)
                 Spacer()
-                Button(localized("Clear"), action: clearAll)
+                Button(.clear, action: clearAll)
             }
             Divider()
             FastSelectToggleButton(
-                title: localized("Base"),
+                title: .base,
                 tint: CatagoryColor.base,
                 isOn: $selectedBase[containsLines: base],
             )
             FastSelectToggleButton(
-                title: localized("Diacritics"),
+                title: .diacritics,
                 tint: CatagoryColor.diacritic,
                 isOn: $selectedDiacritic[containsLines: diacritic],
             )
             FastSelectToggleButton(
-                title: localized("Combinatory"),
+                title: .combinatory,
                 tint: CatagoryColor.combinatory,
                 isOn: $selectedCombinatory[containsLines: combinatory],
             )
             FastSelectToggleButton(
-                title: localized("Combinatory diacritics"),
+                title: .combinatoryDiacritics,
                 tint: CatagoryColor.combinarotyDiacritic,
                 isOn: $selectedCombinatoryDiacritic[containsLines: combinatoryDiacritic],
             )
             FastSelectToggleButton(
-                title: localized("Extended katakana"),
+                title: .extendedKatakana,
                 tint: CatagoryColor.extendedKatakana,
                 isOn: $selectedExtendedKatakana[containsLines: extendedKatakana],
             )
@@ -70,7 +70,7 @@ struct FastSelectPopoverView: View {
 }
 
 struct FastSelectToggleButton: View {
-    let title: String
+    let title: LocalizedStringResource
     let tint: Color
     @Binding var isOn: Bool
 

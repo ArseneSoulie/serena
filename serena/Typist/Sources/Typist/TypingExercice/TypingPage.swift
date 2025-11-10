@@ -65,13 +65,13 @@ public struct TypingPage: View {
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Toggle("Auto-submit", isOn: $typingViewModel.autoSubmitEnabled)
+                Toggle(.autoSubmit, isOn: $typingViewModel.autoSubmitEnabled)
             }
         }
         .onDisappear {
             typingViewModel.endGame()
         }
-        .navigationTitle("Typing")
+        .navigationTitle(.typing)
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -80,7 +80,7 @@ public struct TypingPage: View {
             text: $typingViewModel.inputText,
             isFirstResponder: $isFocused,
             languageCode: "ja",
-            placeholder: "日本語で入力してください",
+            placeholder: .inputTheFallingText,
             onSubmit: { typingViewModel.onSubmit() },
         )
         .padding(.horizontal, 12)
@@ -112,7 +112,7 @@ private struct TopBars: View {
             .padding(.horizontal)
 
             HStack {
-                Text("Points: \(score)")
+                Text(.points(score))
                 Spacer()
             }
             .padding(.horizontal)
@@ -134,7 +134,7 @@ private struct TopBars: View {
     private var comboView: some View {
         Group {
             if comboCount > 0 {
-                Text("Combo \(comboCount) • x\(comboMultiplier, specifier: "%.1f")")
+                Text(.comboX(comboCount, Float(comboMultiplier)))
                     .foregroundStyle(.orange)
                     .transition(.opacity.animation(.easeInOut))
             }
@@ -181,7 +181,7 @@ private struct Playfield: View {
             }
 
             if showLevelUp {
-                Text("Level Up!")
+                Text(.levelUp)
                     .font(.headline)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
@@ -207,24 +207,24 @@ private struct FinishCard: View {
         VStack {
             Spacer()
             VStack(spacing: 14) {
-                Text("Finished")
+                Text(.finished)
                     .typography(.title2)
                 VStack(spacing: 6) {
-                    Text("Total score")
+                    Text(.totalScore)
                         .foregroundStyle(.secondary)
                     Text("\(score)")
                         .typography(.title)
                         .font(.largeTitle)
                 }
                 if isHighScore {
-                    Text("New high score !")
+                    Text(.newHighScore)
                 }
                 if bestCombo > 0 {
-                    Text("Best combo: \(bestCombo) • x\(bestComboMultiplier, specifier: "%.1f")")
+                    Text(.bestComboX(bestCombo, Float(bestComboMultiplier)))
                         .foregroundStyle(.orange)
                 }
                 Button(action: onRestart) {
-                    Text("Play again")
+                    Text(.playAgain)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 8)
                         .background(.ultraThinMaterial, in: Capsule())

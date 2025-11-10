@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct ToastView: View {
-    let message: String
+    let message: LocalizedStringResource
 
     var body: some View {
         Text(message)
-
             .padding()
             .background(Color.black.opacity(0.8))
             .foregroundColor(.white)
@@ -25,7 +24,7 @@ struct ToastView: View {
 
 struct ToastModifier: ViewModifier {
     @Binding var isPresented: Bool
-    let message: String
+    let message: LocalizedStringResource
 
     func body(content: Content) -> some View {
         ZStack {
@@ -46,7 +45,7 @@ struct ToastModifier: ViewModifier {
 }
 
 extension View {
-    func toast(isPresented: Binding<Bool>, message: String) -> some View {
+    func toast(isPresented: Binding<Bool>, message: LocalizedStringResource) -> some View {
         modifier(ToastModifier(isPresented: isPresented, message: message))
     }
 }

@@ -24,13 +24,13 @@ public struct KanaSelectionPage: View {
                     Image(.ReinaEmotes.training)
                         .resizable()
                         .frame(width: 64, height: 64)
-                    Text(localized("Select the rows you want to train on and hit \"Let's go\""))
+                    Text(.selectTheRowsYouWantToTrainOnAndHitLetsGo)
                 }
                 .padding()
 
                 LazyVStack(pinnedViews: .sectionHeaders) {
                     KanaLineGroupView(
-                        title: localized("Base"),
+                        title: .base,
                         lines: base,
                         selectedLines: $selectedBase,
                         showRomaji: showRomaji,
@@ -38,7 +38,7 @@ public struct KanaSelectionPage: View {
                         tint: CatagoryColor.base,
                     )
                     KanaLineGroupView(
-                        title: localized("Diacritics"),
+                        title: .diacritics,
                         lines: diacritic,
                         selectedLines: $selectedDiacritic,
                         showRomaji: showRomaji,
@@ -46,7 +46,7 @@ public struct KanaSelectionPage: View {
                         tint: CatagoryColor.diacritic,
                     )
                     KanaLineGroupView(
-                        title: localized("Combinatory"),
+                        title: .combinatory,
                         lines: combinatory,
                         selectedLines: $selectedCombinatory,
                         showRomaji: showRomaji,
@@ -54,7 +54,7 @@ public struct KanaSelectionPage: View {
                         tint: CatagoryColor.combinatory,
                     )
                     KanaLineGroupView(
-                        title: localized("Combinatory diacritics"),
+                        title: .combinatoryDiacritics,
                         lines: combinatoryDiacritic,
                         selectedLines: $selectedCombinatoryDiacritic,
                         showRomaji: showRomaji,
@@ -63,7 +63,7 @@ public struct KanaSelectionPage: View {
                     )
                     if kanaSelectionType != .hiragana {
                         KanaLineGroupView(
-                            title: localized("Extended katakana"),
+                            title: .extendedKatakana,
                             lines: extendedKatakana,
                             selectedLines: $selectedExtendedKatakana,
                             showRomaji: showRomaji,
@@ -83,7 +83,7 @@ public struct KanaSelectionPage: View {
             let totalSelectedKanas = selectedKanasForExercise.count
             if totalSelectedKanas != 0 {
                 Button(
-                    localized("Let's go ! %lld", totalSelectedKanas),
+                    .letsGo(totalSelectedKanas),
                     systemImage: "arrow.right",
                     action: onExerciceSelectionTapped,
                 )
@@ -102,7 +102,7 @@ public struct KanaSelectionPage: View {
                 selectedExtendedKatakana: $selectedExtendedKatakana,
             )
         }
-        .navigationTitle(localized("Kana training"))
+        .navigationTitle(.kanaTraining)
         .navigationBarTitleDisplayMode(.large)
     }
 
@@ -162,11 +162,11 @@ struct ToolbarViews: View {
     @Binding var selectedExtendedKatakana: Set<KanaLine>
 
     var body: some View {
-        Picker(localized("Training mode"), selection: $kanaSelectionType) {
+        Picker(.trainingMode, selection: $kanaSelectionType) {
             ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.localisedDescription) }
         }
         .pickerStyle(.menu)
-        Toggle(localized("Romaji"), isOn: $showRomaji)
+        Toggle(.romaji, isOn: $showRomaji)
         Button(action: { showsFastSelect.toggle() }) { Image(systemName: "text.line.first.and.arrowtriangle.forward") }
             .popover(isPresented: $showsFastSelect) {
                 FastSelectPopoverView(

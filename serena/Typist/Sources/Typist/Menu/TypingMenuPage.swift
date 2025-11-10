@@ -23,29 +23,29 @@ public struct TypingMenuPage: View {
     public var body: some View {
         ScrollView {
             VStack {
-                Text("Get better at typing with a japanese keyboard !")
+                Text(.getBetterAtTypingWithAJapaneseKeyboard)
                 Spacer()
                 Grid(alignment: .leading, horizontalSpacing: 20) {
                     GridRow {
-                        Text("Pick a mode")
-                        Text("Top")
+                        Text(.pickAMode)
+                        Text(.bestScore)
                     }
                     GridRow {
-                        Button("Kana only", systemImage: "tortoise.fill", action: onKanaOnlyTapped)
+                        Button(.kanaOnly, systemImage: "tortoise.fill", action: onKanaOnlyTapped)
                         Text(String(typingScore[.kanaOnly] ?? 0))
                     }
                     GridRow {
-                        Button("Easy words", systemImage: "cat.fill", action: onEasyWordsTapped)
+                        Button(.easyWords, systemImage: "cat.fill", action: onEasyWordsTapped)
                         Text(String(typingScore[.easyWords] ?? 0))
                     }
                     GridRow {
-                        Button("Full dictionary", systemImage: "hare.fill", action: onFullDictionnaryTapped)
+                        Button(.fullDictionary, systemImage: "hare.fill", action: onFullDictionnaryTapped)
                         Text(String(typingScore[.fullDictionnary] ?? 0))
                     }
                 }.padding(.horizontal, 8)
             }
         }
-        .navigationTitle("Typing test")
+        .navigationTitle(.typingTest)
         .navigationBarTitleDisplayMode(.large)
     }
 

@@ -76,7 +76,7 @@ public struct DrawingView<ContentView: View>: View {
 
     public var body: some View {
         VStack(spacing: 16) {
-            Text(localized("Draw"))
+            Text(.draw)
             contentView()
                 .overlay {
                     GeometryReader { geo in

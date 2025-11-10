@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-      "shouldTranslate" : false
-    },
     "%@ %lld/%lld" : {
       "localizations" : {
         "en" : {
@@ -13,23 +10,6 @@
           }
         }
       },
-      "shouldTranslate" : false
-    },
-    "%@: %lld" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@: %2$lld"
-          }
-        }
-      },
-      "shouldTranslate" : false
-    },
-    "┌[∵└]   ノ( -_-)ノ   [┘∵]┐" : {
-      "shouldTranslate" : false
-    },
-    "└[∵┌]   ヾ(-_- )ゞ   [┐∵]┘" : {
       "shouldTranslate" : false
     },
     "All" : {
@@ -120,13 +100,13 @@
         }
       }
     },
-    "Correct" : {
+    "Correct: %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Corrects"
+            "value" : "Correct: %lld"
           }
         }
       }
@@ -143,6 +123,7 @@
       }
     },
     "Draw" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -251,16 +232,6 @@
         }
       }
     },
-    "Here's a list of helpful mnemonics and explanations we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Voila une liste de moyens mnémotechniques préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et fais ta propre histoire !"
-          }
-        }
-      }
-    },
     "Hiragana" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -272,13 +243,13 @@
         }
       }
     },
-    "Incorrect" : {
+    "Incorrect: %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Erronés"
+            "value" : "Erronée: %lld"
           }
         }
       }
@@ -295,6 +266,7 @@
       }
     },
     "Kana" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -315,9 +287,6 @@
         }
       }
     },
-    "KanaLearningPage" : {
-      "shouldTranslate" : false
-    },
     "Katakana" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -329,13 +298,13 @@
         }
       }
     },
-    "Learn the selected kanas by doing challenges of increasing difficulty" : {
+    "Learn" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apprends les kanas sélectionnés par paliers de difficulté croissante ~ Parfait pour débuter"
+            "value" : "Apprendre"
           }
         }
       }
@@ -362,6 +331,17 @@
         }
       }
     },
+    "Level %lld" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nivear %lld"
+          }
+        }
+      }
+    },
     "Level up !" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -384,7 +364,25 @@
         }
       }
     },
+    "levelUpsExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn the selected kanas by doing challenges of increasing difficulty"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprends les kanas sélectionnés par paliers de difficulté croissante ~ Parfait pour débuter"
+          }
+        }
+      }
+    },
     "Mnemonics" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -396,6 +394,7 @@
     },
     "Mnemonics.あ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -413,6 +412,7 @@
     },
     "Mnemonics.ア" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -430,6 +430,7 @@
     },
     "Mnemonics.い" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -447,6 +448,7 @@
     },
     "Mnemonics.イ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -464,6 +466,7 @@
     },
     "Mnemonics.う" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -481,6 +484,7 @@
     },
     "Mnemonics.ウ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -498,6 +502,7 @@
     },
     "Mnemonics.え" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -515,6 +520,7 @@
     },
     "Mnemonics.エ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -532,6 +538,7 @@
     },
     "Mnemonics.お" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -549,6 +556,7 @@
     },
     "Mnemonics.オ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -566,6 +574,7 @@
     },
     "Mnemonics.か" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -583,6 +592,7 @@
     },
     "Mnemonics.カ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -600,6 +610,7 @@
     },
     "Mnemonics.き" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -617,6 +628,7 @@
     },
     "Mnemonics.キ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -634,6 +646,7 @@
     },
     "Mnemonics.く" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -651,6 +664,7 @@
     },
     "Mnemonics.ク" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -668,6 +682,7 @@
     },
     "Mnemonics.け" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -685,6 +700,7 @@
     },
     "Mnemonics.ケ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -702,6 +718,7 @@
     },
     "Mnemonics.こ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -719,6 +736,7 @@
     },
     "Mnemonics.コ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -736,6 +754,7 @@
     },
     "Mnemonics.さ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -753,6 +772,7 @@
     },
     "Mnemonics.サ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -770,6 +790,7 @@
     },
     "Mnemonics.し" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -787,6 +808,7 @@
     },
     "Mnemonics.シ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -804,6 +826,7 @@
     },
     "Mnemonics.す" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -821,6 +844,7 @@
     },
     "Mnemonics.ス" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -838,6 +862,7 @@
     },
     "Mnemonics.せ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -855,6 +880,7 @@
     },
     "Mnemonics.セ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -872,6 +898,7 @@
     },
     "Mnemonics.そ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -889,6 +916,7 @@
     },
     "Mnemonics.ソ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -906,6 +934,7 @@
     },
     "Mnemonics.た" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -923,6 +952,7 @@
     },
     "Mnemonics.タ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -940,6 +970,7 @@
     },
     "Mnemonics.ち" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -957,6 +988,7 @@
     },
     "Mnemonics.チ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -974,6 +1006,7 @@
     },
     "Mnemonics.つ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -991,6 +1024,7 @@
     },
     "Mnemonics.ツ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1008,6 +1042,7 @@
     },
     "Mnemonics.て" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1025,6 +1060,7 @@
     },
     "Mnemonics.テ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1042,6 +1078,7 @@
     },
     "Mnemonics.と" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1059,6 +1096,7 @@
     },
     "Mnemonics.ト" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1076,6 +1114,7 @@
     },
     "Mnemonics.な" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1093,6 +1132,7 @@
     },
     "Mnemonics.ナ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1110,6 +1150,7 @@
     },
     "Mnemonics.に" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1127,6 +1168,7 @@
     },
     "Mnemonics.ニ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1144,6 +1186,7 @@
     },
     "Mnemonics.ぬ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1161,6 +1204,7 @@
     },
     "Mnemonics.ヌ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1178,6 +1222,7 @@
     },
     "Mnemonics.ね" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1195,6 +1240,7 @@
     },
     "Mnemonics.ネ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1212,6 +1258,7 @@
     },
     "Mnemonics.の" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1229,6 +1276,7 @@
     },
     "Mnemonics.ノ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1246,6 +1294,7 @@
     },
     "Mnemonics.は" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1263,6 +1312,7 @@
     },
     "Mnemonics.ハ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1280,6 +1330,7 @@
     },
     "Mnemonics.ひ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1297,6 +1348,7 @@
     },
     "Mnemonics.ヒ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1314,6 +1366,7 @@
     },
     "Mnemonics.ふ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1331,6 +1384,7 @@
     },
     "Mnemonics.フ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1348,6 +1402,7 @@
     },
     "Mnemonics.へ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1365,6 +1420,7 @@
     },
     "Mnemonics.ヘ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1382,6 +1438,7 @@
     },
     "Mnemonics.ほ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1399,6 +1456,7 @@
     },
     "Mnemonics.ホ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1416,6 +1474,7 @@
     },
     "Mnemonics.ま" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1433,6 +1492,7 @@
     },
     "Mnemonics.マ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1450,6 +1510,7 @@
     },
     "Mnemonics.み" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1467,6 +1528,7 @@
     },
     "Mnemonics.ミ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1484,6 +1546,7 @@
     },
     "Mnemonics.む" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1501,6 +1564,7 @@
     },
     "Mnemonics.ム" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1518,6 +1582,7 @@
     },
     "Mnemonics.め" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1535,6 +1600,7 @@
     },
     "Mnemonics.メ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1552,6 +1618,7 @@
     },
     "Mnemonics.も" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1569,6 +1636,7 @@
     },
     "Mnemonics.モ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1586,6 +1654,7 @@
     },
     "Mnemonics.や" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1603,6 +1672,7 @@
     },
     "Mnemonics.ヤ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1620,6 +1690,7 @@
     },
     "Mnemonics.ゆ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1637,6 +1708,7 @@
     },
     "Mnemonics.ユ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1654,6 +1726,7 @@
     },
     "Mnemonics.よ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1671,6 +1744,7 @@
     },
     "Mnemonics.ヨ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1688,6 +1762,7 @@
     },
     "Mnemonics.ら" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1705,6 +1780,7 @@
     },
     "Mnemonics.ラ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1722,6 +1798,7 @@
     },
     "Mnemonics.り" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1739,6 +1816,7 @@
     },
     "Mnemonics.リ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1756,6 +1834,7 @@
     },
     "Mnemonics.る" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1773,6 +1852,7 @@
     },
     "Mnemonics.ル" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1790,6 +1870,7 @@
     },
     "Mnemonics.れ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1807,6 +1888,7 @@
     },
     "Mnemonics.レ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1824,6 +1906,7 @@
     },
     "Mnemonics.ろ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1841,6 +1924,7 @@
     },
     "Mnemonics.ロ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1858,6 +1942,7 @@
     },
     "Mnemonics.わ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1875,6 +1960,7 @@
     },
     "Mnemonics.ワ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1892,6 +1978,7 @@
     },
     "Mnemonics.を" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1909,6 +1996,7 @@
     },
     "Mnemonics.ヲ" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1926,6 +2014,7 @@
     },
     "Mnemonics.ん" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1943,6 +2032,7 @@
     },
     "Mnemonics.ン" : {
       "extractionState" : "manual",
+      "generatesSymbol" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1954,6 +2044,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "`N` C'est le dernier kataka`n`a, tiens prend une ba`n`a`n`e"
+          }
+        }
+      }
+    },
+    "mnemonicsExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here's a list of helpful mnemonics and explanations we've prepared for you.\nThe best remains for you to make them your own so have fun and experiment by creating your own story !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voila une liste de moyens mnémotechniques préparés juste pour toi. Le mieux reste de les créer par toi même. Alors amuse toi et fais ta propre histoire !"
           }
         }
       }
@@ -1980,13 +2087,13 @@
         }
       }
     },
-    "Passed" : {
+    "Passed: %lld" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passés"
+            "value" : "Passés: %lld"
           }
         }
       }
@@ -2003,6 +2110,7 @@
       }
     },
     "Pick an exercise type" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2046,6 +2154,7 @@
       }
     },
     "Reveal answer" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2067,6 +2176,7 @@
       }
     },
     "Save" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2077,6 +2187,7 @@
       }
     },
     "Search a kana" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2098,6 +2209,7 @@
       }
     },
     "Show Romaji for failed" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
@@ -2173,6 +2285,17 @@
         }
       }
     },
+    "Typing" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écrire"
+          }
+        }
+      }
+    },
     "Write the combinaison of the three kanas." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2207,6 +2330,7 @@
       }
     },
     "Write what the kana reminds you of" : {
+      "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {

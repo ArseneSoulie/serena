@@ -1,3 +1,5 @@
+import Foundation
+
 enum KanaSelectionType: CaseIterable, Hashable {
     case hiragana
     case both
@@ -11,14 +13,14 @@ enum KanaSelectionType: CaseIterable, Hashable {
         }
     }
 
-    var localisedDescription: String {
+    var localisedDescription: LocalizedStringResource {
         switch self {
         case .hiragana:
-            localized("Hiragana")
+            .hiragana
         case .both:
-            localized("Both")
+            .both
         case .katakana:
-            localized("Katakana")
+            .katakana
         }
     }
 }

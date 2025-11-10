@@ -18,7 +18,7 @@ public struct KanaMainPage: View {
     public var body: some View {
         TabView(selection: $selectedTab) {
             Tab(
-                localized("Mnemonics"),
+                String(localized: .mnemonics),
                 systemImage: "brain",
                 value: .mnemonics,
             ) {
@@ -28,7 +28,7 @@ public struct KanaMainPage: View {
             }
 
             Tab(
-                localized("Training"),
+                String(localized: .training),
                 systemImage: "figure.run",
                 value: .training,
             ) {
@@ -40,7 +40,7 @@ public struct KanaMainPage: View {
             }
 
             Tab(
-                localized("Typing"),
+                String(localized: .typing),
                 systemImage: "keyboard",
                 value: .typist,
             ) {
