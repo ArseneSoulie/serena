@@ -8,8 +8,7 @@ You're ready to use the app
 Download the jmdict.yml file
 Run the following to build the database
 ```bash
-cd ./JMdictTools
-swift run JMdictToolsCLI ./jmdict.yml -o sqlite
+swift run  --package-path ./JMdictTools jmdict-tools ./small-dict.xml -o sqlite
 ```
 Ignoring the -o will print the output to the console, you can swap the path to your dict
 
