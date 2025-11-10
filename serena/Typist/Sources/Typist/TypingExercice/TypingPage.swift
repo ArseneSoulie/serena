@@ -49,6 +49,7 @@ public struct TypingPage: View {
                         FinishCard(
                             score: typingViewModel.score,
                             bestCombo: typingViewModel.bestCombo,
+                            isHighScore: typingViewModel.isHighScore,
                             onRestart: {
                                 typingViewModel.restartGame()
                                 isFocused = true
@@ -202,6 +203,7 @@ private struct Playfield: View {
 private struct FinishCard: View {
     let score: Int
     let bestCombo: Int
+    let isHighScore: Bool
     let onRestart: () -> Void
 
     private var bestComboMultiplier: Double { 1.0 + Double(bestCombo) * 0.1 }
@@ -218,6 +220,9 @@ private struct FinishCard: View {
                     Text("\(score)")
                         .typography(.title)
                         .font(.largeTitle)
+                }
+                if isHighScore {
+                    Text("New high score !")
                 }
                 if bestCombo > 0 {
                     Text("Best combo: \(bestCombo) • x\(bestComboMultiplier, specifier: "%.1f")")

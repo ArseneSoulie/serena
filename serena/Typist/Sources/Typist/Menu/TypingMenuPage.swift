@@ -5,22 +5,18 @@
 //  Created by A S on 16/10/2025.
 //
 
+import FoundationModels
 import Navigation
 import ReinaDB
+import Sharing
 import SQLiteData
 import SwiftUI
 
-public struct BestScore {
-    let kanaOnly: Int = 0
-    let easyWords: Int = 0
-    let fullDictionnary: Int = 0
-}
-
 public struct TypingMenuPage: View {
     @Dependency(\.defaultDatabase) var database
+    @Shared(.appStorage("typingScore")) var typingScore: [TypingLevel: Int] = [:]
 
     @Environment(NavigationCoordinator.self) private var coordinator
-    @State var bestScore: BestScore = .init()
 
     public init() {}
 
@@ -36,15 +32,15 @@ public struct TypingMenuPage: View {
                     }
                     GridRow {
                         Button("Kana only", systemImage: "tortoise.fill", action: onKanaOnlyTapped)
-                        Text(String(bestScore.kanaOnly))
+                        Text(String(typingScore[.kanaOnly] ?? 0))
                     }
                     GridRow {
                         Button("Easy words", systemImage: "cat.fill", action: onEasyWordsTapped)
-                        Text(String(bestScore.kanaOnly))
+                        Text(String(typingScore[.easyWords] ?? 0))
                     }
                     GridRow {
                         Button("Full dictionary", systemImage: "hare.fill", action: onFullDictionnaryTapped)
-                        Text(String(bestScore.kanaOnly))
+                        Text(String(typingScore[.fullDictionnary] ?? 0))
                     }
                 }.padding(.horizontal, 8)
             }

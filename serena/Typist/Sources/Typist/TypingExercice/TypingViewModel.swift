@@ -1,12 +1,14 @@
 import Combine
 import FoundationModels
 import ReinaDB
+import Sharing
 import SQLiteData
 import SwiftUI
 
 @MainActor
 class TypingViewModel: ObservableObject {
     @Dependency(\.defaultDatabase) var database
+    @Shared(.appStorage("typingScore")) var typingScore: [TypingLevel: Int] = [:]
 
     @Published private(set) var textsToType: [TextToType] = []
     @Published private(set) var scorePopups: [ScorePopup] = []
@@ -17,6 +19,7 @@ class TypingViewModel: ObservableObject {
     @Published private(set) var shakeTrigger: CGFloat = 0
     @Published private(set) var showLevelUp: Bool = false
     @Published private(set) var isPlaying: Bool = true
+    @Published private(set) var isHighScore: Bool = false
     @Published private(set) var bestCombo: Int = 0
     @Published var inputText: String = ""
     @Published var autoSubmitEnabled: Bool = true
@@ -100,6 +103,7 @@ class TypingViewModel: ObservableObject {
         bestCombo = 0
         showLevelUp = false
         isPlaying = true
+        isHighScore = false
         startGame()
     }
 
@@ -205,7 +209,16 @@ class TypingViewModel: ObservableObject {
     private func endGame() {
         bestCombo = max(bestCombo, comboCount)
 
+        saveNewHighScoreIfNeeded()
         stopGame()
+    }
+
+    func saveNewHighScoreIfNeeded() {
+        let previousHighScore = typingScore[level] ?? 0
+        isHighScore = score > previousHighScore
+        if isHighScore {
+            $typingScore.withLock { $0[level] = score }
+        }
     }
 
     private func evaluateMatchesAndScore(with inputText: String, onSuccess: (() -> Void)? = nil) {
@@ -270,5 +283,9 @@ class TypingViewModel: ObservableObject {
 extension ReinaWord {
     var difficultyMultiplier: Double {
         1 + (1 - Double(easinessScore) / 10)
+    }
+
+    func matches(input: String) -> Bool {
+        reading == input || writing == input
     }
 }

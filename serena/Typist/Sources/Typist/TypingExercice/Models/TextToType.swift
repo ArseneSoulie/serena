@@ -7,9 +7,3 @@ struct TextToType: Equatable, Identifiable {
     let x: Double
     var y: Double
 }
-
-extension ReinaWord {
-    func matches(input: String) -> Bool {
-        reading == input || writing == input
-    }
-}
