@@ -1,7 +1,7 @@
 import SQLiteData
 
 @Table
-public struct ReinaWord: Encodable, Sendable {
+public struct ReinaWord: Encodable, Sendable, Equatable {
     public let id: String
     public let writing: String?
     public let reading: String

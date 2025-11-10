@@ -157,15 +157,17 @@ private struct Playfield: View {
             GeometryReader { geometry in
                 ZStack(alignment: .topLeading) {
                     ForEach(textsToType) { textToType in
-                        TextWithHighlight(fullText: textToType.value, textToMatch: inputText)
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(.ultraThinMaterial, in: Capsule())
-                            .shadow(color: .black.opacity(0.12), radius: 5, x: 0, y: 3)
-                            .position(
-                                x: textToType.x * geometry.size.width,
-                                y: textToType.y * geometry.size.height,
-                            )
+                        TextToMatchView(
+                            data: .init(
+                                reading: textToType.word.reading,
+                                writing: textToType.word.writing,
+                                textToMatch: inputText,
+                            ),
+                        )
+                        .position(
+                            x: textToType.x * geometry.size.width,
+                            y: textToType.y * geometry.size.height,
+                        )
                     }
 
                     ForEach(scorePopups) { popup in

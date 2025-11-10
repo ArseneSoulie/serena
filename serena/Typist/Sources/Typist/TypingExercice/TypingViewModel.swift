@@ -140,28 +140,29 @@ class TypingViewModel: ObservableObject {
         }
 
         withAnimation {
-            textsToType.append(.init(value: nextWord, x: Double.random(in: 0.1 ... 0.9), y: 0))
+            textsToType.append(.init(word: nextWord, x: Double.random(in: 0.1 ... 0.9), y: 0))
         }
         timeSinceLastSpawn = 0
     }
 
-    private func getWordForCurrentLevel() -> String? {
+    private func getWordForCurrentLevel() -> ReinaWord? {
         switch level {
         case .kanaOnly:
             let characters = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん"
-            return characters.randomElement().flatMap(String.init)
+            guard let character = characters.randomElement() else { return nil }
+            return .init(id: UUID().uuidString, writing: nil, reading: String(character), easinessScore: 10)
 
         case .easyWords:
             var randomWord: ReinaWord?
             withErrorReporting {
                 randomWord = try database.read { db in
                     try ReinaWord
-                        .where { $0.easinessScore == 8 }
+                        .where { $0.easinessScore == 10 }
                         .order { _ in #sql("RANDOM()") }
                         .fetchOne(db)
                 }
             }
-            return randomWord?.reading
+            return randomWord
 
         case .fullDictionnary:
             var randomWord: ReinaWord?
@@ -173,7 +174,7 @@ class TypingViewModel: ObservableObject {
                         .fetchOne(db)
                 }
             }
-            return randomWord?.reading
+            return randomWord
         }
     }
 
@@ -208,13 +209,13 @@ class TypingViewModel: ObservableObject {
     }
 
     private func evaluateMatchesAndScore(with inputText: String, onSuccess: (() -> Void)? = nil) {
-        let matched = textsToType.filter { $0.value == inputText }
+        let matched = textsToType.filter { $0.word.matches(input: inputText) }
         guard !matched.isEmpty else { return }
 
-        textsToType.removeAll { $0.value == inputText }
+        textsToType.removeAll { $0.word.matches(input: inputText) }
 
-        let base = matched.reduce(0) { $0 + $1.value.count }
-        let points = Int(Double(base) * comboMultiplier * difficultyScale)
+        let base = matched.reduce(0.0) { $0 + Double($1.word.reading.count) * $1.word.difficultyMultiplier }
+        let points = Int(base * comboMultiplier * difficultyScale)
         score += points
 
         for item in matched {
@@ -263,5 +264,11 @@ class TypingViewModel: ObservableObject {
                 self.showLevelUp = false
             }
         }
+    }
+}
+
+extension ReinaWord {
+    var difficultyMultiplier: Double {
+        1 + (1 - Double(easinessScore) / 10)
     }
 }
