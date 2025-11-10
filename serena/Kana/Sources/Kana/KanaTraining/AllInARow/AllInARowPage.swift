@@ -14,7 +14,7 @@ public struct AllInARowPage: View {
 
     @State var allInARowState: AllInARowState
 
-    init(kanas: [Kana]) {
+    public init(kanas: [Kana]) {
         self.kanas = kanas
         allInARowState = .exercice(kanas: kanas)
     }

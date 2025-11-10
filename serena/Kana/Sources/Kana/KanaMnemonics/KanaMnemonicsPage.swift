@@ -12,6 +12,8 @@ public struct KanaMnemonicsPage: View {
 
     @State var kanaType: KanaType = .hiragana
 
+    public init() {}
+
     public var body: some View {
         ZStack(alignment: .bottomTrailing) {
             ScrollViewReader { proxy in

@@ -1,12 +1,4 @@
-//
-//  ReinaApp.swift
-//  reina
-//
-//  Created by A S on 06/08/2025.
-//
-
 import DesignSystem
-import Kana
 import ReinaDB
 import SwiftUI
 import Typist
@@ -20,7 +12,7 @@ struct ReinaApp: App {
 
     var body: some Scene {
         WindowGroup {
-            KanaMainPage()
+            ReinaMainPage()
                 .registerFontForSwiftUIComponents()
         }
     }
