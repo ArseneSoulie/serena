@@ -14,13 +14,11 @@ public struct TypingPage: View {
 
     public var body: some View {
         ZStack {
-            AnimatedBackground(difficultyScale: typingViewModel.difficultyScale)
-                .ignoresSafeArea()
+            AnimatedBackground(currentDifficulty: typingViewModel.currentDifficulty, livesCount: typingViewModel.health)
 
             VStack(spacing: 10) {
                 if typingViewModel.isPlaying {
                     TopBars(
-                        health: typingViewModel.health,
                         comboCount: typingViewModel.comboCount,
                         score: typingViewModel.score,
                     )
@@ -95,7 +93,6 @@ public struct TypingPage: View {
 // MARK: - Subviews
 
 private struct TopBars: View {
-    let health: Int
     let comboCount: Int
     let score: Int
 
@@ -105,7 +102,6 @@ private struct TopBars: View {
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                heartsView
                 Spacer()
                 comboView
             }
@@ -118,17 +114,6 @@ private struct TopBars: View {
             .padding(.horizontal)
         }
         .font(.callout)
-    }
-
-    private var heartsView: some View {
-        HStack(spacing: 6) {
-            ForEach(1 ... maxHealth, id: \.self) { index in
-                Image(systemName: index <= health ? "heart.fill" : "heart")
-                    .foregroundStyle(index <= health ? .red : .secondary)
-                    .scaleEffect(index <= health ? 1.05 : 1.0)
-                    .animation(.easeInOut(duration: 0.2), value: health)
-            }
-        }
     }
 
     private var comboView: some View {
@@ -240,17 +225,64 @@ private struct FinishCard: View {
 }
 
 private struct AnimatedBackground: View {
-    let difficultyScale: Double
-    private let maxDifficultyForGradient: Double = 3
+    let currentDifficulty: Int
+    let livesCount: Int
+
+    private let dayCycleColors: [Color] = [
+        Color(hue: 0.58, saturation: 0.25, brightness: 1.0),
+        Color(hue: 0.58, saturation: 0.50, brightness: 0.9),
+        Color(hue: 0.56, saturation: 1.0, brightness: 0.75),
+        Color(hue: 0.58, saturation: 0.35, brightness: 0.8),
+        Color(hue: 0.05, saturation: 0.70, brightness: 0.85),
+        Color(hue: 0.85, saturation: 0.60, brightness: 0.70),
+        Color(hue: 0.70, saturation: 0.80, brightness: 0.20),
+        Color(hue: 0.70, saturation: 0.90, brightness: 0.15),
+        Color(hue: 0.95, saturation: 0.50, brightness: 0.50),
+    ]
 
     var body: some View {
-        let t = min(difficultyScale / maxDifficultyForGradient, 1.0)
-        let start = Color(hue: 210 / 360, saturation: 0.35 + 0.10 * t, brightness: 1)
-        let end = Color(hue: (260 - 230 * t) / 360, saturation: 0.50 + 0.35 * t, brightness: 0.95 + 0.05 * t)
+        let gradientTop = dayCycleColors[currentDifficulty % dayCycleColors.count]
+        let gradientBottom = dayCycleColors[(currentDifficulty + 1) % dayCycleColors.count]
 
-        return LinearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
-            .animation(.easeInOut(duration: 0.6), value: difficultyScale)
+        return ZStack(alignment: .bottom) {
+            Color(.grass)
+                .ignoresSafeArea(.all, edges: .bottom)
+
+            LinearGradient(colors: [gradientTop, gradientBottom], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea(.all, edges: .top)
+
+            Image(.castle)
+                .resizable()
+                .scaledToFit()
+                .background {
+                    GeometryReader { geo in
+                        if livesCount >= 1 {
+                            HStack {
+                                ForEach(Range(1 ... livesCount), id: \.self) { _ in
+                                    Image(.flag)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: geo.size.height * 0.18)
+                                        .transition(.move(edge: .bottom))
+                                }
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            .offset(x: geo.size.width * 0.175, y: geo.size.height * 0.15)
+                        }
+                    }
+                }
+        }
     }
+}
+
+#Preview {
+    @Previewable @State var lives = 3
+    AnimatedBackground(currentDifficulty: 10, livesCount: lives)
+    Button("aa", action: {
+        withAnimation {
+            lives -= 1
+        }
+    })
 }
 
 // MARK: - Helper Views and Modifiers

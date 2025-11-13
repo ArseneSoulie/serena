@@ -24,6 +24,10 @@ class TypingViewModel: ObservableObject {
     @Published var inputText: String = ""
     @Published var autoSubmitEnabled: Bool = true
 
+    var currentDifficulty: Int {
+        Int(difficultyScale)
+    }
+
     // MARK: - Internal Game State
 
     private var lastFrameTime: Date = .now
@@ -36,7 +40,7 @@ class TypingViewModel: ObservableObject {
 
     // MARK: - Tuning
 
-    private var fallSpeed: CGFloat { (1 / timeToReachTheBottom) * difficultyScale }
+    private var fallSpeed: CGFloat { (1 / timeToReachTheBottom) * (Double(currentDifficulty + 1) / 2) }
     private var timeUntilNextSpawn: TimeInterval { 10 / difficultyScale }
     private let maxHealth = 3
     private let timeToReachTheBottom: CGFloat = 20
@@ -58,9 +62,11 @@ class TypingViewModel: ObservableObject {
 
     // MARK: - Game Loop Control
 
+    let targetFps = 60.0
+
     func startGame() {
         DispatchQueue.main.async {
-            self.gameLoopTimer = Timer.publish(every: 1.0 / 20.0, on: .main, in: .common)
+            self.gameLoopTimer = Timer.publish(every: 1.0 / self.targetFps, on: .main, in: .common)
                 .autoconnect()
                 .sink { [weak self] currentTime in
                     self?.onTick(currentTime: currentTime)
@@ -244,7 +250,9 @@ class TypingViewModel: ObservableObject {
         bestCombo = max(bestCombo, comboCount)
 
         let previousDifficulty = difficultyScale
-        difficultyScale += 0.05 * Double(matched.count)
+        withAnimation(.easeInOut(duration: 2)) {
+            difficultyScale += 0.1 * Double(matched.count)
+        }
         if Int(difficultyScale) > Int(previousDifficulty) {
             triggerLevelUpAnimation()
         }
