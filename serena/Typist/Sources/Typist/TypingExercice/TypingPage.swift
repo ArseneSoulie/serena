@@ -97,23 +97,16 @@ private struct TopBars: View {
     let score: Int
 
     private var comboMultiplier: Double { 1.0 + Double(comboCount) * 0.1 }
-    private let maxHealth = 3
 
     var body: some View {
         VStack(spacing: 10) {
             HStack {
+                Text(.points(score))
                 Spacer()
                 comboView
             }
             .padding(.horizontal)
-
-            HStack {
-                Text(.points(score))
-                Spacer()
-            }
-            .padding(.horizontal)
         }
-        .font(.callout)
     }
 
     private var comboView: some View {
@@ -153,7 +146,7 @@ private struct Playfield: View {
 
                     ForEach(scorePopups) { popup in
                         Text(popup.text)
-                            .font(.headline)
+                            .typography(.headline)
                             .foregroundStyle(.green)
                             .opacity(popup.opacity)
                             .position(
@@ -167,7 +160,7 @@ private struct Playfield: View {
 
             if showLevelUp {
                 Text(.levelUp)
-                    .font(.headline)
+                    .typography(.headline)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(.ultraThinMaterial, in: Capsule())
@@ -199,7 +192,6 @@ private struct FinishCard: View {
                         .foregroundStyle(.secondary)
                     Text("\(score)")
                         .typography(.title)
-                        .font(.largeTitle)
                 }
                 if isHighScore {
                     Text(.newHighScore)
@@ -229,15 +221,14 @@ private struct AnimatedBackground: View {
     let livesCount: Int
 
     private let dayCycleColors: [Color] = [
-        Color(hue: 0.58, saturation: 0.25, brightness: 1.0),
-        Color(hue: 0.58, saturation: 0.50, brightness: 0.9),
-        Color(hue: 0.56, saturation: 1.0, brightness: 0.75),
-        Color(hue: 0.58, saturation: 0.35, brightness: 0.8),
-        Color(hue: 0.05, saturation: 0.70, brightness: 0.85),
-        Color(hue: 0.85, saturation: 0.60, brightness: 0.70),
-        Color(hue: 0.70, saturation: 0.80, brightness: 0.20),
-        Color(hue: 0.70, saturation: 0.90, brightness: 0.15),
-        Color(hue: 0.95, saturation: 0.50, brightness: 0.50),
+        Color(.Sky.dawn),
+        Color(.Sky.morning),
+        Color(.Sky.noon),
+        Color(.Sky.afternoon),
+        Color(.Sky.evening),
+        Color(.Sky.night),
+        Color(.Sky.midnight),
+        Color(.Sky.aftermidnight),
     ]
 
     var body: some View {
