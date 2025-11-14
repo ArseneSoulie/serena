@@ -20,56 +20,55 @@ public struct KanaSelectionPage: View {
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                LazyVStack(pinnedViews: .sectionHeaders) {
+            LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
+                KanaLineGroupView(
+                    title: .base,
+                    lines: base,
+                    selectedLines: $selectedBase,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.base,
+                )
+                KanaLineGroupView(
+                    title: .diacritics,
+                    lines: diacritic,
+                    selectedLines: $selectedDiacritic,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.diacritic,
+                )
+                KanaLineGroupView(
+                    title: .combinatory,
+                    lines: combinatory,
+                    selectedLines: $selectedCombinatory,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.combinatory,
+                )
+                KanaLineGroupView(
+                    title: .combinatoryDiacritics,
+                    lines: combinatoryDiacritic,
+                    selectedLines: $selectedCombinatoryDiacritic,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.combinarotyDiacritic,
+                )
+                if kanaSelectionType != .hiragana {
                     KanaLineGroupView(
-                        title: .base,
-                        lines: base,
-                        selectedLines: $selectedBase,
+                        title: .extendedKatakana,
+                        lines: extendedKatakana,
+                        selectedLines: $selectedExtendedKatakana,
                         showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.base,
+                        kanaSelectionType: .katakana,
+                        tint: CatagoryColor.extendedKatakana,
                     )
-                    KanaLineGroupView(
-                        title: .diacritics,
-                        lines: diacritic,
-                        selectedLines: $selectedDiacritic,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.diacritic,
-                    )
-                    KanaLineGroupView(
-                        title: .combinatory,
-                        lines: combinatory,
-                        selectedLines: $selectedCombinatory,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.combinatory,
-                    )
-                    KanaLineGroupView(
-                        title: .combinatoryDiacritics,
-                        lines: combinatoryDiacritic,
-                        selectedLines: $selectedCombinatoryDiacritic,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.combinarotyDiacritic,
-                    )
-                    if kanaSelectionType != .hiragana {
-                        KanaLineGroupView(
-                            title: .extendedKatakana,
-                            lines: extendedKatakana,
-                            selectedLines: $selectedExtendedKatakana,
-                            showRomaji: showRomaji,
-                            kanaSelectionType: .katakana,
-                            tint: CatagoryColor.extendedKatakana,
-                        )
-                    }
                 }
 
                 Spacer()
-                    .frame(height: 160)
+                    .frame(height: 80)
             }
         }
+        .background(.thinMaterial)
         .animation(.default, value: showRomaji)
         .animation(.default, value: kanaSelectionType)
         .overlay(alignment: .bottom) {

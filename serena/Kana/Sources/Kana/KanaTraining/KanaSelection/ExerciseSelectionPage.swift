@@ -12,6 +12,7 @@ import SwiftUI
 
 public struct ExerciseSelectionPage: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    @Environment(NavigationCoordinator.self) private var coordinator
 
     let kanaPool: [Kana]
 
@@ -20,18 +21,31 @@ public struct ExerciseSelectionPage: View {
     }
 
     public var body: some View {
-        ScrollView {
-            if horizontalSizeClass == .compact {
-                VStack(alignment: .leading) {
-                    SelectionContent(kanaPool: kanaPool)
-                }
-                .padding()
-            } else {
-                HStack {
-                    SelectionContent(kanaPool: kanaPool)
-                }.padding()
+        List {
+            Section(.levelUps) {
+                ExerciceBanner(
+                    title: .levelUpsExplanation,
+                    imageResource: .TrainingBanner.levelUp,
+                    onBannerTapped: onLevelUpsTapped,
+                )
+            }
+
+            Section(.allInARow) {
+                ExerciceBanner(
+                    title: .tryToGetAllSelectedKanasRightInARow,
+                    imageResource: .TrainingBanner.allInARow,
+                    onBannerTapped: onAllInARowTapped,
+                )
             }
         }.navigationTitle(.pickAnExerciseType)
+    }
+
+    func onLevelUpsTapped() {
+        coordinator.push(.levelUps(kanaPool))
+    }
+
+    func onAllInARowTapped() {
+        coordinator.push(.allInARow(kanaPool))
     }
 }
 
@@ -51,7 +65,7 @@ struct ExerciceBanner: View {
                 Image(imageResource)
                     .resizable()
                     .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
+                    .cornerRadius(.default)
                 HStack {
                     Text(title).multilineTextAlignment(.leading)
                     Spacer()
@@ -60,50 +74,7 @@ struct ExerciceBanner: View {
                 }
             }
             .padding()
-            .background(.quinary)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
         }
         .foregroundStyle(.primary)
-    }
-}
-
-struct SelectionContent: View {
-    @Environment(NavigationCoordinator.self) private var coordinator
-
-    let kanaPool: [Kana]
-
-    var body: some View {
-        VStack {
-            Text(.levelUps)
-                .typography(.title2)
-
-            ExerciceBanner(
-                title: .levelUpsExplanation,
-                imageResource: .TrainingBanner.levelUp,
-                onBannerTapped: onLevelUpsTapped,
-            )
-            .padding(.horizontal, 8)
-        }
-
-        Divider()
-        VStack {
-            Text(.allInARow)
-                .typography(.title2)
-
-            ExerciceBanner(
-                title: .tryToGetAllSelectedKanasRightInARow,
-                imageResource: .TrainingBanner.allInARow,
-                onBannerTapped: onAllInARowTapped,
-            )
-            .padding(.horizontal, 8)
-        }
-    }
-
-    func onLevelUpsTapped() {
-        coordinator.push(.levelUps(kanaPool))
-    }
-
-    func onAllInARowTapped() {
-        coordinator.push(.allInARow(kanaPool))
     }
 }
