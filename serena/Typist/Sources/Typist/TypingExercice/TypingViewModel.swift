@@ -179,7 +179,7 @@ class TypingViewModel: ObservableObject {
             }
             return randomWord
 
-        case .fullDictionnary:
+        case .fullDictionary:
             var randomWord: ReinaWord?
             withErrorReporting {
                 randomWord = try database.read { db in

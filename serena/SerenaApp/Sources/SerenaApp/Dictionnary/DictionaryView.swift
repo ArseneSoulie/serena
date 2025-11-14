@@ -1,5 +1,5 @@
 //
-//  DictionnaryView.swift
+//  DictionaryView.swift
 //  SerenaApp
 //
 //  Created by A S on 30/07/2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DictionnaryView: View {
+struct DictionaryView: View {
     let previewEntry: KanjiEntry = .init(
         kanji: "単",
         meanings: .init(jishoMeanings: ["Simple"], userProvidedMeanings: []),

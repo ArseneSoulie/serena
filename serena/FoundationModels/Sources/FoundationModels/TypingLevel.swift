@@ -1,5 +1,5 @@
-public enum TypingLevel: Sendable, Codable {
+public enum TypingLevel: Sendable, Codable, CaseIterable {
     case kanaOnly
     case easyWords
-    case fullDictionnary
+    case fullDictionary
 }

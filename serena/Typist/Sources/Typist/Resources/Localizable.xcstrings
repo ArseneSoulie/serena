@@ -117,6 +117,57 @@
         }
       }
     },
+    "japaneseKeyboardMissingInstructions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To type in Japanese, add the Japanese keyboard in your device’s settings. This will give you Kana and Romaji (QWERTY) layouts that automatically convert romaji to kana and kanji. As well “Writing” which allows you to try writing characters by hand.\n\n`General > Keyboard > Keyboards > Add a keyboard > Japanese > Kana/Romaji/Writing`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour taper en japonais, ajoute le clavier japonais dans les réglages de ton appareil. Ça te donnera les dispositions Kana et Romaji (QWERTY) qui convertissent automatiquement les romaji en kana et kanji. Ainsi que “Écriture” qui te permet de dessiner les symboles a la main\n\n`Général > Clavier > Claviers > Ajouter un clavier > Japonais > Kana/Romaji/Écriture`"
+          }
+        }
+      }
+    },
+    "japaneseKeyboardMissingTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanese keyboard missing"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier japonais manquant"
+          }
+        }
+      }
+    },
+    "japaneseKeyboardReady" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanese keyboard installed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier japonais installé"
+          }
+        }
+      }
+    },
     "Kana only" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -124,6 +175,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kana uniquement"
+          }
+        }
+      }
+    },
+    "keyboardSetup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keyboard Setup"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Options du clavier"
           }
         }
       }
@@ -146,6 +214,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nouveau record !"
+          }
+        }
+      }
+    },
+    "openSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open settings"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir les options"
           }
         }
       }
