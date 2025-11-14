@@ -80,10 +80,19 @@ public struct KanaMnemonicsPage: View {
             Button("", systemImage: "info.circle", action: { showInfo.toggle() })
         }
         .overlay(alignment: .top) {
-            Color(.red).frame(height: 0)
+            Color(.clear).frame(height: 0)
                 .popover(
                     isPresented: $showInfo,
-                ) { MnemonicsPageInfo() }
+                ) {
+                    PageInfoView(
+                        infoPages: [
+                            .mnemonicsExplanation1,
+                            .mnemonicsExplanation2,
+                            .mnemonicsExplanation3,
+                        ],
+                        image: .ReinaEmotes.mnemonics,
+                    )
+                }
         }
     }
 
@@ -100,34 +109,6 @@ extension KanaType {
         case .katakana:
             .katakana
         }
-    }
-}
-
-struct MnemonicsPageInfo: View {
-    private let infoPages: [LocalizedStringResource] = [
-        .mnemonicsExplanation1,
-        .mnemonicsExplanation2,
-        .mnemonicsExplanation3,
-    ]
-
-    var body: some View {
-        VStack(alignment: .center, spacing: 0) {
-            Image(.ReinaEmotes.mnemonics)
-                .resizable()
-                .frame(width: 64, height: 64)
-            TabView {
-                ForEach(infoPages, id: \.key) { pageText in
-                    Text(pageText)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-            }
-            .tabViewStyle(.page(indexDisplayMode: .always))
-            .frame(minHeight: 150)
-        }
-        .padding()
-        .frame(minWidth: 300)
-        .presentationCompactAdaptation(.popover)
     }
 }
 

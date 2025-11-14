@@ -12,6 +12,7 @@ public struct KanaSelectionPage: View {
     @State var selectedExtendedKatakana: Set<KanaLine> = []
 
     @State var showRomaji: Bool = false
+    @State var showInfo: Bool = false
 
     @State var kanaSelectionType: KanaSelectionType = .hiragana
 
@@ -20,14 +21,6 @@ public struct KanaSelectionPage: View {
     public var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                HStack {
-                    Image(.ReinaEmotes.training)
-                        .resizable()
-                        .frame(width: 64, height: 64)
-                    Text(.selectTheRowsYouWantToTrainOnAndHitLetsGo)
-                }
-                .padding()
-
                 LazyVStack(pinnedViews: .sectionHeaders) {
                     KanaLineGroupView(
                         title: .base,
@@ -91,10 +84,27 @@ public struct KanaSelectionPage: View {
                 .padding(.all)
             }
         }
+        .overlay(alignment: .top) {
+            Color(.clear).frame(height: 0)
+                .popover(
+                    isPresented: $showInfo,
+                ) {
+                    PageInfoView(
+                        infoPages: [
+                            .selectionExplanation1,
+                            .selectionExplanation2,
+                            .selectionExplanation3,
+                            .selectionExplanation4,
+                        ],
+                        image: .ReinaEmotes.training,
+                    )
+                }
+        }
         .toolbar {
             ToolbarViews(
                 kanaSelectionType: $kanaSelectionType,
                 showRomaji: $showRomaji,
+                showInfo: $showInfo,
                 selectedBase: $selectedBase,
                 selectedDiacritic: $selectedDiacritic,
                 selectedCombinatory: $selectedCombinatory,
@@ -154,6 +164,7 @@ struct ToolbarViews: View {
     @State var showsFastSelect: Bool = false
 
     @Binding var showRomaji: Bool
+    @Binding var showInfo: Bool
 
     @Binding var selectedBase: Set<KanaLine>
     @Binding var selectedDiacritic: Set<KanaLine>
@@ -177,6 +188,7 @@ struct ToolbarViews: View {
                     selectedExtendedKatakana: $selectedExtendedKatakana,
                 )
             }
+        Button("", systemImage: "info.circle", action: { showInfo.toggle() })
     }
 }
 

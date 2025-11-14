@@ -1993,13 +1993,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "You can toggle between Hiragana and Katakana in the top menu"
+            "value" : "You can toggle between **Hiragana** and **Katakana** in the top menu"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tu peux basculer entre les Hiragana et les Katakana dans le menu du haut."
+            "state" : "needs_review",
+            "value" : "Tu peux basculer entre les **Hiragana** et les **Katakana** dans le menu du haut."
           }
         }
       }
@@ -2153,13 +2153,70 @@
         }
       }
     },
-    "Select the rows you want to train on and hit \"Let's go\"" : {
+    "selectionExplanation1" : {
       "extractionState" : "manual",
       "localizations" : {
-        "fr" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur “C’est parti !”"
+            "value" : "Learn Kana by training on them. Select the rows you want to train on and hit **[Let's go**]"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Apprends les Kana en t’entrainant. Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur [**C’est parti !**]"
+          }
+        }
+      }
+    },
+    "selectionExplanation2" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can choose to focus on **Hiragana**, **Katakana** or train on **both** at the same time"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Tu peux choisir de te concentrer sur les **Hiragana**/**Katakana** ou choisir de t’entrainer sur les deux **ensemble**"
+          }
+        }
+      }
+    },
+    "selectionExplanation3" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Toggle the **Romaji** visibility by tapping the button in the top menu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Bascule la visibilité des **Romaji** en tapant sur le bouton du menu du haut"
+          }
+        }
+      }
+    },
+    "selectionExplanation4" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select entire sections using the **fast selection** button in the top menu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "Sélectionne une section complète en utilisant le bouton de **sélection rapide** du menu du haut"
           }
         }
       }
