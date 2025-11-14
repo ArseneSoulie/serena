@@ -14,7 +14,7 @@ package extension RadiusStyle {
         switch self {
         case .default: 16
         case .strong: 24
-        case .round: 0
+        case .round: .infinity
         }
     }
 }

@@ -45,6 +45,5 @@ struct ProgressBarView: View {
                 }
             }
         }
-        .padding()
     }
 }

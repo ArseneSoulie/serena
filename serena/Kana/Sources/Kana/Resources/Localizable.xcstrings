@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "shouldTranslate" : false
     },
     "%@ %lld/%lld" : {
       "localizations" : {
@@ -1998,7 +1998,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Tu peux basculer entre les **Hiragana** et les **Katakana** dans le menu du haut."
           }
         }
@@ -2159,12 +2159,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Learn Kana by training on them. Select the rows you want to train on and hit **[Let's go**]"
+            "value" : "Learn Kana by training on them. Select the rows you want to train on and hit [**Let's go**]"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Apprends les Kana en t’entrainant. Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur [**C’est parti !**]"
           }
         }
@@ -2181,7 +2181,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Tu peux choisir de te concentrer sur les **Hiragana**/**Katakana** ou choisir de t’entrainer sur les deux **ensemble**"
           }
         }
@@ -2198,7 +2198,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bascule la visibilité des **Romaji** en tapant sur le bouton du menu du haut"
           }
         }
@@ -2215,7 +2215,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sélectionne une section complète en utilisant le bouton de **sélection rapide** du menu du haut"
           }
         }

@@ -30,77 +30,87 @@ struct AllInARowExercicePage: View {
         onFinishedExercice: @escaping (AllInARowResult) -> Void,
     ) {
         self.kanas = kanas
-        remainingKanas = Set(kanas)
-        truth = kanas.randomElement() ?? .empty
+        _remainingKanas = State(initialValue: Set(kanas))
+        _truth = State(initialValue: kanas.randomElement() ?? .empty)
         self.onFinishedExercice = onFinishedExercice
         randomizeFont()
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 10) {
-                ProgressBarView(progress: $progress)
-                Text(.writeTheWritingOfAllKanasInARow)
+        VStack {
+            List {
+                Section {
+                    Text(.writeTheWritingOfAllKanasInARow)
+                }
 
-                VStack {
-                    ZStack(alignment: .bottom) {
-                        Text(truth.kanaValue)
-                            .foregroundStyle(truthColor)
-                            .shake(shakeTrigger)
-                            .typography(.largeTitle, fontFamily: handwrittenFont)
-                            .padding()
-                        if showAnswer {
-                            Text(truth.romajiValue)
-                                .typography(.caption)
+                Section {
+                    Button(action: randomizeFont) {
+                        VStack {
+                            Text(truth.kanaValue)
+                                .foregroundStyle(truthColor)
+                                .shake(shakeTrigger)
+                                .typography(.largeTitle, fontFamily: handwrittenFont)
+
+                            if showAnswer {
+                                Text(truth.romajiValue)
+                                    .padding(.bottom)
+                            }
+
+                            if failedKanas.contains(truth) {
+                                Button(.revealAnswer, action: onRevealAnswer)
+                                    .buttonStyle(.borderless)
+                            } else if let info {
+                                Text(info)
+                            }
                         }
-                    }
-                    .padding(.bottom, 8)
-                    .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                    .overlay(alignment: .bottomTrailing) {
-                        Button(
-                            action: randomizeFont,
-                            label: { Image(systemName: "arrow.trianglehead.2.clockwise") },
-                        )
-                        .padding(8)
-                    }
-                    if failedKanas.contains(truth) {
-                        Button(.revealAnswer, action: { showAnswer.toggle() })
-                    } else if let info {
-                        Text(info)
-                    }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .overlay(alignment: .topTrailing) {
+                            Button("", systemImage: "chevron.forward.2", action: onSkip)
+                                .buttonStyle(.borderless)
+                        }
+                    }.buttonStyle(.plain)
                 }
-
-                ZStack(alignment: .trailing) {
-                    TextEditor(text: $inputText)
-                        .onSubmit(onSubmit)
-                        .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
-                        .multilineTextAlignment(.center)
-                        .textEditorStyle(.plain)
-                        .submitLabel(.send)
-                        .typography(.title)
-                        .focused($isFocused)
-
-                    Button(action: onSubmit) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
-                            .frame(width: 24, height: 24)
-                            .padding()
-                    }
-                }
-                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                .padding()
             }
+            .listStyle(.insetGrouped)
+        }
+        .overlay(alignment: .bottom) {
+            ZStack(alignment: .trailing) {
+                TextEditor(text: $inputText)
+                    .onSubmit(onSubmit)
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
+                    .multilineTextAlignment(.center)
+                    .textEditorStyle(.plain)
+                    .submitLabel(.send)
+                    .typography(.title)
+                    .focused($isFocused)
+
+                Button(action: onSubmit) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding()
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .background {
+                Color.white.cornerRadius(.round)
+                    .border(style: .quaternary, cornerRadius: .round)
+            }
+            .padding()
         }
         .navigationTitle(.allInARow)
-        .navigationBarTitleDisplayMode(.inline)
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
         .toolbar {
-            Button(.skip, action: onSkip)
-            Button(.finish, action: finishExercice)
+            ToolbarItem(placement: .topBarTrailing) {
+                ProgressBarView(progress: $progress).padding(.leading)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(.finish, action: finishExercice)
+            }
         }
         .animation(.default, value: failedKanas)
         .animation(.default, value: showAnswer)
@@ -127,11 +137,13 @@ struct AllInARowExercicePage: View {
         let convertedTruth = truth.kanaValue.standardisedRomaji
         let isCorrect = cleanedText == convertedTruth
 
-        info = nil
+        withAnimation {
+            info = nil
+        }
 
         if !isCorrect {
-            failedKanas.insert(truth)
             withAnimation(.default) {
+                failedKanas.insert(truth)
                 truthColor = .red
                 shakeTrigger += 1
             } completion: {
@@ -150,8 +162,8 @@ struct AllInARowExercicePage: View {
                 }
             }
         } else {
-            remainingKanas.remove(truth)
             withAnimation {
+                remainingKanas.remove(truth)
                 nextRandomKana()
                 progress += answerCompletionPercent
                 if progress >= 0.99 {
@@ -163,14 +175,22 @@ struct AllInARowExercicePage: View {
         inputText = ""
     }
 
+    func onRevealAnswer() {
+        withAnimation {
+            showAnswer.toggle()
+        }
+    }
+
     func onSkip() {
         nextRandomKana()
     }
 
     func nextRandomKana() {
-        showAnswer = false
-        randomizeFont()
-        truth = remainingKanas.filter { truth != $0 }.randomElement() ?? remainingKanas.first ?? .empty
+        withAnimation {
+            showAnswer = false
+            randomizeFont()
+            truth = remainingKanas.filter { truth != $0 }.randomElement() ?? remainingKanas.first ?? .empty
+        }
     }
 
     func randomizeFont() {
