@@ -19,16 +19,20 @@ struct MnemonicView: View {
     var currentDrawing: String? { currentMnemonic?.drawingMnemonic }
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(mnemonic.kanaString)
                     .typography(.title2)
                     .bold()
                     .foregroundStyle(color)
                 Button(.pronunciation, systemImage: "speaker.wave.2.fill", action: onPlayAudioButtonTapped)
+                Spacer()
+                Button(.edit, systemImage: "pencil", action: { onDrawMnemonicTapped(mnemonic) })
             }
 
-            Text(String(localizedInterpolated: "Mnemonics.\(mnemonic.kanaString)"))
+            if let mnemonicExplanation = mnemonic.localisedKey {
+                Text(mnemonicExplanation)
+            }
 
             if let currentExplanation, !currentExplanation.isEmpty {
                 Text(currentExplanation).foregroundStyle(.secondary)
@@ -52,18 +56,12 @@ struct MnemonicView: View {
                             }
                         }
                 }
-                .padding()
+                .padding(.horizontal)
                 .foregroundStyle(.black)
                 .background(.white)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
             }
-            Button(
-                (currentDrawing ?? "").isEmpty ? .drawYourOwn : .edit,
-                systemImage: "pencil",
-                action: { onDrawMnemonicTapped(mnemonic) },
-            )
-            Divider()
-        }
+        }.padding(.vertical)
     }
 
     func onPlayAudioButtonTapped() {

@@ -9,6 +9,106 @@ struct KanaMnemonicData: Identifiable, Hashable {
     var id: String { kanaString }
 }
 
+extension KanaMnemonicData {
+    var localisedKey: LocalizedStringResource? {
+        switch kanaString {
+        case "あ": .mnemonicsあ
+        case "い": .mnemonicsい
+        case "う": .mnemonicsう
+        case "え": .mnemonicsえ
+        case "お": .mnemonicsお
+        case "か": .mnemonicsか
+        case "き": .mnemonicsき
+        case "く": .mnemonicsく
+        case "け": .mnemonicsけ
+        case "こ": .mnemonicsこ
+        case "さ": .mnemonicsさ
+        case "し": .mnemonicsし
+        case "す": .mnemonicsす
+        case "せ": .mnemonicsせ
+        case "そ": .mnemonicsそ
+        case "た": .mnemonicsた
+        case "ち": .mnemonicsち
+        case "つ": .mnemonicsつ
+        case "て": .mnemonicsて
+        case "と": .mnemonicsと
+        case "な": .mnemonicsな
+        case "に": .mnemonicsに
+        case "ぬ": .mnemonicsぬ
+        case "ね": .mnemonicsね
+        case "の": .mnemonicsの
+        case "は": .mnemonicsは
+        case "ひ": .mnemonicsひ
+        case "ふ": .mnemonicsふ
+        case "へ": .mnemonicsへ
+        case "ほ": .mnemonicsほ
+        case "ま": .mnemonicsま
+        case "み": .mnemonicsみ
+        case "む": .mnemonicsむ
+        case "め": .mnemonicsめ
+        case "も": .mnemonicsも
+        case "や": .mnemonicsや
+        case "ゆ": .mnemonicsゆ
+        case "よ": .mnemonicsよ
+        case "ら": .mnemonicsら
+        case "り": .mnemonicsり
+        case "る": .mnemonicsる
+        case "れ": .mnemonicsれ
+        case "ろ": .mnemonicsろ
+        case "わ": .mnemonicsわ
+        case "を": .mnemonicsを
+        case "ん": .mnemonicsん
+        case "ア": .mnemonicsア
+        case "イ": .mnemonicsイ
+        case "ウ": .mnemonicsウ
+        case "エ": .mnemonicsエ
+        case "オ": .mnemonicsオ
+        case "カ": .mnemonicsカ
+        case "キ": .mnemonicsキ
+        case "ク": .mnemonicsク
+        case "ケ": .mnemonicsケ
+        case "コ": .mnemonicsコ
+        case "サ": .mnemonicsサ
+        case "シ": .mnemonicsシ
+        case "ス": .mnemonicsス
+        case "セ": .mnemonicsセ
+        case "ソ": .mnemonicsソ
+        case "タ": .mnemonicsタ
+        case "チ": .mnemonicsチ
+        case "ツ": .mnemonicsツ
+        case "テ": .mnemonicsテ
+        case "ト": .mnemonicsト
+        case "ナ": .mnemonicsナ
+        case "ニ": .mnemonicsニ
+        case "ヌ": .mnemonicsヌ
+        case "ネ": .mnemonicsネ
+        case "ノ": .mnemonicsノ
+        case "ハ": .mnemonicsハ
+        case "ヒ": .mnemonicsヒ
+        case "フ": .mnemonicsフ
+        case "ヘ": .mnemonicsヘ
+        case "ホ": .mnemonicsホ
+        case "マ": .mnemonicsマ
+        case "ミ": .mnemonicsミ
+        case "ム": .mnemonicsム
+        case "メ": .mnemonicsメ
+        case "モ": .mnemonicsモ
+        case "ヤ": .mnemonicsヤ
+        case "ユ": .mnemonicsユ
+        case "ヨ": .mnemonicsヨ
+        case "ラ": .mnemonicsラ
+        case "リ": .mnemonicsリ
+        case "ル": .mnemonicsル
+        case "レ": .mnemonicsレ
+        case "ロ": .mnemonicsロ
+        case "ワ": .mnemonicsワ
+        case "ヲ": .mnemonicsヲ
+        case "ン": .mnemonicsン
+        default: nil
+        }
+    }
+}
+
 extension KanaType {
     var mnemonicGroups: [MnemonicGroup] {
         switch self {
@@ -19,14 +119,14 @@ extension KanaType {
 }
 
 struct MnemonicGroup {
-    let title: String
+    let title: String?
     let color: Color
     let data: [KanaMnemonicData]
 }
 
 let hiraganaMnemonicsData: [MnemonicGroup] = [
     .init(
-        title: "-",
+        title: nil,
         color: .purple,
         data: [
             .init(unicodeID: "3042", kanaString: "あ"),
@@ -141,7 +241,7 @@ let hiraganaMnemonicsData: [MnemonicGroup] = [
 
 let katakanaMnemonicsData: [MnemonicGroup] = [
     .init(
-        title: "-",
+        title: nil,
         color: .purple,
         data: [
             .init(unicodeID: "30a2", kanaString: "ア"),
