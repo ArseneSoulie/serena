@@ -37,16 +37,9 @@ struct CompletedAllInARowPage: View {
 
     var body: some View {
         ZStack {
-            VStack {
-                ScrollView {
+            List {
+                Section {
                     VStack {
-                        Text(.completed)
-                            .typography(.headline)
-                            .padding()
-                        if isPerfect {
-                            Text(.perfectRun🎉)
-                        }
-
                         let columns = [GridItem(.adaptive(minimum: 50))]
                         LazyVGrid(columns: columns) {
                             ForEach(result.succeededKanas, id: \.kanaValue) { successKana in
@@ -70,36 +63,90 @@ struct CompletedAllInARowPage: View {
                         .background { RoundedRectangle(cornerRadius: 16).fill(Color(white: 0.91)) }
                         .padding()
 
-                        if result.succeededKanas.count != 0 {
-                            Text(.correct(result.succeededKanas.count))
-                                .foregroundStyle(.green)
-                        }
-
-                        if result.skippedKanas.count != 0 {
-                            Text(.passed(result.skippedKanas.count))
-                                .foregroundStyle(.secondary)
-                        }
-
-                        if result.failedKanas.count != 0 {
-                            Text(.incorrect(result.failedKanas.count))
-                                .foregroundStyle(.red)
-                        }
-
                         if isPerfect {
-                            DancingKaomojiView()
+                            Text(.perfectRun🎉)
+                        } else {
+                            if result.succeededKanas.count != 0 {
+                                Text(.correct(result.succeededKanas.count))
+                                    .foregroundStyle(.green)
+                            }
+
+                            if result.skippedKanas.count != 0 {
+                                Text(.passed(result.skippedKanas.count))
+                                    .foregroundStyle(.secondary)
+                            }
+
+                            if result.failedKanas.count != 0 {
+                                Text(.incorrect(result.failedKanas.count))
+                                    .foregroundStyle(.red)
+                            }
+
+                            if isPerfect {
+                                DancingKaomojiView()
+                            }
                         }
-                        Spacer()
-                    }
+                    }.frame(maxWidth: .infinity)
+                } header: {
+                    Text(.completed)
+                        .typography(.headline)
+                        .padding()
                 }
 
-                HStack {
-                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
-                    Button(.levelUps, action: onLevelUpsTapped)
-                }.buttonStyle(.borderedProminent)
-                    .padding()
-                Button(.goBackToSelection, action: onGoBackTapped)
-                    .buttonStyle(.borderless)
-            }.padding()
+                Section {
+                    Button(action: onTryAgainTapped) {
+                        ZStack(alignment: .bottom) {
+                            Image(._TrainingBanner.allInARow)
+                                .resizable()
+                                .scaledToFit()
+
+                            HStack {
+                                Spacer()
+                                Text(.tryAgainWithSelection)
+                                    .typography(.headline)
+                                    .bold()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background {
+                                Color(white: 0)
+                                    .opacity(0.7)
+                            }
+                        }
+                        .cornerRadius(.default)
+                    }.buttonStyle(.plain)
+
+                    Button(action: onLevelUpsTapped) {
+                        ZStack(alignment: .bottom) {
+                            Image(._TrainingBanner.levelUp)
+                                .resizable()
+                                .scaledToFit()
+
+                            HStack {
+                                Spacer()
+                                Text(.levelUps)
+                                    .typography(.headline)
+                                    .bold()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background {
+                                Color(white: 0)
+                                    .opacity(0.7)
+                            }
+                        }
+                        .cornerRadius(.default)
+                    }.buttonStyle(.plain)
+
+                    Button(.goBackToSelection, systemImage: "arrow.backward", action: onGoBackTapped)
+                        .buttonStyle(.bordered)
+
+                } header: {
+                    Text(.navigate)
+                }
+            }
+
             if isPerfect {
                 ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
             }

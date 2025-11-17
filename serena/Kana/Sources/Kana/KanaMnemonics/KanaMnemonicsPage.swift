@@ -4,68 +4,55 @@ import KanjiVGParser
 import SwiftUI
 
 public struct KanaMnemonicsPage: View {
+    @StateObject private var mnemonicsManager = KanaMnemonicsManager()
     @State private var presentedMnemonic: KanaMnemonicData?
-    @State private var mnemonicsManager = KanaMnemonicsManager()
     private let audioManager = KanaAudioManager()
 
-    @State var searchText: String = ""
+    @State private var searchText: String = ""
+    @State private var kanaType: KanaType = .hiragana
+    @State private var showInfo: Bool = false
 
-    @State var kanaType: KanaType = .hiragana
+    private var searchableKanas: [String] {
+        kanaType.mnemonicGroups.flatMap(\.data).map(\.kanaString.standardisedRomaji)
+    }
 
     public init() {}
 
     public var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            ScrollViewReader { proxy in
-                ScrollView {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Image(.ReinaEmotes.mnemonics)
-                                .resizable()
-                                .frame(width: 64, height: 64)
-                            Text(.mnemonicsExplanation)
+        ScrollViewReader { proxy in
+            List {
+                ForEach(kanaType.mnemonicGroups, id: \.title) { mnemonicGroup in
+                    Section {
+                        ForEach(mnemonicGroup.data, id: \.kanaString) { mnemonic in
+                            MnemonicView(
+                                mnemonicsManager: mnemonicsManager,
+                                audioManager: audioManager,
+                                mnemonic: mnemonic,
+                                color: mnemonicGroup.color,
+                                onDrawMnemonicTapped: onDrawMnemonicTapped,
+                            )
+                            .id(mnemonic.kanaString.standardisedRomaji)
+                            .buttonStyle(.plain)
                         }
-
-                        Divider()
-
-                        ForEach(kanaType.mnemonicGroups, id: \.title) { mnemonicGroup in
-                            VStack(alignment: .leading) {
-                                Text(mnemonicGroup.title)
-                                    .typography(.title).bold()
-                                    .foregroundStyle(mnemonicGroup.color)
-                                ForEach(mnemonicGroup.data, id: \.kanaString) { mnemonic in
-                                    MnemonicView(
-                                        mnemonicsManager: mnemonicsManager,
-                                        audioManager: audioManager,
-                                        mnemonic: mnemonic,
-                                        color: mnemonicGroup.color,
-                                        onDrawMnemonicTapped: onDrawMnemonicTapped,
-                                    ).id(mnemonic.kanaString.standardisedRomaji)
-                                }
-                            }
-                        }
-                    }
-                    .padding()
-                    .onChange(of: searchText) { _, newValue in
-                        let allKanas = kanaType.mnemonicGroups.flatMap(\.data).map(\.kanaString.standardisedRomaji)
-                        if
-                            let match = allKanas
-                                .first(where: { $0.contains(newValue.standardisedRomaji) }) {
-                            withAnimation {
-                                proxy.scrollTo(match, anchor: .top)
-                            }
+                    } header: {
+                        if let title = mnemonicGroup.title {
+                            Text(title)
+                                .typography(.title).bold()
+                                .foregroundStyle(mnemonicGroup.color)
                         }
                     }
                 }
             }
-            Picker(.kana, selection: $kanaType) {
-                ForEach(KanaType.allCases, id: \.self) {
-                    Text($0.rawValue)
+            .listStyle(.insetGrouped)
+            .onChange(of: searchText) { _, newValue in
+                if
+                    let match = searchableKanas
+                        .first(where: { $0.contains(newValue.standardisedRomaji) }) {
+                    withAnimation {
+                        proxy.scrollTo(match, anchor: .top)
+                    }
                 }
             }
-            .pickerStyle(.segmented)
-            .fixedSize()
-            .padding()
         }
         .sheet(item: $presentedMnemonic) { data in
             MnemonicDrawingView(
@@ -82,10 +69,46 @@ public struct KanaMnemonicsPage: View {
         .onAppear {
             mnemonicsManager.load()
         }
+        .toolbar {
+            Picker(.kana, selection: $kanaType) {
+                ForEach(KanaType.allCases, id: \.self) {
+                    Text($0.localizedResource)
+                }
+            }
+            .fixedSize()
+            .pickerStyle(.menu)
+            Button("", systemImage: "info.circle", action: { showInfo.toggle() })
+        }
+        .overlay(alignment: .top) {
+            Color(.clear).frame(height: 0)
+                .popover(
+                    isPresented: $showInfo,
+                ) {
+                    PageInfoView(
+                        infoPages: [
+                            .mnemonicsExplanation1,
+                            .mnemonicsExplanation2,
+                            .mnemonicsExplanation3,
+                        ],
+                        image: ._ReinaEmotes.mnemonics,
+                    )
+                }
+        }
     }
 
     func onDrawMnemonicTapped(mnemonic: KanaMnemonicData) {
         presentedMnemonic = mnemonic
+    }
+}
+
+extension KanaType {
+    var localizedResource: LocalizedStringResource {
+        switch self {
+        case .hiragana:
+            .hiragana
+        case .katakana:
+            .katakana
+        }
     }
 }
 

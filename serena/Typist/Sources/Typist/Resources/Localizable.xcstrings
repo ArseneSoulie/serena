@@ -106,6 +106,40 @@
         }
       }
     },
+    "HandwritingKeyboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handwriting keyboard"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier Manuscrit"
+          }
+        }
+      }
+    },
+    "HandwritingKeyboardExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The handwriting keyboard uses a character recognition algorithm to suggest you the most relevant character(s) depending on the strokes you make\n\nIt is handy to train writing by hand and remembering kana and kanji"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le clavier écriture manuscrite utilise un algorithme de reconnaissance de caractères pour suggérer le ou les caractères les plus pertinents en fonction des traits que tu traces\n\nIl est pratique pour s'entraîner à écrire à la main et se souvenir des kana et des kanji"
+          }
+        }
+      }
+    },
     "Input the falling text" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -117,6 +151,57 @@
         }
       }
     },
+    "japaneseKeyboardMissingInstructions" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "To type in Japanese, add the Japanese keyboard in your device’s settings. This will give you Kana and Romaji (QWERTY) layouts that automatically convert romaji to kana and kanji. As well “Writing” which allows you to try writing characters by hand.\n\n`General > Keyboard > Keyboards > Add a keyboard > Japanese > Kana/Romaji/Writing`"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour taper en japonais, ajoute le clavier japonais dans les réglages de ton appareil. Ça te donnera les dispositions Kana et Romaji (QWERTY) qui convertissent automatiquement les romaji en kana et kanji. Ainsi que “Écriture” qui te permet de dessiner les symboles a la main\n\n`Général > Clavier > Claviers > Ajouter un clavier > Japonais > Kana/Romaji/Écriture`"
+          }
+        }
+      }
+    },
+    "japaneseKeyboardMissingTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanese keyboard missing"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier japonais manquant"
+          }
+        }
+      }
+    },
+    "japaneseKeyboardReady" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Japanese keyboard installed"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier japonais installé"
+          }
+        }
+      }
+    },
     "Kana only" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -124,6 +209,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kana uniquement"
+          }
+        }
+      }
+    },
+    "KanaKeyboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kana keyboard"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier Kana"
+          }
+        }
+      }
+    },
+    "KanaKeyboardExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The kana keyboard has multiple layouts. Its most common use is on a phone to be used in a T9 fashion. Each kana is grouped by consonant. Holding the key gives you access to the different variations. \n\nNeutral -> A\nLeft       -> I\nUp         -> U\nRight     -> E\nDown    -> O"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le clavier kana a plusieurs dispositions\nSon usage le plus courant se fait sur téléphone, à la manière du T9\nChaque kana est regroupé par consonne\nMaintenir la touche enfoncée donne accès aux différentes variations\n\nNeutre   -> A\nGauche -> I\nHaut      -> U\nDroite    -> E\nBas        -> O"
+          }
+        }
+      }
+    },
+    "keyboardSetup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keyboard Setup"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Options du clavier"
+          }
+        }
+      }
+    },
+    "keyboardTypes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keyboard types"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Types de claviers"
           }
         }
       }
@@ -146,6 +299,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nouveau record !"
+          }
+        }
+      }
+    },
+    "openSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open settings"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir les options"
           }
         }
       }
@@ -183,6 +353,40 @@
         }
       }
     },
+    "QwertyKeyboard" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Qwerty keyboard"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clavier Qwerty"
+          }
+        }
+      }
+    },
+    "QwertyKeyboardExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The qwerty keyboard is used like a usual keyboard and has the same input methods you used while learning kana.\nThe phonetic sounds are converted into kanji and kana suggestions.\nDoubling a consonant allows you to put a pause.\n\nThis keyboard is well spread and mainly used for physical devices"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le clavier qwerty s'utilise comme un clavier habituel et reprend les mêmes méthodes de saisie que celles que tu as utilisées lors de l'apprentissage des kana\n\nLes sons phonétiques sont ensuite convertis en suggestions de kanji et de kana\nDoubler une consonne permet d'insérer une pause\n\nCe clavier est très répandu et principalement utilisé pour les appareils physiques"
+          }
+        }
+      }
+    },
     "Total score" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -212,6 +416,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Test d’écriture"
+          }
+        }
+      }
+    },
+    "typingExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Learn to write on a japanese keyboard or by hand Kana and Kanji.\nWrite the falling words as fast as you can and get the best score !"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprends à écrire avec un clavier japonais ou à la main des Kana et Kanji\n\nEcris les mots qui chutent le plus vite possible et obtiens le meilleur score !"
           }
         }
       }

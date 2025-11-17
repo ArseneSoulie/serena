@@ -7,30 +7,84 @@ struct CompletedLevelUpsPage: View {
 
     var body: some View {
         ZStack {
-            VStack {
-                ScrollView {
+            List {
+                Section {
                     VStack {
-                        Text(.completed)
-                            .typography(.headline)
-                        Spacer()
                         Image(systemName: "party.popper")
                             .resizable()
                             .frame(width: 80, height: 80)
                             .padding()
                         DancingKaomojiView()
-
-                        Spacer()
-                    }
+                    }.frame(maxWidth: .infinity)
+                } header: {
+                    Text(.completed)
+                        .typography(.headline)
                 }
-                HStack {
-                    Button(.tryAgainWithSelection, action: onTryAgainTapped)
-                    Button(.allInARow, action: onAllInARowTapped)
-                }.buttonStyle(.borderedProminent)
-                    .padding()
-                Button(.goBackToSelection, action: onGoBackTapped)
-                    .buttonStyle(.borderless)
-            }.padding()
+
+                Section {
+                    Button(action: onTryAgainTapped) {
+                        ZStack(alignment: .bottom) {
+                            Image(._TrainingBanner.levelUp)
+                                .resizable()
+                                .scaledToFit()
+
+                            HStack {
+                                Spacer()
+                                Text(.tryAgainWithSelection)
+                                    .typography(.headline)
+                                    .bold()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background {
+                                Color(white: 0)
+                                    .opacity(0.7)
+                            }
+                        }
+                        .cornerRadius(.default)
+                    }.buttonStyle(.plain)
+
+                    Button(action: onAllInARowTapped) {
+                        ZStack(alignment: .bottom) {
+                            Image(._TrainingBanner.allInARow)
+                                .resizable()
+                                .scaledToFit()
+
+                            HStack {
+                                Spacer()
+                                Text(.allInARow)
+                                    .typography(.headline)
+                                    .bold()
+                                Image(systemName: "chevron.right")
+                            }
+                            .foregroundStyle(.white)
+                            .padding()
+                            .background {
+                                Color(white: 0)
+                                    .opacity(0.7)
+                            }
+                        }
+                        .cornerRadius(.default)
+                    }.buttonStyle(.plain)
+
+                    Button(.goBackToSelection, systemImage: "arrow.backward", action: onGoBackTapped)
+                        .buttonStyle(.bordered)
+
+                } header: {
+                    Text(.navigate)
+                }
+            }
+
             ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
         }
     }
+}
+
+#Preview {
+    CompletedLevelUpsPage(
+        onTryAgainTapped: {},
+        onAllInARowTapped: {},
+        onGoBackTapped: {},
+    )
 }

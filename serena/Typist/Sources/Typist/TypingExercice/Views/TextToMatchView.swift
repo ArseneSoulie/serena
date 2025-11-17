@@ -26,9 +26,9 @@ struct TextToMatchView: View {
             TextWithHighlight(fullText: data.mainText, textToMatch: data.textToMatch)
                 .typography(.title2)
         }
-        .padding(.horizontal, 8)
+        .padding(.horizontal, 16)
         .padding(.vertical, 4)
-        .background(.ultraThinMaterial, in: Capsule())
+        .background(.thickMaterial, in: Capsule())
         .shadow(color: .black.opacity(0.12), radius: 5, x: 0, y: 3)
     }
 }

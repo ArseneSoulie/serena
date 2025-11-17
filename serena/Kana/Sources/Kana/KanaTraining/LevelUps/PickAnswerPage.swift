@@ -42,6 +42,7 @@ struct PickAnswerPage: View {
         self.kanaPool = kanaPool
         self.maxStepsCount = maxStepsCount
         self.onLevelCompleted = onLevelCompleted
+
         let options = Array(kanaPool.shuffled().prefix(3))
         guessingOptions = options
         truth = options.randomElement() ?? .empty
@@ -62,39 +63,57 @@ struct PickAnswerPage: View {
     }
 
     var body: some View {
-        VStack(spacing: 10) {
-            ProgressBarView(progress: $progress)
-            Text(pickingExerciceType.prompt)
-                .padding(.horizontal)
-            Text(.byConventionHiraganaIsLowercasedAndKatakanaIsUppercased)
-                .foregroundStyle(capitalizationColorHint)
-                .padding(.horizontal)
-                .padding(.bottom)
-                .typography(.callout)
-
-            Text(formattedTruth)
-                .typography(.largeTitle)
-                .padding()
-                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-
-            Spacer()
-
-            HStack(spacing: 20) {
-                ForEach(guessingOptions, id: \.self) { option in
-                    Button(
-                        action: { onOptionSelected(option) },
-                        label: { Text(formatGuessingOption(option)).padding(.horizontal) },
-                    )
-                    .typography(.title)
-                    .minimumScaleFactor(0.5)
-                    .lineLimit(1)
-                    .buttonStyle(.borderedProminent)
+        VStack(spacing: 0) {
+            List {
+                Section {
+                    Text(title)
+                        .typography(.title2)
                 }
-            }.disabled(disableButtons)
-                .padding()
-                .transaction { $0.disablesAnimations = true }
+                .listRowBackground(Color.clear)
+                .listRowSpacing(0)
+                .listSectionSpacing(0)
+
+                Section {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(pickingExerciceType.prompt)
+                        Text(.byConventionHiraganaIsLowercasedAndKatakanaIsUppercased)
+                            .foregroundStyle(capitalizationColorHint)
+                            .typography(.callout)
+                    }
+                }
+
+                Section {
+                    Text(formattedTruth)
+                        .typography(.largeTitle)
+                        .padding(.vertical, 20)
+                        .frame(maxWidth: .infinity)
+                }
+            }.listStyle(.insetGrouped)
+                .overlay(alignment: .bottom) {
+                    HStack(spacing: 20) {
+                        ForEach(guessingOptions, id: \.self) { option in
+                            Button(
+                                action: { onOptionSelected(option) },
+                                label: { Text(formatGuessingOption(option)).padding(.horizontal) },
+                            )
+                            .typography(.title)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
+                            .buttonStyle(.borderedProminent)
+                            .transaction { $0.disablesAnimations = true }
+                        }
+                    }
+                    .padding()
+                    .disabled(disableButtons)
+                }
         }
-        .navigationTitle(title)
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarTrailing) {
+                ProgressBarView(progress: $progress)
+                    .frame(minWidth: 150)
+                    .padding(.leading)
+            }
+        })
         .toast(isPresented: $showToast, message: .levelUp)
     }
 

@@ -1,3 +1,4 @@
+import DesignSystem
 import FoundationModels
 import SwiftUI
 
@@ -54,44 +55,62 @@ struct WriteAnswerPage: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(spacing: 10) {
-                ProgressBarView(progress: $progress)
-                Text(writingExerciceType.prompt)
-                VStack {
-                    Text(kanaTruth)
-                        .foregroundStyle(truthColor)
-                        .typography(.largeTitle)
-                        .shake(shakeTrigger)
-                        .padding()
-                        .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                    if let info {
-                        Text(info)
-                    }
+        VStack {
+            List {
+                Section {
+                    Text(title)
+                        .typography(.title2)
                 }
+                .listRowBackground(Color.clear)
+                .listRowSpacing(0)
+                .listSectionSpacing(0)
 
-                ZStack(alignment: .trailing) {
-                    TextEditor(text: $inputText)
-                        .onSubmit(onSubmit)
-                        .autocorrectionDisabled(true)
-                        .textInputAutocapitalization(.never)
-                        .multilineTextAlignment(.center)
-                        .textEditorStyle(.plain)
-                        .submitLabel(.send)
-                        .typography(.title)
-                        .focused($isFocused)
-
-                    Button(action: onSubmit) {
-                        Image(systemName: "checkmark.circle.fill")
-                            .resizable()
-                            .frame(width: 24, height: 24)
+                Section {
+                    Text(writingExerciceType.prompt)
+                    VStack {
+                        Text(kanaTruth)
+                            .foregroundStyle(truthColor)
+                            .typography(.largeTitle)
+                            .shake(shakeTrigger)
                             .padding()
+
+                        if let info {
+                            Text(info)
+                        }
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
-                .overlay { RoundedRectangle(cornerRadius: 16).stroke() }
-                .padding()
             }
+            .listStyle(.insetGrouped)
         }
+        .overlay(alignment: .bottom) {
+            ZStack(alignment: .trailing) {
+                TextEditor(text: $inputText)
+                    .onSubmit(onSubmit)
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
+                    .multilineTextAlignment(.center)
+                    .textEditorStyle(.plain)
+                    .submitLabel(.send)
+                    .typography(.title2)
+                    .focused($isFocused)
+
+                Button(action: onSubmit) {
+                    Image(systemName: "checkmark.circle.fill")
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding()
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+            .background {
+                Color(uiColor: .secondarySystemGroupedBackground)
+                    .cornerRadius(.round)
+                    .border(style: .quaternary, cornerRadius: .round)
+            }
+            .padding()
+        }
+
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
@@ -99,11 +118,16 @@ struct WriteAnswerPage: View {
             isFocused = true
             isLevelCompleted = false
         }
-        .navigationTitle(title)
         .toolbar {
-            Button(.skip, action: goToNextRound)
+            ToolbarItem(placement: .topBarTrailing) {
+                ProgressBarView(progress: $progress)
+                    .frame(minWidth: 150)
+                    .padding(.leading)
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button(.skip, action: goToNextRound)
+            }
         }
-        .navigationBarTitleDisplayMode(.inline)
         .toast(isPresented: $showToast, message: .levelUp)
     }
 
@@ -192,5 +216,17 @@ struct WriteAnswerPage: View {
                 truthColor = .primary
             }
         }
+    }
+}
+
+#Preview {
+    NavigationView {
+        WriteAnswerPage(
+            title: .writeTheKana,
+            writingExerciceType: .single,
+            kanaPool: [.hiragana(value: "あ")],
+            maxStepsCount: 3,
+            onLevelCompleted: {},
+        )
     }
 }

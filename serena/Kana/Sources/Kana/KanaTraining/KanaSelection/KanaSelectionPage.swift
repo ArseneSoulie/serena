@@ -12,6 +12,7 @@ public struct KanaSelectionPage: View {
     @State var selectedExtendedKatakana: Set<KanaLine> = []
 
     @State var showRomaji: Bool = false
+    @State var showInfo: Bool = false
 
     @State var kanaSelectionType: KanaSelectionType = .hiragana
 
@@ -19,64 +20,59 @@ public struct KanaSelectionPage: View {
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading) {
-                HStack {
-                    Image(.ReinaEmotes.training)
-                        .resizable()
-                        .frame(width: 64, height: 64)
-                    Text(.selectTheRowsYouWantToTrainOnAndHitLetsGo)
-                }
-                .padding()
+            LazyVStack(alignment: .leading, spacing: 16, pinnedViews: .sectionHeaders) {
+                Text(.kanaTraining)
+                    .typography(.title2)
+                    .padding(.horizontal)
 
-                LazyVStack(pinnedViews: .sectionHeaders) {
+                KanaLineGroupView(
+                    title: .base,
+                    lines: base,
+                    selectedLines: $selectedBase,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.base,
+                )
+                KanaLineGroupView(
+                    title: .diacritics,
+                    lines: diacritic,
+                    selectedLines: $selectedDiacritic,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.diacritic,
+                )
+                KanaLineGroupView(
+                    title: .combinatory,
+                    lines: combinatory,
+                    selectedLines: $selectedCombinatory,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.combinatory,
+                )
+                KanaLineGroupView(
+                    title: .combinatoryDiacritics,
+                    lines: combinatoryDiacritic,
+                    selectedLines: $selectedCombinatoryDiacritic,
+                    showRomaji: showRomaji,
+                    kanaSelectionType: kanaSelectionType,
+                    tint: CatagoryColor.combinarotyDiacritic,
+                )
+                if kanaSelectionType != .hiragana {
                     KanaLineGroupView(
-                        title: .base,
-                        lines: base,
-                        selectedLines: $selectedBase,
+                        title: .extendedKatakana,
+                        lines: extendedKatakana,
+                        selectedLines: $selectedExtendedKatakana,
                         showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.base,
+                        kanaSelectionType: .katakana,
+                        tint: CatagoryColor.extendedKatakana,
                     )
-                    KanaLineGroupView(
-                        title: .diacritics,
-                        lines: diacritic,
-                        selectedLines: $selectedDiacritic,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.diacritic,
-                    )
-                    KanaLineGroupView(
-                        title: .combinatory,
-                        lines: combinatory,
-                        selectedLines: $selectedCombinatory,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.combinatory,
-                    )
-                    KanaLineGroupView(
-                        title: .combinatoryDiacritics,
-                        lines: combinatoryDiacritic,
-                        selectedLines: $selectedCombinatoryDiacritic,
-                        showRomaji: showRomaji,
-                        kanaSelectionType: kanaSelectionType,
-                        tint: CatagoryColor.combinarotyDiacritic,
-                    )
-                    if kanaSelectionType != .hiragana {
-                        KanaLineGroupView(
-                            title: .extendedKatakana,
-                            lines: extendedKatakana,
-                            selectedLines: $selectedExtendedKatakana,
-                            showRomaji: showRomaji,
-                            kanaSelectionType: .katakana,
-                            tint: CatagoryColor.extendedKatakana,
-                        )
-                    }
                 }
 
                 Spacer()
-                    .frame(height: 160)
+                    .frame(height: 80)
             }
         }
+        .background(Color(uiColor: .systemGroupedBackground))
         .animation(.default, value: showRomaji)
         .animation(.default, value: kanaSelectionType)
         .overlay(alignment: .bottom) {
@@ -91,10 +87,27 @@ public struct KanaSelectionPage: View {
                 .padding(.all)
             }
         }
+        .overlay(alignment: .top) {
+            Color(.clear).frame(height: 0)
+                .popover(
+                    isPresented: $showInfo,
+                ) {
+                    PageInfoView(
+                        infoPages: [
+                            .selectionExplanation1,
+                            .selectionExplanation2,
+                            .selectionExplanation3,
+                            .selectionExplanation4,
+                        ],
+                        image: ._ReinaEmotes.training,
+                    )
+                }
+        }
         .toolbar {
             ToolbarViews(
                 kanaSelectionType: $kanaSelectionType,
                 showRomaji: $showRomaji,
+                showInfo: $showInfo,
                 selectedBase: $selectedBase,
                 selectedDiacritic: $selectedDiacritic,
                 selectedCombinatory: $selectedCombinatory,
@@ -102,8 +115,6 @@ public struct KanaSelectionPage: View {
                 selectedExtendedKatakana: $selectedExtendedKatakana,
             )
         }
-        .navigationTitle(.kanaTraining)
-        .navigationBarTitleDisplayMode(.large)
     }
 
     var textForSelectedKanas: String {
@@ -154,6 +165,7 @@ struct ToolbarViews: View {
     @State var showsFastSelect: Bool = false
 
     @Binding var showRomaji: Bool
+    @Binding var showInfo: Bool
 
     @Binding var selectedBase: Set<KanaLine>
     @Binding var selectedDiacritic: Set<KanaLine>
@@ -163,7 +175,10 @@ struct ToolbarViews: View {
 
     var body: some View {
         Picker(.trainingMode, selection: $kanaSelectionType) {
-            ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.localisedDescription) }
+            ForEach(KanaSelectionType.allCases, id: \.self) {
+                Text($0.localisedDescription)
+                    .typography(.body)
+            }
         }
         .pickerStyle(.menu)
         Toggle(.romaji, isOn: $showRomaji)
@@ -177,6 +192,7 @@ struct ToolbarViews: View {
                     selectedExtendedKatakana: $selectedExtendedKatakana,
                 )
             }
+        Button("", systemImage: "info.circle", action: { showInfo.toggle() })
     }
 }
 

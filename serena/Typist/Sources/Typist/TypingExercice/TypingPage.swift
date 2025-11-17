@@ -14,13 +14,16 @@ public struct TypingPage: View {
 
     public var body: some View {
         ZStack {
-            AnimatedBackground(difficultyScale: typingViewModel.difficultyScale)
-                .ignoresSafeArea()
+            AnimatedBackground(
+                currentDifficulty: typingViewModel.currentDifficulty,
+                livesCount: typingViewModel.health,
+                castleResource: typingViewModel.castleImageResource,
+                flagOffset: typingViewModel.flagOffset,
+            )
 
             VStack(spacing: 10) {
                 if typingViewModel.isPlaying {
                     TopBars(
-                        health: typingViewModel.health,
                         comboCount: typingViewModel.comboCount,
                         score: typingViewModel.score,
                     )
@@ -95,49 +98,31 @@ public struct TypingPage: View {
 // MARK: - Subviews
 
 private struct TopBars: View {
-    let health: Int
     let comboCount: Int
     let score: Int
 
     private var comboMultiplier: Double { 1.0 + Double(comboCount) * 0.1 }
-    private let maxHealth = 3
 
     var body: some View {
         VStack(spacing: 10) {
             HStack {
-                heartsView
-                Spacer()
-                comboView
-            }
-            .padding(.horizontal)
-
-            HStack {
                 Text(.points(score))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                    .background(.thickMaterial, in: Capsule())
+                    .shadow(color: .black.opacity(0.12), radius: 5, x: 0, y: 3)
                 Spacer()
+                if comboCount > 0 {
+                    Text(.comboX(comboCount, Float(comboMultiplier)))
+                        .foregroundStyle(.orange)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 4)
+                        .background(.thickMaterial, in: Capsule())
+                        .shadow(color: .black.opacity(0.12), radius: 5, x: 0, y: 3)
+                        .transition(.opacity.animation(.easeInOut))
+                }
             }
             .padding(.horizontal)
-        }
-        .font(.callout)
-    }
-
-    private var heartsView: some View {
-        HStack(spacing: 6) {
-            ForEach(1 ... maxHealth, id: \.self) { index in
-                Image(systemName: index <= health ? "heart.fill" : "heart")
-                    .foregroundStyle(index <= health ? .red : .secondary)
-                    .scaleEffect(index <= health ? 1.05 : 1.0)
-                    .animation(.easeInOut(duration: 0.2), value: health)
-            }
-        }
-    }
-
-    private var comboView: some View {
-        Group {
-            if comboCount > 0 {
-                Text(.comboX(comboCount, Float(comboMultiplier)))
-                    .foregroundStyle(.orange)
-                    .transition(.opacity.animation(.easeInOut))
-            }
         }
     }
 }
@@ -168,7 +153,7 @@ private struct Playfield: View {
 
                     ForEach(scorePopups) { popup in
                         Text(popup.text)
-                            .font(.headline)
+                            .typography(.headline)
                             .foregroundStyle(.green)
                             .opacity(popup.opacity)
                             .position(
@@ -182,7 +167,7 @@ private struct Playfield: View {
 
             if showLevelUp {
                 Text(.levelUp)
-                    .font(.headline)
+                    .typography(.headline)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(.ultraThinMaterial, in: Capsule())
@@ -214,7 +199,6 @@ private struct FinishCard: View {
                         .foregroundStyle(.secondary)
                     Text("\(score)")
                         .typography(.title)
-                        .font(.largeTitle)
                 }
                 if isHighScore {
                     Text(.newHighScore)
@@ -240,17 +224,70 @@ private struct FinishCard: View {
 }
 
 private struct AnimatedBackground: View {
-    let difficultyScale: Double
-    private let maxDifficultyForGradient: Double = 3
+    let currentDifficulty: Int
+    let livesCount: Int
+    let castleResource: ImageResource
+    let flagOffset: CGPoint
+
+    private let dayCycleColors: [Color] = [
+        Color(._Sky.dawn),
+        Color(._Sky.morning),
+        Color(._Sky.noon),
+        Color(._Sky.afternoon),
+        Color(._Sky.evening),
+        Color(._Sky.night),
+        Color(._Sky.midnight),
+        Color(._Sky.aftermidnight),
+    ]
 
     var body: some View {
-        let t = min(difficultyScale / maxDifficultyForGradient, 1.0)
-        let start = Color(hue: 210 / 360, saturation: 0.35 + 0.10 * t, brightness: 1)
-        let end = Color(hue: (260 - 230 * t) / 360, saturation: 0.50 + 0.35 * t, brightness: 0.95 + 0.05 * t)
+        let gradientTop = dayCycleColors[currentDifficulty % dayCycleColors.count]
+        let gradientBottom = dayCycleColors[(currentDifficulty + 1) % dayCycleColors.count]
 
-        return LinearGradient(colors: [start, end], startPoint: .topLeading, endPoint: .bottomTrailing)
-            .animation(.easeInOut(duration: 0.6), value: difficultyScale)
+        return ZStack(alignment: .bottom) {
+            Color(._Typing.grass)
+                .ignoresSafeArea(.all, edges: .bottom)
+
+            LinearGradient(colors: [gradientTop, gradientBottom], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea(.all, edges: .top)
+
+            Image(castleResource)
+                .resizable()
+                .scaledToFit()
+                .background {
+                    GeometryReader { geo in
+                        if livesCount >= 1 {
+                            HStack {
+                                ForEach(Range(1 ... livesCount), id: \.self) { _ in
+                                    Image(._Typing.flag)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: geo.size.height * 0.18)
+                                        .transition(.move(edge: .bottom))
+                                }
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+                            .offset(x: geo.size.width * flagOffset.x, y: geo.size.height * flagOffset.y)
+                        }
+                    }
+                }
+        }
     }
+}
+
+#Preview {
+    @Previewable @State var lives = 3
+    AnimatedBackground(
+        currentDifficulty: 10,
+        livesCount: lives,
+        castleResource: ._Typing.castle1,
+        flagOffset: .init(x: 0.038, y: 0.3),
+    )
+    Button("aa", action: {
+        withAnimation {
+            lives -= 1
+        }
+    })
 }
 
 // MARK: - Helper Views and Modifiers

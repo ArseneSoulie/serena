@@ -4,13 +4,13 @@ import SwiftUI
 
 enum Tabs: String, CaseIterable {
     case study
-    case dictionnary
+    case dictionary
     case stats
     case testing
 }
 
 public struct ContentView: View {
-    @State var selectedTab: Tabs = .dictionnary
+    @State var selectedTab: Tabs = .dictionary
 
     var coordinator = NavigationCoordinator()
 
@@ -21,11 +21,11 @@ public struct ContentView: View {
             .environment(coordinator)
 //        TabView(selection: $selectedTab) {
 //            Tab(
-//                "Dictionnary",
+//                "Dictionary",
 //                systemImage: "character.book.closed.fill",
-//                value: .dictionnary
+//                value: .dictionary
 //            ) {
-//                DictionnaryView()
+//                DictionaryView()
 //            }
 //            Tab(
 //                "Tests",

@@ -37,8 +37,12 @@ struct KanaLineGroupView: View {
                         isOn: $selectedLines[containsLine: kanaLine],
                     )
                 }
-            }.padding(.vertical, 8)
-            Divider()
+            }
+            .padding(.vertical, 16)
+            .background {
+                Color(uiColor: .secondarySystemGroupedBackground)
+                    .cornerRadius(.strong)
+            }
         } header: {
             HStack {
                 Button(action: toggleSelectBase) {
@@ -52,10 +56,12 @@ struct KanaLineGroupView: View {
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 12)
-                .background(Color.bgColor, in: .capsule)
+                .background(Color(uiColor: .secondarySystemGroupedBackground), in: .capsule)
+                .border(style: .quinary, width: .default, cornerRadius: .default)
                 .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                 Spacer()
             }
+            .padding(.top)
         }
         .padding(.horizontal)
     }
