@@ -99,7 +99,8 @@ struct AllInARowExercicePage: View {
             }
             .fixedSize(horizontal: false, vertical: true)
             .background {
-                Color.white.cornerRadius(.round)
+                Color(uiColor: .secondarySystemGroupedBackground)
+                    .cornerRadius(.round)
                     .border(style: .quaternary, cornerRadius: .round)
             }
             .padding()

@@ -40,7 +40,7 @@ struct KanaLineGroupView: View {
             }
             .padding(.vertical, 16)
             .background {
-                Color.white
+                Color(uiColor: .secondarySystemGroupedBackground)
                     .cornerRadius(.strong)
             }
         } header: {
@@ -56,7 +56,7 @@ struct KanaLineGroupView: View {
                 }
                 .padding(.vertical, 8)
                 .padding(.horizontal, 12)
-                .background(Color.bgColor, in: .capsule)
+                .background(Color(uiColor: .secondarySystemGroupedBackground), in: .capsule)
                 .border(style: .quinary, width: .default, cornerRadius: .default)
                 .shadow(color: Color.black.opacity(0.1), radius: 8, x: 0, y: 4)
                 Spacer()
