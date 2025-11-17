@@ -30,8 +30,8 @@ struct AllInARowExercicePage: View {
         onFinishedExercice: @escaping (AllInARowResult) -> Void,
     ) {
         self.kanas = kanas
-        _remainingKanas = State(initialValue: Set(kanas))
-        _truth = State(initialValue: kanas.randomElement() ?? .empty)
+        remainingKanas = Set(kanas)
+        truth = kanas.randomElement() ?? .empty
         self.onFinishedExercice = onFinishedExercice
         randomizeFont()
     }
