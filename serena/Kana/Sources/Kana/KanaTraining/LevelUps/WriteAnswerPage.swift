@@ -58,10 +58,15 @@ struct WriteAnswerPage: View {
         VStack {
             List {
                 Section {
-                    Text(writingExerciceType.prompt)
+                    Text(title)
+                        .typography(.title2)
                 }
+                .listRowBackground(Color.clear)
+                .listRowSpacing(0)
+                .listSectionSpacing(0)
 
                 Section {
+                    Text(writingExerciceType.prompt)
                     VStack {
                         Text(kanaTruth)
                             .foregroundStyle(truthColor)
@@ -87,7 +92,7 @@ struct WriteAnswerPage: View {
                     .multilineTextAlignment(.center)
                     .textEditorStyle(.plain)
                     .submitLabel(.send)
-                    .typography(.title)
+                    .typography(.title2)
                     .focused($isFocused)
 
                 Button(action: onSubmit) {
@@ -112,10 +117,10 @@ struct WriteAnswerPage: View {
             isFocused = true
             isLevelCompleted = false
         }
-        .navigationTitle(title)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 ProgressBarView(progress: $progress)
+                    .frame(minWidth: 150)
                     .padding(.leading)
             }
             ToolbarItem(placement: .topBarTrailing) {

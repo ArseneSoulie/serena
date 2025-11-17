@@ -90,7 +90,7 @@ public struct KanaMnemonicsPage: View {
                             .mnemonicsExplanation2,
                             .mnemonicsExplanation3,
                         ],
-                        image: .ReinaEmotes.mnemonics,
+                        image: ._ReinaEmotes.mnemonics,
                     )
                 }
         }

@@ -221,14 +221,14 @@ private struct AnimatedBackground: View {
     let livesCount: Int
 
     private let dayCycleColors: [Color] = [
-        Color(.Sky.dawn),
-        Color(.Sky.morning),
-        Color(.Sky.noon),
-        Color(.Sky.afternoon),
-        Color(.Sky.evening),
-        Color(.Sky.night),
-        Color(.Sky.midnight),
-        Color(.Sky.aftermidnight),
+        Color(._Sky.dawn),
+        Color(._Sky.morning),
+        Color(._Sky.noon),
+        Color(._Sky.afternoon),
+        Color(._Sky.evening),
+        Color(._Sky.night),
+        Color(._Sky.midnight),
+        Color(._Sky.aftermidnight),
     ]
 
     var body: some View {
@@ -236,13 +236,13 @@ private struct AnimatedBackground: View {
         let gradientBottom = dayCycleColors[(currentDifficulty + 1) % dayCycleColors.count]
 
         return ZStack(alignment: .bottom) {
-            Color(.grass)
+            Color(._Typing.grass)
                 .ignoresSafeArea(.all, edges: .bottom)
 
             LinearGradient(colors: [gradientTop, gradientBottom], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea(.all, edges: .top)
 
-            Image(.castle)
+            Image(._Typing.castle)
                 .resizable()
                 .scaledToFit()
                 .background {
@@ -250,7 +250,7 @@ private struct AnimatedBackground: View {
                         if livesCount >= 1 {
                             HStack {
                                 ForEach(Range(1 ... livesCount), id: \.self) { _ in
-                                    Image(.flag)
+                                    Image(._Typing.flag)
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(height: geo.size.height * 0.18)

@@ -40,7 +40,7 @@ struct MnemonicView: View {
 
             HStack {
                 HStack {
-                    Image("KanaMnemonics/\(mnemonic.unicodeID)", bundle: Bundle.module)
+                    Image("KanaMnemonics/\(mnemonic.unicodeID)", bundle: designSystemModule)
                         .resizable()
                         .frame(width: 200, height: 100)
                     KanjiStrokes(from: strokeURL)?

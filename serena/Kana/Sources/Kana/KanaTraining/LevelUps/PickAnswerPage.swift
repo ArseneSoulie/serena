@@ -66,6 +66,14 @@ struct PickAnswerPage: View {
         VStack(spacing: 0) {
             List {
                 Section {
+                    Text(title)
+                        .typography(.title2)
+                }
+                .listRowBackground(Color.clear)
+                .listRowSpacing(0)
+                .listSectionSpacing(0)
+
+                Section {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(pickingExerciceType.prompt)
                         Text(.byConventionHiraganaIsLowercasedAndKatakanaIsUppercased)
@@ -99,10 +107,11 @@ struct PickAnswerPage: View {
                     .disabled(disableButtons)
                 }
         }
-        .navigationTitle(title)
         .toolbar(content: {
             ToolbarItem(placement: .topBarTrailing) {
-                ProgressBarView(progress: $progress).padding(.leading)
+                ProgressBarView(progress: $progress)
+                    .frame(minWidth: 150)
+                    .padding(.leading)
             }
         })
         .toast(isPresented: $showToast, message: .levelUp)

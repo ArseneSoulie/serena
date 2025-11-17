@@ -25,7 +25,7 @@ public struct ExerciseSelectionPage: View {
             Section(.levelUps) {
                 ExerciceBanner(
                     title: .levelUpsExplanation,
-                    imageResource: .TrainingBanner.levelUp,
+                    imageResource: ._TrainingBanner.levelUp,
                     onBannerTapped: onLevelUpsTapped,
                 )
             }
@@ -33,7 +33,7 @@ public struct ExerciseSelectionPage: View {
             Section(.allInARow) {
                 ExerciceBanner(
                     title: .tryToGetAllSelectedKanasRightInARow,
-                    imageResource: .TrainingBanner.allInARow,
+                    imageResource: ._TrainingBanner.allInARow,
                     onBannerTapped: onAllInARowTapped,
                 )
             }

@@ -40,10 +40,15 @@ struct AllInARowExercicePage: View {
         VStack {
             List {
                 Section {
-                    Text(.writeTheWritingOfAllKanasInARow)
+                    Text(.allInARow)
+                        .typography(.title2)
                 }
+                .listRowBackground(Color.clear)
+                .listRowSpacing(0)
+                .listSectionSpacing(0)
 
                 Section {
+                    Text(.writeTheWritingOfAllKanasInARow)
                     Button(action: randomizeFont) {
                         VStack {
                             Text(truth.kanaValue)
@@ -82,7 +87,7 @@ struct AllInARowExercicePage: View {
                     .multilineTextAlignment(.center)
                     .textEditorStyle(.plain)
                     .submitLabel(.send)
-                    .typography(.title)
+                    .typography(.title2)
                     .focused($isFocused)
 
                 Button(action: onSubmit) {
@@ -99,14 +104,13 @@ struct AllInARowExercicePage: View {
             }
             .padding()
         }
-        .navigationTitle(.allInARow)
         .onChange(of: inputText) { _, newValue in
             if newValue.filter(\.isNewline).count > 0 { onSubmit() }
         }
         .onAppear { isFocused = true }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                ProgressBarView(progress: $progress).padding(.leading)
+                ProgressBarView(progress: $progress).frame(minWidth: 150).padding(.leading)
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button(.finish, action: finishExercice)

@@ -144,6 +144,10 @@ struct KeyboardStatusView: View {
                 Text(.japaneseKeyboardMissingTitle)
                     .typography(.headline)
             }
+            Image(._ReinaEmotes.confused)
+                .resizable()
+                .frame(width: 64, height: 64)
+                .frame(maxWidth: .infinity)
 
             Text(.japaneseKeyboardMissingInstructions)
 

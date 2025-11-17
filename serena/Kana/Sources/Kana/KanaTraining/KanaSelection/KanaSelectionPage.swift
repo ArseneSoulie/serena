@@ -20,7 +20,11 @@ public struct KanaSelectionPage: View {
 
     public var body: some View {
         ScrollView {
-            LazyVStack(spacing: 16, pinnedViews: .sectionHeaders) {
+            LazyVStack(alignment: .leading, spacing: 16, pinnedViews: .sectionHeaders) {
+                Text(.kanaTraining)
+                    .typography(.title2)
+                    .padding(.horizontal)
+
                 KanaLineGroupView(
                     title: .base,
                     lines: base,
@@ -68,7 +72,7 @@ public struct KanaSelectionPage: View {
                     .frame(height: 80)
             }
         }
-        .background(.thinMaterial)
+        .background(Color(uiColor: .systemGroupedBackground))
         .animation(.default, value: showRomaji)
         .animation(.default, value: kanaSelectionType)
         .overlay(alignment: .bottom) {
@@ -95,7 +99,7 @@ public struct KanaSelectionPage: View {
                             .selectionExplanation3,
                             .selectionExplanation4,
                         ],
-                        image: .ReinaEmotes.training,
+                        image: ._ReinaEmotes.training,
                     )
                 }
         }
@@ -111,8 +115,6 @@ public struct KanaSelectionPage: View {
                 selectedExtendedKatakana: $selectedExtendedKatakana,
             )
         }
-        .navigationTitle(.kanaTraining)
-        .navigationBarTitleDisplayMode(.large)
     }
 
     var textForSelectedKanas: String {
@@ -173,7 +175,10 @@ struct ToolbarViews: View {
 
     var body: some View {
         Picker(.trainingMode, selection: $kanaSelectionType) {
-            ForEach(KanaSelectionType.allCases, id: \.self) { Text($0.localisedDescription) }
+            ForEach(KanaSelectionType.allCases, id: \.self) {
+                Text($0.localisedDescription)
+                    .typography(.body)
+            }
         }
         .pickerStyle(.menu)
         Toggle(.romaji, isOn: $showRomaji)

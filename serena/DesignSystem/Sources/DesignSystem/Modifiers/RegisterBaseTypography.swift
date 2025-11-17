@@ -24,6 +24,8 @@ public func registerFontForUIKitComponents() {
     UITabBarItem.appearance().setTitleTextAttributes([.font: tabBarFont], for: .normal)
 
     UISegmentedControl.appearance().setTitleTextAttributes([.font: segmentedControlFont], for: .normal)
+    UIBarItem.appearance().setTitleTextAttributes([.font: buttonFont], for: .normal)
+    UIBarButtonItem.appearance().setTitleTextAttributes([.font: buttonFont], for: .normal)
 }
 
 public extension View {
