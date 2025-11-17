@@ -28,10 +28,21 @@ public extension ImageResource {
         public static let confused = ImageResource.ReinaEmotes.confused
         public static let mnemonics = ImageResource.ReinaEmotes.mnemonics
         public static let training = ImageResource.ReinaEmotes.training
+        public static let easy = ImageResource.ReinaEmotes.easy
+        public static let medium = ImageResource.ReinaEmotes.medium
+        public static let hard = ImageResource.ReinaEmotes.hard
     }
 
     enum _Typing {
-        public static let castle = ImageResource.Typing.castle
+        public static let castle1 = ImageResource.Typing.castle1
+        public static let castle2 = ImageResource.Typing.castle2
+        public static let castle3 = ImageResource.Typing.castle3
         public static let flag = ImageResource.Typing.flag
+
+        public enum Tutorial {
+            public static let kana = ImageResource.Typing.Tutorial.kana
+            public static let qwerty = ImageResource.Typing.Tutorial.qwerty
+            public static let hand = ImageResource.Typing.Tutorial.hand
+        }
     }
 }

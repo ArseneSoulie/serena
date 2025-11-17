@@ -24,6 +24,22 @@ class TypingViewModel: ObservableObject {
     @Published var inputText: String = ""
     @Published var autoSubmitEnabled: Bool = true
 
+    var castleImageResource: ImageResource {
+        switch level {
+        case .kanaOnly: ._Typing.castle1
+        case .easyWords: ._Typing.castle2
+        case .fullDictionary: ._Typing.castle3
+        }
+    }
+
+    var flagOffset: CGPoint {
+        switch level {
+        case .kanaOnly: .init(x: 0.038, y: 0.3)
+        case .easyWords: .init(x: -0.01, y: 0.11)
+        case .fullDictionary: .init(x: 0.175, y: 0.15)
+        }
+    }
+
     var currentDifficulty: Int {
         Int(difficultyScale)
     }

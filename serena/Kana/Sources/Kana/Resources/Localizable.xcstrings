@@ -2032,6 +2032,17 @@
         }
       }
     },
+    "Navigate" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naviguer"
+          }
+        }
+      }
+    },
     "New cases" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -14,7 +14,12 @@ public struct TypingPage: View {
 
     public var body: some View {
         ZStack {
-            AnimatedBackground(currentDifficulty: typingViewModel.currentDifficulty, livesCount: typingViewModel.health)
+            AnimatedBackground(
+                currentDifficulty: typingViewModel.currentDifficulty,
+                livesCount: typingViewModel.health,
+                castleResource: typingViewModel.castleImageResource,
+                flagOffset: typingViewModel.flagOffset,
+            )
 
             VStack(spacing: 10) {
                 if typingViewModel.isPlaying {
@@ -102,20 +107,22 @@ private struct TopBars: View {
         VStack(spacing: 10) {
             HStack {
                 Text(.points(score))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 4)
+                    .background(.thickMaterial, in: Capsule())
+                    .shadow(color: .black.opacity(0.12), radius: 5, x: 0, y: 3)
                 Spacer()
-                comboView
+                if comboCount > 0 {
+                    Text(.comboX(comboCount, Float(comboMultiplier)))
+                        .foregroundStyle(.orange)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 4)
+                        .background(.thickMaterial, in: Capsule())
+                        .shadow(color: .black.opacity(0.12), radius: 5, x: 0, y: 3)
+                        .transition(.opacity.animation(.easeInOut))
+                }
             }
             .padding(.horizontal)
-        }
-    }
-
-    private var comboView: some View {
-        Group {
-            if comboCount > 0 {
-                Text(.comboX(comboCount, Float(comboMultiplier)))
-                    .foregroundStyle(.orange)
-                    .transition(.opacity.animation(.easeInOut))
-            }
         }
     }
 }
@@ -219,6 +226,8 @@ private struct FinishCard: View {
 private struct AnimatedBackground: View {
     let currentDifficulty: Int
     let livesCount: Int
+    let castleResource: ImageResource
+    let flagOffset: CGPoint
 
     private let dayCycleColors: [Color] = [
         Color(._Sky.dawn),
@@ -242,7 +251,7 @@ private struct AnimatedBackground: View {
             LinearGradient(colors: [gradientTop, gradientBottom], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea(.all, edges: .top)
 
-            Image(._Typing.castle)
+            Image(castleResource)
                 .resizable()
                 .scaledToFit()
                 .background {
@@ -258,7 +267,7 @@ private struct AnimatedBackground: View {
                                 }
                             }
                             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-                            .offset(x: geo.size.width * 0.175, y: geo.size.height * 0.15)
+                            .offset(x: geo.size.width * flagOffset.x, y: geo.size.height * flagOffset.y)
                         }
                     }
                 }
@@ -268,7 +277,12 @@ private struct AnimatedBackground: View {
 
 #Preview {
     @Previewable @State var lives = 3
-    AnimatedBackground(currentDifficulty: 10, livesCount: lives)
+    AnimatedBackground(
+        currentDifficulty: 10,
+        livesCount: lives,
+        castleResource: ._Typing.castle1,
+        flagOffset: .init(x: 0.038, y: 0.3),
+    )
     Button("aa", action: {
         withAnimation {
             lives -= 1

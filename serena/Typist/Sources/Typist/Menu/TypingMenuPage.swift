@@ -25,10 +25,16 @@ public struct TypingMenuPage: View {
 
     public var body: some View {
         List {
+            if !isKeyboardInstalled {
+                Section {
+                    KeyboardInstructionsView()
+                } header: {
+                    Text(.keyboardSetup)
+                }
+            }
+
             Section {
-                KeyboardStatusView(isInstalled: isKeyboardInstalled)
-            } header: {
-                Text(.keyboardSetup)
+                Text(.typingExplanation)
             }
 
             Section {
@@ -41,9 +47,48 @@ public struct TypingMenuPage: View {
                     .foregroundStyle(.primary)
                 }
             } header: {
-                Text(.pickAMode)
+                HStack {
+                    Text(.pickAMode)
+                    Spacer()
+                    Text(.bestScore)
+                }
             }
             .disabled(!isKeyboardInstalled)
+
+            Section {
+                VStack(alignment: .leading) {
+                    Text(.kanaKeyboard)
+                        .typography(.headline)
+                    Image(._Typing.Tutorial.kana)
+                        .resizable()
+                        .scaledToFit()
+                    Text(.kanaKeyboardExplanation)
+                        .multilineTextAlignment(.leading)
+                        .foregroundStyle(.secondary)
+                }
+                VStack(alignment: .leading) {
+                    Text(.qwertyKeyboard)
+                        .typography(.headline)
+                    Image(._Typing.Tutorial.qwerty)
+                        .resizable()
+                        .scaledToFit()
+                    Text(.handwritingKeyboardExplanation)
+                        .multilineTextAlignment(.leading)
+                        .foregroundStyle(.secondary)
+                }
+                VStack(alignment: .leading) {
+                    Text(.handwritingKeyboard)
+                        .typography(.headline)
+                    Image(._Typing.Tutorial.hand)
+                        .resizable()
+                        .scaledToFit()
+                    Text(.handwritingKeyboardExplanation)
+                        .multilineTextAlignment(.leading)
+                        .foregroundStyle(.secondary)
+                }
+            } header: {
+                Text(.keyboardTypes)
+            }
         }
         .navigationTitle(.typingTest)
         .onAppear {
@@ -79,10 +124,11 @@ struct TypingModeRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: level.systemImage)
+            Image(level.imageResource)
+                .resizable()
                 .typography(.title2)
                 .foregroundStyle(.tint)
-                .frame(width: 40)
+                .frame(width: 48, height: 48)
 
             Text(level.title)
 
@@ -91,6 +137,7 @@ struct TypingModeRow: View {
             Text(String(score))
                 .typography(.body)
                 .foregroundStyle(.secondary)
+            Image(systemName: "chevron.right")
         }
         .padding(.vertical, 4)
     }
@@ -105,38 +152,17 @@ extension TypingLevel {
         }
     }
 
-    var systemImage: String {
+    var imageResource: ImageResource {
         switch self {
-        case .kanaOnly: "tortoise.fill"
-        case .easyWords: "cat.fill"
-        case .fullDictionary: "hare.fill"
+        case .kanaOnly: ._ReinaEmotes.easy
+        case .easyWords: ._ReinaEmotes.medium
+        case .fullDictionary: ._ReinaEmotes.hard
         }
     }
 }
 
-struct KeyboardStatusView: View {
-    let isInstalled: Bool
-
+struct KeyboardInstructionsView: View {
     var body: some View {
-        GroupBox {
-            if isInstalled {
-                successView
-            } else {
-                instructionsView
-            }
-        }
-    }
-
-    private var successView: some View {
-        HStack {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundStyle(.green)
-            Text(.japaneseKeyboardReady)
-            Spacer()
-        }
-    }
-
-    private var instructionsView: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Image(systemName: "exclamationmark.triangle.fill")
