@@ -21,23 +21,34 @@ public struct ExerciseSelectionPage: View {
     }
 
     public var body: some View {
-        List {
-            Section(.levelUps) {
-                ExerciceBanner(
-                    title: .levelUpsExplanation,
-                    imageResource: ._TrainingBanner.levelUp,
-                    onBannerTapped: onLevelUpsTapped,
-                )
-            }
+        ScrollView(.vertical) {
+            VStack {
+                VStack {
+                    Text(.levelUps)
+                        .typography(.title2)
+                    ExerciceBanner(
+                        title: .levelUpsExplanation,
+                        imageResource: ._TrainingBanner.levelUp,
+                        onBannerTapped: onLevelUpsTapped,
+                    )
+                }
 
-            Section(.allInARow) {
-                ExerciceBanner(
-                    title: .tryToGetAllSelectedKanasRightInARow,
-                    imageResource: ._TrainingBanner.allInARow,
-                    onBannerTapped: onAllInARowTapped,
-                )
+                Divider().padding(.top)
+
+                VStack {
+                    Text(.allInARow)
+                        .typography(.title2)
+                    ExerciceBanner(
+                        title: .tryToGetAllSelectedKanasRightInARow,
+                        imageResource: ._TrainingBanner.allInARow,
+                        onBannerTapped: onAllInARowTapped,
+                    )
+                }
             }
-        }.navigationTitle(.pickAnExerciseType)
+            .padding(.horizontal)
+        }
+        .background(Color(uiColor: .systemGroupedBackground))
+        .navigationTitle(.pickAnExerciseType)
     }
 
     func onLevelUpsTapped() {
@@ -61,13 +72,14 @@ struct ExerciceBanner: View {
 
     var body: some View {
         Button(action: onBannerTapped) {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(spacing: 16) {
                 Image(imageResource)
                     .resizable()
                     .scaledToFit()
                     .cornerRadius(.default)
                 HStack {
-                    Text(title).multilineTextAlignment(.leading)
+                    Text(title)
+                        .multilineTextAlignment(.leading)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .padding()
@@ -75,6 +87,10 @@ struct ExerciceBanner: View {
             }
             .padding()
         }
+        .frame(maxWidth: 500)
         .foregroundStyle(.primary)
+        .padding()
+        .background(Color(uiColor: .secondarySystemGroupedBackground))
+        .cornerRadius(.default)
     }
 }
