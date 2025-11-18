@@ -17,38 +17,29 @@ public struct ContentView: View {
     public init() {}
 
     public var body: some View {
-        KanaSelectionPage()
-            .environment(coordinator)
-//        TabView(selection: $selectedTab) {
-//            Tab(
-//                "Dictionary",
-//                systemImage: "character.book.closed.fill",
-//                value: .dictionary
-//            ) {
-//                DictionaryView()
-//            }
-//            Tab(
-//                "Tests",
-//                systemImage: "testtube.2",
-//                value: .testing
-//            ) {
-//                Train()
-//            }
-//            Tab(
-//                "Study",
-//                systemImage: "book.pages",
-//                value: .study
-//            ) {
-//                StudyView()
-//            }
-//            Tab(
-//                "Stats",
-//                systemImage: "chart.pie",
-//                value: .stats
-//            ) {
-//                Text("Settings")
-//            }
-//        }
+        TabView(selection: $selectedTab) {
+            Tab(
+                "Dictionary",
+                systemImage: "character.book.closed.fill",
+                value: .dictionary,
+            ) {
+                DictionaryView()
+            }
+            Tab(
+                "Study",
+                systemImage: "book.pages",
+                value: .study,
+            ) {
+                StudyView()
+            }
+            Tab(
+                "Stats",
+                systemImage: "chart.pie",
+                value: .stats,
+            ) {
+                Text("Settings")
+            }
+        }
     }
 }
 
