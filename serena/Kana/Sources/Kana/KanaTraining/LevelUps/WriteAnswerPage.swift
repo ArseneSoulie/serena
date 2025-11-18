@@ -69,6 +69,8 @@ struct WriteAnswerPage: View {
                     Text(writingExerciceType.prompt)
                     VStack {
                         Text(kanaTruth)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.5)
                             .foregroundStyle(truthColor)
                             .typography(.largeTitle)
                             .shake(shakeTrigger)
@@ -80,6 +82,9 @@ struct WriteAnswerPage: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
                 }
+
+                Spacer().frame(height: 50)
+                    .listRowBackground(Color.clear)
             }
             .listStyle(.insetGrouped)
         }

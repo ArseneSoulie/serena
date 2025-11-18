@@ -72,9 +72,13 @@ struct AllInARowExercicePage: View {
                         .overlay(alignment: .topTrailing) {
                             Button("", systemImage: "chevron.forward.2", action: onSkip)
                                 .buttonStyle(.borderless)
+                                .padding()
                         }
                     }.buttonStyle(.plain)
                 }
+
+                Spacer().frame(height: 50)
+                    .listRowBackground(Color.clear)
             }
             .listStyle(.insetGrouped)
         }
