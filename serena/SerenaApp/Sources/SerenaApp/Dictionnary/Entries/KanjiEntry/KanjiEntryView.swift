@@ -5,6 +5,7 @@
 //  Created by A S on 24/07/2025.
 //
 
+import DesignSystem
 import KanjiVGParser
 import SwiftUI
 
