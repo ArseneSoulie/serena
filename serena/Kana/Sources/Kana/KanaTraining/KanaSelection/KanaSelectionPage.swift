@@ -182,17 +182,22 @@ struct ToolbarViews: View {
         }
         .pickerStyle(.menu)
         Toggle(.romaji, isOn: $showRomaji)
-        Button(action: { showsFastSelect.toggle() }) { Image(systemName: "text.line.first.and.arrowtriangle.forward") }
-            .popover(isPresented: $showsFastSelect) {
-                FastSelectPopoverView(
-                    selectedBase: $selectedBase,
-                    selectedDiacritic: $selectedDiacritic,
-                    selectedCombinatory: $selectedCombinatory,
-                    selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                    selectedExtendedKatakana: $selectedExtendedKatakana,
-                )
-            }
-        Button("", systemImage: "info.circle", action: { showInfo.toggle() })
+        Button(action: { showsFastSelect.toggle() }) {
+            Label(.fastSelect, systemImage: "text.line.first.and.arrowtriangle.forward")
+        }
+
+        .popover(isPresented: $showsFastSelect) {
+            FastSelectPopoverView(
+                selectedBase: $selectedBase,
+                selectedDiacritic: $selectedDiacritic,
+                selectedCombinatory: $selectedCombinatory,
+                selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
+                selectedExtendedKatakana: $selectedExtendedKatakana,
+            )
+        }
+        Button(action: { showInfo.toggle() }) {
+            Label(.info, systemImage: "info.circle")
+        }
     }
 }
 

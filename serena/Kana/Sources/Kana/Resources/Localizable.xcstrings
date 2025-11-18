@@ -268,6 +268,17 @@
         }
       }
     },
+    "Info" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        }
+      }
+    },
     "It reminds me of..." : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2170,13 +2181,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Learn Kana by training on them. Select the rows you want to train on and hit [**Let's go**]"
+            "value" : "Learn Kana by training on them. Select the rows you want to train on and hit [**Let's go**]"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apprends les Kana en t’entrainant. Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur [**C’est parti !**]"
+            "value" : "Apprends les Kana en t’entrainant. Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur [**C’est parti !**]"
           }
         }
       }

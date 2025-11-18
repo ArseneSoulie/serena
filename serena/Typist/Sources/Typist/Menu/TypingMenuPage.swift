@@ -56,36 +56,21 @@ public struct TypingMenuPage: View {
             .disabled(!isKeyboardInstalled)
 
             Section {
-                VStack(alignment: .leading) {
-                    Text(.kanaKeyboard)
-                        .typography(.headline)
-                    Image(._Typing.Tutorial.kana)
-                        .resizable()
-                        .scaledToFit()
-                    Text(.kanaKeyboardExplanation)
-                        .multilineTextAlignment(.leading)
-                        .foregroundStyle(.secondary)
-                }
-                VStack(alignment: .leading) {
-                    Text(.qwertyKeyboard)
-                        .typography(.headline)
-                    Image(._Typing.Tutorial.qwerty)
-                        .resizable()
-                        .scaledToFit()
-                    Text(.qwertyKeyboardExplanation)
-                        .multilineTextAlignment(.leading)
-                        .foregroundStyle(.secondary)
-                }
-                VStack(alignment: .leading) {
-                    Text(.handwritingKeyboard)
-                        .typography(.headline)
-                    Image(._Typing.Tutorial.hand)
-                        .resizable()
-                        .scaledToFit()
-                    Text(.handwritingKeyboardExplanation)
-                        .multilineTextAlignment(.leading)
-                        .foregroundStyle(.secondary)
-                }
+                KeyboardInfoView(
+                    title: .kanaKeyboard,
+                    explanation: .kanaKeyboardExplanation,
+                    image: ._Typing.Tutorial.kana,
+                )
+                KeyboardInfoView(
+                    title: .qwertyKeyboard,
+                    explanation: .qwertyKeyboardExplanation,
+                    image: ._Typing.Tutorial.qwerty,
+                )
+                KeyboardInfoView(
+                    title: .handwritingKeyboard,
+                    explanation: .handwritingKeyboardExplanation,
+                    image: ._Typing.Tutorial.hand,
+                )
             } header: {
                 Text(.keyboardTypes)
             }
@@ -115,6 +100,26 @@ public struct TypingMenuPage: View {
 
     func checkKeyboardStatus() {
         isKeyboardInstalled = KeyboardUtilities.isJapaneseKeyboardInstalled()
+    }
+}
+
+struct KeyboardInfoView: View {
+    let title: LocalizedStringResource
+    let explanation: LocalizedStringResource
+    let image: ImageResource
+
+    var body: some View {
+        VStack {
+            Text(title)
+                .typography(.headline)
+            Image(image)
+                .resizable()
+                .scaledToFit()
+                .frame(maxWidth: 500)
+            Text(explanation)
+                .multilineTextAlignment(.leading)
+                .foregroundStyle(.secondary)
+        }
     }
 }
 

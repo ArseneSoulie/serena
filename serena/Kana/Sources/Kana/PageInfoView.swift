@@ -64,7 +64,7 @@ struct PageInfoView: View {
             }
         }
         .padding()
-        .frame(minWidth: 300)
+        .frame(minWidth: 350)
         .presentationCompactAdaptation(.popover)
     }
 }
