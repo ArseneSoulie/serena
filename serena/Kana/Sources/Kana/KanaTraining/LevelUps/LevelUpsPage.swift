@@ -57,7 +57,7 @@ public struct LevelUpsPage: View {
                 title: .level(3),
                 writingExerciceType: .single,
                 kanaPool: kanaPool,
-                maxStepsCount: 8,
+                maxStepsCount: 5,
                 onLevelCompleted: onLevelCompleted,
             )
         case .level4:
@@ -65,7 +65,7 @@ public struct LevelUpsPage: View {
                 title: .finalLevel,
                 writingExerciceType: .groupOfThree,
                 kanaPool: kanaPool,
-                maxStepsCount: 5,
+                maxStepsCount: 3,
                 onLevelCompleted: onLevelCompleted,
             )
         case .completed:
