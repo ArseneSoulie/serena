@@ -72,7 +72,7 @@ public struct TypingMenuPage: View {
                     Image(._Typing.Tutorial.qwerty)
                         .resizable()
                         .scaledToFit()
-                    Text(.handwritingKeyboardExplanation)
+                    Text(.qwertyKeyboardExplanation)
                         .multilineTextAlignment(.leading)
                         .foregroundStyle(.secondary)
                 }
