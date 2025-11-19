@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03D5B5342E43E35D0049D1EA /* Kana in Frameworks */ = {isa = PBXBuildFile; productRef = 03D5B5332E43E35D0049D1EA /* Kana */; };
+		0383BBD32ECDC7F100629C2A /* ReinaApp in Frameworks */ = {isa = PBXBuildFile; productRef = 0383BBD22ECDC7F100629C2A /* ReinaApp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,17 +40,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03D5B5342E43E35D0049D1EA /* Kana in Frameworks */,
+				0383BBD32ECDC7F100629C2A /* ReinaApp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0383BBC22ECDC02E00629C2A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		03C1F41D2E43E1E800029A0D = {
 			isa = PBXGroup;
 			children = (
 				03C1F4282E43E1E800029A0D /* reina */,
+				0383BBC22ECDC02E00629C2A /* Frameworks */,
 				03C1F4272E43E1E800029A0D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -83,7 +91,7 @@
 			);
 			name = reina;
 			packageProductDependencies = (
-				03D5B5332E43E35D0049D1EA /* Kana */,
+				0383BBD22ECDC7F100629C2A /* ReinaApp */,
 			);
 			productName = reina;
 			productReference = 03C1F4262E43E1E800029A0D /* reina.app */;
@@ -397,9 +405,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		03D5B5332E43E35D0049D1EA /* Kana */ = {
+		0383BBD22ECDC7F100629C2A /* ReinaApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Kana;
+			productName = ReinaApp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
