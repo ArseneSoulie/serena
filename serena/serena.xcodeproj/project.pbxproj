@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		033850DF2E508E9C00ED6084 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033850DC2E508E9C00ED6084 /* Main.swift */; };
-		03EA60CE2E37E0EF00C7F9A9 /* SerenaApp in Frameworks */ = {isa = PBXBuildFile; productRef = 03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */; };
+		03FEFAEB2ECDD5F800005649 /* SerenaApp in Frameworks */ = {isa = PBXBuildFile; productRef = 03FEFAEA2ECDD5F800005649 /* SerenaApp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,7 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03EA60CE2E37E0EF00C7F9A9 /* SerenaApp in Frameworks */,
+				03FEFAEB2ECDD5F800005649 /* SerenaApp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -89,12 +89,13 @@
 			children = (
 				033850E02E508F3900ED6084 /* serena-Info.plist */,
 				033850DC2E508E9C00ED6084 /* Main.swift */,
+				03BC516A2E311EEB0081F67B /* Products */,
 				0383BBCD2ECDC61900629C2A /* App */,
 				0383BBCF2ECDC63300629C2A /* Design */,
 				0383BBCB2ECDC51600629C2A /* Feature */,
-				03BC516A2E311EEB0081F67B /* Products */,
 				0383BBCE2ECDC62100629C2A /* Shared */,
 				0383BBCC2ECDC52800629C2A /* Tools */,
+				03FEFAE92ECDD5F800005649 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,6 +105,13 @@
 				03BC51692E311EEB0081F67B /* serena.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		03FEFAE92ECDD5F800005649 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,7 +131,7 @@
 			);
 			name = serena;
 			packageProductDependencies = (
-				03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */,
+				03FEFAEA2ECDD5F800005649 /* SerenaApp */,
 			);
 			productName = serena;
 			productReference = 03BC51692E311EEB0081F67B /* serena.app */;
@@ -442,7 +450,7 @@
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		03EA60CD2E37E0EF00C7F9A9 /* SerenaApp */ = {
+		03FEFAEA2ECDD5F800005649 /* SerenaApp */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SerenaApp;
 		};

@@ -1,4 +1,3 @@
-import Kana
 import Navigation
 import SwiftUI
 
