@@ -7,51 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03D5B5342E43E35D0049D1EA /* Kana in Frameworks */ = {isa = PBXBuildFile; productRef = 03D5B5332E43E35D0049D1EA /* Kana */; };
+		0383BBBB2ECDBDDE00629C2A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0383BBB62ECDBDDE00629C2A /* Assets.xcassets */; };
+		0383BBBF2ECDBDDE00629C2A /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0383BBB92ECDBDDE00629C2A /* Main.swift */; };
+		03FEFAE82ECDD3AA00005649 /* ReinaApp in Frameworks */ = {isa = PBXBuildFile; productRef = 03FEFAE72ECDD3AA00005649 /* ReinaApp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0383BBB62ECDBDDE00629C2A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0383BBB72ECDBDDE00629C2A /* reina-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "reina-Info.plist"; sourceTree = "<group>"; };
+		0383BBB92ECDBDDE00629C2A /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		03C1F4262E43E1E800029A0D /* reina.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reina.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		03D5B5362E43E40E0049D1EA /* Exceptions for "reina" folder in "reina" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 03C1F4252E43E1E800029A0D /* reina */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		03C1F4282E43E1E800029A0D /* reina */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				03D5B5362E43E40E0049D1EA /* Exceptions for "reina" folder in "reina" target */,
-			);
-			path = reina;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		03C1F4232E43E1E800029A0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				03D5B5342E43E35D0049D1EA /* Kana in Frameworks */,
+				03FEFAE82ECDD3AA00005649 /* ReinaApp in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0383BBC22ECDC02E00629C2A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		03C1F41D2E43E1E800029A0D = {
 			isa = PBXGroup;
 			children = (
-				03C1F4282E43E1E800029A0D /* reina */,
+				0383BBC22ECDC02E00629C2A /* Frameworks */,
 				03C1F4272E43E1E800029A0D /* Products */,
+				0383BBB62ECDBDDE00629C2A /* Assets.xcassets */,
+				0383BBB72ECDBDDE00629C2A /* reina-Info.plist */,
+				0383BBB92ECDBDDE00629C2A /* Main.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -78,12 +72,9 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				03C1F4282E43E1E800029A0D /* reina */,
-			);
 			name = reina;
 			packageProductDependencies = (
-				03D5B5332E43E35D0049D1EA /* Kana */,
+				03FEFAE72ECDD3AA00005649 /* ReinaApp */,
 			);
 			productName = reina;
 			productReference = 03C1F4262E43E1E800029A0D /* reina.app */;
@@ -129,6 +120,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0383BBBB2ECDBDDE00629C2A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0383BBBF2ECDBDDE00629C2A /* Main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +278,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = reina/Info.plist;
+				INFOPLIST_FILE = "reina-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Reina kana";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -337,7 +330,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = reina/Info.plist;
+				INFOPLIST_FILE = "reina-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Reina kana";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -397,9 +390,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		03D5B5332E43E35D0049D1EA /* Kana */ = {
+		03FEFAE72ECDD3AA00005649 /* ReinaApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = Kana;
+			productName = ReinaApp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
