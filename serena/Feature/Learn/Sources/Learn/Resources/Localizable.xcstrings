@@ -3,6 +3,17 @@
   "strings" : {
     "Hello, World!" : {
 
+    },
+    "Learn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprendre"
+          }
+        }
+      }
     }
   },
   "version" : "1.1"
