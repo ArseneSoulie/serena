@@ -15,7 +15,7 @@ enum SelectedTab {
 }
 
 public struct ReinaMainPage: View {
-    @State var selectedTab: SelectedTab = .training
+    @State var selectedTab: SelectedTab = .learn
     let rootKanaCoordinator = NavigationCoordinator()
     let rootTypingCoordinator = NavigationCoordinator()
 
