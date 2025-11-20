@@ -18,6 +18,7 @@ let package = Package(
         .package(name: "Mnemonics", path: "../Mnemonics"),
         .package(name: "Typist", path: "../Typist"),
         .package(name: "Training", path: "../Training"),
+        .package(name: "Learn", path: "../Learn"),
         .package(name: "Navigation", path: "../Navigation"),
     ],
     targets: [
@@ -26,6 +27,7 @@ let package = Package(
             dependencies: [
                 "About",
                 "Mnemonics",
+                "Learn",
                 "Typist",
                 "Navigation",
                 "Training",

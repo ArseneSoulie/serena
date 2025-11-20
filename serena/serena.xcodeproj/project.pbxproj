@@ -12,6 +12,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		033482FA2ECF628D00D76385 /* Learn */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Learn; sourceTree = "<group>"; };
 		033850D82E508E9C00ED6084 /* DesignSystem */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DesignSystem; sourceTree = "<group>"; };
 		033850D92E508E9C00ED6084 /* FoundationModels */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = FoundationModels; sourceTree = "<group>"; };
 		033850DB2E508E9C00ED6084 /* KanjiVGParser */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = KanjiVGParser; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		0383BBCB2ECDC51600629C2A /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				033482FA2ECF628D00D76385 /* Learn */,
 				0383BBC12ECDBE2400629C2A /* About */,
 				038511872ECCD68F00785FA7 /* Mnemonics */,
 				038511882ECCD97B00785FA7 /* Training */,
