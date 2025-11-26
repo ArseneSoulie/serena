@@ -1,7 +1,40 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Hello, World!" : {
+    "Getting started" : {
+
+    },
+    "How do i pronounce japanese ?" : {
+
+    },
+    "How do i recognize the right character ? か　and　カ look the same ;(" : {
+
+    },
+    "How do i search for information in a dictionary ?" : {
+
+    },
+    "How do I write japanese on my keyboard ? And how do i become good at it ?" : {
+
+    },
+    "How many alphabets are there ?" : {
+
+    },
+    "How to draw kana ?" : {
+
+    },
+    "How to write kana ?" : {
+
+    },
+    "I thought は was pronouced ha but its pronounced wa ?" : {
+
+    },
+    "I thought へ was pronouced wo but its pronounced e ?" : {
+
+    },
+    "I thought を was pronouced wo but its pronounced o ?" : {
+
+    },
+    "I'm new, where do i begin ?" : {
 
     },
     "Learn" : {
@@ -14,6 +47,75 @@
           }
         }
       }
+    },
+    "The japanese language - cursed edition" : {
+
+    },
+    "The japanese language - grammar" : {
+
+    },
+    "The japanese language - kanji" : {
+
+    },
+    "The japanese language - keyboard" : {
+
+    },
+    "The kanas - part 1" : {
+
+    },
+    "The kanas - part 2" : {
+
+    },
+    "The origin of the Japanese writing system" : {
+
+    },
+    "There are small ones now ?" : {
+
+    },
+    "What are diacritics ? Dakuten, handakuten" : {
+
+    },
+    "What are furigana ?" : {
+
+    },
+    "What are hentaigana ?" : {
+
+    },
+    "What are hiragana used for ?" : {
+
+    },
+    "What are kanji ? Why do we use them ?" : {
+
+    },
+    "What are katakana used for ?" : {
+
+    },
+    "What are okurigana ?" : {
+
+    },
+    "What are particles ?" : {
+
+    },
+    "What are prolongations ?" : {
+
+    },
+    "What are romaji ?" : {
+
+    },
+    "What are the new special katakana characters ?" : {
+
+    },
+    "What's a mora ?" : {
+
+    },
+    "Where're ye,yi,wi,wu,we gone ?" : {
+
+    },
+    "You're telling me there's cursive ?" : {
+
+    },
+    "うぉ is written UXO... really ?" : {
+
     }
   },
   "version" : "1.1"
