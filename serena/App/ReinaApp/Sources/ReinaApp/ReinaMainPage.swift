@@ -1,4 +1,5 @@
 import About
+import Learn
 import Mnemonics
 import Navigation
 import SwiftUI
@@ -8,12 +9,13 @@ import Typist
 enum SelectedTab {
     case mnemonics
     case training
+    case learn
     case typist
     case about
 }
 
 public struct ReinaMainPage: View {
-    @State var selectedTab: SelectedTab = .training
+    @State var selectedTab: SelectedTab = .learn
     let rootKanaCoordinator = NavigationCoordinator()
     let rootTypingCoordinator = NavigationCoordinator()
 
@@ -38,6 +40,18 @@ public struct ReinaMainPage: View {
             ) {
                 NavigationStack(path: rootKanaCoordinator.binding(for: \.path)) {
                     KanaSelectionPage()
+                        .registerDestinations()
+                }
+                .environment(rootKanaCoordinator)
+            }
+
+            Tab(
+                String(localized: .learn),
+                systemImage: "book",
+                value: .learn,
+            ) {
+                NavigationStack(path: rootKanaCoordinator.binding(for: \.path)) {
+                    LearnMainPage()
                         .registerDestinations()
                 }
                 .environment(rootKanaCoordinator)
