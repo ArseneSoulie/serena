@@ -55,6 +55,7 @@ public struct LearnMainPage: View {
                 Text("I thought を was pronouced wo but its pronounced o ?")
                 Text("I thought へ was pronouced wo but its pronounced e ?")
                 Text("What are okurigana ?")
+                Text("Let's break down sentenses and read them")
             } header: {
                 Text("The japanese language - grammar")
             }
