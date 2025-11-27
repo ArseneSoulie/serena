@@ -9,6 +9,7 @@ public struct LearnMainPage: View {
                 Text("I'm new, where do i begin ?")
                 Text("The origin of the Japanese writing system")
                 Text("How do i search for information in a dictionary ?")
+                Text("How to learn japanese and remember things ?")
             } header: {
                 Text("Getting started")
             }
@@ -36,6 +37,7 @@ public struct LearnMainPage: View {
             Section {
                 Text("What are kanji ? Why do we use them ?")
                 Text("How do i pronounce japanese ?")
+                Text("What's the difference between onyomi and kunyomi ?")
                 Text("What's a mora ?")
                 Text("What are furigana ?")
             } header: {
