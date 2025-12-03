@@ -1,40 +1,52 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Getting started" : {
+    "/ き look different here? (Fonts)" : {
 
     },
-    "How do i pronounce japanese ?" : {
+    "Common Confusions" : {
 
     },
-    "How do i recognize the right character ? か　and　カ look the same ;(" : {
+    "Did you say cursive?" : {
 
     },
-    "How do i search for information in a dictionary ?" : {
+    "Digital Japanese" : {
 
     },
-    "How do I write japanese on my keyboard ? And how do i become good at it ?" : {
+    "Grammar & Particles" : {
 
     },
-    "How many alphabets are there ?" : {
+    "Help! 'Ka' (か) and 'Ka' (カ) look the same!" : {
 
     },
-    "How to draw kana ?" : {
+    "Help! 'Shi' (シ) and 'Tsu' (ツ) look the same!" : {
 
     },
-    "How to write kana ?" : {
+    "How do i learn Japanese?" : {
 
     },
-    "I thought は was pronouced ha but its pronounced wa ?" : {
+    "How do I look things up in a dictionary?" : {
 
     },
-    "I thought へ was pronouced wo but its pronounced e ?" : {
+    "How do I make long sounds? (Prolongations)" : {
 
     },
-    "I thought を was pronouced wo but its pronounced o ?" : {
+    "How do I type Japanese on my phone?" : {
 
     },
-    "I'm new, where do i begin ?" : {
+    "How do I type on a computer?" : {
+
+    },
+    "How to write Japanese characters? (Stroke order)" : {
+
+    },
+    "I'm new, where do I start?" : {
+
+    },
+    "Into the World of Kanji" : {
+
+    },
+    "Is it an 'R' or an 'L'?" : {
 
     },
     "Learn" : {
@@ -48,73 +60,88 @@
         }
       }
     },
-    "The japanese language - cursed edition" : {
+    "Let's break down a sentence" : {
 
     },
-    "The japanese language - grammar" : {
+    "Onyomi? Kunyomi? What's the difference?" : {
 
     },
-    "The japanese language - kanji" : {
+    "Reading & Speaking" : {
 
     },
-    "The japanese language - keyboard" : {
+    "Starting" : {
 
     },
-    "The kanas - part 1" : {
+    "The 'Cursed' Inputs (Typing UXO for ウォ)" : {
 
     },
-    "The kanas - part 2" : {
+    "The Rabbit Hole" : {
 
     },
-    "The origin of the Japanese writing system" : {
+    "Wait, there are multiple alphabets?" : {
 
     },
-    "There are small ones now ?" : {
+    "What are Furigana? (The tiny kana above Kanji)" : {
 
     },
-    "What are diacritics ? Dakuten, handakuten" : {
+    "What are Hentaigana?" : {
 
     },
-    "What are furigana ?" : {
+    "What are Hiragana?" : {
 
     },
-    "What are hentaigana ?" : {
+    "What are Kanji and why do we need them?" : {
 
     },
-    "What are hiragana used for ?" : {
+    "What are Katakana?" : {
 
     },
-    "What are kanji ? Why do we use them ?" : {
+    "What are Okurigana? (The kana attached to Kanji)" : {
 
     },
-    "What are katakana used for ?" : {
+    "What are Particles?" : {
 
     },
-    "What are okurigana ?" : {
+    "What are the little circles ゜? (Handakuten)" : {
 
     },
-    "What are particles ?" : {
+    "What are the two little dashes ゛? (Dakuten)" : {
 
     },
-    "What are prolongations ?" : {
+    "What is 'Romaji'?" : {
 
     },
-    "What are romaji ?" : {
+    "What is a 'Mora' (Rhythm)?" : {
 
     },
-    "What are the new special katakana characters ?" : {
+    "Where did this writing system come from?" : {
 
     },
-    "What's a mora ?" : {
+    "Where did We and Wi go?" : {
 
     },
-    "Where're ye,yi,wi,wu,we gone ?" : {
+    "Why does 'Desu' sound like 'Dess'? (Devoicing)" : {
 
     },
-    "You're telling me there's cursive ?" : {
+    "Why does 'Ki'" : {
 
     },
-    "うぉ is written UXO... really ?" : {
+    "Why is 'Vertical Writing' a thing?" : {
+
+    },
+    "Why is this character so small? (っ, ゃ, ゅ, ょ)" : {
+
+    },
+    "Why is は pronounced 'Wa'?" : {
+
+    },
+    "Why is へ pronounced 'E'?" : {
+
+    },
+    "Why is を pronounced 'O'?" : {
+
+    },
+    "き" : {
 
     }
   },

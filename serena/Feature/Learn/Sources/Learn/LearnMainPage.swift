@@ -1,3 +1,4 @@
+import DesignSystem
 import SwiftUI
 
 public struct LearnMainPage: View {
@@ -6,71 +7,83 @@ public struct LearnMainPage: View {
     public var body: some View {
         List {
             Section {
-                Text("I'm new, where do i begin ?")
-                Text("The origin of the Japanese writing system")
-                Text("How do i search for information in a dictionary ?")
-                Text("How to learn japanese and remember things ?")
+                Text("I'm new, where do I start?")
+                Text("Wait, there are multiple alphabets?")
+                Text("What are Hiragana?")
+                Text("What are Katakana?")
+                Text("Where did this writing system come from?")
+                Text("How can I learn Japanese?")
             } header: {
-                Text("Getting started")
+                Text("Starting")
             }
 
             Section {
-                Text("What are hiragana used for ?")
-                Text("What are katakana used for ?")
-                Text("How many alphabets are there ?")
+                Text("What are the two little dashes ゛? (Dakuten)")
+                Text("What are the little circles ゜? (Handakuten)")
+                Text("What is a 'Mora' (Rhythm)?")
+                Text("Why is this character so small? (っ, ゃ, ゅ, ょ)")
+                Text("How do I make long sounds? (Prolongations)")
             } header: {
-                Text("The kanas - part 1")
+                Text("Reading & Speaking")
             }
 
             Section {
-                Text("How to draw kana ?")
-                Text("How to write kana ?")
-                Text("What are diacritics ? Dakuten, handakuten")
-                Text("There are small ones now ?")
-                Text("What are prolongations ?")
+                Text("Why do kana look different depening on the font? ")
+                    + Text("(き/")
+                    + Text("き").inlineTypography(.title2, fontFamily: .yujiMai)
+                    + Text(") (ら/")
+                    + Text("ら").inlineTypography(.title2, fontFamily: .yujiMai)
+                    + Text(")")
+                Text("Help! 'SHI' (シ) and 'TSU' (ツ) look the same!")
+                Text("Help! 'Ka' (か) and 'KA' (カ) look the same!")
+                Text("Is it an 'R' or an 'L'?")
+                Text("Why does 'Desu' sound like 'Dess'? (Devoicing)")
                 Text("What are the new special katakana characters ?")
-                Text("How do i recognize the right character ? か　and　カ look the same ;(")
             } header: {
-                Text("The kanas - part 2")
+                Text("Common Confusions")
             }
 
             Section {
-                Text("What are kanji ? Why do we use them ?")
-                Text("How do i pronounce japanese ?")
-                Text("What's the difference between onyomi and kunyomi ?")
-                Text("What's a mora ?")
-                Text("What are furigana ?")
+                Text("What are Particles?")
+                Text("Why is は pronounced 'Wa'?")
+                Text("Why is を pronounced 'O'?")
+                Text("Why is へ pronounced 'E'?")
+                Text("Let's break down a sentence")
             } header: {
-                Text("The japanese language - kanji")
+                Text("Grammar & Particles")
             }
 
             Section {
-                Text("What are romaji ?")
-                Text("How do I write japanese on my keyboard ? And how do i become good at it ?")
+                Text("What are Kanji and why do we need them?")
+                Text("Onyomi? Kunyomi? What's the difference?")
+                Text("What are Furigana? (The tiny kana above Kanji)")
+                Text("What are Okurigana? (The kana attached to Kanji)")
+                Text("How to write Japanese characters? (Stroke order)")
             } header: {
-                Text("The japanese language - keyboard")
+                Text("Into the World of Kanji")
             }
 
             Section {
-                Text("What are particles ?")
-                Text("I thought は was pronouced ha but its pronounced wa ?")
-                Text("I thought を was pronouced wo but its pronounced o ?")
-                Text("I thought へ was pronouced wo but its pronounced e ?")
-                Text("What are okurigana ?")
-                Text("Let's break down sentenses and read them")
+                Text("What is 'Romaji'?")
+                Text("How do I look things up in a dictionary?")
+                Text("How do I type Japanese on my phone?")
+                Text("How do I type on a computer?")
             } header: {
-                Text("The japanese language - grammar")
+                Text("Digital Japanese")
             }
 
             Section {
-                Text("You're telling me there's cursive ?")
-                Text("What are hentaigana ?")
-                Text("Where're ye,yi,wi,wu,we gone ?")
-                Text("うぉ is written UXO... really ?")
+                Text("Did you say cursive?")
+                Text("What are Hentaigana?")
+                Text("Where did We and Wi go?")
+                Text("Why is 'Vertical Writing' a thing?")
+                Text("The 'Cursed' Inputs (Typing UXO for ウォ)")
             } header: {
-                Text("The japanese language - cursed edition")
+                Text("The Rabbit Hole")
             }
-        }.navigationTitle(.learn)
+        }
+        .listStyle(.insetGrouped)
+        .navigationTitle(.learn)
     }
 }
 
