@@ -95,6 +95,23 @@ extension View {
                 ExerciseSelectionPage(kanaPool: kanas)
             case let .typing(level):
                 TypingPage(level: level)
+            case let .learn(learnCategory):
+                switch learnCategory {
+                case .commonConfusions:
+                    CommonConfusionsPage()
+                case .digital:
+                    DigitalPage()
+                case .grammar:
+                    GrammarPage()
+                case .kanji:
+                    KanjiPage()
+                case .rabbitHole:
+                    RabbitHolePage()
+                case .readingSpeaking:
+                    ReadingSpeakingPage()
+                case .starting:
+                    StartingPage()
+                }
             }
         }
     }

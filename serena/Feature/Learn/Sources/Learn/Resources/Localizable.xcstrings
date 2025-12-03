@@ -1,7 +1,13 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "/ き look different here? (Fonts)" : {
+    "(き/" : {
+
+    },
+    ")" : {
+
+    },
+    ") (ら/" : {
 
     },
     "Common Confusions" : {
@@ -16,13 +22,13 @@
     "Grammar & Particles" : {
 
     },
-    "Help! 'Ka' (か) and 'Ka' (カ) look the same!" : {
+    "Help! 'Ka' (か) and 'KA' (カ) look the same!" : {
 
     },
-    "Help! 'Shi' (シ) and 'Tsu' (ツ) look the same!" : {
+    "Help! 'SHI' (シ) and 'TSU' (ツ) look the same!" : {
 
     },
-    "How do i learn Japanese?" : {
+    "How can I learn Japanese?" : {
 
     },
     "How do I look things up in a dictionary?" : {
@@ -105,6 +111,9 @@
     "What are the little circles ゜? (Handakuten)" : {
 
     },
+    "What are the new special katakana characters ?" : {
+
+    },
     "What are the two little dashes ゛? (Dakuten)" : {
 
     },
@@ -120,10 +129,10 @@
     "Where did We and Wi go?" : {
 
     },
-    "Why does 'Desu' sound like 'Dess'? (Devoicing)" : {
+    "Why do kana look different depening on the font? " : {
 
     },
-    "Why does 'Ki'" : {
+    "Why does 'Desu' sound like 'Dess'? (Devoicing)" : {
 
     },
     "Why is 'Vertical Writing' a thing?" : {
@@ -142,6 +151,9 @@
 
     },
     "き" : {
+
+    },
+    "ら" : {
 
     }
   },
