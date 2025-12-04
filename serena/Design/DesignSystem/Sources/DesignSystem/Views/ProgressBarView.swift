@@ -1,12 +1,16 @@
 import SwiftUI
 
-struct ProgressBarView: View {
+public struct ProgressBarView: View {
     @Binding var progress: Double
     @State var barColor: Color = .gray
 
     let barHeight: CGFloat = 20
 
-    var body: some View {
+    public init(progress: Binding<Double>) {
+        _progress = progress
+    }
+
+    public var body: some View {
         HStack {
             ZStack(alignment: .leading) {
                 Rectangle()
