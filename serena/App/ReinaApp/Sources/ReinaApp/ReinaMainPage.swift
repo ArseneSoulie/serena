@@ -17,6 +17,7 @@ enum SelectedTab {
 public struct ReinaMainPage: View {
     @State var selectedTab: SelectedTab = .learn
     let rootKanaCoordinator = NavigationCoordinator()
+    let rootLearnCoordinator = NavigationCoordinator()
     let rootTypingCoordinator = NavigationCoordinator()
 
     public init() {}
@@ -50,11 +51,11 @@ public struct ReinaMainPage: View {
                 systemImage: "book",
                 value: .learn,
             ) {
-                NavigationStack(path: rootKanaCoordinator.binding(for: \.path)) {
+                NavigationStack(path: rootLearnCoordinator.binding(for: \.path)) {
                     LearnMainPage()
                         .registerDestinations()
                 }
-                .environment(rootKanaCoordinator)
+                .environment(rootLearnCoordinator)
             }
 
             Tab(
