@@ -175,6 +175,23 @@
         }
       }
     },
+    "fastSelectButtonTitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fast select."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select."
+          }
+        }
+      }
+    },
     "Final level" : {
       "extractionState" : "manual",
       "localizations" : {

@@ -189,7 +189,7 @@ struct ToolbarViews: View {
         .pickerStyle(.menu)
         Toggle(.romaji, isOn: $showRomaji)
         Button(action: { showsFastSelect.toggle() }) {
-            Label(.fastSelect, systemImage: "text.line.first.and.arrowtriangle.forward")
+            Text(.fastSelectButtonTitle)
                 .popover(isPresented: $showsFastSelect) {
                     FastSelectPopoverView(
                         selectedBase: $selectedBase,
