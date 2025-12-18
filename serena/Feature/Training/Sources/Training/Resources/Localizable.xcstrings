@@ -40,10 +40,16 @@
     "Base" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base kana"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Base"
+            "value" : "Kanas de base"
           }
         }
       }
@@ -84,10 +90,16 @@
     "Combinatory" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Combinatory kana"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combinaisons"
+            "value" : "Kana combinés"
           }
         }
       }
@@ -95,10 +107,16 @@
     "Combinatory diacritics" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Combinatory kana with diacritics"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Combinaisons diacritiques"
+            "value" : "Kana combinés avec diacritiques"
           }
         }
       }
@@ -128,10 +146,16 @@
     "Diacritics" : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kana with diacritics"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Diacritiques"
+            "value" : "Kana avec diacritiques"
           }
         }
       }

@@ -50,6 +50,8 @@ struct KanaLineGroupView: View {
                         Image(systemName: hasSelectedAll ? "checkmark.circle.fill" : "checkmark.circle")
                             .foregroundStyle(hasSelectedAll ? tint : .secondary)
                         Text("\(title) \(selectedLines.kanaCount)/\(lines.kanaCount)")
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
                             .bold(!selectedLines.isEmpty)
                             .foregroundStyle(!selectedLines.isEmpty ? Color.primary : Color.secondary)
                     }

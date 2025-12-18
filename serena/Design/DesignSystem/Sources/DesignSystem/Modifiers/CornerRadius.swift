@@ -3,6 +3,8 @@ import SwiftUI
 public enum RadiusStyle {
     /// 16
     case `default`
+    /// 20
+    case moderate
     /// 24
     case strong
     /// 100%
@@ -13,6 +15,7 @@ package extension RadiusStyle {
     var baseValue: CGFloat {
         switch self {
         case .default: 16
+        case .moderate: 20
         case .strong: 24
         case .round: .infinity
         }
