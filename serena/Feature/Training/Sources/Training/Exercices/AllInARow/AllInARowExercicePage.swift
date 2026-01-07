@@ -16,6 +16,7 @@ struct AllInARowExercicePage: View {
 
     @State var failedKanas: Set<Kana> = []
     @State var remainingKanas: Set<Kana>
+    @State var succeededKanas: Set<Kana> = []
 
     @State var handwrittenFont: CustomFontFamily = .yujiBoku
     @State var info: LocalizedStringResource?
@@ -132,8 +133,8 @@ struct AllInARowExercicePage: View {
     func finishExercice() {
         onFinishedExercice(
             .init(
-                succeededKanas: kanas.filter { !remainingKanas.contains($0) }.filter { !failedKanas.contains($0) },
-                skippedKanas: Array(remainingKanas),
+                succeededKanas: Array(succeededKanas),
+                skippedKanas: Array(remainingKanas.subtracting(failedKanas)),
                 failedKanas: Array(failedKanas),
             ),
         )
@@ -172,6 +173,9 @@ struct AllInARowExercicePage: View {
             }
         } else {
             withAnimation {
+                if !failedKanas.contains(truth) {
+                    succeededKanas.insert(truth)
+                }
                 remainingKanas.remove(truth)
                 nextRandomKana()
                 progress += answerCompletionPercent

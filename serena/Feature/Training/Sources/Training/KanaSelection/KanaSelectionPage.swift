@@ -28,7 +28,7 @@ public struct KanaSelectionPage: View {
                 Text(.selectionExplanation1)
                     .typography(.body)
                     .padding()
-                    .background(Color.bgColor)
+                    .background(Color(uiColor: .secondarySystemGroupedBackground))
                     .cornerRadius(.default)
                     .padding(.horizontal)
 
