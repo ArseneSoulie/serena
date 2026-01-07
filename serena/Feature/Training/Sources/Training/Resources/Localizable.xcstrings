@@ -246,17 +246,6 @@
         }
       }
     },
-    "Let's go ! %lld" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "C’est parti ! %lld"
-          }
-        }
-      }
-    },
     "Level %lld" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -401,13 +390,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Learn Kana by training on them. Select the rows you want to train on and hit [**Let's go**]"
+            "value" : "Select the kana rows you want to train on and hit **Start training**"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apprends les Kana en t’entrainant. Sélectionne les lignes sur lesquelles tu souhaites t’entrainer et tape sur [**C’est parti !**]"
+            "value" : "Sélectionne les lignes de kana sur lesquelles tu souhaites t’entrainer et tape sur **Commencer l’entrainement**"
           }
         }
       }
@@ -481,6 +470,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passer"
+          }
+        }
+      }
+    },
+    "Start training - %lld kana" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commencer l’entrainement - %lld kana"
           }
         }
       }

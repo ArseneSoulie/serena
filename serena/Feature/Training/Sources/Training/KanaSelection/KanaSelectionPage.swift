@@ -25,6 +25,12 @@ public struct KanaSelectionPage: View {
                 Text(.kanaTraining)
                     .typography(.title2)
                     .padding(.horizontal)
+                Text(.selectionExplanation1)
+                    .typography(.body)
+                    .padding()
+                    .background(Color.bgColor)
+                    .cornerRadius(.default)
+                    .padding(.horizontal)
 
                 KanaLineGroupView(
                     title: .base,
@@ -78,15 +84,14 @@ public struct KanaSelectionPage: View {
         .animation(.default, value: kanaSelectionType)
         .overlay(alignment: .bottom) {
             let totalSelectedKanas = selectedKanasForExercise.count
-            if totalSelectedKanas != 0 {
-                Button(
-                    .letsGo(totalSelectedKanas),
-                    systemImage: "arrow.right",
-                    action: onExerciceSelectionTapped,
-                )
-                .buttonStyle(.borderedProminent)
-                .padding(.all)
-            }
+            Button(
+                .startTrainingKana(totalSelectedKanas),
+                systemImage: "arrow.right",
+                action: onExerciceSelectionTapped,
+            )
+            .buttonStyle(.borderedProminent)
+            .padding(.all)
+            .disabled(totalSelectedKanas == 0)
         }
         .overlay(alignment: .top) {
             Color(.clear).frame(height: 0)
