@@ -35,6 +35,8 @@ struct CompletedAllInARowPage: View {
     @State var displayedKanas: [Kana] = []
     @State var shouldShowRomajiForFailedKanas: Bool = false
 
+    @State private var animationTask: Task<Void, Never>?
+
     var body: some View {
         ZStack {
             List {
@@ -62,6 +64,9 @@ struct CompletedAllInARowPage: View {
                         .padding()
                         .background { RoundedRectangle(cornerRadius: 16).fill(Color(white: 0.91)) }
                         .padding()
+                        .onTapGesture {
+                            skipAnimation()
+                        }
 
                         if isPerfect {
                             Text(.perfectRun🎉)
@@ -154,14 +159,7 @@ struct CompletedAllInARowPage: View {
         .animation(.default, value: shouldShowRomajiForFailedKanas)
         .onAppear {
             guard displayedKanas.isEmpty else { return }
-            Task {
-                for kana in result.allKanas {
-                    try? await Task.sleep(for: .seconds(0.1))
-                    withAnimation {
-                        displayedKanas.append(kana)
-                    }
-                }
-            }
+            startAnimation()
         }
         .toolbar {
             if result.failedKanas.count != 0 {
@@ -174,6 +172,33 @@ struct CompletedAllInARowPage: View {
 
     var isPerfect: Bool {
         result.failedKanas.count == 0 && result.skippedKanas.count == 0
+    }
+
+    func startAnimation() {
+        animationTask?.cancel()
+        animationTask = Task { @MainActor in
+            displayedKanas = []
+
+            for kana in result.allKanas {
+                if Task.isCancelled { return }
+
+                try? await Task.sleep(for: .seconds(0.1))
+                if Task.isCancelled { return }
+
+                withAnimation(.spring(duration: 0.3)) {
+                    displayedKanas.append(kana)
+                }
+            }
+        }
+    }
+
+    func skipAnimation() {
+        animationTask?.cancel()
+        animationTask = nil
+
+        withAnimation(.easeOut(duration: 0.2)) {
+            displayedKanas = result.allKanas
+        }
     }
 }
 
