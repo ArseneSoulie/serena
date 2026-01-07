@@ -1,13 +1,13 @@
 {
-  "originHash" : "e2d54c60d88248758aeeeac2c11ba98e15dc6b031028663017c90502c51ab25e",
+  "originHash" : "3085c5b593b4bf501351c504cb352d1847b4e764db4e3d0e00831b270e830b11",
   "pins" : [
     {
       "identity" : "combine-schedulers",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/combine-schedulers",
       "state" : {
-        "revision" : "5928286acce13def418ec36d05a001a9641086f2",
-        "version" : "1.0.3"
+        "revision" : "fd16d76fd8b9a976d88bfb6cacc05ca8d19c91b6",
+        "version" : "1.1.0"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/groue/GRDB.swift",
       "state" : {
-        "revision" : "18497b68fdbb3a09528d260a0a0e1e7e61c8c53d",
-        "version" : "7.8.0"
+        "revision" : "aa0079aeb82a4bf00324561a40bffe68c6fe1c26",
+        "version" : "7.9.0"
       }
     },
     {
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/sqlite-data",
       "state" : {
-        "revision" : "b66b894b9a5710f1072c8eb6448a7edfc2d743d9",
-        "version" : "1.3.0"
+        "revision" : "8af16d5303372ecd01962ae59b2ad2f921d36fac",
+        "version" : "1.4.3"
       }
     },
     {
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "309a47b2b1d9b5e991f36961c983ecec72275be3",
-        "version" : "1.6.1"
+        "revision" : "c5d11a805e765f52ba34ec7284bd4fcd6ba68615",
+        "version" : "1.7.0"
       }
     },
     {
@@ -123,8 +123,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-structured-queries",
       "state" : {
-        "revision" : "9c84335373bae5f5c9f7b5f0adf3ae10f2cab5b9",
-        "version" : "0.25.2"
+        "revision" : "907cd2c4a31f6e45e0632e29bdac06977985faca",
+        "version" : "0.26.0"
       }
     },
     {
@@ -141,8 +141,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/xctest-dynamic-overlay",
       "state" : {
-        "revision" : "4c27acf5394b645b70d8ba19dc249c0472d5f618",
-        "version" : "1.7.0"
+        "revision" : "34e463e98ab8541c604af706c99bed7160f5ec70",
+        "version" : "1.8.1"
       }
     }
   ],
