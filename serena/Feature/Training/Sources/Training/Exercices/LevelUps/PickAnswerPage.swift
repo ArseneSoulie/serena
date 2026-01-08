@@ -24,8 +24,12 @@ struct PickAnswerPage: View {
     @State private var truth: Kana
     @State private var guessingOptions: [Kana]
     @State private var progress: Double = 0
+    @State private var truthColor: Color = .primary
 
+    @State private var shakeTrigger: CGFloat = 0
     @State private var showToast = false
+    @State private var successAnswerFeedbackTrigger = false
+    @State private var failureAnswerFeedbackTrigger = false
 
     @State private var disableButtons: Bool = false
     @State private var capitalizationColorHint: Color = .secondary
@@ -86,6 +90,8 @@ struct PickAnswerPage: View {
                     Text(formattedTruth)
                         .typography(.largeTitle)
                         .padding(.vertical, 20)
+                        .foregroundStyle(truthColor)
+                        .shake(shakeTrigger)
                         .frame(maxWidth: .infinity)
                 }
             }.listStyle(.insetGrouped)
@@ -115,6 +121,8 @@ struct PickAnswerPage: View {
             }
         })
         .toast(isPresented: $showToast, message: .levelUp)
+        .sensoryFeedback(.impact, trigger: successAnswerFeedbackTrigger)
+        .sensoryFeedback(.error, trigger: failureAnswerFeedbackTrigger)
     }
 
     func nextRound() {
@@ -126,8 +134,29 @@ struct PickAnswerPage: View {
         1.0 / Double(min(kanaPool.count, maxStepsCount))
     }
 
+    func triggerSensoryFeedback(for isCorrect: Bool) {
+        isCorrect ? successAnswerFeedbackTrigger.toggle() : failureAnswerFeedbackTrigger.toggle()
+    }
+
+    func triggerWrongAnswer() {
+        withAnimation(.default) {
+            truthColor = .red
+            shakeTrigger += 1
+        } completion: {
+            withAnimation {
+                truthColor = .primary
+            }
+        }
+    }
+
     func onOptionSelected(_ option: Kana) {
         let isCorrect = option == truth
+
+        triggerSensoryFeedback(for: isCorrect)
+
+        if !isCorrect {
+            triggerWrongAnswer()
+        }
 
         if !isCorrect, option.romajiValue.lowercased() == truth.romajiValue.lowercased() {
             withAnimation(.bouncy(duration: 0.1)) {

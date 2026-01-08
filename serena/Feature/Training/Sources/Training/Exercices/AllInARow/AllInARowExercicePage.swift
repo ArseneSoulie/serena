@@ -10,6 +10,8 @@ struct AllInARowExercicePage: View {
     @State private var truth: Kana
     @State private var truthColor: Color = .primary
     @State private var shakeTrigger: CGFloat = 0
+    @State private var successAnswerFeedbackTrigger = false
+    @State private var failureAnswerFeedbackTrigger = false
 
     @State private var inputText: String = ""
     @FocusState private var isFocused: Bool
@@ -124,6 +126,8 @@ struct AllInARowExercicePage: View {
         }
         .animation(.default, value: failedKanas)
         .animation(.default, value: showAnswer)
+        .sensoryFeedback(.impact, trigger: successAnswerFeedbackTrigger)
+        .sensoryFeedback(.error, trigger: failureAnswerFeedbackTrigger)
     }
 
     var answerCompletionPercent: Double {
@@ -140,6 +144,10 @@ struct AllInARowExercicePage: View {
         )
     }
 
+    func triggerSensoryFeedback(for isCorrect: Bool) {
+        isCorrect ? successAnswerFeedbackTrigger.toggle() : failureAnswerFeedbackTrigger.toggle()
+    }
+
     func onSubmit() {
         let (cleanedText, containsInvalidRomaji) = inputText
             .filter { !$0.isWhitespace && !$0.isNewline }
@@ -150,6 +158,8 @@ struct AllInARowExercicePage: View {
         withAnimation {
             info = nil
         }
+
+        triggerSensoryFeedback(for: isCorrect)
 
         if !isCorrect {
             withAnimation(.default) {

@@ -32,6 +32,8 @@ struct WriteAnswerPage: View {
     @FocusState var isFocused: Bool
 
     @State private var showToast = false
+    @State private var successAnswerFeedbackTrigger = false
+    @State private var failureAnswerFeedbackTrigger = false
 
     @State var info: LocalizedStringResource?
 
@@ -134,6 +136,8 @@ struct WriteAnswerPage: View {
             }
         }
         .toast(isPresented: $showToast, message: .levelUp)
+        .sensoryFeedback(.impact, trigger: successAnswerFeedbackTrigger)
+        .sensoryFeedback(.error, trigger: failureAnswerFeedbackTrigger)
     }
 
     func goToNextRound() {
@@ -158,6 +162,10 @@ struct WriteAnswerPage: View {
 
     @State var canSubmit: Bool = true
 
+    func triggerSensoryFeedback(for isCorrect: Bool) {
+        isCorrect ? successAnswerFeedbackTrigger.toggle() : failureAnswerFeedbackTrigger.toggle()
+    }
+
     func onSubmit() {
         if !canSubmit { return }
         let (cleanedText, containsInvalidRomaji) = inputText
@@ -168,6 +176,8 @@ struct WriteAnswerPage: View {
 
         inputText = ""
         info = nil
+
+        triggerSensoryFeedback(for: isCorrect)
 
         if !isCorrect {
             triggerWrongAnswer()
