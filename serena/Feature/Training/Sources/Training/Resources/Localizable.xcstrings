@@ -510,13 +510,13 @@
         }
       }
     },
-    "Show Romaji for failed" : {
+    "Show Romaji" : {
       "extractionState" : "manual",
       "localizations" : {
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Afficher les Romaji pour les erronés"
+            "value" : "Afficher les Romaji"
           }
         }
       }

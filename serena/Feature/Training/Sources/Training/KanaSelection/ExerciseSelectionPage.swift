@@ -45,6 +45,8 @@ public struct ExerciseSelectionPage: View {
                     onBannerTapped: onLevelUpsTapped,
                 )
 
+                Divider()
+
                 ExerciceBanner(
                     explanation: .tryToGetAllSelectedKanasRightInARow,
                     imageResource: ._TrainingBanner.allInARow,
@@ -52,6 +54,7 @@ public struct ExerciseSelectionPage: View {
                     onBannerTapped: onAllInARowTapped,
                 )
             }
+            .frame(maxWidth: .infinity)
             .padding(.horizontal)
         }
         .background(Color(uiColor: .systemGroupedBackground))
@@ -94,7 +97,7 @@ struct ExerciceBanner: View {
                 }
             }
         }
-        .frame(maxWidth: 500)
+        .frame(maxWidth: 600)
         .foregroundStyle(.primary)
         .padding()
         .background(Color(uiColor: .secondarySystemGroupedBackground).mix(with: bgTint, by: 0.3))

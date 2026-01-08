@@ -122,7 +122,7 @@ struct CompletedAllInARowPage: View {
             }
             .padding()
         }
-
+        .frame(maxWidth: .infinity)
         .overlay {
             if isPerfect {
                 ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
@@ -139,7 +139,7 @@ struct CompletedAllInARowPage: View {
         .toolbar {
             if !result.failedKanas.isEmpty {
                 Toggle(isOn: $shouldShowRomajiForFailedKanas) {
-                    Text(.showRomajiForFailed)
+                    Text(.showRomaji)
                 }.padding()
             }
         }
