@@ -182,7 +182,7 @@ struct ToolbarViews: View {
     var body: some View {
         Picker(.trainingMode, selection: $kanaSelectionType) {
             ForEach(KanaSelectionType.allCases, id: \.self) { kanaType in
-                Label(kanaType.localisedDescription, systemImage: "arrow.up.arrow.down")
+                Label(kanaType.localisedDescription, systemImage: "repeat")
                     .typography(.body)
                     .modify {
                         if kanaType == kanaSelectionType {

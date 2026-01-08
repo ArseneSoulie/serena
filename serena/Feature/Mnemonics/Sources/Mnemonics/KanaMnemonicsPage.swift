@@ -72,7 +72,7 @@ public struct KanaMnemonicsPage: View {
         .toolbar {
             Picker(.kana, selection: $kanaType) {
                 ForEach(KanaType.allCases, id: \.self) { kanaSelectionType in
-                    Label(kanaSelectionType.localizedResource, systemImage: "arrow.up.arrow.down")
+                    Label(kanaSelectionType.localizedResource, systemImage: "repeat")
                         .typography(.body)
                         .modify {
                             if kanaType == kanaSelectionType {
