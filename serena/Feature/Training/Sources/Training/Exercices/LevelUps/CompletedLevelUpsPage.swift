@@ -7,7 +7,7 @@ struct CompletedLevelUpsPage: View {
 
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 24) {
                 Text(.completed)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .typography(.title2)
@@ -18,7 +18,6 @@ struct CompletedLevelUpsPage: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100)
-                    .padding()
 
                 DancingKaomojiView()
                     .frame(maxWidth: .infinity)
@@ -44,7 +43,7 @@ struct CompletedLevelUpsPage: View {
                 .padding()
                 .background(Color(uiColor: .secondarySystemGroupedBackground))
                 .cornerRadius(.default)
-            }.padding(.horizontal)
+            }.padding()
         }
         .background(Color(uiColor: UIColor.systemGroupedBackground))
         .overlay {
