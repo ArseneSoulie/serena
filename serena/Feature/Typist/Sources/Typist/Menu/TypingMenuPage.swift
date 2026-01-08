@@ -108,18 +108,55 @@ struct KeyboardInfoView: View {
     let explanation: LocalizedStringResource
     let image: ImageResource
 
+    @Environment(\.horizontalSizeClass) private var sizeClass
+
     var body: some View {
-        VStack {
-            Text(title)
-                .typography(.headline)
-            Image(image)
-                .resizable()
-                .scaledToFit()
-                .frame(maxWidth: 500)
-            Text(explanation)
-                .multilineTextAlignment(.leading)
-                .foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 24) {
+            if sizeClass == .regular {
+                wideLayout
+            } else {
+                narrowLayout
+            }
         }
+    }
+
+    private var wideLayout: some View {
+        Grid(horizontalSpacing: 24) {
+            GridRow {
+                contentTitle
+                Spacer()
+            }
+            GridRow {
+                contentImage
+                contentText
+            }
+        }
+    }
+
+    private var narrowLayout: some View {
+        VStack(spacing: 16) {
+            contentTitle
+            contentImage
+            contentText
+        }
+    }
+
+    private var contentTitle: some View {
+        Text(title)
+            .typography(.headline)
+    }
+
+    private var contentImage: some View {
+        Image(image)
+            .resizable()
+            .scaledToFit()
+            .frame(maxWidth: 300)
+    }
+
+    private var contentText: some View {
+        Text(explanation)
+            .multilineTextAlignment(.leading)
+            .foregroundStyle(.secondary)
     }
 }
 
