@@ -90,7 +90,7 @@ public struct KanaSelectionPage: View {
                 action: onExerciceSelectionTapped,
             )
             .buttonStyle(.borderedProminent)
-            .padding(.all)
+            .padding()
             .disabled(totalSelectedKanas == 0)
         }
         .overlay(alignment: .top) {

@@ -59,7 +59,7 @@ struct CourseCardView: View {
                         }
                 }
             }
-            .padding(.all)
+            .padding()
             .foregroundStyle(textColor)
             .background(mainColor)
         }

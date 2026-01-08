@@ -229,7 +229,7 @@ struct KanjiStrokesToolbar: View {
             },
         ).popover(isPresented: $showStrokeOrder) {
             KanjiStrokesView(svgId: svgId)
-                .padding(.all)
+                .padding()
                 .padding(.horizontal)
                 .presentationCompactAdaptation(.popover)
         }
