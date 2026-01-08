@@ -52,7 +52,11 @@ public struct ExerciseSelectionPage: View {
                     onBannerTapped: onAllInARowTapped,
                 )
             }
+            .padding()
+            .background(Color(uiColor: .secondarySystemGroupedBackground))
+            .cornerRadius(.default)
             .padding(.horizontal)
+            .frame(maxWidth: .infinity)
         }
         .background(Color(uiColor: .systemGroupedBackground))
         .navigationTitle(.pickAnExerciseType)
@@ -94,7 +98,7 @@ struct ExerciceBanner: View {
                 }
             }
         }
-        .frame(maxWidth: 500)
+        .frame(maxWidth: 600)
         .foregroundStyle(.primary)
         .padding()
         .background(Color(uiColor: .secondarySystemGroupedBackground).mix(with: bgTint, by: 0.3))

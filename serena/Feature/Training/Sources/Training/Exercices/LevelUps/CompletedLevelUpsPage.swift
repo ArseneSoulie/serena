@@ -46,6 +46,7 @@ struct CompletedLevelUpsPage: View {
             }.padding()
         }
         .background(Color(uiColor: UIColor.systemGroupedBackground))
+        .frame(maxWidth: .infinity)
         .overlay {
             ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
         }

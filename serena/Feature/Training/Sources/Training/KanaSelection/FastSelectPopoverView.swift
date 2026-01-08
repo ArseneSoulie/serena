@@ -13,7 +13,7 @@ struct FastSelectPopoverView: View {
                 .typography(.title2)
             Spacer()
             HStack {
-                Button(.all, action: selectAll)
+                Button(.all, action: onSelectAllTapped)
                 Spacer()
                 Button(.clear, action: clearAll)
             }
@@ -46,6 +46,22 @@ struct FastSelectPopoverView: View {
         }
         .padding()
         .presentationCompactAdaptation(.popover)
+    }
+
+    var areAllSelected: Bool {
+        selectedBase.isSuperset(of: base) &&
+            selectedDiacritic.isSuperset(of: diacritic) &&
+            selectedCombinatory.isSuperset(of: combinatory) &&
+            selectedCombinatoryDiacritic.isSuperset(of: combinatoryDiacritic) &&
+            selectedExtendedKatakana.isSuperset(of: extendedKatakana)
+    }
+
+    func onSelectAllTapped() {
+        if areAllSelected {
+            clearAll()
+        } else {
+            selectAll()
+        }
     }
 
     func selectAll() {

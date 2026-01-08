@@ -100,3 +100,9 @@ public extension View {
         modifier(TypographyModifier(typography: typography, fontFamily: fontFamily))
     }
 }
+
+public extension Text {
+    func inlineTypography(_ typography: Typography, fontFamily: CustomFontFamily = .defaultFamily) -> Text {
+        font(fontFamily.fontConvertible.swiftUIFont(typography: typography))
+    }
+}

@@ -11,7 +11,7 @@ struct MnemonicDrawingView: View {
     @State var drawnPaths: [Path] = []
 
     var strokes: KanjiStrokes? {
-        let url = Bundle.module.url(forResource: "0\(data.unicodeID)", withExtension: "svg")
+        let url = mnemonicsModule.url(forResource: "0\(data.unicodeID)", withExtension: "svg")
         return KanjiStrokes(from: url)
     }
 

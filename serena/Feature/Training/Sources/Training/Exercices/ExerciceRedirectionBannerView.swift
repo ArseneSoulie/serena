@@ -35,5 +35,6 @@ struct ExerciceRedirectionBannerView: View {
             }
             .cornerRadius(.default)
         }.buttonStyle(.plain)
+            .frame(maxWidth: 600)
     }
 }

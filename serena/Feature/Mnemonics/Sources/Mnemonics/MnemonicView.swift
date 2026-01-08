@@ -13,7 +13,7 @@ struct MnemonicView: View {
     let mnemonicLineStyle: StrokeStyle = .init(lineWidth: 10, lineCap: .butt, lineJoin: .round)
     let mnemonicDrawingStyle: StrokeStyle = .init(lineWidth: 2, lineCap: .round, lineJoin: .round)
 
-    var strokeURL: URL? { Bundle.module.url(forResource: "0\(mnemonic.unicodeID)", withExtension: "svg") }
+    var strokeURL: URL? { mnemonicsModule.url(forResource: "0\(mnemonic.unicodeID)", withExtension: "svg") }
     var currentMnemonic: UserKanaMnemonic? { mnemonicsManager.userMnemonics[mnemonic.kanaString] }
     var currentExplanation: String? { currentMnemonic?.writtenMnemonic }
     var currentDrawing: String? { currentMnemonic?.drawingMnemonic }

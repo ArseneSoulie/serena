@@ -23,32 +23,39 @@ struct KanaLineView: View {
                         KanaWritingPreview(text: kana, showRomaji: showRomaji, kanaSelectionType: kanaSelectionType)
                             .padding(.all, 6)
                             .frame(maxWidth: .infinity)
-                            .background { isOn ? Color(white: 1) : Color(white: 0.96) }
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
                             .opacity(kana == nil ? 0 : 1)
-                    }
-                }
-                .padding(.all, 4)
-                .foregroundStyle(isOn ? Color(white: 0.2) : Color(white: 0.4))
-                .background(isOn ? tint.mix(with: .white, by: 0.2) : Color(white: 0.92), in: .rect)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .overlay(alignment: .topTrailing) {
-                    if isOn {
-                        ZStack {
-                            Color.bgColor
-                                .frame(width: 26, height: 26)
-                                .clipShape(.circle)
-                            Image(systemName: "checkmark.circle.fill")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .foregroundStyle(tint)
+
+                        if kana != kanaLine.kanas.last {
+                            Divider().padding(.vertical)
                         }
-                        .offset(x: 8, y: -8)
                     }
                 }
+                .padding(.horizontal, 8)
+                .padding(.all, 4)
+                .foregroundStyle(isOn ? Color.primary : Color.secondary)
+                .background(
+                    isOn ? tint.mix(with: Color.bgColor, by: 0.8).opacity(0.5) : Color.secondary.opacity(0.1),
+                    in: .rect,
+                )
+                .cornerRadius(.default)
+                .border(
+                    style: isOn ? tint.mix(with: Color(white: 0.9), by: 0.4) : Color.secondary.opacity(0.1),
+                    width: .strong,
+                    cornerRadius: .moderate,
+                )
             }
 
-            Text(kanaLine.id).hidden()
+            Button(
+                action: toggleLine,
+                label: {
+                    Image(systemName: isOn ? "checkmark.circle.fill" : "checkmark.circle")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .foregroundStyle(isOn ? tint : Color(white: 0.8))
+                        .padding(8)
+                        .padding(.trailing, 8)
+                },
+            )
         }
     }
 
@@ -98,34 +105,36 @@ struct KanaWritingPreview: View {
 #Preview {
     @Previewable @State var isOn = true
     @Previewable @State var isnOn = false
-    Grid {
-        KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
-            showRomaji: true,
-            kanaSelectionType: .hiragana,
-            tint: .green,
-            isOn: $isOn,
-        )
-        KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
-            showRomaji: true,
-            kanaSelectionType: .katakana,
-            tint: .green,
-            isOn: $isnOn,
-        )
-        KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
-            showRomaji: false,
-            kanaSelectionType: .hiragana,
-            tint: .green,
-            isOn: $isOn,
-        )
-        KanaLineView(
-            kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
-            showRomaji: false,
-            kanaSelectionType: .hiragana,
-            tint: .green,
-            isOn: $isnOn,
-        )
+    ScrollView {
+        Grid {
+            KanaLineView(
+                kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
+                showRomaji: true,
+                kanaSelectionType: .hiragana,
+                tint: .green,
+                isOn: $isOn,
+            )
+            KanaLineView(
+                kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
+                showRomaji: true,
+                kanaSelectionType: .katakana,
+                tint: .green,
+                isOn: $isnOn,
+            )
+            KanaLineView(
+                kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
+                showRomaji: false,
+                kanaSelectionType: .hiragana,
+                tint: .green,
+                isOn: $isOn,
+            )
+            KanaLineView(
+                kanaLine: .init(name: "r-", kanas: ["ra", "ri", "ru", "re", "ro"]),
+                showRomaji: false,
+                kanaSelectionType: .hiragana,
+                tint: .green,
+                isOn: $isnOn,
+            )
+        }
     }
 }

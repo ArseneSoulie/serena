@@ -5,4 +5,5 @@ public enum Destination: Hashable, Equatable {
     case allInARow([Kana])
     case exerciseSelection([Kana])
     case typing(TypingLevel)
+    case learn(LearnSection)
 }

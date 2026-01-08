@@ -90,7 +90,7 @@ public struct KanaSelectionPage: View {
                 action: onExerciceSelectionTapped,
             )
             .buttonStyle(.borderedProminent)
-            .padding(.all)
+            .padding()
             .disabled(totalSelectedKanas == 0)
         }
         .overlay(alignment: .top) {
@@ -181,25 +181,32 @@ struct ToolbarViews: View {
 
     var body: some View {
         Picker(.trainingMode, selection: $kanaSelectionType) {
-            ForEach(KanaSelectionType.allCases, id: \.self) {
-                Text($0.localisedDescription)
+            ForEach(KanaSelectionType.allCases, id: \.self) { kanaType in
+                Label(kanaType.localisedDescription, systemImage: "repeat")
                     .typography(.body)
+                    .modify {
+                        if kanaType == kanaSelectionType {
+                            $0.labelStyle(.titleAndIcon)
+                        } else {
+                            $0.labelStyle(.titleOnly)
+                        }
+                    }
             }
         }
         .pickerStyle(.menu)
+
         Toggle(.romaji, isOn: $showRomaji)
-        Button(action: { showsFastSelect.toggle() }) {
-            Label(.fastSelect, systemImage: "text.line.first.and.arrowtriangle.forward")
-                .popover(isPresented: $showsFastSelect) {
-                    FastSelectPopoverView(
-                        selectedBase: $selectedBase,
-                        selectedDiacritic: $selectedDiacritic,
-                        selectedCombinatory: $selectedCombinatory,
-                        selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
-                        selectedExtendedKatakana: $selectedExtendedKatakana,
-                    )
-                }
-        }
+
+        Button(.fastSelectButtonTitle, action: { showsFastSelect.toggle() })
+            .popover(isPresented: $showsFastSelect) {
+                FastSelectPopoverView(
+                    selectedBase: $selectedBase,
+                    selectedDiacritic: $selectedDiacritic,
+                    selectedCombinatory: $selectedCombinatory,
+                    selectedCombinatoryDiacritic: $selectedCombinatoryDiacritic,
+                    selectedExtendedKatakana: $selectedExtendedKatakana,
+                )
+            }
         Button(action: { showInfo.toggle() }) {
             Label(.info, systemImage: "info.circle")
         }

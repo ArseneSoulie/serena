@@ -46,4 +46,6 @@ public extension ImageResource {
             public static let hand = ImageResource.Typing.Tutorial.hand
         }
     }
+
+    enum _Learn {}
 }

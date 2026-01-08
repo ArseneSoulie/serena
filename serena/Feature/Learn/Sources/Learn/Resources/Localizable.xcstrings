@@ -1,0 +1,171 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "(き/" : {
+
+    },
+    ")" : {
+
+    },
+    ") (ら/" : {
+
+    },
+    "%lld/%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld/%2$lld"
+          }
+        }
+      }
+    },
+    "Common Confusions" : {
+
+    },
+    "Did you say cursive?" : {
+
+    },
+    "Digital Japanese" : {
+
+    },
+    "Grammar & Particles" : {
+
+    },
+    "Help! 'Ka' (か) and 'KA' (カ) look the same!" : {
+
+    },
+    "Help! 'SHI' (シ) and 'TSU' (ツ) look the same!" : {
+
+    },
+    "How can I learn Japanese?" : {
+
+    },
+    "How do I look things up in a dictionary?" : {
+
+    },
+    "How do I make long sounds? (Prolongations)" : {
+
+    },
+    "How do I type Japanese on my phone?" : {
+
+    },
+    "How do I type on a computer?" : {
+
+    },
+    "How to write Japanese characters? (Stroke order)" : {
+
+    },
+    "I'm new, where do I start?" : {
+
+    },
+    "Into the World of Kanji" : {
+
+    },
+    "Is it an 'R' or an 'L'?" : {
+
+    },
+    "Learn" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apprendre"
+          }
+        }
+      }
+    },
+    "Let's break down a sentence" : {
+
+    },
+    "Onyomi? Kunyomi? What's the difference?" : {
+
+    },
+    "Reading & Speaking" : {
+
+    },
+    "Starting" : {
+
+    },
+    "The 'Cursed' Inputs (Typing UXO for ウォ)" : {
+
+    },
+    "The Rabbit Hole" : {
+
+    },
+    "Wait, there are multiple alphabets?" : {
+
+    },
+    "What are Furigana? (The tiny kana above Kanji)" : {
+
+    },
+    "What are Hentaigana?" : {
+
+    },
+    "What are Hiragana?" : {
+
+    },
+    "What are Kanji and why do we need them?" : {
+
+    },
+    "What are Katakana?" : {
+
+    },
+    "What are Okurigana? (The kana attached to Kanji)" : {
+
+    },
+    "What are Particles?" : {
+
+    },
+    "What are the little circles ゜? (Handakuten)" : {
+
+    },
+    "What are the new special katakana characters ?" : {
+
+    },
+    "What are the two little dashes ゛? (Dakuten)" : {
+
+    },
+    "What is 'Romaji'?" : {
+
+    },
+    "What is a 'Mora' (Rhythm)?" : {
+
+    },
+    "Where did this writing system come from?" : {
+
+    },
+    "Where did We and Wi go?" : {
+
+    },
+    "Why do kana look different depening on the font? " : {
+
+    },
+    "Why does 'Desu' sound like 'Dess'? (Devoicing)" : {
+
+    },
+    "Why is 'Vertical Writing' a thing?" : {
+
+    },
+    "Why is this character so small? (っ, ゃ, ゅ, ょ)" : {
+
+    },
+    "Why is は pronounced 'Wa'?" : {
+
+    },
+    "Why is へ pronounced 'E'?" : {
+
+    },
+    "Why is を pronounced 'O'?" : {
+
+    },
+    "き" : {
+
+    },
+    "ら" : {
+
+    }
+  },
+  "version" : "1.1"
+}
