@@ -1,12 +1,20 @@
 {
   "images" : [
     {
-      "filename" : "Frame 3.png",
+      "filename" : "Frame 20.pdf",
       "idiom" : "universal"
+    },
+    {
+      "filename" : "Frame 23.pdf",
+      "idiom" : "universal",
+      "locale" : "fr"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "localizable" : true
   }
 }

@@ -136,6 +136,23 @@
         }
       }
     },
+    "exerciceSelectionSubtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%(kanaCount)lld kana selected - Mode %(kanaMode)@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%(kanaCount)lld kana sélectionnés - Mode %(kanaMode)@"
+          }
+        }
+      }
+    },
     "Extended katakana" : {
       "extractionState" : "manual",
       "localizations" : {

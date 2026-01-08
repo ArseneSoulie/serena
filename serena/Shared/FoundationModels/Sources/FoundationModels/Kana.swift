@@ -19,6 +19,15 @@ public enum Kana: Hashable, Equatable, Sendable {
             value.katakanaToRomaji
         }
     }
+
+    public var isHiragana: Bool {
+        switch self {
+        case .hiragana:
+            true
+        case .katakana:
+            false
+        }
+    }
 }
 
 public enum KanaType: String, CaseIterable {

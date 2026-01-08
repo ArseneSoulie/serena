@@ -10,6 +10,19 @@ import FoundationModels
 import Navigation
 import SwiftUI
 
+extension [Kana] {
+    var modeString: String {
+        let hiraganaCount = filter(\.isHiragana).count
+        if hiraganaCount == count {
+            return String(localized: .hiragana)
+        } else if hiraganaCount == 0 {
+            return String(localized: .katakana)
+        } else {
+            return String(localized: .both)
+        }
+    }
+}
+
 public struct ExerciseSelectionPage: View {
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(NavigationCoordinator.self) private var coordinator
@@ -23,27 +36,21 @@ public struct ExerciseSelectionPage: View {
     public var body: some View {
         ScrollView(.vertical) {
             VStack {
-                VStack {
-                    Text(.levelUps)
-                        .typography(.title2)
-                    ExerciceBanner(
-                        title: .levelUpsExplanation,
-                        imageResource: ._TrainingBanner.levelUp,
-                        onBannerTapped: onLevelUpsTapped,
-                    )
-                }
+                Text(.exerciceSelectionSubtitle(kanaCount: kanaPool.count, kanaMode: kanaPool.modeString))
+                    .padding()
+                ExerciceBanner(
+                    explanation: .levelUpsExplanation,
+                    imageResource: ._TrainingBanner.levelUp,
+                    bgTint: .blue,
+                    onBannerTapped: onLevelUpsTapped,
+                )
 
-                Divider().padding(.top)
-
-                VStack {
-                    Text(.allInARow)
-                        .typography(.title2)
-                    ExerciceBanner(
-                        title: .tryToGetAllSelectedKanasRightInARow,
-                        imageResource: ._TrainingBanner.allInARow,
-                        onBannerTapped: onAllInARowTapped,
-                    )
-                }
+                ExerciceBanner(
+                    explanation: .tryToGetAllSelectedKanasRightInARow,
+                    imageResource: ._TrainingBanner.allInARow,
+                    bgTint: .red,
+                    onBannerTapped: onAllInARowTapped,
+                )
             }
             .padding(.horizontal)
         }
@@ -66,31 +73,31 @@ public struct ExerciseSelectionPage: View {
 }
 
 struct ExerciceBanner: View {
-    let title: LocalizedStringResource
+    let explanation: LocalizedStringResource
     let imageResource: ImageResource
+    let bgTint: Color
     let onBannerTapped: () -> Void
 
     var body: some View {
         Button(action: onBannerTapped) {
-            VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 16) {
                 Image(imageResource)
                     .resizable()
                     .scaledToFit()
                     .cornerRadius(.default)
                 HStack {
-                    Text(title)
+                    Text(explanation)
                         .multilineTextAlignment(.leading)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .padding()
                 }
             }
-            .padding()
         }
         .frame(maxWidth: 500)
         .foregroundStyle(.primary)
         .padding()
-        .background(Color(uiColor: .secondarySystemGroupedBackground))
+        .background(Color(uiColor: .secondarySystemGroupedBackground).mix(with: bgTint, by: 0.3))
         .cornerRadius(.default)
     }
 }

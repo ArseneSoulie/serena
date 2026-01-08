@@ -101,49 +101,17 @@ struct CompletedAllInARowPage: View {
                 }
 
                 VStack(spacing: 16) {
-                    Button(action: onTryAgainTapped) {
-                        ZStack(alignment: .bottom) {
-                            Image(._TrainingBanner.allInARow)
-                                .resizable()
-                                .scaledToFit()
+                    ExerciceRedirectionBannerView(
+                        image: ._TrainingBanner.allInARow,
+                        label: .tryAgainWithSelection,
+                        onBannerTapped: onTryAgainTapped,
+                    )
 
-                            HStack {
-                                Spacer()
-                                Text(.tryAgainWithSelection)
-                                    .typography(.headline)
-                                    .bold()
-                                Image(systemName: "chevron.right")
-                            }
-                            .foregroundStyle(.white)
-                            .padding()
-                            .background {
-                                Color(white: 0).opacity(0.7)
-                            }
-                        }
-                        .cornerRadius(.default)
-                    }.buttonStyle(.plain)
-
-                    Button(action: onLevelUpsTapped) {
-                        ZStack(alignment: .bottom) {
-                            Image(._TrainingBanner.levelUp)
-                                .resizable()
-                                .scaledToFit()
-
-                            HStack {
-                                Spacer()
-                                Text(.levelUps)
-                                    .typography(.headline)
-                                    .bold()
-                                Image(systemName: "chevron.right")
-                            }
-                            .foregroundStyle(.white)
-                            .padding()
-                            .background {
-                                Color(white: 0).opacity(0.7)
-                            }
-                        }
-                        .cornerRadius(.default)
-                    }.buttonStyle(.plain)
+                    ExerciceRedirectionBannerView(
+                        image: ._TrainingBanner.levelUp,
+                        label: .levelUps,
+                        onBannerTapped: onLevelUpsTapped,
+                    )
 
                     Button(.goBackToSelection, systemImage: "arrow.backward", action: onGoBackTapped)
                         .buttonStyle(.bordered)

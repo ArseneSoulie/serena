@@ -6,76 +6,48 @@ struct CompletedLevelUpsPage: View {
     let onGoBackTapped: () -> Void
 
     var body: some View {
-        ZStack {
-            List {
-                Section {
-                    VStack {
-                        Image(systemName: "party.popper")
-                            .resizable()
-                            .frame(width: 80, height: 80)
-                            .padding()
-                        DancingKaomojiView()
-                    }.frame(maxWidth: .infinity)
-                } header: {
-                    Text(.completed)
-                        .typography(.headline)
-                }
+        ScrollView {
+            VStack {
+                Text(.completed)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .typography(.title2)
+                    .padding(.horizontal)
+                    .padding(.top)
 
-                Section {
-                    Button(action: onTryAgainTapped) {
-                        ZStack(alignment: .bottom) {
-                            Image(._TrainingBanner.levelUp)
-                                .resizable()
-                                .scaledToFit()
+                Image(._ReinaEmotes.party)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 100)
+                    .padding()
 
-                            HStack {
-                                Spacer()
-                                Text(.tryAgainWithSelection)
-                                    .typography(.headline)
-                                    .bold()
-                                Image(systemName: "chevron.right")
-                            }
-                            .foregroundStyle(.white)
-                            .padding()
-                            .background {
-                                Color(white: 0)
-                                    .opacity(0.7)
-                            }
-                        }
-                        .cornerRadius(.default)
-                    }.buttonStyle(.plain)
+                DancingKaomojiView()
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color(uiColor: .secondarySystemGroupedBackground))
+                    .cornerRadius(.default)
 
-                    Button(action: onAllInARowTapped) {
-                        ZStack(alignment: .bottom) {
-                            Image(._TrainingBanner.allInARow)
-                                .resizable()
-                                .scaledToFit()
+                VStack(spacing: 16) {
+                    ExerciceRedirectionBannerView(
+                        image: ._TrainingBanner.levelUp,
+                        label: .tryAgainWithSelection,
+                        onBannerTapped: onTryAgainTapped,
+                    )
 
-                            HStack {
-                                Spacer()
-                                Text(.allInARow)
-                                    .typography(.headline)
-                                    .bold()
-                                Image(systemName: "chevron.right")
-                            }
-                            .foregroundStyle(.white)
-                            .padding()
-                            .background {
-                                Color(white: 0)
-                                    .opacity(0.7)
-                            }
-                        }
-                        .cornerRadius(.default)
-                    }.buttonStyle(.plain)
-
+                    ExerciceRedirectionBannerView(
+                        image: ._TrainingBanner.allInARow,
+                        label: .allInARow,
+                        onBannerTapped: onAllInARowTapped,
+                    )
                     Button(.goBackToSelection, systemImage: "arrow.backward", action: onGoBackTapped)
                         .buttonStyle(.bordered)
-
-                } header: {
-                    Text(.navigate)
                 }
-            }
-
+                .padding()
+                .background(Color(uiColor: .secondarySystemGroupedBackground))
+                .cornerRadius(.default)
+            }.padding(.horizontal)
+        }
+        .background(Color(uiColor: UIColor.systemGroupedBackground))
+        .overlay {
             ConfettiView(count: 100, emitPoint: .init(x: UIScreen.main.bounds.width / 2, y: 0))
         }
     }

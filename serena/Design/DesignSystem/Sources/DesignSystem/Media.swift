@@ -31,6 +31,7 @@ public extension ImageResource {
         public static let easy = ImageResource.ReinaEmotes.easy
         public static let medium = ImageResource.ReinaEmotes.medium
         public static let hard = ImageResource.ReinaEmotes.hard
+        public static let party = ImageResource.ReinaEmotes.party
     }
 
     enum _Typing {
