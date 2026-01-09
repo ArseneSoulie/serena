@@ -75,14 +75,18 @@ public struct TypingPage: View {
             }
         }
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(.typing)
+                    .foregroundStyle(.white)
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Toggle(.autoSubmit, isOn: $typingViewModel.autoSubmitEnabled)
+                    .foregroundStyle(.primary)
             }
         }
         .onDisappear {
             typingViewModel.endGame()
         }
-        .navigationTitle(.typing)
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -278,6 +282,16 @@ private struct AnimatedBackground: View {
                         }
                     }
                 }
+        }.overlay(alignment: .top) {
+            let darkenedSky = Color(._Sky.noon).mix(with: .black, by: 0.5)
+            EllipticalGradient(
+                colors: [darkenedSky.opacity(0), darkenedSky],
+                center: .bottom,
+                startRadiusFraction: 0.5,
+                endRadiusFraction: 1,
+            )
+            .ignoresSafeArea()
+            .frame(height: 180)
         }
     }
 }
