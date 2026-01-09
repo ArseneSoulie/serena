@@ -166,13 +166,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%(kanaCount)lld kana selected - Mode %(kanaMode)@"
+            "value" : "%(kanaCount)lld kana selected - Mode "
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%(kanaCount)lld kana sélectionnés - Mode %(kanaMode)@"
+            "value" : "%(kanaCount)lld kana sélectionnés - Mode "
           }
         }
       }

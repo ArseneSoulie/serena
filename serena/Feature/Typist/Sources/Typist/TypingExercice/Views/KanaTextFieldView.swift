@@ -26,13 +26,11 @@ struct KanaTextFieldView: UIViewRepresentable {
     @Binding var isFirstResponder: Bool
 
     let languageCode: String
-    let placeholder: LocalizedStringResource
     let onSubmit: () -> Void
 
     func makeUIView(context: Context) -> KanaTextField {
         let textField = KanaTextField()
         textField.preferredLanguageCode = languageCode
-        textField.placeholder = String(localized: placeholder)
         textField.returnKeyType = .done
         textField.clearButtonMode = .whileEditing
         textField.delegate = context.coordinator

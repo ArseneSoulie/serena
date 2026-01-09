@@ -11,14 +11,14 @@ import Navigation
 import SwiftUI
 
 extension [Kana] {
-    var modeString: String {
+    var modeString: LocalizedStringResource {
         let hiraganaCount = filter(\.isHiragana).count
         if hiraganaCount == count {
-            return String(localized: .hiragana)
+            return .hiragana
         } else if hiraganaCount == 0 {
-            return String(localized: .katakana)
+            return .katakana
         } else {
-            return String(localized: .both)
+            return .both
         }
     }
 }
@@ -36,8 +36,7 @@ public struct ExerciseSelectionPage: View {
     public var body: some View {
         ScrollView(.vertical) {
             VStack {
-                Text(.exerciceSelectionSubtitle(kanaCount: kanaPool.count, kanaMode: kanaPool.modeString))
-                    .padding()
+                Text(.exerciceSelectionSubtitle(kanaCount: kanaPool.count)) + Text(kanaPool.modeString)
                 ExerciceBanner(
                     explanation: .levelUpsExplanation,
                     imageResource: ._TrainingBanner.levelUp,

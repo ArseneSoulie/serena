@@ -10,7 +10,7 @@ enum SelectedTab {
     case mnemonics
     case training
     case learn
-    case typist
+    case typing
     case about
 }
 
@@ -24,61 +24,51 @@ public struct ReinaMainPage: View {
 
     public var body: some View {
         TabView(selection: $selectedTab) {
-            Tab(
-                String(localized: .mnemonics),
-                systemImage: "brain",
-                value: .mnemonics,
-            ) {
+            Tab(value: .mnemonics, content: {
                 NavigationStack {
                     KanaMnemonicsPage()
                 }
-            }
+            }, label: {
+                Label(.mnemonics, systemImage: "brain")
+            })
 
-            Tab(
-                String(localized: .training),
-                systemImage: "figure.run",
-                value: .training,
-            ) {
+            Tab(value: .training, content: {
                 NavigationStack(path: rootKanaCoordinator.binding(for: \.path)) {
                     KanaSelectionPage()
                         .registerDestinations()
                 }
                 .environment(rootKanaCoordinator)
-            }
-//
-//            Tab(
-//                String(localized: .learn),
-//                systemImage: "book",
-//                value: .learn,
-//            ) {
+            }, label: {
+                Label(.training, systemImage: "figure.run")
+            })
+
+//            Tab(value: .learn, content: {
 //                NavigationStack(path: rootLearnCoordinator.binding(for: \.path)) {
 //                    LearnMainPage()
 //                        .registerDestinations()
 //                }
 //                .environment(rootLearnCoordinator)
-//            }
+//            }, label: {
+//                Label(.learn, systemImage: "book")
+//            })
 
-            Tab(
-                String(localized: .typing),
-                systemImage: "keyboard",
-                value: .typist,
-            ) {
+            Tab(value: .typing, content: {
                 NavigationStack(path: rootTypingCoordinator.binding(for: \.path)) {
                     TypingMenuPage()
                         .registerDestinations()
                 }
                 .environment(rootTypingCoordinator)
-            }
+            }, label: {
+                Label(.typing, systemImage: "keyboard")
+            })
 
-            Tab(
-                String(localized: .about),
-                systemImage: "questionmark.circle",
-                value: .about,
-            ) {
+            Tab(value: .about, content: {
                 NavigationStack {
                     AboutPage()
                 }
-            }
+            }, label: {
+                Label(.about, systemImage: "questionmark.circle")
+            })
         }
         .registerFontForSwiftUIComponents()
     }

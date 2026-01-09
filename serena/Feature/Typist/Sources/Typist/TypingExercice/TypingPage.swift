@@ -56,7 +56,15 @@ public struct TypingPage: View {
                 }
 
                 if typingViewModel.isPlaying {
-                    inputBar
+                    VStack(alignment: .leading) {
+                        Text(.inputTheFallingText)
+                            .typography(.caption)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(.ultraThinMaterial, in: Capsule())
+                            .padding(.horizontal)
+                        inputBar
+                    }
                 }
             }
         }
@@ -83,7 +91,6 @@ public struct TypingPage: View {
             text: $typingViewModel.inputText,
             isFirstResponder: $isFocused,
             languageCode: "ja",
-            placeholder: .inputTheFallingText,
             onSubmit: { typingViewModel.onSubmit() },
         )
         .padding(.horizontal, 12)
