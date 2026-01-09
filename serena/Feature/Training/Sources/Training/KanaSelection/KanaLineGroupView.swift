@@ -54,6 +54,12 @@ struct KanaLineGroupView: View {
                             .lineLimit(1)
                             .bold(!selectedLines.isEmpty)
                             .foregroundStyle(!selectedLines.isEmpty ? Color.primary : Color.secondary)
+                        if selectedLines.count > 0 {
+                            Button(.clear, action: onClearTapped)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
+                                .foregroundStyle(Color.secondary)
+                        }
                     }
                 }
                 .padding(.vertical, 8)
@@ -75,6 +81,12 @@ struct KanaLineGroupView: View {
     func toggleSelectBase() {
         withAnimation {
             if hasSelectedAll { selectedLines.removeAll() } else { selectedLines.formUnion(lines) }
+        }
+    }
+
+    func onClearTapped() {
+        withAnimation {
+            selectedLines.removeAll()
         }
     }
 }
