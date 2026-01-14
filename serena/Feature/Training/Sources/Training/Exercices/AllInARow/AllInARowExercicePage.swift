@@ -43,15 +43,9 @@ struct AllInARowExercicePage: View {
         VStack {
             List {
                 Section {
-                    Text(.allInARow)
-                        .typography(.title2)
-                }
-                .listRowBackground(Color.clear)
-                .listRowSpacing(0)
-                .listSectionSpacing(0)
-
-                Section {
                     Text(.writeTheWritingOfAllKanasInARow)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     Button(action: randomizeFont) {
                         VStack {
                             Text(truth.kanaValue)
@@ -59,20 +53,21 @@ struct AllInARowExercicePage: View {
                                 .shake(shakeTrigger)
                                 .typography(.largeTitle, fontFamily: handwrittenFont)
 
-                            if showAnswer {
-                                Text(truth.romajiValue)
-                                    .padding(.bottom)
-                            }
-
                             if failedKanas.contains(truth) {
-                                Button(.revealAnswer, action: onRevealAnswer)
+                                Button(showAnswer ? .hideAnswer : .revealAnswer, action: onRevealAnswer)
                                     .buttonStyle(.borderless)
-                            } else if let info {
+                            }
+                            Text(truth.romajiValue)
+                                .opacity(showAnswer ? 1.0 : 0.0)
+                            if let info {
                                 Text(info)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.5)
+                                    .foregroundStyle(.secondary)
                             }
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .overlay(alignment: .topTrailing) {
+                        .overlay(alignment: .trailing) {
                             Button("", systemImage: "chevron.forward.2", action: onSkip)
                                 .buttonStyle(.borderless)
                                 .padding()
@@ -118,16 +113,18 @@ struct AllInARowExercicePage: View {
         .onAppear { isFocused = true }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                ProgressBarView(progress: $progress).frame(minWidth: 150).padding(.leading)
-            }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(.finish, action: finishExercice)
+                HStack {
+                    ProgressBarView(progress: $progress).frame(minWidth: 100).padding(.leading)
+                    Button(.finish, action: finishExercice)
+                }
             }
         }
         .animation(.default, value: failedKanas)
         .animation(.default, value: showAnswer)
         .sensoryFeedback(.impact, trigger: successAnswerFeedbackTrigger)
         .sensoryFeedback(.error, trigger: failureAnswerFeedbackTrigger)
+        .navigationTitle(.allInARow)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     var answerCompletionPercent: Double {

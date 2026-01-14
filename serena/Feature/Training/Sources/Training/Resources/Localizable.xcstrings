@@ -249,6 +249,23 @@
         }
       }
     },
+    "hideAnswer" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hide Answer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cacher la réponse"
+          }
+        }
+      }
+    },
     "Hiragana" : {
       "extractionState" : "manual",
       "localizations" : {
