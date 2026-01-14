@@ -12,6 +12,13 @@ enum WriteExerciceType {
         case .groupOfThree: .writeTheCombinaisonOfTheThreeKanas
         }
     }
+
+    var subtitle: LocalizedStringResource {
+        switch self {
+        case .single: .byConventionHiraganaIsLowercasedAndKatakanaIsUppercased
+        case .groupOfThree: .writeTheCombinaisonSubtitle
+        }
+    }
 }
 
 struct WriteAnswerPage: View {
@@ -60,26 +67,37 @@ struct WriteAnswerPage: View {
         VStack {
             List {
                 Section {
-                    Text(title)
-                        .typography(.title2)
-                }
-                .listRowBackground(Color.clear)
-                .listRowSpacing(0)
-                .listSectionSpacing(0)
-
-                Section {
-                    Text(writingExerciceType.prompt)
-                    VStack {
-                        Text(kanaTruth)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.5)
-                            .foregroundStyle(truthColor)
-                            .typography(.largeTitle)
-                            .shake(shakeTrigger)
-                            .padding()
+                    VStack(spacing: 8) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(writingExerciceType.prompt)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
+                            Text(writingExerciceType.subtitle)
+                                .lineLimit(3)
+                                .minimumScaleFactor(0.5)
+                                .foregroundStyle(.secondary)
+                                .typography(.callout)
+                        }
+                        HStack {
+                            Button("", systemImage: "chevron.forward.2", action: goToNextRound)
+                                .buttonStyle(.borderless)
+                                .hidden()
+                            Spacer()
+                            Text(kanaTruth)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
+                                .foregroundStyle(truthColor)
+                                .typography(.largeTitle)
+                                .shake(shakeTrigger)
+                            Spacer()
+                            Button("", systemImage: "chevron.forward.2", action: goToNextRound)
+                                .buttonStyle(.borderless)
+                        }
 
                         if let info {
                             Text(info)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.5)
                         }
                     }
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -106,7 +124,7 @@ struct WriteAnswerPage: View {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .frame(width: 24, height: 24)
-                        .padding()
+                        .padding(.all, 12)
                 }
             }
             .fixedSize(horizontal: false, vertical: true)
@@ -131,13 +149,12 @@ struct WriteAnswerPage: View {
                     .frame(minWidth: 150)
                     .padding(.leading)
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(.skip, action: goToNextRound)
-            }
         }
         .toast(isPresented: $showToast, message: .levelUp)
         .sensoryFeedback(.impact, trigger: successAnswerFeedbackTrigger)
         .sensoryFeedback(.error, trigger: failureAnswerFeedbackTrigger)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(title)
     }
 
     func goToNextRound() {

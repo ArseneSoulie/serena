@@ -71,14 +71,6 @@ struct PickAnswerPage: View {
         VStack(spacing: 0) {
             List {
                 Section {
-                    Text(title)
-                        .typography(.title2)
-                }
-                .listRowBackground(Color.clear)
-                .listRowSpacing(0)
-                .listSectionSpacing(0)
-
-                Section {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(pickingExerciceType.prompt)
                         Text(.byConventionHiraganaIsLowercasedAndKatakanaIsUppercased)
@@ -124,6 +116,8 @@ struct PickAnswerPage: View {
         .toast(isPresented: $showToast, message: .levelUp)
         .sensoryFeedback(.impact, trigger: successAnswerFeedbackTrigger)
         .sensoryFeedback(.error, trigger: failureAnswerFeedbackTrigger)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(title)
     }
 
     func nextRound() {

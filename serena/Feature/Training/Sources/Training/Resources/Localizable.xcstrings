@@ -590,6 +590,12 @@
     "Write the combinaison of the three kanas." : {
       "extractionState" : "manual",
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Write the combinaison of the three kanas."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -616,6 +622,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Écris tous les kanas à la suite"
+          }
+        }
+      }
+    },
+    "writeTheCombinaisonSubtitle" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By convention Hiragana are lowercased and Katakana are uppercased, this is not mandatory.\nThe combinaison is not a real word."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par convention les Hiragana sont en minuscules et Katakana en majuscules, ce n’est pas obligatoire.\nLa combinaison n’est pas un vrai mot."
           }
         }
       }
