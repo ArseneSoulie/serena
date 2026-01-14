@@ -47,7 +47,7 @@ public struct PageInfoView: View {
                 if showBackwardButton {
                     Button("", systemImage: "chevron.backward", action: {
                         withAnimation {
-                            selectedTabKey = infoPages[selectedIndex - 1].key
+                            selectedTabKey = infoPages.boundedGet(selectedIndex - 1).key
                         }
                     })
                 }
@@ -57,7 +57,7 @@ public struct PageInfoView: View {
                 if showForwardButton {
                     Button("", systemImage: "chevron.forward", action: {
                         withAnimation {
-                            selectedTabKey = infoPages[selectedIndex + 1].key
+                            selectedTabKey = infoPages.boundedGet(selectedIndex + 1).key
                         }
                     })
                 }
@@ -66,5 +66,18 @@ public struct PageInfoView: View {
         .padding()
         .frame(minWidth: 350)
         .presentationCompactAdaptation(.popover)
+    }
+}
+
+extension Array {
+    func boundedGet(_ index: Int) -> Element {
+        let boundedIndex = index.clamped(to: 0 ... count - 1)
+        return self[boundedIndex]
+    }
+}
+
+extension Comparable {
+    func clamped(to limits: ClosedRange<Self>) -> Self {
+        min(max(self, limits.lowerBound), limits.upperBound)
     }
 }
