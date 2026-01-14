@@ -47,7 +47,9 @@ public struct PageInfoView: View {
                 if showBackwardButton {
                     Button("", systemImage: "chevron.backward", action: {
                         withAnimation {
-                            selectedTabKey = infoPages.boundedGet(selectedIndex - 1).key
+                            if let previousTab = infoPages.boundedGet(selectedIndex - 1) {
+                                selectedTabKey = previousTab.key
+                            }
                         }
                     })
                 }
@@ -57,7 +59,9 @@ public struct PageInfoView: View {
                 if showForwardButton {
                     Button("", systemImage: "chevron.forward", action: {
                         withAnimation {
-                            selectedTabKey = infoPages.boundedGet(selectedIndex + 1).key
+                            if let nextTab = infoPages.boundedGet(selectedIndex + 1) {
+                                selectedTabKey = nextTab.key
+                            }
                         }
                     })
                 }
@@ -70,7 +74,8 @@ public struct PageInfoView: View {
 }
 
 extension Array {
-    func boundedGet(_ index: Int) -> Element {
+    func boundedGet(_ index: Int) -> Element? {
+        guard count > 0 else { return nil }
         let boundedIndex = index.clamped(to: 0 ... count - 1)
         return self[boundedIndex]
     }
