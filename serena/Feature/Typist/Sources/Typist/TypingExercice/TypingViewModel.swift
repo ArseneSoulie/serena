@@ -121,6 +121,7 @@ class TypingViewModel: ObservableObject {
     }
 
     func restartGame() {
+        inputText = ""
         lastFrameTime = .now
         timeSinceLastSpawn = 0
         deltaTime = 0
