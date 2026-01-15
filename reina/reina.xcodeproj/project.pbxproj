@@ -19,6 +19,14 @@
 		03C1F4262E43E1E800029A0D /* reina.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = reina.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		034E865D2F18D12000593BE4 /* Resources */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		03C1F4232E43E1E800029A0D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -41,6 +49,7 @@
 		03C1F41D2E43E1E800029A0D = {
 			isa = PBXGroup;
 			children = (
+				034E865D2F18D12000593BE4 /* Resources */,
 				0383BBC22ECDC02E00629C2A /* Frameworks */,
 				03C1F4272E43E1E800029A0D /* Products */,
 				0383BBB62ECDBDDE00629C2A /* Assets.xcassets */,
@@ -71,6 +80,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				034E865D2F18D12000593BE4 /* Resources */,
 			);
 			name = reina;
 			packageProductDependencies = (
@@ -296,7 +308,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.arsenesoulie.reina.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -348,7 +360,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 3.2;
+				MARKETING_VERSION = 3.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.arsenesoulie.reina.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
