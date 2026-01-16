@@ -10,7 +10,10 @@ struct Main: App {
     var body: some Scene {
         WindowGroup {
             ReinaMainPage()
-                .environment(\.locale, Locale(identifier: Bundle.main.preferredLocalizations.first ?? "en"))
+                .environment(
+                    \.locale,
+                    Bundle.main.preferredLocalizations.first.flatMap(Locale.init(identifier:)) ?? Locale.current,
+                )
         }
     }
 }
