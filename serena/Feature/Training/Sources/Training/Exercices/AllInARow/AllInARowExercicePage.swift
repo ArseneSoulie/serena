@@ -68,7 +68,7 @@ struct AllInARowExercicePage: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
                         .overlay(alignment: .trailing) {
-                            Button("", systemImage: "chevron.forward.2", action: onSkip)
+                            Button(.skip, action: onSkip)
                                 .buttonStyle(.borderless)
                                 .padding()
                         }
