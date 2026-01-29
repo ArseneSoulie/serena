@@ -314,6 +314,9 @@ extension ReinaWord {
     }
 
     func matches(input: String) -> Bool {
-        reading == input || writing == input
+        reading == input ||
+            writing == input ||
+            reading.standardisedRomaji == input.standardisedRomaji ||
+            writing?.standardisedRomaji == input.standardisedRomaji
     }
 }
