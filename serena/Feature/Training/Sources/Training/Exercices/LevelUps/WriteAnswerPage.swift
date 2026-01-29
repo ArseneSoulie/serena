@@ -79,7 +79,7 @@ struct WriteAnswerPage: View {
                                 .typography(.callout)
                         }
                         HStack {
-                            Button("", systemImage: "chevron.forward.2", action: goToNextRound)
+                            Button(.skip, action: goToNextRound)
                                 .buttonStyle(.borderless)
                                 .hidden()
                             Spacer()
@@ -90,7 +90,7 @@ struct WriteAnswerPage: View {
                                 .typography(.largeTitle)
                                 .shake(shakeTrigger)
                             Spacer()
-                            Button("", systemImage: "chevron.forward.2", action: goToNextRound)
+                            Button(.skip, action: goToNextRound)
                                 .buttonStyle(.borderless)
                         }
 
